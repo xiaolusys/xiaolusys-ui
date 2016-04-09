@@ -1,4 +1,5 @@
 from busybox
 
-run mkdir -p /data/site_media
-add . /data/site_media
+run mkdir -p /var/www/site_media
+add . /var/www/site_media
+workdir /var/www/site_media

@@ -19,10 +19,7 @@ deploy:
     user: root
     commands:
       - docker pull registry.aliyuncs.com/xiaolu-img/xiaolusys-ui
-      - docker rm -f static
-      - docker run --name static -v /data registry.aliyuncs.com/xiaolu-img/xiaolusys-ui /bin/sh
-      - docker rm -f nginx
-      - docker run --name=nginx -p 0.0.0.0:80:80 -d --volumes-from=static registry.aliyuncs.com/xiaolu-img/nginx
+      - docker run --rm --volumes-from=static registry.aliyuncs.com/xiaolu-img/xiaolusys-ui mv static /data/site_media
   ssh:
     host: 
       - staging.xiaolumm.com
@@ -32,7 +29,4 @@ deploy:
     user: root
     commands:
       - docker pull registry.aliyuncs.com/xiaolu-img/xiaolusys-ui
-      - docker rm -f static
-      - docker run --name static -v /data registry.aliyuncs.com/xiaolu-img/xiaolusys-ui /bin/sh
-      - docker rm -f nginx
-      - docker run --name=nginx -p 0.0.0.0:80:80 -d --volumes-from=static registry.aliyuncs.com/xiaolu-img/nginx
+      - docker run --rm --volumes-from=static registry.aliyuncs.com/xiaolu-img/xiaolusys-ui mv static /data/site_media
