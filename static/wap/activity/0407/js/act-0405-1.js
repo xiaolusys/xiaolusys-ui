@@ -57,6 +57,9 @@ $(document).ready(function() {
 						$('input').val('');
 						$('input')[0]['placeholder'] = '请重新输入';
 					}
+				},
+				error: function(res) {
+					console.log(res);
 				}
 			});
 		}
@@ -92,6 +95,6 @@ $(document).ready(function() {
 		});
 	};
 	requestData();
-	$(document).on('click', '.act-0405-add img', add);
 	$(document).on('click', '.act-0405-add', add);
+	});
 });
