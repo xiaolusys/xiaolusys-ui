@@ -22,9 +22,9 @@ $(document).ready(function() {
 				if (minute <= 9) minute = '0' + minute;
 				if (second <= 9) second = '0' + second;
 				$('#day_show').html(day);
-				$('#hour_show').html('<s id="h"></s>' + hour);
-				$('#minute_show').html('<s></s>' + minute);
-				$('#second_show').html('<s></s>' + second);
+				$('#hour_show').html(hour);
+				$('#minute_show').html(minute);
+				$('#second_show').html(second);
 				intDiff--;
 			}, 1000);
 		}
@@ -48,6 +48,8 @@ $(document).ready(function() {
 							window.location.href = '../html/act-0405-3.html';
 						} else if (res.next == 'snsauth') {
 							window.location.href = '/sale/promotion/weixin_snsauth_join/3/';
+						} else if (res.next == 'activate') {
+							window.location.href = '/sale/promotion/activate/3/';
 						}
 
 					} else {
@@ -67,7 +69,7 @@ $(document).ready(function() {
 			url: baseurl + '/sale/promotion/apply/3/',
 			success: function(res) {
 				//set rest time of activity
-				end_time = (new Date(res.end_time)).getTime();
+				end_time = res.end_time;
 				current_time = (new Date()).getTime();
 				rest_time = parseInt((end_time - current_time) / 1000);
 				timer(rest_time);
