@@ -1,0 +1,20 @@
+publish:
+  docker:
+    username: $$DOCKER_USERNAME
+    password: $$DOCKER_PASSWORD
+    email: $$DOCKER_EMAIL
+    registry: registry.aliyuncs.com
+    repo: xiaolu-img/xiaolusys-ui
+    tag: latest
+    file: Dockerfile
+    mirror: https://n5fb0zgg.mirror.aliyuncs.com
+deploy:
+  ssh:
+    host: 
+      - staging.xiaolumm.com
+      - sale.xiaolumm.com
+    user: root
+    commands:
+      - docker pull registry.aliyuncs.com/xiaolu-img/xiaolusys-ui
+      - docker rm -f xlstatic
+      - docker run --name xlstatic -v /data registry.aliyuncs.com/xiaolu-img/xiaolusys-ui /bin/sh
