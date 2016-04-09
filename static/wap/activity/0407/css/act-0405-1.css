@@ -90,6 +90,7 @@ input::-webkit-input-placeholder {
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
+	cursor: pointer;
 }
 .act-0405-add-img {
 	width: 16%;
