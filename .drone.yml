@@ -8,13 +8,31 @@ publish:
     tag: latest
     file: Dockerfile
     mirror: https://n5fb0zgg.mirror.aliyuncs.com
+    when:
+      branch: staging
 deploy:
   ssh:
     host: 
       - staging.xiaolumm.com
-      - sale.xiaolumm.com
+    when:
+      branch: staging
     user: root
     commands:
       - docker pull registry.aliyuncs.com/xiaolu-img/xiaolusys-ui
       - docker rm -f static
       - docker run --name static -v /data registry.aliyuncs.com/xiaolu-img/xiaolusys-ui /bin/sh
+      - docker rm -f nginx
+      - docker run --name=nginx -p 0.0.0.0:80:80 -d --volumes-from=static registry.aliyuncs.com/xiaolu-img/nginx
+  ssh:
+    host: 
+      - staging.xiaolumm.com
+      - sale.xiaolumm.com
+    when:
+      branch: master
+    user: root
+    commands:
+      - docker pull registry.aliyuncs.com/xiaolu-img/xiaolusys-ui
+      - docker rm -f static
+      - docker run --name static -v /data registry.aliyuncs.com/xiaolu-img/xiaolusys-ui /bin/sh
+      - docker rm -f nginx
+      - docker run --name=nginx -p 0.0.0.0:80:80 -d --volumes-from=static registry.aliyuncs.com/xiaolu-img/nginx
