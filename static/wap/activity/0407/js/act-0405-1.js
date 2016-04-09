@@ -95,5 +95,5 @@ var requestData = function() {
 	});
 };
 requestData();
-$(document).on('click', '.act-0405-add', add);
+$(document).on('touchend', '.act-0405-add', add);
 });
