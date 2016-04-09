@@ -1,0 +1,312 @@
+{% extends "mmdress/base_dress.html" %}
+
+{% load url from future %}
+{% block title %} 妈妈穿衣品味测试-结果展示 {% endblock %}
+
+{% load static %}
+{% load mathfilters %}
+{% block head_script %}
+<style>
+.container-fluid{
+    position: relative;
+}
+.container-nav{
+    margin-top:0;
+}
+.row{
+    padding:0;
+}
+.head-img{
+    width:100%;
+    margin:0　auto;
+}
+.page-panel {
+    position: static;
+}
+.share-mask{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+}
+.mg-btm-15{
+    margin-bottom:20px;
+}
+.share-img{
+    width:100%;
+    margin:0　auto;
+}
+.share-panel{
+    display:none;
+    position:absolute;
+    top:0;
+    left:50%;
+    width:100%; 
+    height:100%;
+    margin-left:-50%;
+}
+.share-btn-img{
+    display:inline;
+    width:40%;
+}
+.score-bg {
+    width:100%;
+    height:60px;
+    margin:10px auto;
+}
+.score-block{
+    width:30%;
+    height:60px;
+    margin:10px auto;
+    position:relative;
+}
+.score-img{
+    max-width:35%;
+}
+.score-img-sm{
+    margin-top:-10px;
+    width:25px;
+    display:inline;
+}
+.score-cover{
+    position:absolute;
+    top:15%;
+    left:50%;
+    width:100%; 
+    margin-left:-50%;
+}
+.cover-img{
+    width:100%;
+}
+.head-cover-img{
+    position:absolute;
+    top:2%;
+    left:50%;
+    width:100%; 
+    margin-left:-50%;
+    font-size:18px;
+}
+.head-cover-img span{
+    display:inline;
+}
+.page-relate{
+    position:relative;
+}
+.ads-content{
+    position:absolute;
+    top:7%;
+    left:50%;
+    width:68%; 
+    margin-left:-34%;
+    text-align:left;
+    font-size:18px;
+    color: #333;
+}
+.ads-item p{
+    max-height:25px;
+    overflow:hidden;
+}
+.ads-item .gprice {
+    margin-top:5px;
+    margin-bottom:5px;
+}
+.ads-item .nprice{
+    font-size:20px;
+    color:#00CCE0;
+    padding-right:10px;
+}
+.ads-item .oprice{
+    font-size:14px;
+}
+.ads-item .gname{
+    font-size:16px;
+    text-overflow:ellipsis;
+}
+</style>
+{% endblock %}
+
+{% block container-nav %}
+<!-- 页头 -->
+<div class="container-nav">
+</div>
+{% endblock %}
+
+{% block container-body %}
+<!-- 内容区 -->
+<div class="page-panel">
+  <div class="row ">
+    <div class="page-relate">
+        <img class="head-img" src="{{dress_star.star_image}}" />
+        <div class="head-cover-img" >
+            <div style="display:inline-block;"><span style="display:inline;float:left;">您的穿衣品味在：</span>
+            <div style="display:inline;float:right;"> 
+                {% if dress_age|intdiv:'10' > 0 %}
+                <img class="score-img-sm" src="http://7xogkj.com2.z0.glb.qiniucdn.com/dress_%E7%BB%93%E6%9E%9C-%E6%95%B0%E5%AD%97{{dress_age|intdiv:'10'}}.png" />
+                {% endif %}
+                <img class="score-img-sm" src="http://7xogkj.com2.z0.glb.qiniucdn.com/dress_%E7%BB%93%E6%9E%9C-%E6%95%B0%E5%AD%97{{dress_age|mod:'10'}}.png" />
+                <img class="score-img-sm" src="http://7xogkj.com2.z0.glb.qiniucdn.com/dress_%E5%B2%81.png" />
+            </div>
+            </div>
+            <div>跟我们的 <span style="color:#f967bc;font-size:24px;padding-top:10px;">{{dress_star.name}}</span> 一样呢</div>
+        </div>
+     </div>
+  </div>
+  <!-- 分享提示 -->
+  {% if age_tag %}
+  <div class="row">
+    <div>你的穿衣品味跟&nbsp;<span style="color:#fff843;">{{ referal_dress.mama_nick}}</span></div>
+    <div><span style="font-weight:bold;font-size:30px;">相差{{age_tag.0}}岁呢</span></div>
+    <div>{{age_tag.1}}</div>
+  </div>
+  {% else %}
+  <div class="row" style="margin-bottom:15px;">
+    <img style="width:50%;" src="http://7xogkj.com2.z0.glb.qiniucdn.com/dress_%E5%88%86%E4%BA%AB%E5%BE%97%E7%BA%A2%E5%8C%85%E6%8F%90%E7%A4%BA.png" />
+  </div>
+  {% endif %}
+  <!-- 分享按钮 -->
+  <div class="row">
+    <a href="{% url 'dress_question' active_id=mama_dress.active_id %}?replay=1"><img class="share-btn-img"  src="http://7xogkj.com2.z0.glb.qiniucdn.com/dress_%E6%8C%89%E9%94%AE-%E5%86%8D%E6%B5%8B%E4%B8%80%E6%AC%A1.png" /></a>
+    <a href="javascript:void(0)" class="share-friends" onclick="showtips();"><img class="share-btn-img" src="http://7xogkj.com2.z0.glb.qiniucdn.com/dress_%E6%8C%89%E9%94%AE-%E5%91%8A%E8%AF%89%E5%B0%8F%E4%BC%99%E4%BC%B4.png" /></a>
+    <!-- <a href="javascript:void(0)" class="share-friends" onclick="showtips();"><img class="share-btn-img" src="http://7xogkj.com2.z0.glb.qiniucdn.com/dress_%E6%8C%89%E9%94%AE-%E5%88%86%E4%BA%AB.png" /></a> -->
+  </div>
+  <!-- 查看答案 -->
+  <div class="row mg-btm-15" >
+    <a href="#envelop"><img class="head-img" src="http://7xogkj.com2.z0.glb.qiniucdn.com/dress_%E7%BB%93%E6%9E%9C-%E6%9F%A5%E7%9C%8B%E7%AD%94%E6%A1%88.png" /></a>
+  </div>
+  <!-- 红包 -->
+  <div id="envelop" class="row mg-btm-15">
+    {% if mama_dress.is_sendenvelop %}
+    <img class="head-img" src="http://7xogkj.com2.z0.glb.qiniucdn.com/dress_%E7%BA%A2%E5%8C%85-%E9%A2%86%E5%8F%96%E5%90%8E%E7%8A%B6%E6%80%81.png" />
+    {% else %}
+    <img class="head-img" src="http://7xogkj.com2.z0.glb.qiniucdn.com/dress_%E7%BA%A2%E5%8C%85.png" />
+    {% endif %}
+  </div>
+  <!-- 测试年龄 -->
+  <div id="score-age" class="row mg-btm-15" >
+    <div class="score-block">
+    <img class="score-bg" src="http://7xogkj.com2.z0.glb.qiniucdn.com/dress_%E7%BB%93%E6%9E%9C-%E5%B9%B4%E9%BE%84-%E5%BA%95.png"/>
+    <div class="score-cover">
+    {% if dress_age|intdiv:'10' > 0 %}
+    <img class="score-img" src="http://7xogkj.com2.z0.glb.qiniucdn.com/dress_%E7%BB%93%E6%9E%9C-%E6%95%B0%E5%AD%97{{dress_age|intdiv:'10'}}.png" />
+    {% endif %}
+    <img class="score-img" src="http://7xogkj.com2.z0.glb.qiniucdn.com/dress_%E7%BB%93%E6%9E%9C-%E6%95%B0%E5%AD%97{{dress_age|mod:'10'}}.png" />
+    <img class="score-img" style="width:20%;" src="http://7xogkj.com2.z0.glb.qiniucdn.com/dress_%E5%B2%81.png" />
+    </div>
+    </div>
+  </div>
+  <!-- 评语 -->
+  <div class="row">
+    <img class="head-img" src="{{dress_star.comment_img}}" />
+  </div>
+  <!-- 推荐商品 -->
+  <div id="page-ads" class="row page-relate ">
+    <img class="head-img " src="http://7xogkj.com2.z0.glb.qiniucdn.com/dress_%E7%BB%93%E6%9E%9C-%E9%AD%85%E5%8A%9B%E6%8E%A8%E8%8D%90%E6%90%AD%E9%85%8D-%E5%BA%95.png" />
+    <!-- <a href="{{dress_star.item_url}}">
+      <div class="ads-content">
+        <img class="cover-img" src="{{dress_star.item_img}}?imageMogr2/thumbnail/350/format/jpg/quality/90" />
+        <div class="ads-item">
+            <p class="gprice">
+              <span class="nprice"><em>¥</em> 99 </span>
+              <s class="oprice"><em>¥</em> 399</s>
+            </p>
+            <p class="gname">双排扣修身气质风衣/图片色</p>
+        </div>
+      </div>
+    </a> -->
+  </div>
+</div>
+<!-- 分享弹出层 -->
+<div class="row" style="height:100%;">
+    <div id="share-panel" class="share-panel" onclick="hidetips();">
+      <div class="share-mask"><img class="share-img" src="http://7xogkj.com2.z0.glb.qiniucdn.com/dress_%E5%88%86%E4%BA%AB-%E5%91%8A%E8%AF%89%E5%B0%8F%E4%BC%99%E4%BC%B4.png"/></div>
+      <!-- <div class="share-mask"><img class="share-img" src="http://7xogkj.com2.z0.glb.qiniucdn.com/dress_%E5%88%86%E4%BA%AB%E6%8C%87%E7%A4%BA.png"/></div> -->
+    </div>
+</div>
+{% endblock %}
+
+{% block container-foot %}
+<!-- 页尾 -->
+{% endblock %}
+
+{% block tail_script %}
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="{{STATIC_URL}}js/dress-share.js"></script>
+<script>
+function showtips(){
+    $('#share-panel').show();
+}
+function hidetips(){
+    $('#share-panel').hide();
+}
+var shareParams = {
+    wx_singkey:{ 
+          timestamp:{% if share_params.wx_singkey.timestamp %}{{share_params.wx_singkey.timestamp}}{% else %}0{% endif %},
+          app_id:'{{share_params.wx_singkey.app_id}}',
+          signature:'{{share_params.wx_singkey.signature}}',
+          noncestr:'{{share_params.wx_singkey.noncestr}}',
+     },
+    referal_url:'{{share_params.referal_url}}',
+    share_title:'{{share_params.share_title}}',
+    openid:'{{share_params.openid}}',
+    share_img:'{{share_params.share_img}}',
+    callback_url:'{{share_params.callback_url}}',
+    share_link:'{{share_params.share_link}}',
+    share_desc:'{{share_params.share_desc}}',
+};
+//微信分享，并回调处理函数
+listenWeixinShareEvent(shareParams,
+    function(shareParam, shareType){
+        var callbackUrl = shareParam.callback_url;
+        $.post(callbackUrl, 
+           { share_type: shareType },
+           function(res) {
+             console.log('share resp:',res);
+             hidetips();
+             if (res.is_sendenvelop == true){
+               $('#envelop img').attr('src','http://7xogkj.com2.z0.glb.qiniucdn.com/dress_%E7%BA%A2%E5%8C%85-%E9%A2%86%E5%8F%96%E5%90%8E%E7%8A%B6%E6%80%81.png');
+             }
+             var offset = $('#envelop').offset();
+             $('html body').animate({
+               scrollTop: offset.top,
+               scrollLeft: offset.left
+             });
+           },
+        'json');
+    });
+$(document).ready(function(){
+    // 加载推荐商品
+    var promotion_url = '/rest/v1/products/promotion_ads?category={{dress_star.category_id}}&lnum=1&max_age={{dress_age}}&min_age={{dress_age}}';
+    $.get(
+        promotion_url,
+        function(resp){
+            console.log('dress ads:',resp);
+            if (resp.length == 0){return}
+            var product = resp[0];
+            var html = '';
+            if (product.model_product){
+                html += '<a href="/pages/tongkuan.html?id='+ product.model_product.id +'&ufrom=dress&mm_linkid={{mm_linkid}}">';
+            }else{
+                html += '<a href="/pages/shangpinxq.html?id='+ product.id +'&ufrom=dress&mm_linkid={{mm_linkid}}">';
+            } 
+            html +=  '<div class="ads-content">'
+              + '<img class="cover-img" src="'+ product.head_img +'?imageMogr2/thumbnail/350/format/jpg/quality/90" />'
+              + '<div class="ads-item">'
+              + '<p class="gprice">'
+              + '<span class="nprice"><em>¥</em>'+ product.lowest_price +'</span>'
+              + '<s class="oprice"><em>¥</em> '+ product.std_sale_price +' </s>'
+              + '</p>'
+              + '<p class="gname">'+ product.name +'</p>'
+              + '</div>'
+              + '</div>'
+              + '</a>';
+             
+            $('#page-ads').append(html);
+        },
+        'json'
+    );
+});
+
+</script>
+{% endblock %}

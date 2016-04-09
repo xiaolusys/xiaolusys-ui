@@ -1,0 +1,157 @@
+{% extends "mmdress/wxbase_share.html" %}
+
+{% load url from future %}
+{% block title %} 妈妈穿衣品味测试-测试１ {% endblock %}
+
+{% load static %}
+
+{% block head_script %}
+<style>
+.container-nav{
+    margin-top:30px;
+}
+.container-fluid{
+    position: fixed;
+}
+.page-panel{
+    min-height:75%;
+}
+.page-footer{
+    margin-top:15px;
+}
+.question-img{
+    position: relative;
+    /*max-width:290px;*/
+    margin:0 auto;
+}
+.bottom-img{
+    max-width:30%;
+}
+.choice .fullfill{
+    /*border:1px dotted grey;*/
+}
+.choice{
+    position:absolute;
+    top:0;
+    left:50%;
+    width:100%; 
+    margin-left:-50%;
+}
+.choice,.choice ul{
+    height:100%;
+}
+
+.choice ul, .choice ul li{
+    padding:0;
+    padding:0;
+    list-style:none;
+}
+
+.model_1{
+     top:35%;
+     margin-left:-40%;
+}
+
+.model_1 ul li{
+    display:inline;
+    float:left;
+    height:28%;
+    width:38%;
+    margin-right:4%;
+    margin-bottom:12%;
+}
+
+.model_2{
+    top:32%;
+    margin-left:-40%;
+}
+
+.model_2 ul li{
+    height:29%;
+    width:80%;
+    margin-bottom:14%;
+}
+
+.model_3{
+    top:29%;
+    margin-left:-40%;
+}
+
+.model_3 ul li{
+    height:20%;
+    width:80%;
+    margin-bottom:8%;
+}
+
+</style>
+{% endblock %}
+
+{% block container-nav %}
+<!-- 页头 -->
+{% endblock %}
+
+{% block container-body %}
+<!-- 内容区 -->
+<div class="page-panel">
+  <div class="row div-center question-img">
+    <img class="carousel-inner img-responsive img-rounded " src="{{question.image}}"/>
+    <div class="page-mask"></div>
+	<div class="row choice {{question.style}}">
+	  <ul>
+	  {% for c in question.choices %}
+	    <li >
+	        <a href="javascript:void(0);" action="{% url 'dress_question' active_id=active_id %}" onclick="submit(this);"
+	          scores="{{score_string}},{{question.id}}_{{c.1}}" dress_id="{{dress_id}}" question_id="{{post_question_id}}" >
+	        <div class="fullfill"></div>
+	        </a>
+	    </li>
+	  {% endfor %}
+	  </ul>
+	</div>
+  </div>
+</div>
+{% endblock %}
+
+{% block container-foot %}
+{% if question.id > 1 %}
+<div class="page-footer">
+    <div class="row div-center">
+        <a href="javascript:void(0);" action="{% url 'dress_question' active_id=active_id %}" onclick="submit(this);"
+           dress_id="{{dress_id}}" question_id="{{pre_question_id}}"  scores="{{score_string}}" >
+        <img class="col-xs-offset-1 bottom-img" src="http://7xogkj.com2.z0.glb.qiniucdn.com/dress_%E9%A2%98%E7%9B%AE-%E6%8C%89%E9%94%AE-%E8%BF%94%E5%9B%9E%E4%B8%8A%E9%A2%98%20.png">
+        </a>
+    </div>
+</div>
+{% endif %}
+<!-- 页尾 -->
+{% endblock %}
+
+{% block tail_inner_script %}
+<script>
+function submit(ele){
+    console.log(ele);
+    var scores = $(ele).attr('scores');
+    var action = $(ele).attr('action');
+    var dress_id = $(ele).attr('dress_id');
+    var question_id = $(ele).attr('question_id');
+    var callback = function(resp,status,xhr){
+        if (typeof(resp) == 'string' && resp.indexOf('302') == 0){
+            var direct_url = resp.split('|');
+            window.location.href = direct_url[1];
+            return;
+        }
+        document.write(resp);
+        document.close();
+    }
+    $.ajax({ 
+        type:'post', 
+        url:action, 
+        data:{'scores':scores, 'dress_id':dress_id, 'question_id':question_id}, 
+        success:callback ,
+        error:function(err){
+            alert('保存出错：'+err.responseText);
+        }
+    }); 
+}
+</script>
+{% endblock %}

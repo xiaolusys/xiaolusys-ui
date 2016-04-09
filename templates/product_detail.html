@@ -1,0 +1,136 @@
+{% load mathfilters %}
+
+<li id="id-item-{% if record %}{{ record.id }}{% endif %}" class="list-group-item">
+    <div class="row fetched">
+        {% if code %}
+            <div class="col-xs-12 ">
+                <div class="alert alert-danger">{{ error_response }}</div>
+            </div>
+        {% else %}
+            {% if record %}
+                <div class="col-xs-4">
+                    <div class="thumbnail">
+                        <a href="{{ record.product_link }}}" target="_blank">
+                            <img src="{{ record.pic_url }}" width="340px" height="340px">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <p>{{ record.title }}</p>
+                    <p>货号: <input id="id-supplier-sku-{{ record.id }}" class="form-control" placeholder="请填写货号" value="{{ record.supplier_sku }}"></p>
+                    <p>商家: {{ record.sale_supplier.supplier_name }}</p>
+                    <p>平台: {{ record.platform }}</p>
+                    <p>类别: {{ record.sale_category.name }}</p>
+                    <p>状态: <label class="label label-danger">{{ record.status }}</label></p>
+                </div>
+                <div class="col-xs-4">
+                    <p id="id-msg">进货价：<input id="id-buy-price-{{ record.id }}" class="form-control"
+                                                  placeholder="进货价(必须)" value="{{ record.sale_price }}"></p>
+
+                    <p>吊牌价: <input id="id-target-price-{{ record.id }}" class="form-control" value="{{ record.std_sale_price }}"></p>
+                    <p>出售价: <input id="id-sale-price-{{ record.id }}" class="form-control" placeholder="出售价" value="{{ record.on_sale_price }}"></p>
+	            <p>
+	                <label class="label label-success">上架时间:</label>
+	                <input type="text" id="id-sale-time-{{ record.id }}" name="dt" class="datepicker " value="{% if record.sale_time %}{{ record.sale_time }}{% endif %}"/>
+	            </p>
+                    <p>预留数: <input id="id-remain-num-{{record.id}}" class="form-control" placeholder="请填写预留数" value="{{ record.remain_num|default:'0' }}"></p>
+                    <p style="margin-top:10px">选择 洽谈结果：</p>
+                    <p><select class="form-control input" id="id-select-{{ record.id }}">
+                        {% ifequal record.status '入围' %}
+                            <option value="purchase">取样</option>
+                        {% endifequal %}
+                        {% ifequal record.status '取样' %}
+                            <option value="passed">通过</option>
+                        {% endifequal %}
+                        {% ifequal record.status '通过' %}
+                            <option value="passed">通过</option>
+                        {% endifequal %}
+                        <option value="rejected">拒绝</option>
+                    </select></p>
+                    <p style="margin-top:10px">备注：</p><textarea rows="1" cols="20" class="form-control"
+                                                                id="id-memo-{{ record.id }}}">{{ record.memo }}</textarea>
+                    <button type="button" class="btn btn-primary" style="margin-top:20px"
+                            onclick="screen({{ record.id }}, '{{ record.id }}')" ;>确定
+                    </button>
+                    <p id="id-msg-{{ record.id }}"></p>
+                </div>
+                <script src="{{ STATIC_URL }}js/supplier_price.js?v=1.0"></script>
+                <script>
+                 $(function(){
+                     var is_exists = {{is_exists}};
+                     if(is_exists)
+                         window.location.reload();
+
+                     $('#id-sale-time-{{ record.id }}').datepicker({dateFormat: "yy-mm-dd 00:00:00"});
+                     $('.fetched input[id|="id-buy-price"]').change(function(){
+                         var salePrice = calcSalePrice($(this).val());
+                         if(salePrice)
+                             $('.fetched input[id|="id-sale-price"]').val(salePrice);
+                     });
+                 });
+                </script>
+            {% else %}
+                <form id="fetch-form" method="POST" action="/supplychain/supplier/brand/fetch/{{ supplier.id }}/">
+                    {% csrf_token %}
+                    <input type="hidden" name="pic_url" value="{{ pic_url }}"/>
+                    <input type="hidden" name="product_link" value="{{ fetch_url }}"/>
+                    <input type="hidden" name="status" value="{{ status }}"/>
+                    <input type="hidden" name="memo" value="{{ memo }}"/>
+                    <div class="col-xs-4">
+                        <div class="thumbnail">
+                            <a href="{{ fetch_url }}" target="_blank">
+                                <img src="{{ pic_url }}" style="width:340px; height:340px;">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <p><textarea rows="3" cols="20" name="title" class="form-control">{{ title }}</textarea></p>
+                        <p>货号: <input name="supplier_sku" placeholder="请填写货号" class="form-control" value="{{supplier_sku|default:''}}"></p>
+                        <p>类别:
+                            <select class="form-control input" name="sale_category">
+                                {% for cat in categorys %}
+                                    <option value="{{ cat.id }}">{{ cat.full_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </p>
+                    </div>
+                    <div class="col-xs-4">
+                        <p id="id-msg">进货价：<input name="sale_price" class="form-control" value="0.0"></p>
+                        <p>吊牌价:<input name="std_sale_price" placeholder="请输入吊牌价" class="form-control" value="0"/></p>
+                        <p>出售价:<input name="on_sale_price" placeholder="价格*必填" class="form-control" value="{{ price }}"/></p>
+	                <p>
+	                    <label class="label label-success">上架时间:</label>
+	                    <input type="text" name="sale_time" class="datepicker"/>
+	                </p>
+                        <p>预留数: <input name="remain_num" placeholder="预留数" class="form-control" value="0"></p>
+                        {% if request_data.status %}
+                            <p style="margin-top:10px">选择 接洽结果：</p>
+                            <select class="form-control input" name="status">
+                                <option value="purchase">取样</option>
+                                <option value="passed">通过</option>
+                            </select>
+                        {% endif %}
+                        <p style="margin-top:10px">备注：</p><textarea rows="3" cols="20" name="memo"
+                                                                    class="form-control"></textarea>
+                        <button type="submit" class="btn btn-primary" style="margin-top:20px">创建商品</button>
+                    </div>
+                </form>
+                <script src="{{ STATIC_URL }}js/supplier_price.js?v=1.0"></script>
+                <script>
+                 $(function(){
+                     $('#fetch-form').ajaxForm(function (res) {
+                         $("#items-group li:first").after(res);
+                         $("#items-group li:first").remove();
+                     });
+                     $('#fetch-form input.datepicker').datepicker({dateFormat: "yy-mm-dd 00:00:00"});
+                     $('#fetch-form input[name=sale_price]').change(function(){
+                         var salePrice = calcSalePrice($(this).val());
+                         if(salePrice)
+                             $('#fetch-form input[name=on_sale_price]').val(salePrice);
+                     });
+                 });
+                </script>
+            {% endif %}
+        {% endif %}
+    </div>
+</li>

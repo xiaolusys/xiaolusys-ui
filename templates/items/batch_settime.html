@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>库存批量设置</title>
+    <link href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}jquery-timepicker-addon/timepicker/jquery-ui-timepicker-addon.css" type="text/css"/>
+    <script src="http://youni.huyi.so/static/jquery/jquery-1.8.13.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://youni.huyi.so/static/jquery/jquery-ui-1.10.1.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/wap/css/sweet-alert.css">
+    <script src="/static/jquery/jquery-ui-1.8.13.min.js"></script>
+    <script src="/static/jquery-timepicker-addon/timepicker/jquery-ui-timepicker-addon.js"
+            type="text/javascript"></script>
+    <script src="/static/jquery-timepicker-addon/js/jquery-ui-timepicker-zh-CN.js"
+            type="text/javascript"></script>
+<style>
+input[type=checkbox]{
+    width: 16px;
+    height: 16x;
+}
+.checkbox{
+    display:inline;
+}
+</style>
+</head>
+<body>
+<div class="container" style="margin-top: 30px">
+    <script>
+        function removethisdiv(dom) {
+            $(dom).children().toggle();
+        }
+    </script>
+    <div class="alert alert-info" role="alert" onclick="removethisdiv(this)">点击蓝色框隐藏或显示操作注意事项
+        <h3 hidden="hidden">温馨提示：<br/>
+            <small>1. 当款式id为空的时候点击搜索将按照左侧选择的上架时间列出准备修改的产品</small>
+            <br/>
+            <small>2. 当款式id不为空的时候点击搜索将按照款式id列出准备修改的产品</small>
+            <br/>
+            <small>3. 可以在款式id中输入两个款式或更多款式，并以'-'隔开(英文输入法下)，搜索多个款式产品</small>
+            <br/>
+            <small>4. 选择上架时间，下架时间，产品类别，仓库点击设置后服务器会提示，注意服务器提示，必要时请点击搜索(同条件搜索)验证修改后的结果是否正确</small>
+            <br/>
+            <small>5. 如果要添加某产品的秒杀标题，请在选中产品后并勾选秒杀选框点击设置即可．</small>
+            <br/>
+            <small>6. 如果要删除某产品的秒杀标题，请在选中产品后并勾选秒杀选框点击设置即可．</small>
+        </h3>
+        <h3>特别注意：<br/>
+            <small>1. 当有秒杀标题存在而没有勾选秒杀就点击设置，则将会移除该秒杀标题</small>
+            <br/>
+            <small>2. 打上水印标签后修改其他字段时候没有勾选水印则将删除水印设置</small>
+            <br/>
+            <small>3. 注意配合忽略按钮操作</small>
+        </h3>
+    </div>
+    <div class="row">
+        <form method="get" action="/items/batch_settime/">
+            <div class="col-xs-2">
+                <input type="text" class="form-control" name="shelf_date" readonly value="{{ target_shelf_date }}"
+                       id="shelfdate" placeholder="选择上架日期"/>
+            </div>
+            <div class="col-xs-2">
+                <select name="search_cate" class="form-control">
+                    <option value="" selected="selected">选择分类</option>
+                    {% for  p_cate in p_cates %}
+                        <option value="{{ p_cate.p_cid }}">{{ p_cate.p_fullcate_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-xs-4">
+                <input type="text" class="form-control" name="model_id" value="{{ model_id }}"
+                       placeholder="请输入商品款式id"/>
+            </div>
+            <div class="col-xs-4">
+                <input type="submit" class="btn" value="搜索"/>
+            </div>
+        </form>
+    </div>
+    <div class="row panel panel-success" style="margin-top: 20px">
+        <div class="panel-heading">
+            <h3 class="panel-title">商品列表</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-1">
+                    <div class="checkbox">
+	                    <label>
+	                      <input type="checkbox" id="sec_kill_products"> 秒杀
+	                    </label>
+	                </div>
+                    <div class="checkbox">
+                        <label>
+                          <input type="checkbox" id="is_watermark"> 水印
+                        </label>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <input type="text" id="shelf_time" class="form-control" placeholder="设置上架日期" readonly/>
+                </div>
+                <div class="col-xs-2">
+                    <input type="text" id="unshelf_time" class="form-control" placeholder="设置下架日期" readonly/>
+                </div>
+                <div class="col-xs-2">
+                    <select name="ware_by" id="setting_ware_by" class="form-control">
+                        <option value="" selected="selected">选择仓库</option>
+                        {% for  wareid , ware in ware_by %}
+                            <option value="{{ wareid }}">{{ ware }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-xs-2">
+                    <div class="form-group">
+					    <label class="sr-only" for="exampleInputAmount"></label>
+					    <div class="input-group">
+					      <div class="input-group-addon">￥</div>
+					      <input type="text" class="form-control" id="setting_price" placeholder="售价">
+					    </div>
+					  </div>
+                </div>
+                <div class="col-xs-2">
+                    <select name="rebeta_scheme_id" id="setting_rebeta_scheme" class="form-control">
+                        <option value="" selected="selected">选择返利计划</option>
+                        {% for scheme in rebeta_schemes %}
+                            <option value="{{ scheme.id }}">{{ scheme.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-xs-1">
+                    <input type="button" class="btn btn-danger" id="set_target" value="设置"/>
+                </div>
+            </div>
+            <br>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-bordered table-hover table-condensed"
+                       style="text-align: center">
+                    <thead>
+                    <td width="10%">图片</td>
+                    <td width="10%">编码-款式</td>
+                    <td width="10%">商品名</td>
+                    <td width="10%">上架日期</td>
+                    <td width="10%">返利计划</td>
+                    <td width="10%">售价-成本(￥)</td>
+                    <td width="10%">类别</td>
+                    <td width="10%">仓库</td>
+                    <td width="5%">秒杀</td>
+                    <td width="5%">水印</td>
+                    <td width="5%">勾选
+                        <input type="checkbox" id="all_check" style="width: 25px;height: 25px">
+                    </td>
+                    <td>忽略</td>
+                    </thead>
+                    {% for product in all_product %}
+                        <tr class="warning">
+
+                            <td><img src="{{ product.PIC_PATH }}" width="100px" class="img-circle"></td>
+                            <td>
+                                <a href="/admin/items/product/?id={{ product.id }}"
+                                   target="_blank">{{ product.outer_id }}-{{ product.model_id }}</a>
+                            </td>
+                            <td>{{ product.name }}</td>
+
+                            <td>{{ product.sale_time }}</td>
+                            <td>{% if product.detail %}
+                                    {% for scheme in rebeta_schemes %}
+                                    {% if scheme.id == product.detail.rebeta_scheme_id %}
+                                    {{scheme.name}}
+                                    {% endif %}
+                                    {% endfor %}
+                                {% endif %}</td>
+                            <td>{{ product.agent_price }}－{{  product.cost }}</td>
+                            <td>{{ product.category.name }}</td>
+                            <td>{{ product.get_ware_by_display }}</td>
+                            <td>{% if product.detail %}
+                                    {% if product.is_seckill %}<i class="glyphicon glyphicon-ok-circle"></i>
+                                    {%else%}<i class="glyphicon glyphicon-ban-circle"></i>{%endif%}
+                                {% else %}
+                                    <i class="glyphicon glyphicon-ban-circle"></i>
+                                {% endif %}     
+                            </td>
+                            <td>{% if product.is_watermark %}<i class="glyphicon glyphicon-ok-circle"></i>
+                                {%else%}<i class="glyphicon glyphicon-ban-circle"></i>{%endif%}</td>
+                            <td>
+                                <input type="checkbox" class="my_product" data-product-id="{{ product.id }}"
+                                       style="width: 25px;height: 25px"/>
+                            </td>
+                            <td>
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"
+                                      onclick="remove_this_row(this)"></span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="/static/wap/js/sweet-alert.min.js"></script>
+<script>
+    // 删除表中单行
+    function remove_this_row(dom) {
+        $(dom).parent().parent().remove();
+    }
+
+    (function () {
+        $("#unshelf_time").datetimepicker({
+            timeFormat: "HH:mm:ss",
+            dateFormat: "yy-mm-dd"
+        });
+        $("#shelf_time").datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+        $("#shelfdate").datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+        $("#all_check").bind("click", function () {
+            if ($("#all_check").prop("checked")) {
+                $(".my_product").attr("checked", true);
+            } else {
+                $(".my_product").attr("checked", false);
+            }
+        });
+
+        $("#set_target").bind("click", function () {
+            console.log("setting");
+            var all_product = $(".my_product");
+            var checked_product = "";
+
+            $.each(all_product, function (index, dd) { // 获取选中的产品
+                var temp_product = all_product.eq(index);
+                if (temp_product.prop("checked")) {
+                    checked_product += temp_product.attr("data-product-id") + ","
+                }
+            });
+
+            var add_kill_title = 0;
+            var is_watermark = 0;
+            var unshelf_time = $("#unshelf_time").val();//下架时间
+            var shelf_time = $("#shelf_time").val();//上架时间
+            var ware_by = $("#setting_ware_by").val();//所选仓库
+            var rebeta_scheme = $("#setting_rebeta_scheme").val();//返利计划
+            var price = $("#setting_price").val();//返利计划
+            if (checked_product && checked_product.length != 0) {
+                checked_product = checked_product.substring(0, checked_product.length - 1);
+            } else {
+                swal("您好！", "请选择商品", "warning");
+                return;
+            }
+            if ($("#is_watermark").prop("checked")) {
+                is_watermark = 1;
+            }
+            if ($("#sec_kill_products").prop("checked")) {
+                add_kill_title = 1;
+            }
+            if (price != '' && !parseFloat(price)){
+                swal("您好！", "商品价格输入有误", "warning");
+                return;
+            }
+            var requestUrl = "/items/batch_settime/";
+            var data = {
+                "product_list": checked_product,
+                "add_kill_title": add_kill_title,
+
+                "offshelf_time": unshelf_time,
+                "sale_time": shelf_time,
+                "ware_by": ware_by,
+                "agent_price": price,
+                "rebeta_scheme_id": rebeta_scheme,
+                "is_watermark": is_watermark
+            };
+            console.log("data:", data);
+            $.ajax({
+                type: 'post',
+                url: requestUrl,
+                data: data,
+                dataType: 'json',
+                success: requestCallBack
+            });
+            function requestCallBack(res) {
+                if (res.code == 0) {
+                    swal("您好！", "设置成功", "warning");
+                }
+                else {
+                    swal("您好！", "系统错误，联系技术处理", "warning");
+                }
+            };
+        })
+    })()
+</script>
+
+</body>
+</html>

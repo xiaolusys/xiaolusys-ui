@@ -1,0 +1,283 @@
+{% extends "weixin/weixin_base.html" %}
+
+{% block title %} 申请确认 {% endblock %}
+
+
+{% block container %}
+
+<div class="container-fluid">
+  <div class="panel panel-default" style="margin-top:5px">
+    <!--<div class="panel-heading" style="color:orange">申请确认</div>-->
+    <div class="panel-body">
+      
+      <form method="post" action="/weixin/sampleconfirm/" onsubmit="return check()">{% csrf_token %}
+	<input type="hidden" name="sample_pk" value="{{ sample.pk }}"/>
+	<input type="hidden" name="sku_code" value="{{ sku.sku_code }}"/>
+	<input type="hidden" name="fcode" value="{{ fcode }}"/>
+	<input type="hidden" name="openid" id="id_openid" value="{{ wx_user.openid }}"/>
+	<div class="row">
+	  <div class="col-xs-5" style="text-align:center">
+	    <div class="thumbnail">
+	      {% if color == 1 %}
+	      <img src="https://mmbiz.qlogo.cn/mmbiz/yMhOQPTKhLuib4oia7Uxw0Ttn7TWcdaoxicCfia634xuOP5pobDYFtxKeHLrBNONJ72OO7ibauW5QYQ0zVVacThZDKA/0?wx_fmt=png" alt="...">
+	      {% endif %}
+	      {% if color == 2 %}
+	      <img src="https://mmbiz.qlogo.cn/mmbiz/yMhOQPTKhLuib4oia7Uxw0Ttn7TWcdaoxic6hywIyTkXxPxsnGBkbWvhG0YyxQNa7DvaH8TGzicbmJQ0K42Bz2amOA/0?wx_fmt=png"  alt="...">
+	      {% endif %}
+	      {% if color == 3 %}
+	      <img src="https://mmbiz.qlogo.cn/mmbiz/yMhOQPTKhLuib4oia7Uxw0Ttn7TWcdaoxicC6Oyunic2mVscEdfU18bRTwCM57XAoFuTU7IVvzhw3KdaiatR1ibkcibJg/0?wx_fmt=png"  alt="...">
+	      {% endif %}
+	    </div>
+	  </div>
+	  <div class="col-xs-7">
+	    <p style="color:#e8792a">{{ sample.name }}</p>
+	    <!--<p style="color:#e8792a">{{ sku.sku_name }}</p>-->
+	  </div>
+	</div>
+
+	<div class="row">
+	  <div class="col-xs-12">
+	    {% if wx_user.isvalid %}
+	    <p>收货人手机: {{ wx_user.mobile }}</p>
+	    {% else %}
+	    
+	    <h5 style="color:#3071a9">验证手机</h5><span style="color:red" id="id_verify_msg"></span>
+	    <div class="input-group">
+	      <span class="input-group-addon">手机号</span>
+	      <input id="id_mobile_input" type="text" class="form-control">
+	      <span class="input-group-btn">
+		<button id="id_requestcode_button" class="btn btn-primary" type="button" onclick="requestcode();" status="0">获验证码</button>
+	      </span>
+	    </div>
+	    <div id="id_verifycode_group" class="input-group">
+	      <span class="input-group-addon">验证码</span>
+	      <input id="id_code_input" type="text" class="form-control">
+	      <span class="input-group-btn">
+		<button id="id_verifycode_button" class="btn btn-warning" type="button" onclick="verifycode();">点击验证</button>
+	      </span>
+	    </div>
+	    {% endif %}
+	  </div>
+	</div>
+
+	<hr/>
+	
+	<div class="row">
+	  <div class="col-xs-12">
+	    <h5 style="color:red"><b>小调查</b></h5>
+	    <div>
+	      <p style="color:#029fd6">1. 小鹿美美，是优尼世界旗下新的童装女装特卖平台，主推外贸原单新款，每天10点上新。您会感兴趣吗？</p>
+	      <div class="radio">
+		<label>
+		  <input type="radio" name="p1" value="1" id="id_input11"> 每天可以准时来看看都特卖啥宝贝。
+		</label>
+	      </div>
+	      <div class="radio">
+		<label>
+		  <input type="radio" name="p1" value="2" id="id_input12"> 看看可以的，特别实惠的才会想买。
+		</label>
+	      </div>
+	    </div>
+
+	    <!--<div style="margin-top:20px">
+	      <p style="color:#029fd6">2. 申请提交后，您的VIP邀请码请发给好友使用，VIP码使用次数越多，那么</p>
+	      <div class="radio">
+		<label>
+		  <input type="radio" name="p2" value="1" id="id_input2"> 中奖几率越大。
+		</label>
+	      </div>
+	    </div>-->
+
+	    <!--{% if hongbao_pass %}
+	    <div style="margin-top:20px">
+	      <p style="color:#029fd6">3. 若您是第一次参加小鹿美美活动，那么</p>
+	      <div class="radio">
+		<label>
+		  <input type="radio" name="p3" value="1" id="id_input3"> 可在申请提交后加客服微信，领>1元现金红包。
+		</label>
+	      </div>
+	    </div>
+	    {% endif %}-->
+	  </div>
+	</div>
+
+
+	{% if not wx_user.subscribe %}
+	<div class="row" style="margin-top:16px">
+	  <div class="col-xs-12" style="text-align:center">
+	    <p><font style="color:red;font-size:20px">亲，您还没有关注公众号【优尼世界】哦。</font>请在申请提交后立即关注，以便公众号自动通知您申请结果。</p>
+	  </div>
+	</div>
+	{% endif %}
+	
+	<div class="row" style="margin-top:16px">
+	  <p id="id_msg" style="text-align:center;color:red"></p>
+	  <div class="col-xs-12" style="text-align:center">
+	    <input type="submit" class="btn btn-warning" value="确认提交"/>
+	  </div>
+	</div>
+	<!--
+	<div class="row">
+	  <div class="col-xs-12"><p>本期睡袋免费试用活动已经结束申请了，亲们下期活动再会！</p></div>
+	</div>
+	-->
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <h5 style="color:#3071a9">温馨提示</h5>
+      <p>若收货信息有误，请到宝宝档案里更改地址或联系信息后，重新提交试用申请。</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>© Uni Littles 2014</p>
+  </div>
+
+</div>
+{% endblock %}    
+    
+
+{% block tail_script %}
+<script type="text/javascript">
+  function validateMobile(s) {
+    var validateReg = /^((\+?86)|(\(\+86\)))?1\d{10}$/;
+    return validateReg.test(s);
+  };
+
+  function validateVerifyCode(s) {
+    var validateReg = /^\d{6}$/;
+    return validateReg.test(s);
+  };
+
+  var global_timer;
+  function updateTime() {
+    var btn = $("#id_requestcode_button");
+    time_left = parseInt(btn[0].innerHTML) - 1;
+    if (time_left <= 0) {
+      btn.attr("status","0");
+      window.clearInterval(global_timer);
+      btn[0].innerHTML = "点击重发";
+    } else {
+      btn[0].innerHTML = time_left.toString();
+    }
+  };
+
+  function requestcode() {
+    var btn = $("#id_requestcode_button");
+    var status = btn.attr("status");
+    if (status == "1" || status == "2") {
+      return;
+    }
+    
+    var mobile = $("#id_mobile_input").val();
+    if (validateMobile(mobile) == false) {
+      return;
+    }
+
+    btn.attr("status","1");
+    btn[0].innerHTML = "180";
+    global_timer = window.setInterval(updateTime, 1000);
+
+    var openid = $("#id_openid").val();
+    var url = "/weixin/requestcode/";
+    var data = {"mobile":mobile, "openid":openid};
+    
+    var callback = function (res) {
+      if (res["code"] == "wait") {
+        $("#id_verify_msg")[0].innerHTML = "请先耐心等待180秒哦！";
+        return;
+      } 
+      
+      if (res["code"] != "good") {
+        btn.attr("status","0");
+        window.clearInterval(global_timer);
+      }
+
+      if (res["code"] == "locked") {
+        $("#id_verify_msg")[0].innerHTML = "验证次数达到上限，请联系微信客服处理！";
+        btn[0].innerHTML = "已达上限";
+        btn[0].innerHTML = "成功发送";
+        return;
+      } 
+
+      if (res["code"] == "anony") {
+        $("#id_verify_msg")[0].innerHTML = "请从优尼世界微信登录此页面！";
+        btn[0].innerHTML = "登录有误";
+        return;
+      } 
+
+      if (res["code"] == "bad") {
+        $("#id_verify_msg")[0].innerHTML = "请输入正确的手机号码！";
+        btn[0].innerHTML = "点击重发";
+        return;
+      } 
+
+      if (res["code"] == "dup") {
+        $("#id_verify_msg")[0].innerHTML = "此号码已被他人验证，请重新输入！";
+        btn[0].innerHTML = "点击重发";
+        return;
+      } 
+    };
+          
+    $.ajax({url:url, data:data, success:callback});
+  };
+
+      function verifycode() {
+        var verifycode = $("#id_code_input").val();
+        if (validateVerifyCode(verifycode) == false) {
+          $("#id_verify_msg")[0].innerHTML = "验证码错误！";
+          return;
+        }
+        var url = "/weixin/verifycode/";
+        var callback = function (res) {
+          if (res["code"] == "bad") {
+            $("#id_verifycode_button")[0].innerHTML = "验证失败，刷新再试";
+            return;
+          }
+
+	  window.clearInterval(global_timer);
+          $("#id_verifycode_group").css("display","none");
+          $("#id_requestcode_button").removeClass("btn-primary").addClass("btn-success")[0].innerHTML="已验证";
+          $("#id_mobile_input").attr("disabled","disabled");
+          $("#id_requestcode_button").attr("status", "2");
+        };
+        var openid = $("#id_openid").val();
+	var data = {"verifycode":verifycode, "openid":openid};
+        $.ajax({url:url, data:data, success:callback});
+      };
+
+
+
+  function check() {
+    {% if not wx_user.isvalid %}
+    if ($("#id_requestcode_button").attr("status") != "2") {
+      $("#id_msg")[0].innerHTML = "请先验证手机号！";
+      return false;
+    }
+    {% endif %}
+
+    if ((!$("#id_input11").is(':checked')) && (!$("#id_input12").is(':checked'))) {
+      $("#id_msg")[0].innerHTML = "亲，请选择答案再提交哦。";
+      return false;
+    }
+
+   /** if ((!$("#id_input2").is(':checked')) ) {
+      $("#id_msg")[0].innerHTML = "亲，请选择答案再提交哦。";
+      return false;
+    }
+
+    {% if hongbao_pass %}
+    if ((!$("#id_input3").is(':checked')) ) {
+      $("#id_msg")[0].innerHTML = "亲，请选择答案再提交哦。";
+      return false;
+    }
+    {% endif %}**/
+
+    return true;
+  }
+</script>
+{% endblock %}
+

@@ -1,0 +1,118 @@
+{% extends "supplier_base.html" %}
+
+
+{% block title %}
+品牌供应商
+{% endblock %}
+
+{% block container %}
+<div class="container">
+  <div class="navbar navbar-inverse">
+    <div class="nav-collapse" style="height: auto;">
+      <ul class="nav nav-tabs" role="tablist">
+	<li role="presentation" class="active"><a href="#">预审</a></li>
+	<li role="presentation"><a href="#">接洽</a></li>
+	<li role="presentation"><a href="#">终审</a></li>
+	<li role="presentation"><a href="#">排期</a></li>
+      </ul>
+    </div>
+  </div>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <div class="row">
+	<div class="col-xs-4">
+	  <div class="thumbnail">
+	    <a href="{{ main_page }}" target="_blank">
+	    <img src="{{ brand_url }}">
+	    </a>
+	  </div>
+	</div>
+	<div class="col-xs-4">
+	  <div class="input-group">
+	    <span class="input-group-addon">店铺名称:</span>
+	    <input type="text" class="form-control" value="{{ supplier_name }}"/>
+	  </div>
+
+	  <div class="input-group">
+	    <span class="input-group-addon">品牌名称:</span>
+	    <input type="text" class="form-control" value="{{ supplier_code }}"/>
+	  </div>
+
+	  <div class="input-group">
+	    <span class="input-group-addon">商标图片:</span>
+	    <input type="text" class="form-control" value="{{ brand_url }}">
+	  </div>	  
+
+	  <div class="input-group">
+	    <span class="input-group-addon">主页地址:</span>
+	    <input type="text" class="form-control" value="{{ main_page }}">
+	  </div>	  
+
+	  <div class="input-group">
+	    <span class="input-group-addon">联系人:</span>
+	    <input type="text" class="form-control" value="{{ contact }}">
+	  </div>	  
+
+	  <div class="input-group">
+	    <span class="input-group-addon">电话:</span>
+	    <input type="text" class="form-control" value="{{ phone }}">
+	  </div>	  
+
+	  <div class="input-group">
+	    <span class="input-group-addon">手机:</span>
+	    <input type="text" class="form-control" value="{{ mobile }}">
+	  </div>	  
+	</div>
+
+	<div class="col-xs-4">
+	  <div class="input-group">
+	    <span class="input-group-addon">传真:</span>
+	    <input type="text" class="form-control" value="{{ fax }}">
+	  </div>	  
+
+	  <div class="input-group">
+	    <span class="input-group-addon">邮箱:</span>
+	    <input type="text" class="form-control" value="{{ email }}">
+	  </div>	  
+
+	  <div class="input-group">
+	    <span class="input-group-addon">地址:</span>
+	    <input type="text" class="form-control" value="{{ address }}">
+	  </div>	  
+
+	  <div class="input-group">
+	    <span class="input-group-addon">邮编:</span>
+	    <input type="text" class="form-control" value="{{ zip_code }}">
+	  </div>	  
+
+	  <div class="input-group">
+	    <span class="input-group-addon">开户银行:</span>
+	    <input type="text" class="form-control" value="{{ account_bank }}">
+	  </div>	  
+
+	  <div class="input-group">
+	    <span class="input-group-addon">银行帐号:</span>
+	    <input type="text" class="form-control" value="{{ account_no }}">
+	  </div>
+
+	  <button type="button" class="btn btn-warning" style="margin-top:10px" onclick="save()">保存</button>
+	</div>
+      </div>
+    </li>
+  </ul>
+
+  
+  <div class="footer">
+    <p>© Uni Littles 2014</p>
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block tail_script %}
+
+
+
+{% endblock %}
+    

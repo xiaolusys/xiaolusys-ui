@@ -1,0 +1,68 @@
+{% extends "weixin/weixin_base.html" %}
+ 
+{% block title %} 崔玉涛-育儿问答 {%endblock %} 
+
+{% block head_script %}
+<style>
+   .well-small {
+   		display: inline-block;
+		min-width: 60%;
+		max-width: 85%;
+		padding: 5px;
+		margin-bottom:0px;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		border-radius: 6px;
+   }
+   .table-bordered{
+   		border:solid 1px #fff;
+   }
+   .table>tbody>tr>td,.table>tfoot>tr>td{
+   		border:solid 1px #fff;
+   }
+</style>
+{% endblock %}
+
+{% block container %}
+<div class="container-fluid">
+  <div class="panel panel-default" style="margin-top: 5px" id="id_problem_body">
+    {% include "weixin/examination/weixin_exam_block.html" %}
+  </div>
+
+  <div class="footer">
+    <p>© Uni Littles 2014</p>
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block tail_script %}
+<script type="text/javascript">
+  function submit() {
+    var paper_id = $("#id_paper_id").val();
+    var problem_id = $("#id_problem_id").val();
+    var selected = "E";
+    if ($("#selected_A").is(':checked')) {
+      selected = "A";
+    } else if ($("#selected_B").is(':checked')) {
+      selected = "B";
+    } else if ($("#selected_C").is(':checked')) {
+      selected = "C";
+    } else if ($("#selected_D").is(':checked')) {
+      selected = "D";
+    }
+    if (selected == "E") {
+      return;
+    }
+    var csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+    var url = "./";
+    var data = {"csrfmiddlewaretoken":csrf_token, "selected":selected,
+                "paper_id":paper_id, "problem_id":problem_id, "block":"yes"};
+    var callback = function (res) {
+      $("#id_problem_body")[0].innerHTML = res;
+    };
+    $.ajax({url:url, data:data, type:"post", success:callback});
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <title>退货商品管理</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap2.3.2.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}css/base.less" rel="stylesheet/less" type="text/css" />
+    <script src="{{ STATIC_URL }}script/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}closure-library/closure/goog/base.js"></script>
+    <style type="text/css">
+    body,div{
+    	margin:0px auto;
+    	padding:0px;
+    }
+    body{
+    	width:1000px;
+    }
+    .table-bordered {
+	    border: 1px solid #DDD;
+	    border-collapse: separate;
+	    border-left: 0;
+	    border-top:0;
+	    -webkit-border-radius: 4px;
+	    -moz-border-radius: 4px;
+	    border-radius: 4px;
+	}
+	.table {
+	    width: 100%;
+	    margin-bottom: 18px;
+	}
+	table {
+	    max-width: 100%;
+	    background-color: white;
+	    border-collapse: collapse;
+	    border-spacing: 0;
+	}
+	tr {
+	    display: table-row;
+	    vertical-align: inherit;
+	    border-color: inherit;
+	}
+	.table-bordered th, .table-bordered td {
+	    border-left: 1px solid #DDD;
+	}
+	.table tbody tr:hover td, .table tbody tr:hover th {
+	    background-color: whiteSmoke;
+	}
+    .simple-text {
+	    width:120px;
+	    height:16px;
+	    display:inline;
+	    margin:0px 0px;
+	}
+	.content-main{
+		margin-top:40px;
+		display:fixed;
+	}
+	.content-base-info {
+		display:fixed;
+	}
+	.product-search,.trade-search{
+		margin:0px 10px;
+		display:inline;
+	}
+	
+	.product-search{
+		float:left;
+	}
+	
+	.trade-search{
+		float:right;
+	}
+
+	.content-search {
+		width:60%;
+		height:20px;
+		display:fixed;
+	}
+	
+	.order-prompt{
+		display:none;
+		width:1000px;
+		position:absolute;
+	    z-index:99;
+	    background: #fff;
+	    border: 1px solid #999;
+	}
+	
+	.order-confirm-prompt{
+		display:none;
+		width:1000px;
+	    z-index:100;
+	    position:fixed;
+	    background-color:#ddd;
+	    border: 1px solid #999;
+	}
+	
+	.order-prompt-head{
+		height:16px;
+		background-color:#3A87AD;
+	}
+	
+	.prompt-title{
+		float:left;
+	}
+	
+	.prompt-close{
+		float:right;
+	}
+	
+	.head-title h3 ,.head-title button{
+		display:inline;
+	}
+	
+    </style>
+    
+  </head>
+  <body>
+	<div class="content-main">
+		<fieldset>
+			<legend><h1 class="head-title" >退回商品录入单</h1></legend>
+			<div id="id-baseinfo-panel" class="content-base-info">
+				<table id="id-baseinfo-table" class="table table-bordered table-striped table-condensed">
+					<tr>
+						<td>原单ID:</td><td><input type="text" id="id_trade_id" class="simple-text" /></td>
+						<td>买家昵称:</td><td><input type="text" id="id_buyer_nick" class="simple-text" /></td>
+						<td>手机:</td><td><input type="text" id="id_receiver_mobile" class="simple-text" /></td>
+						<td>固话:</td><td><input type="text" id="id_receiver_phone" class="simple-text" /></td>
+					</tr>
+					<tr>
+						<td>退货快递:</td><td><input type="text" id="id_return_company_name" class="simple-text" /></td>
+						<td>快递单号:</td><td><input type="text" id="id_return_out_sid" class="simple-text" /></td>
+						<td>备注:</td><td><textarea id="id-return-memo" class="simple-text" rows="2" cols="40"></textarea></td>
+						<td>退货原因
+                            <select class="select_reason" cid="{{ prod.id }}" id="reason_select" style="width: 100px">
+                                <option value='0'>其他</option>
+                                <option value='1'>错拍</option>
+                                <option value='2'>缺货</option>
+                                <option value='3'>开线/脱色/脱毛/有色差/有虫洞</option>
+                                <option value='4'>发错货/漏发</option>
+                                <option value='5'>没有发货</option>
+                                <option value='6'>未收到货</option>
+                                <option value='7'>与描述不符</option>
+                                <option value='8'>退运费</option>
+                                <option value='9'>发票问题</option>
+                                <option value='10'>七天无理由退换货</option>
+                            </select></td><td><button id="id_clear_btn" class="btn btn-small btn-success">重填</button><td>
+					</tr>
+				</table>
+			</div>
+			<hr/>
+			<div class="product-content">
+				<div class="product-panel">
+					<div class="head-title">
+						<h3 id="id-refund-head"><img src="{{ STATIC_URL }}img/tri_right.png" style="cursor:pointer;margin-right:5px;"></img>退回商品列表</h3>
+						<button id="id_clear_list_btn" class="btn btn-mini btn-reverse" style="float:right;">清空列表</button>
+					</div>
+					<div id="id-refund-goods">
+						<table id="id-refund-table" class="table table-bordered table-striped table-condensed">
+							<thead>
+								<tr>
+								<th>序号</th>
+								<th>原单ID</th>
+								<th>买家昵称</th>
+								<th>手机</th>
+								<th>固话</th>
+								<th>物流单号</th>
+								<th>物流公司</th>
+								<th style="width:200px;">商品简称</th>
+								<th style="width:150px;">规格</th>
+								<th>数量</th>
+								<th>二次销售</th>
+								<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<hr/>
+			<div id="id-search-panel" class="content-search">
+				<div class="navbar-search product-search">
+					<input type="text" id="id_prod_q" class="search-query"  placeholder="商品搜索" />
+				</div>
+				<div class="navbar-search trade-search">
+					<input type="text" id="id_trade_q" class="search-query"  placeholder="订单搜索" />
+				</div>
+			</div>
+			<hr/>
+			<div id="id-prod-search-dialog" style="display:none;">
+				<table id="id-prod-search-table" class="table table-bordered">
+					<thead>
+							<tr>
+							<th>序号</th>
+							<th>商家编码</th>
+							<th style="width:200px;">商品简称</th>
+							<th>规格</th>
+							<th>单价</th>
+							<th>操作</th>
+							</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div id="id-trade-search-dialog" style="display:none;">
+				<table id="id-trade-search-table" class="table table-bordered">
+					<thead>
+						<tr>
+						<th style="width:5px;">序号</th>
+						<th>原单ID</th>
+						<th>买家昵称</th>
+						<th>单数</th>
+						<th>付款日期</th>
+						<th>收货人</th>
+						<th style="width:200px;">收货地址及电话</th>
+						<th>订单状态</th>
+						<th>系统状态</th>
+						<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<hr/>
+		</fieldset>
+	</div>
+	<!-- 订单商品列表弹出对话框 -->
+	<div id="order-prompt" class="order-prompt">
+		<div class="order-prompt-head">
+			<span class="prompt-title">订单商品列表</span>
+			<a id="prompt-close" class="prompt-close"><i class="icon-remove-sign"></i></a>
+		</div>
+		<div id="order-prompt-body" class="order-prompt-body"></div>
+	</div>
+	<!-- 确认退回商品对话框 -->
+	<div id="id-confirm-order-dialog" class="order-confirm-prompt">
+		<table id="id-confirm-order-table" class="table table-bordered table-condensed" style="background-color: #ddd;">
+		<thead>
+			<tr>
+			<th>交易ID</th><th>买家昵称</th><th>手机</th><th>固话</th><th>物流公司</th><th>物流单号</th>
+			<th>商品名</th><th>规格</th><th>数量</th><th>二次销售</th><th>退货原因</th><th>操作</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+		</table>
+	</div>
+  </body>
+<script type="text/javascript" src="{{ STATIC_URL }}script/base.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}script/refund/refund.js"></script>
+<script type="text/javascript">
+	 new refund.Manager();
+</script>
+</html>

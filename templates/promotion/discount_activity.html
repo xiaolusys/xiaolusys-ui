@@ -1,0 +1,260 @@
+{% extends "promotion_base.html" %}
+
+{% load url from future %}
+{% block title %}春夏美衣大赏{% endblock %}
+
+{% load static %}
+
+{% block head_script %}
+<style>
+.page-panel{
+    max-width:640px;
+    position:relative;
+    margin:0 auto;
+    text-align: center;
+}
+.fullfill{
+    width:100%;
+    height:100%;
+}
+.head-img{
+    width:100%;
+    margin:0 auto;
+}
+.page-content{
+    position: absolute;
+    top:0;
+    left:50%;
+    width:100%; 
+    height:100%;
+    margin-left:-50%;
+    border:1px dotted grey;
+}
+.coupon{
+    margin-top:60%;
+    width:100%;
+    height:4%;
+}
+.items{
+    margin-top:10%;
+    width:100%;
+}
+.items ul ,.item ul li{
+    padding:0;
+    padding:0;
+    list-style:none;
+}
+.items ,.items ul{
+    height:85%;
+}
+.items ul li{
+    widht:100%;
+    height:22%;
+    margin-bottom:10px;
+}
+.share-btn,.share-origin,.share-sn{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100%;
+    margin-left: -50%;
+}
+.share-origin{
+    top:2%;
+}
+.share-sn{
+    top:4%;
+}
+</style>
+{% endblock %}
+
+{% block content1 %}
+{% load core_tags %}
+<div class="row">
+<div class="page-panel">
+{% csrf_token %}
+{% session_token %}
+<!-- 头图区域 -->
+<div>
+  <img class="head-img" src="http://7xogkj.com2.z0.glb.qiniucdn.com/dress_3.21%20%E6%B4%BB%E5%8A%A8.png?imageMogr2/thumbnail/640/format/jpg/quality/90">
+</div>
+
+<div class="page-content">
+    <div class="row" style="display:block;width:100%;">
+    <div class="share-btn btn btn-default ">分享到朋友圈</div>
+    </div >
+    <div class="row" style="display:block;width:100%;">
+    <div class="share-origin btn btn-success ">调用原生分享控件</div>
+    </div>
+    <div class="row" style="display:block;width:100%;">
+    <div class="share-sn btn btn-info row">获取原生设备SN码</div>
+    </div>
+	<!-- 优惠券 -->
+	<div class="coupon" template_id="35,37" onclick="Action_release(this)">
+	
+	</div>
+	<!-- 内容图 -->
+	<div class="items">
+	  <ul>
+	  {% for product in product_list %}
+	    <li>
+	        <a class="item" href="javascript:void(0)">
+	        <div class="fullfill"></div>
+	        </a>
+	    </li>
+	  {% endfor %}
+	  </ul>
+	</div>
+</div>
+</div>
+{% endblock %}
+
+{% block content9 %}
+{% endblock %}
+
+{% block tail_script %}
+<script>
+function Action_release(ele) {
+    //点击领取优惠券
+    var url  = '/rest/v1/usercoupons.json';
+    var csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+    var session = document.getElementsByName("sessionid");
+    var sessionid = session.length>0?session[0].value:'';
+    var data = {'template_id': $(ele).attr('template_id'),"csrfmiddlewaretoken": csrf_token};//"sessionid":sessionid
+    $.ajax({
+        "url": url,
+        "data": data,
+        "success": callback,
+        "type": "post",
+        "error": function (err) {
+            console.log('debug profile:', err);
+            if (err.status == 403) {
+                alert('您还没有登陆哦!');
+            }else{
+                try{
+                    var resp = JSON.parse(err.responseText);
+                    alert(err.detail);
+                }catch(exc){
+                    alert(err.responseText);
+                }
+            }
+        }
+    });
+    function callback(res) {
+        alert(res.res);
+    }
+};
+var OSTest = function () {// 客户端平台检测　返回
+    var u = navigator.userAgent;
+    var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+    var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    if (isAndroid == true) {
+        return 'Android';
+    }
+    else if (isiOS == true) {
+        return 'iOS';
+    }
+    else {
+        return 'web'
+    }
+};
+function setupWebViewJavascriptBridge(callback) {
+    if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
+    if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
+    window.WVJBCallbacks = [callback];
+    var WVJBIframe = document.createElement('iframe');
+    WVJBIframe.style.display = 'none';
+    WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+    document.documentElement.appendChild(WVJBIframe);
+    setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
+}
+
+function callBridge(){
+    setupWebViewJavascriptBridge(function(bridge) {
+        var data = {'target_url': 'com.jimei.xlmm://app/v1/products?product_id=36572'};
+        bridge.callHandler('jumpToJsLocation', data, function(response) {
+            console.log("jumpToJsLocation called with:", data);
+        });
+    })
+}
+
+$(document).ready(function(){
+    console.log('document ready');
+    //给WebViewJavascriptBridgeReady事件注册一个Listener
+
+    $('.item').click(function(){
+        var os = OSTest();
+        console.log('os jump:',os)
+        if (os == 'iOS'){
+            setupWebViewJavascriptBridge(function(bridge) {
+		        var data = {'target_url': 'com.jimei.xlmm://app/v1/products?product_id=1'};
+		        bridge.callHandler('jumpToNativeLocation', data, function(response) {
+		            console.log("jumpToJsLocation called with:", data);
+		        });
+		    })
+		}else{
+		    if (window.AndroidBridge) {
+                var data = "{'target_url': 'com.jimei.xlmm://app/v1/products?product_id=1'}";
+                alert('call:'+data);
+                window.AndroidBridge.jumpToNativeLocation(data);
+            }
+        }
+    });
+
+	$('.share-btn').click(function(){
+	    var os = OSTest();
+        console.log('os share:',os)
+        if (os == 'iOS'){
+            setupWebViewJavascriptBridge(function(bridge) {
+                var data = {'share_to':'pyq','active_id': '1'};
+                bridge.callHandler('callNativeShareFunc', data, function(response) {
+                    console.log("callNativeShareFunc called with:", data);
+                });
+            })
+        }else{
+            if (window.AndroidBridge) {
+                var data = {'share_to':'pyq','active_id': '1'};
+                window.AndroidBridge.callNativeShareFunc(data.share_to,data.active_id);
+            }
+        }
+	});
+	
+	$('.share-origin').click(function(){
+        var os = OSTest();
+        console.log('os share:',os)
+        if (os == 'iOS'){
+            setupWebViewJavascriptBridge(function(bridge) {
+                var data = {'share_to':'','active_id': '1'};
+                bridge.callHandler('callNativeShareFunc', data, function(response) {
+                    console.log("callNativeShareFunc called with:", data);
+                });
+            })
+        }else{
+            if (window.AndroidBridge) {
+                var data = {'share_to':'','active_id': '1'};
+                window.AndroidBridge.callNativeShareFunc(data.share_to,data.active_id);
+            }
+        }
+    });
+    
+    $('.share-sn').click(function(){
+        var os = OSTest();
+        console.log('os share:',os)
+        if (os == 'iOS'){
+            setupWebViewJavascriptBridge(function(bridge) {
+                bridge.callHandler('getNativeMobileSNCode', {}, function(response) {
+                    alert('sn code:' + response);
+                });
+            })
+        }else{
+            if (window.AndroidBridge) {
+                var data = window.AndroidBridge.getNativeMobileSNCode();
+                alert('sn code:' + data);
+            }
+        }
+    });
+});
+</script>
+
+{% endblock %}
+

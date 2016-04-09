@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    {% block meta %} {% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+    <link href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    {% block head_script %}
+    {% endblock %}
+    {% block head_style %}
+    {% endblock %}
+</head>
+
+<body style="background-color:#220a3d">
+  <div class="container">
+    {% block content1 %}
+    {% if not download %}
+    <div class="row">
+      <div class="col-xs-12" style="text-align: center;padding-left:0px;padding-right:0px">
+	<img src="http://7xogkj.com2.z0.glb.qiniucdn.com/222-header-banner.png" style="width:100%"/>
+      </div>
+    </div>
+    {% endif %}
+    {% endblock %}
+    
+    {% block content2 %}
+    {% endblock %}
+    
+    {% block content3 %}
+    {% endblock %}
+
+    {% block content4 %}{% endblock %}
+
+    {% block content9 %}
+    <div class="row" style="margin-top:30px">
+      <div class="col-xs-12" style="text-align: center;">
+	<img src="http://7xogkj.com2.z0.glb.qiniucdn.com/rules.jpg" style="width:100%"/>
+      </div>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <div class="col-xs-12" style="text-align:center;color:white;font-size:12px">
+	<p>© 2016 小鹿美美 All rights reserved.</p>
+      </div>
+    </div>
+    {% endblock %}
+    <!--
+    <div class="row">
+      <div class="col-xs-12">
+        <ul class="list-group" style="font-size: 12px">
+	    <li class="list-group-item list-group-item-warning" style="text-align:center;color:#FFB329">活动细则</li>
+	    <li class="list-group-item">活动提供免费睡袋1000组，送完即止！快抢！</li>
+	    <li class="list-group-item">活动另提供600万吉利数现金红包，全年运势发发发！</li>
+	    <li class="list-group-item">睡袋中奖名单将在2月29日10:00前全部公布，请注意APP推送消息！</li>
+	    <li class="list-group-item">小鹿美美保留对活动的最终解释权。</li>
+        </ul>
+
+      </div>
+    </div>
+    -->
+  </div>
+  
+<script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+{% block tail_script %}
+{% endblock %}
+
+{% block footer %}
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+	    (function() {
+	      var hm = document.createElement("script");
+	      hm.src = "//hm.baidu.com/hm.js?f8a445bf4aa2309eb173c6ad194dd6e7";
+	      var s = document.getElementsByTagName("script")[0]; 
+	      s.parentNode.insertBefore(hm, s);
+	    })();
+    </script>
+{% endblock %}
+</body>
+</html>

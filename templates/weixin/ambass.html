@@ -1,0 +1,115 @@
+{% extends "weixin/weixin_base.html" %}
+
+{% block title %} 优尼大使 {% endblock %}
+
+{% block container %}
+
+{% if referal_count > 9 %}
+<div class="container-fluid">
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-success">我的返利</li>
+    <li class="list-group-item"><p style="color:orange">账户余额: ￥<span style="font-size:26px">{{ referal_bonus }}</span> <button class="btn btn-warning" style="float:right;">提现</button></p></li>
+    <li class="list-group-item"><font style="color:orange">推荐好友: {{ referal_count }}人</font>
+      {% for images in referal_images %}
+      <img src="{{ images }}" width="20px" height="20px"/>
+      {% endfor %}
+    </li>
+    <li class="list-group-item"><font style="color:orange">VIP优惠券(<a href="/weixin/couponfaq/">发给朋友</a>): {{ coupon.description }}</font>（<font style="color:red">{{ coupon_click_count }}人已领取</font>）</li>
+    <li class="list-group-item"><font style="color:orange">等待结算：￥{{ payment }}元（{{ num_orders }}个订单）</font></li>
+    <li class="list-group-item"><font style="color:orange">VIP邀请码: {{ vipcode }}</font></li>
+    <!--
+    <li class="list-group-item"><font style="color:orange">订单详情: {% for mobile in effect_mobiles %} {{ mobile }}, {% endfor %}</font></li>
+    -->
+  </ul>
+
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-success">我的权利</li>
+    <li class="list-group-item">优尼大使有权向其好友或其他客户派发优尼世界<font style="color:orange">VIP优惠券</font>。</li>
+    <li class="list-group-item">VIP优惠券凭大使的专属<font style="color:orange">VIP邀请码</font>领取（【微信购物】->【VIP优惠券】）。</li>
+    <li class="list-group-item">VIP优惠券的优惠力度<font style="color:red">全网最高</font>，大大高于天猫店铺优惠券。</li>
+  </ul>
+
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-success">返利规则</li>	
+    <li class="list-group-item">微信系统自动<font style="color:orange">记录并累加</font>优尼大使在每次活动中推荐的好友及数量。</li>
+    <li class="list-group-item">优尼大使的推荐好友在优尼世界的天猫、京东、一号店等平台达成交易，系统<font style="color:red">返利5%</font>给优尼大使。</li>
+    <li class="list-group-item">使用VIP优惠券的客人，自动成为其对应优尼大使的推荐好友，其交易按<font style="color:red">5%返利</font>给优尼大使。</li>
+  </ul>
+
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-success">我的义务</li>
+    <li class="list-group-item">积极分享和传播优尼世界的微信文章及活动公告。</li>
+    <li class="list-group-item">积极响应优尼世界活动号召，第一时间邀请、推荐、分享。</li>
+    <li class="list-group-item">高度认同优尼世界的<font style="color:orange">设计及养育理念</font>，正面宣传优尼世界品牌，让优尼世界服务更多的宝宝及妈妈！</li>
+  </ul>
+
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-success">什么是优尼大使项目？</li>
+    <li class="list-group-item"><a href="/weixin/ambassintention/">查看详情 >></a></li>
+  </ul>
+{% else %}
+  <div class="panel panel-default" style="margin-top:5px">
+    <div class="panel-heading" style="color:orange">什么是优尼大使项目？</div>
+    <div class="panel-body">
+      <p>移动互联网时代的浪潮来临，每个人都可以推荐、分享、传播，<font style="color:orange">每个人都有价值！</font></p>
+      <p>明星，比如张柏芝，拍奶粉广告要价1000万元人民币。明星有传播价值，因为她们可以影响千万人。</p>
+      <p>在互联网上的妈妈们，我们难以影响千万人。但我们有自己的圈子、朋友，我们可以影响几个、几十人。有谁来认可妈妈们的价值，并且，如果可以的话，为之付一点点费用呢？</p>
+      <p style="color:red">优尼世界，愿意！</p>
+      <p>优尼世界愿意认可您的价值，并为您的影响力支付费用！</p>
+      <p>当看到您的宝宝在优尼世界的睡袋里安睡，或在朋友圈看到您分享的可爱图片，您的朋友也来优尼世界购买，我们应该向您支付费用！</p>
+      <p>这就是<font style="color:orange">优尼大使</font>项目的初衷！</p>
+      <p>如果您认可优尼大使的项目的意义，请积极加入，开启优尼大使之旅吧！</p>
+    </div>
+  </div>
+
+  <ul class="list-group">
+    <li class="list-group-item">亲，要加入优尼大使计划，请咨询微信客服哦！</li>
+  </ul>  
+{% endif %}
+
+  <div class="footer">
+    <p>© Uni Littles 2014</p>
+  </div>
+  
+</div>
+{% endblock %}
+
+{% block tail_script %}
+
+    <script type="text/javascript">
+      function validateMobile(s) {
+        var validateReg = /^((\+?86)|(\(\+86\)))?1\d{10}$/;
+        return validateReg.test(s);
+      };
+
+      function referalSubmit() {
+        var mobile_input = document.getElementById("mobile_input");
+        var mobile = mobile_input.value;
+        mobile_input.placeholder = "好友手机号";
+      
+        if (mobile == "") return false;
+
+        var feedback = document.getElementById("feedback");
+        feedback.innerHTML = "";
+        if (validateMobile(mobile) == false) {
+          feedback.innerHTML = "号码有误，请重新输入";
+          return false;
+        }
+
+        var openid = document.getElementById("openid").value;
+        var url = "/weixin/addreferal/";
+        var data = {"mobile":mobile, "openid":openid};
+        
+        var callback = function (res) {
+          console.log(res);
+          if (res["code"] == "ok") {
+            mobile_input.value = "";
+            mobile_input.placeholder = "推荐成功，请继续推荐";
+          } else if (res["code"] == "dup") {
+            feedback.innerHTML = "号码已存在，请重新推荐";
+          }
+        };
+        $.ajax({url:url, data:data, success: callback});
+      };
+    </script>
+{% endblock %}

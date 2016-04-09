@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <title>创建退换货单</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+     <link href="{{ STATIC_URL }}bootstrap/css/bootstrap2.3.2.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}css/base.less" rel="stylesheet/less" type="text/css" />
+    <script src="{{ STATIC_URL }}jquery/jquery-1.8.13.min.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}jquery/addons/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}jquery/addons/cn_message.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}closure-library/closure/goog/base.js"></script>
+    <style type="text/css">
+    body,div{
+    	margin:0px auto;
+    	padding:0px;
+    }
+    body{
+    	width:1000px;
+    }
+    .table-bordered {
+	    border: 1px solid #DDD;
+	    border-collapse: separate;
+	    border-left: 0;
+	    border-top:0;
+	    -webkit-border-radius: 4px;
+	    -moz-border-radius: 4px;
+	    border-radius: 4px;
+	}
+	.table {
+	    width: 100%;
+	    margin-bottom: 18px;
+	}
+	table {
+	    max-width: 100%;
+	    background-color: white;
+	    border-collapse: collapse;
+	    border-spacing: 0;
+	}
+	tr {
+	    display: table-row;
+	    vertical-align: inherit;
+	    border-color: inherit;
+	}
+	.table-bordered th, .table-bordered td {
+	    border-left: 1px solid #DDD;
+	}
+	.table tbody tr:hover td, .table tbody tr:hover th {
+	    background-color: whiteSmoke;
+	}
+    .simple-text {
+	    width:120px;
+	    height:16px;
+	    display:inline;
+	    margin:0px 0px;
+	}
+	.content-main{
+		margin-top:40px;
+		display:fixed;
+	}
+	.content-base-info {
+		display:fixed;
+	}
+	.product-search,.trade-search{
+		margin:0px 10px;
+		display:inline;
+	}
+	.product-search{
+		float:left;
+	}
+	.trade-search{
+		float:right;
+	}
+	.content-search {
+		width:60%;
+		height:20px;
+		display:fixed;
+	}
+	label.error {
+	    color: red;
+	    font-weight: bold;
+	}
+    </style>
+  </head>
+{% load trade_tags %} 
+
+{% with trade=object.trade sellers=object.sellers origin_no=object.origin_no%}
+  <body>
+	<div class="content-main">
+		<fieldset>
+			<legend><h1 class="head-title" >{% if trade %}修改{% else %}新增{% endif %}&nbsp;退换货单</h1></legend>
+			<div class="content-base-info">
+              <form action="./" id="trade-form" method="POST">
+				  {% csrf_token %}
+
+              	<input type="hidden" id="id_exchange_trade" value="{{ trade.id }}" />
+				<table class="table table-bordered table-striped table-condensed">
+					<tr>
+						<td>所属店铺:  </td>
+						<td>
+							<select name="sellerId" class="selection" style="width:130px;">
+								<option value='' >-------请选择-------</option>
+								{% for seller in sellers %}
+								<option value='{{ seller.id }}' {% if trade.user == seller.id %}selected{% endif %}>{{ seller.nick }}</option>
+								{% endfor %}
+							</select>
+						</td>
+                        <td>原单ID: </td><td><input type="text" class="simple-text" name="tid" 
+                             value="{% if trade %}{{ trade.tid }}{% else %}{{ origin_no }}{% endif %}" readonly/></td>
+						<td>会员昵称:</td><td><input type="text" name="buyer_nick" class="simple-text" value="{{ trade.buyer_nick }}"/></td>
+						<td>手机:</td><td><input type="text" name="receiver_mobile" class="simple-text" value="{{ trade.receiver_mobile }}"/></td>
+					</tr>
+					<tr>
+                        <td>固话:</td><td><input type="text" name="receiver_phone" class="simple-text" value="{{ trade.receiver_phone }}"/></td>
+						<td>收货人:</td><td><input type="text" name="receiver_name" class="simple-text" value="{{ trade.receiver_name }}"/></td>
+						<td>省:</td><td><input type="text" name="receiver_state" class="simple-text" value="{{ trade.receiver_state }}"/></td>
+						<td>市:</td><td><input type="text" name="receiver_city" class="simple-text" value="{{ trade.receiver_city }}"/></td>
+					</tr>
+					<tr>
+                        <td>区:</td><td><input type="text" name="receiver_district" class="simple-text" value="{{ trade.receiver_district }}"/></td>
+						<td>详细地址:</td><td colspan="5">
+                        <input type="text" name="receiver_address" class="simple-text" style="width:400px;" value="{{ trade.receiver_address }}"/></td>
+					</tr>
+					<tr>
+						<td colspan="6"></td>
+						<td colspan="2">
+							<input type="submit" class="btn btn-small btn-success" value="保存 +" />&nbsp;&nbsp;
+							{% if trade %}<a href="/admin/trades/mergetrade/?q={{ trade.id }}&type__exact=exchange" 
+                            class="btn btn-small btn-success">审核 -></a>{% endif %}
+						</td>
+					</tr>
+				</table>
+              </form>
+			</div>
+			<hr/>
+			<div class="order-content">
+				<div class="up-orders-panel">
+					<h3 class="head-title" id="id-return-head">
+						<img src="{{ STATIC_URL }}img/tri_right.png" style="cursor:pointer;margin-right:5px;"></img> 退货单</h3>
+					<div id="id-return-goods">
+						<table id="id-return-table" class="table table-bordered table-striped table-condensed">
+							<thead>
+									<th>编号</th>
+									<th>商家编码</th>
+									<th>商品简称</th>
+									<th>规格</th>
+									<th>数量</th>
+									<th>单价</th>
+									<th>缺货</th>
+									<th>类型</th>
+									<th>操作</th>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<hr/>
+				<div class="down-orders-panel">
+					<h3 class="head-title" id="id-change-head">
+						<img src="{{ STATIC_URL }}img/tri_right.png" style="cursor:pointer;margin-right:5px;"></img> 换货单</h3>
+					<div id="id-change-goods">
+						<table id="id-change-table" class="table table-bordered table-striped table-condensed">
+							<thead>
+									<th>编号</th>
+									<th>商家编码</th>
+									<th>商品简称</th>
+									<th>规格</th>
+									<th>数量</th>
+									<th>单价</th>
+									<th>缺货</th>
+									<th>类型</th>
+									<th>操作</th>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<hr/>
+			<div class="content-search">
+				<div class="navbar-search product-search">
+					<input type="text" id="id_prod_q" class="search-query"  placeholder="商品搜索" {% if not trade%} disabled="disabled"{% endif %}/>
+				</div>
+				<div class="navbar-search trade-search">
+					<input type="text" id="id_trade_q" class="search-query"  placeholder="订单搜索" {% if not trade%} disabled="disabled"{% endif %}/>
+				</div>
+			</div>
+			<hr/>
+			<div id="id-prod-search-dialog" style="display:none;">
+				<table id="id-prod-search-table" class="table table-bordered">
+					<thead>
+							<th>序号</th>
+							<th>商家编码</th>
+							<th style="width:250px;">商品简称</th>
+							<th>规格</th>
+							<th>数量</th>
+							<th>单价</th>
+							<th>操作</th>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div id="id-trade-search-dialog" style="display:none;">
+				<table id="id-trade-search-table" class="table table-bordered">
+					<thead>
+							<th>序号</th>
+							<th>买家昵称</th>
+							<th>单数</th>
+							<th>付款日期</th>
+							<th>发货日期</th>
+							<th>收货人</th>
+							<th style="width:200px;">收货地址及电话</th>
+							<th>淘宝交易状态</th>
+							<th>系统状态</th>
+							<th>操作</th>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<hr/>
+		</fieldset>
+	</div>
+	
+</body>
+{% endwith %}
+<script src="{{ STATIC_URL }}script/base.js"></script>
+<script src="{{ STATIC_URL }}script/trades/exchange.js"></script>
+<script type="text/javascript">
+	 new exchange.Manager();
+	 $("#trade-form").validate({
+	 rules: {
+			tid: {required:true},
+			sellerId: {required:true},
+			buyer_nick: {required:true},
+			receiver_name: {required:true},
+			receiver_state: {required:true},
+			receiver_city: {required:true},
+			receiver_address: {required:true},
+     },
+     submitHandler: function(form) {
+    	form.submit();
+  	 }});
+</script>
+</html>

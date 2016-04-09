@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<title>小鹿美美</title>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no" />
+<meta id="viewport" name="viewport" />
+<script src="../js/common.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/sweet-alert.css">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/tmdd.css">
+</head>
+<body>
+
+<div class="header">
+  <a class="back" href="javascript:history.go(-1)"></a>
+  <h1>待收货订单</h1>
+</div>
+
+<ul class="list order_ul">
+<!-- 这里添加订单列表 -->
+</ul>
+
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="../js/tmdd.js"></script>
+<script src="../js/sweet-alert.min.js"></script>
+<script>
+(function($){
+  //返回顶部
+  $('#js-scroll-top').on('touchend',function(e){
+    e.preventDefault();
+    $('body').animate({scrollTop:0},400);  
+  });
+   //获取待收货订单列表
+  Set_orders(GLConfig.get_trade_waitsend_url);
+
+})(jQuery);  
+</script>  
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>小鹿美美 - 外贸原单，天天惊喜！</title>
+<meta charset="UTF-8">
+<meta id="viewport" name="viewport" />
+<script src="js/common.js"></script>
+<link rel="stylesheet" type="text/css" href="css/dots-loading.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/tongkuan.css">
+</head>
+<body>
+<div class="top">
+  <a href="javascript:void(0);" class="back"></a>
+  <a href="/pages/gerenzhongxin.html" class="user"></a>
+  <p>剩余</p>
+</div>
+<ul class="glist">
+<!-- 这里添加商品列表 -->
+</ul>
+<div id="loading"><span class="dots-loader"></span></div>
+<div class="cart-container">
+    <a class="p-center" href="pages/gerenzhongxin.html"></a>
+    <a class="cart" href="javascript:void(0);"><span class="total">0</span><span class="carttime"></span></a>
+</div>
+<div class="scroll-top" id="js-scroll-top"></div>
+<div class="footer clearfix">
+<div class="link">
+<a href="/index.html">首页</a>
+<a href="/contact.html">联系我们</a>
+</div>
+<div class="copyright">
+<p >Copyright © 2014-2015 小鹿美美，All Rights Reserved 沪ICP备15013901号-1</p>
+</div>
+</div>
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="js/jquery-shopping.js"></script>
+<script src="js/main.js"></script>
+<script>
+(function($){
+  //返回顶部
+  $(document).on({touchend:scroll_top,click:scroll_top},'#js-scroll-top');
+  $('.cart').listencart();
+  $('.back').click(function(){
+    var referer_url = document.referrer.trim();
+    if (isNone(referer_url) || referer_url==''){
+        window.location = adjustPageLink("/index.html");
+    }else{
+        history.go(-1);
+    }
+  })
+  //获取同款聚合商品列表
+  var urlConf = {'model_id':getUrlParam('id')};
+  Set_model_product(GLConfig.get_modellist_url.template(urlConf));
+  Set_shopcarts_num();
+  need_set_info();
+})(jQuery);  
+function scroll_top(e){
+    e.preventDefault();
+    $('body').animate({scrollTop: 0}, 400);
+}
+</script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/wx-share.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  var model_id = getUrlParam('id');
+  shareModelPage(model_id);
+});
+</script>
+<link rel="stylesheet" type="text/css" href="css/sweet-alert.css">
+<script src="js/sweet-alert.min.js"></script>
+</body>
+</html>

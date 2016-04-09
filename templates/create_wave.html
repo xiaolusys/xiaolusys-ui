@@ -1,0 +1,47 @@
+{% extends "wavepick_base.html" %}
+
+{% block title %} 批次创建 {% endblock %}
+
+{% block container %}
+<div class="container">
+
+<div class="row" style="margin-top:10px">
+  <div class="col-md-12">
+    <div class="input-group input-group-lg">
+      <span class="input-group-addon">选择捡货分组：</span>
+      <select id="group_select" class="select form-control">
+        <option value=""></option>
+        {% for group in groups %}
+        <option value="{{ group.id }}">{{ group.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+</div>
+
+<div id="wave_content" style="display:none;">
+    
+</div>
+</div>
+
+{% endblock %}
+
+{% block tail_script %}
+<script type="text/javascript">
+  
+    $(document).ready(function(){
+        $("#group_select").change(function(){
+            var group_id = $(this).val();
+
+            var callback = function(res){
+                $("#wave_content").html(res).show();
+            };
+    
+            $.post("/supplychain/wavepick/createwave/",
+                {"group_id":group_id},
+                callback)
+    
+        });
+    });
+</script>
+{% endblock %}

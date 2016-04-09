@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>小鹿美美</title>
+    <meta id="viewport" name="viewport"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/grumble.min.css">
+    <link rel="stylesheet" href="../css/gerenzhongxin.css">
+
+</head>
+<body>
+<div class="header">
+    <a class="home" href="../index.html"></a>
+    <h1>个人中心</h1>
+</div>
+
+<div class="userinfo">
+    <div class="nickname">昵称:<span>[鹿小美]</span></div>
+    <div class="score">积分:<span>0</span></div>
+    <a class="daizhifu" href="daizhifu-dd.html">待支付</a>
+    <a class="daishouhuo" href="daishouhuo-dd.html">待收货</a>
+    <a class="quanbudingdan" href="quanbu-dd.html">全部订单</a>
+</div>
+
+<ul class="userinfo-list">
+    <li>
+        <i class="icon icon-youhuiquan"></i>
+        <a href="youhuiquan.html">优惠券</a>
+        <i class="icon-jiantouyou"></i>
+    </li>
+    <li>
+        <i class="icon icon-wodejifen"></i>
+        <a href="wodejifen.html">我的积分</a>
+        <i class="icon-jiantouyou"></i>
+    </li>
+    <li>
+        <i class="icon icon-dizhiguanli"></i>
+        <a href="shouhuodz.html">地址管理</a>
+        <i class="icon-jiantouyou"></i>
+    </li>
+    <li>
+        <i class="icon icon-tuihuanhuo"></i>
+        <a href="wodetuihuo.html" class="text-tuihuanhuo">我的退货(款)</a>
+        <i class="icon-jiantouyou"></i>
+    </li>
+    <li>
+        <i class="icon icon-mimaxiugai"></i>
+        <a href="bangding.html" class="text-mimaxiugai">密码修改</a>
+        <i class="icon-jiantouyou"></i>
+    </li>
+    <li>
+        <i class="icon icon-tousujianyi"></i>
+        <a href="tousu.html">投诉建议</a>
+        <i class="icon-jiantouyou"></i>
+    </li>
+</ul>
+
+<div class="btn-wrap">
+    <a class="btn-logout" onclick="logout()">退&nbsp;&nbsp;出</a>
+</div>
+<script src="../js/common.js"></script>
+<script src="../js/gerenzhongxin.js"></script>
+<script src="../js/jquery.grumble.min.js"></script>
+<script type="text/javascript">
+(function ($) {
+	//$("#loading").show();
+    //获取
+    get_user_profile();
+    $(document).on({click:loginclick,touchend:loginclick},'.userinfo a,.userinfo-list a');
+    need_set_info();
+})(jQuery);
+function loginclick(e){
+	e.stopPropagation();
+	var profile = getCookie(PROFILE_COOKIE_NAME);
+	if (isNone(profile) || 
+		($(e.target).tagName == 'A' && isNone($(e.target).attr('href')))){
+		e.preventDefault();
+		var next = window.location.href;
+		window.location = GLConfig.login_url+'?next='+encodeURIComponent(next);;
+	}	
+}
+</script>
+</body>
+</html>

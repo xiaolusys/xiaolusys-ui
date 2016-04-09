@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>小鹿美美</title>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <meta id="viewport" name="viewport"/>
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/gouwuche.css">
+    <link rel="stylesheet" href="../css/queren-dd.css">
+    <link rel="stylesheet" type="text/css" href="../css/sweet-alert.css">
+</head>
+<body>
+<div class="header">
+    <h1>选择优惠券</h1>
+    <a class="back" href="javascript:history.go(-1)"></a>
+    <a class="user" href="gerenzhongxin.html"></a>
+</div>
+
+<div class="coupons youxiao">
+    <script id="coupon_template_xlmm" type="text/html">
+        <ul class="coupons-list">
+            <li class="type2">
+                <p class="name">妈妈专享　订单满30减30</p>
+
+                <p class="date">{{ created }} - {{ deadline }}</p>
+                <i class="icon-radio" onclick="choose_Coupon({{ id }},{{ coupon_type }});"></i>
+            </li>
+        </ul>
+    </script>
+    <script id="coupon_template_xlmm_used" type="text/html">
+        <ul class="coupons-list">
+            <li class="type4">
+                <p class="name">已经使用过的优惠券</p>
+
+                <p class="date">{{ created }} - {{ deadline }}</p>
+            </li>
+        </ul>
+    </script>
+    <script id="coupon_post_fee" type="text/html">
+        <ul class="coupons-list">
+            <li class="type5">
+                <p class="name">优惠券</p>
+
+                <p class="date">{{ created }} - {{ deadline }}</p>
+                <i class="icon-radio" onclick="choose_Coupon({{ id }},{{ coupon_type }});"></i>
+            </li>
+        </ul>
+    </script>
+    <script id="coupon_post_fee_used" type="text/html">
+        <ul class="coupons-list">
+            <li class="type6">
+                <p class="name">优惠券　已使用~</p>
+
+                <p class="date">{{ created }} - {{ deadline }}</p>
+            </li>
+        </ul>
+    </script>
+
+
+    <script id="coupon_c150_10" type="text/html">
+        <ul class="coupons-list">
+            <li class="type7">
+                <p class="name">优惠券 {{ title }}</p>
+
+                <p class="date">{{ created }} - {{ deadline }}</p>
+                <i class="icon-radio" onclick="choose_Coupon({{ id }},{{ coupon_type }});"></i>
+            </li>
+        </ul>
+    </script>
+    <script id="coupon_c150_10_used" type="text/html">
+        <ul class="coupons-list">
+            <li class="type8">
+                <p class="name">优惠券　已使用~</p>
+
+                <p class="date">{{ created }} - {{ deadline }}</p>
+            </li>
+        </ul>
+    </script>
+
+    <script type="text/html" id="c_valid">
+        <ul class="coupons-list">
+            <li class="c_valid">
+                <p class="name">{{ title }}</p>
+
+                <p class="date">{{ created }} － {{ deadline }}</p>
+                <i class="icon-radio" onclick="choose_Coupon({{ id }},{{ coupon_type }});"></i>
+            </li>
+        </ul>
+    </script>
+
+    <script type="text/html" id="c_not_valid">
+        <ul class="coupons-list">
+            <li class="c_not_valid">
+                <p class="name">{{ title }}　已使用~</p>
+
+                <p class="date">{{ created }} － {{ deadline }}</p>
+            </li>
+        </ul>
+    </script>
+
+    <script type="text/html" id="c_past">
+        <ul class="coupons-list">
+            <li class="c_not_valid">
+                <p class="name">{{ title }}　已过期~</p>
+
+                <p class="date">{{ created }} － {{ deadline }}</p>
+            </li>
+        </ul>
+    </script>
+
+</div>
+<div class="coupons shixiao">
+
+</div>
+
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="../js/tmyhquse.js"></script>
+<script src="../js/sweet-alert.min.js"></script>
+<script type="text/javascript">
+    (function ($) {
+        //优惠券选择
+        get_Coupon_On_Choose();
+        $(window).scroll(function () {
+            loadData(get_Coupon_On_Choose);// 更具页面下拉情况来加载数据
+        });
+    })(jQuery);
+</script>
+</body>
+</html>

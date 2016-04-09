@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>小鹿美美 - 外贸原单，天天惊喜！</title>
+<meta charset="UTF-8">
+<meta id="viewport" name="viewport" />
+<script src="js/common.js"></script>
+<link rel="stylesheet" type="text/css" href="css/dots-loading.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/chaotong.css">
+</head>
+<body>
+<div class="top">
+  <a href="index.html" class="home"></a>
+  <a href="pages/gerenzhongxin.html" class="user"></a>
+  <h1>时尚女装</h1>
+</div>
+
+<div class="paixu">
+  <a href="nvzhuang.html">推荐排序</a>
+  <a href="nvzhuang.html?order_by=price">价格排序↑</a>
+</div>
+
+<!--<div class="shengyu">剩余2天1小时18分</div>-->
+
+<ul class="glist">
+</ul>
+<div id="loading"><span class="dots-loader"></span></div>
+<div class="cart-container">
+    <a class="p-center" href="pages/gerenzhongxin.html"></a>
+    <a class="cart" href="javascript:void(0);"><span class="total">0</span><span class="carttime"></span></a>
+</div>
+<div class="scroll-top" id="js-scroll-top"></div>
+<div class="footer clearfix">
+<div class="link">
+<a href="/index.html">首页</a>
+<a href="/contact.html">联系我们</a>
+</div>
+<div class="copyright">
+<p >Copyright © 2014-2015 小鹿美美，All Rights Reserved 沪ICP备15013901号-1</p>
+</div>
+</div>
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="js/jquery-shopping.js"></script>
+<script src="js/main.js"></script>
+<script>
+(function($){
+  //返回顶部
+  $(document).on({touchend:scroll_top,click:scroll_top},'#js-scroll-top');
+  $('.cart').listencart();
+  //设置女装商品列表
+  var req_url   = GLConfig.get_ladylist_url;
+  var order_by  = getUrlParam('order_by');
+  if (!isNone(order_by)){
+  	req_url += '?'+$.param({order_by:order_by})
+  }
+  //Set_category_product(req_url);
+  var paginate_category_product_func = Set_category_product();
+  paginate_category_product_func(req_url);
+  $(window).scroll(function () {
+    //浏览器的高度加上滚动条的高度
+    var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+    var scroll_height = $(document).height() - totalheight;
+    if (($(document).height() - 600 <= totalheight) && scroll_height < 600 ) {
+        paginate_category_product_func(req_url);
+    }
+  });
+  Set_shopcarts_num();
+  need_set_info();
+})(jQuery); 
+function scroll_top(e){
+    e.preventDefault();
+    $('body').animate({scrollTop: 0}, 400);
+}   
+</script>
+<link rel="stylesheet" type="text/css" href="css/sweet-alert.css">
+<script src="js/sweet-alert.min.js"></script>
+</body>
+</html>

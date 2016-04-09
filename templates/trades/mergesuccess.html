@@ -1,0 +1,43 @@
+{% extends "trades/base.html" %}
+
+{% block title%} 审核 {% endblock %}
+
+{% block navbar %}<div style="margin-top:30px;">
+<a href="{{ request.META.HTTP_REFERER }}" class="btn btn-large btn-success" >返回上一页</a>
+</div>{% endblock %}
+
+{% block container %}
+<div class='list_top'>
+	<div>
+		<div style="display:block;">
+		  <fieldset>
+		  	<legend>{% if merge_status %}合并成功{% else %}合并失败(<span style="background-color:red;">{{ fail_reason }})</span>{% endif %} </legend>
+			  <table class="table table-bordered table-striped table-condensed">
+			    <tr>
+			      <th>订单ID</th><th>淘宝订单编号</th><th>店铺名称</th><th>买家昵称</th><th>付款日期</th><th>主订单</th><th>问题编号</th>
+			    </tr>
+			    {% for trade in trades %}
+			    <tr>
+			    	<td>{{ trade.id }}</td>
+					<td>{{ trade.tid }}</td>
+					<td>{{ trade.seller_nick }}</td>
+			    	<td>{{ trade.buyer_nick }}</td>
+			    	<td>{{ trade.pay_time|date:'Y-m-d H:i:s' }}</td>
+			    	<td>{% if trade.has_merge %}
+			    	    <img src="{{ STATIC_URL }}admin/img/icon-yes.gif" alt="yes">
+			    	    {% else %}
+			    	    <img src="{{ STATIC_URL }}admin/img/icon-no.gif" alt="no">
+			    	    {% endif %}
+			    	</td>
+			    	<td>{{ trade.reason_code }}</td>
+			    </tr>
+			    {% endfor %}
+			  </table>
+		  </fieldset>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+

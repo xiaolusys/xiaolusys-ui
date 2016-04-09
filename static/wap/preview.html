@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>小鹿美美 - 外贸原单，天天惊喜！</title>
+    <meta id="viewport" name="viewport"/>
+    <script src="js/common.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/dots-loading.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/unslider.css">
+    <style>
+    .bg-primary{
+    	text-align:center;
+    	height:67px;
+    	line-height:67px;
+    }
+    .pagination-nav{
+		margin-left: -320px;
+	    left: 50%;
+	    position: fixed;
+	    bottom: 40px;
+	    width: 640px;
+	    height: 80px;
+	    z-index: 999;
+	}
+	.pagination-nav li a{
+		color: #777;
+	}
+    </style>
+</head>
+<body>
+<div class="top">
+	<p class="bg-primary">现在是预览模式 </p>
+</div>
+<div>
+    <div class="glist_cou" id="coupon_release">
+        <ul id="tpl_ul_show">
+        </ul>
+    </div>
+    <script type="text/html" id="coupon_tpl">
+        <li cid="{{ id }}"><img src="{{ post_img }}"></li>
+    </script>
+</div>
+<div class="poster new">
+    <dl>
+        <dt>每日10:00 新品上线</dt>
+        <dd>
+            <a class="nvzhuang" href="#">
+                <img src="#">
+                <p class="subject"><span class="tips"></span></p>
+            </a>
+        </dd>
+        <dd>
+            <a class="chaotong" href="#">
+                <img src="#">
+                <p class="subject"><span class="tips"></span></p>
+            </a>
+        </dd>
+    </dl>
+</div>
+<div class="glist ">
+    <div class="header">
+        <div class="text"><i></i>潮童专区</div>
+        <div class="shengyu"><i></i>
+            <div class="poster_timer tm2">剩余 天 小时</div>
+        </div>
+    </div>
+    <ul class="chaotong">
+        <li>
+            <a href="#">
+                <img src="#">
+                <p class="gname"></p>
+                <p class="gprice">
+                    <span class="nprice">¥  </span>
+                    <s class="oprice">¥ </s>
+                </p>
+            </a>
+        </li>
+         <li>
+            <a href="#">
+                <img src="#">
+                <p class="gname"></p>
+                <p class="gprice">
+                    <span class="nprice">¥  </span>
+                    <s class="oprice">¥ </s>
+                </p>
+            </a>
+        </li>
+         <li>
+            <a href="#">
+                <img src="#">
+                <p class="gname"></p>
+                <p class="gprice">
+                    <span class="nprice">¥  </span>
+                    <s class="oprice">¥ </s>
+                </p>
+            </a>
+        </li>
+         <li>
+            <a href="#">
+                <img src="#">
+                <p class="gname"></p>
+                <p class="gprice">
+                    <span class="nprice">¥  </span>
+                    <s class="oprice">¥ </s>
+                </p>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="glist">
+    <div class="header">
+        <div class="text"><i></i>时尚女装</div>
+        <div class="shengyu"><i></i>
+
+            <div class="poster_timer tm2">剩余 天 小时</div>
+        </div>
+    </div>
+    <ul class="nvzhuang">
+        <li>
+            <a href="#">
+                <img src="#">
+                <p class="gname"></p>
+                <p class="gprice">
+                    <span class="nprice">¥  </span>
+                    <s class="oprice">¥ </s>
+                </p>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <img src="#">
+                <p class="gname"></p>
+                <p class="gprice">
+                    <span class="nprice">¥  </span>
+                    <s class="oprice">¥ </s>
+                </p>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <img src="#">
+                <p class="gname"></p>
+                <p class="gprice">
+                    <span class="nprice">¥  </span>
+                    <s class="oprice">¥ </s>
+                </p>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <img src="#">
+                <p class="gname"></p>
+                <p class="gprice">
+                    <span class="nprice">¥  </span>
+                    <s class="oprice">¥ </s>
+                </p>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div id="loading"><span class="dots-loader"></span></div>
+<nav class="pagination-nav">
+  <ul class="pager">
+    <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span>前一天</a></li>
+    <li class="date">2015-10-01</li>
+    <li class="next"><a href="http://m.xiaolumeimei.com">后一天<span aria-hidden="true">&rarr;</span></a></li>
+  </ul>
+</nav>
+
+<div class="footer clearfix">
+<div class="link">
+<a href="/index.html">首页</a>
+<a href="/contact.html">联系我们</a>
+</div>
+<div class="copyright">
+<p >Copyright © 2014-2015 小鹿美美，All Rights Reserved 沪ICP备15013901号-1</p>
+</div>
+</div>
+<script type="text/html" id="verify_icon">
+    <div>
+        <img id="previev_vierify_{{ id }}" src="{{ icon }}" width="32px" onclick="verify_categray({{ id }},{{ model_id }})">
+        <span>{{ sale_charger }}</span>
+    </div>
+</script>
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="js/jquery-shopping.js"></script>
+<script src="js/main-preview.js"></script>
+<link rel="stylesheet" type="text/css" href="css/sweet-alert.css">
+<script src="js/sweet-alert.min.js"></script>
+<script src="js/unslider-min.js"></script>
+<script src="js/coupon_release_index.js"></script>
+<script type="text/javascript">
+(function ($) {
+    //返回顶部
+    $(document).on({touchend:scroll_top,click:scroll_top},'#js-scroll-top');
+    var startY;
+    document.addEventListener('touchstart', function (ev) {
+        startY = ev.touches[0].pageY;
+    }, false);
+
+    document.addEventListener('touchend', function (ev) {
+        var endY = ev.changedTouches[0].pageY;
+        var dir = startY - endY;
+        if (dir > 0) {
+            $('#js-fixed-nav').hide();
+        } else {
+            $('#js-fixed-nav').show();
+        }
+    }, false);
+	$('.cart').listencart();
+	var urlparams = window.location.href.split('?').length > 1?window.location.href.split('?')[1]:'';
+    //获取今日海报
+    Set_posters('/posters/preview.json?' + urlparams);
+    //获取今日推荐商品
+    Set_promotes_product('/products/promote_preview.json?' + urlparams);
+    //获取购物车商品数
+    Set_shopcarts_num();
+	//设置分页
+	change_pagination();
+
+    // 获取优惠券
+    Set_coupon_tpls();
+
+})(jQuery);
+function scroll_top(e){
+    e.preventDefault();
+    $('body').animate({scrollTop: 0}, 400);
+}
+function change_pagination(){
+	var now_day = getUrlParam('days') || '0';
+	if (isNaN(now_day)){
+		drawToast('日期参数错误：'+now_day);
+		return;
+	}
+	now_day  = parseInt(now_day);
+	var now	 = new Date();
+	var cur_date = new Date(now.valueOf() + now_day *  24 * 60 * 60 * 1000);
+	$('.pager .date').html(cur_date.getFullYear()+'-'+(cur_date.getMonth() + 1) +'-'+cur_date.getDate());
+	
+	var previous = now_day - 1;
+	var next     = now_day + 1;
+	var base_url = window.location.href.replace('#','').split('?')[0];
+	$('.pager .previous a').attr('href',base_url + '?days=' + previous);
+	$('.pager .next a').attr('href',base_url + '?days=' + next);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,638 @@
+{% extends "promotion_base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block head_style %}
+<link href="//cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.css" rel="stylesheet">
+<style>
+    .share-icon {
+        text-align: center;
+    }
+
+    .share-icon img {
+        width: 40px;
+    }
+
+    .active_detail {
+        margin-top: 50px;
+        text-align: center;
+    }
+
+    .form-content {
+        text-align: center;
+    }
+
+    .submit-order {
+        margin-top: 30px;
+    }
+
+    .choice {
+        padding: 0px 2px;
+    }
+
+    .counting {
+        display: inline-block;
+        padding: 2px 2px;
+        #margin: 4px 12px;
+        font-size: 36px;
+        #font-weight: 700;
+        line-height: 1.1;
+        text-align: center;
+        border-radius: 4px;
+    }
+
+    .visible-border {
+        color: #999;
+        border: 1px solid #ddd;
+    }
+
+    .highlight-border {
+        color: orange;
+        border: 1px solid orange;
+    }
+
+	.join-button {
+	  background-image:url(http://7xogkj.com2.z0.glb.qiniucdn.com/join-btn.png);
+	  background-repeat:no-repeat;
+	  background-size:100%;
+	  background-color:transparent;
+	  border:0px;
+	}
+
+	.invite-count-section {}
+	
+	.digit {
+	  display: inline-block;
+	  width: 15%;
+	}
+
+	.border-show {
+	  border: 1px solid green;
+	}
+
+	.border-show-red {
+	  border: 1px solid red;
+	}
+	.hongbao-record {
+	  background-image:url(http://7xogkj.com2.z0.glb.qiniucdn.com/222-hongbao.png);
+	  background-color:transparent;
+	  background-size:auto 100%;
+	  background-repeat: no-repeat;
+	  margin-bottom: 14px;
+	  margin-left: 6px;
+	  margin-right: 6px;
+	  padding-left: 40px;
+	  font-size: 12px;
+	}
+	.hongbao-total{
+	  color: #ffcf00;
+	  top: -10px;
+	  text-align: center;
+	}
+	.hongbao-text{
+	  color:white;
+	}
+	.hongbao-time {
+	  color:#ffcf00;
+	  display: inline-block;
+	  margin-bottom: 6px;
+	}
+	.mix-body-bg {
+	  background-image:url(http://7xogkj.com2.z0.glb.qiniucdn.com/222-body-bg.png);
+	  background-color:transparent;
+	  background-size:100% 1px;
+	}
+	
+	.mix-head-image {
+	  width:100%;
+	  vertical-align:bottom;
+	}
+	.mix-tail-image {
+	  width:100%;
+	  vertical-align:top;
+	}
+	.hongbao-section {
+	}
+	.share-button-section {
+	  text-algin:center;
+	  margin-top: 26px;
+	  margin-bottom: 26px;
+	}
+	.share-text {
+	  text-align:center;
+	  color: white;
+	  font-size: 12px;
+	  margin-bottom: 6px;
+	}
+    .share-text font{
+        font-size:20px;
+    }
+	.share-section{
+	  width:100%;
+	  border-radius: 6px;
+	  position: fixed;
+	  left: 0px;
+	  bottom: 0px;
+	  background-color: white;
+	  padding-bottom: 20px;
+	  z-index: 1000;
+	}
+	.share-platforms {
+	  margin-top: 10px;
+	  margin-bottom: 10px;
+	}
+	.share-greetings-text {
+	  text-align:center;
+	  color: #470d88;
+	  font-size: 14px;
+	  margin:20px 16px;
+	  display: inline-block;
+	}
+	.share-cancel {
+	  margin-top:20px;
+	  color: gray;
+	  text-align: center;
+	  font-size: 12px;
+	}
+	.sleepingbag-section {
+	  margin-top:30px;
+	  position:relative;
+	}
+	.qrcode {
+	  margin-top: 10px;
+	  text-align: center;
+          color: white;
+	}
+	.good-mask{
+		background:rgba(0,0,0,0.4);
+		position: absolute;
+		left:0;
+		top:0;
+		right: 0;
+		bottom: 0;
+	}
+	.good-btn{
+	    background-color: #403B3B;
+	    position: absolute;
+	    width: 170px;
+	    height: 170px;
+	    line-height: 100px;
+	    border-radius: 50%;
+	    left: 50%;
+	    top: 40%;
+	    margin-left: -85px;
+	    margin-top: -50px;
+	    text-align: center;
+	    color: #fff;
+	    font-size: 22px;
+	}
+	.zhongjiang-record{
+	   background-image:url(//7xogkj.com2.z0.glb.qiniucdn.com/222-%E6%8C%89%E9%94%AE-%E9%A2%86.png);
+      background-color:transparent;
+      background-size:auto 100%;
+      background-repeat: no-repeat;
+      margin-bottom: 14px;
+      margin-left: 6px;
+      margin-right: 6px;
+      padding-left: 40px;
+	  font-size:12px;
+	}
+	.zhongjiang-record .zj-text{
+	   margin:5px;
+	   color: #ffcf00;
+	   font-size:12px;
+	}
+</style>
+{% endblock %}
+
+{% block content2 %}
+    {% csrf_token %}
+    {% if res %}
+    <div style="position:relative;top:-90px"> 
+    <!-- 邀请图及邀请结果 -->
+    <div class="invite-count">
+      <div class="row">
+	<div class="col-xs-12" style="text-align:center">
+	  <span style="font-size:12px;color:white">您已经邀请好友</span>
+      </div>
+      <div class="row">
+	<div class="col-xs-12" style="text-align:center">
+	  <div class="digit"><img src="{{ res.first_digit_imgsrc }}" style="width:100%"/></div>
+	  <div class="digit"><img src="{{ res.second_digit_imgsrc }}" style="width:100%"/></div>
+	</div>
+
+      </div>
+      <div class="row">
+		<div class="col-xs-12" style="text-align:center">
+		  {% if res.inactive_count > 0 %}
+		  <a href="/sale/promotion/cus_cdt/" style="font-size:12px;color:white">您有{{ res.inactive_count }}位好友未激活，查看 >></a>
+		  {% else %}
+		  {% if res.active_count > 0 %}
+		  <a href="/sale/promotion/cus_cdt/" style="font-size:12px;color:white">点击查看邀请好友 >></a>
+		  {% endif %}
+		  {% endif %}
+		</div>
+      </div>
+    </div>    
+    <!-- 睡袋展示区 -->
+    <div class="sleepingbag-section">
+      <div class="row">
+	   <img class="mix-head-image" src="http://7xogkj.com2.z0.glb.qiniucdn.com/222-bg-head-start.png"/>
+      </div>
+      <div class="row">
+		<div class="col-xs-12 mix-body-bg">
+		  <img src="{{ img_src }}" style="width:100%"/>
+		</div>
+      </div>
+      <div class="row">
+	   <img class="mix-tail-image" src="http://7xogkj.com2.z0.glb.qiniucdn.com/222-bg-tail.png"/>
+      </div>
+      {% if res.invite_pass %}
+      <div class="good-mask"></div>
+      <div class="good-btn">
+        {% if res.award_receive %}
+            <img src="http://7xogkj.com2.z0.glb.qiniucdn.com/222-%E6%89%93%E9%92%A9-%E5%9C%86%E8%A7%92.png" ></img>
+        {% else %}
+            <a id="receve_award" href="javascript:void(0);">
+	            <img src="http://7xogkj.com2.z0.glb.qiniucdn.com/222-%E6%8C%89%E9%94%AE-%E9%A2%86.png"></img>
+	        </a>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+    <div class="share-button-section">
+      {% if res.invite_pass %}
+      <div class="share-text">
+       <span>恭喜你!您邀请了<font style="color:#ffcf00">{{res.active_count}}</font> 位好友下载APP并激活,可以领奖了～～</span>
+      </div>
+      {%else%}
+      <div class="share-text">
+       <p><span>由于活动计划送出的<font style="color:#ffcf00">1000</font>个睡袋名额已全部放出<br>小鹿美美现追加<font style="color:#ffcf00">500</font>个睡袋</span></p>
+       <p><span>加油哦～现在邀请<font style="color:#ffcf00">10</font>位以上好友可获得睡袋<br>(邀请好友越多获得的机会就越大哦)～～</span></p>
+      </div>
+      {% endif %}
+      <div>
+	   <img id="id-share-button" src="http://7xogkj.com2.z0.glb.qiniucdn.com/222-share-button.png" style="width:100%"/>
+      </div>
+      <div class="qrcode">
+	   <a href="/sale/promotion/ercode/">查看我的专属二维码</a>
+      </div>
+    </div>
+    <!-- start 分享区域 -->
+    <div id="id-share-section" class="share-section" style="display:none">
+      <div class="row share-platforms" id="share_link" cid="{{ res.share_link }}">
+	<div class="col-xs-4 share-icon"><img id="shareweixin" src="{{ STATIC_URL }}images/shareweixin.png" alt=""/></div>
+	<div class="col-xs-4 share-icon"><img id="sharefirends" src="{{ STATIC_URL }}images/shareFirends.png" alt=""/></div>
+	<div class="col-xs-4 share-icon"><img id="shareqq" src="{{ STATIC_URL }}images/shareqq.png" alt=""/></div>
+      </div>
+      <div class="row share-platforms">
+	<div class="col-xs-4 share-icon"><img id="shareqqspace" src="{{ STATIC_URL }}images/shareQQSpacing.png" alt=""/></div>
+	<div class="col-xs-4 share-icon"><img id="shareweibo" src="{{ STATIC_URL }}images/shareweibo.png" alt=""/></div>
+	<div class="col-xs-4 share-icon"><img id="sharecopylink" src="{{ STATIC_URL }}images/sharecopylink.png" alt=""/></div>
+      </div>
+      <div class="share-cancel">
+	<span id="id-cancel-button">取消分享</span>
+      </div>
+    </div>
+    <!-- end 分享区域 -->
+    
+    <!-- start 中奖列表 -->
+    <div class="zhongjiang-section">
+      <div class="row">
+        <img class="mix-head-image" src="http://7xogkj.com2.z0.glb.qiniucdn.com/222-award-header.png"/>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 mix-body-bg">
+          <div class="zhongjiang-record ">
+            <p><a href="/sale/promotion/result/1/1/1602/">第一批中奖名单<span class="zj-text">89</span>名,APP激活申请<span class="zj-text">10</span>人数以上 &gt;&gt;</a></p>
+          </div>
+        </div>
+        <div class="col-xs-12 mix-body-bg">
+          <div class="zhongjiang-record ">
+            <p><a href="/sale/promotion/result/2/1/1602/">第二批中奖名单<span class="zj-text">257</span>名,APP激活申请<span class="zj-text">10</span>人数以上 &gt;&gt;</a></p>
+          </div>
+        </div>
+        <div class="col-xs-12 mix-body-bg">
+          <div class="zhongjiang-record ">
+            <p><a href="/sale/promotion/result/3/1/1602/">第三批中奖名单<span class="zj-text">652</span>名,APP激活申请<span class="zj-text">10</span>人数以上 &gt;&gt;</a></p>
+          </div>
+        </div>
+        <div class="col-xs-12 mix-body-bg">
+          <div class="zhongjiang-record ">
+            <p><a href="/sale/promotion/result/4/1/1602/">第四批中奖名单<span class="zj-text">171</span>名,APP激活申请<span class="zj-text">15</span>人数以上 &gt;&gt;</a></p>
+          </div>
+        </div>
+        <div class="col-xs-12 mix-body-bg">
+          <div class="zhongjiang-record ">
+            <p><a href="/sale/promotion/result/5/1/1602/">第五批中奖名单<span class="zj-text">240</span>名,APP激活申请<span class="zj-text">22</span>人数以上 &gt;&gt;</a></p>
+          </div>
+        </div>
+        <div class="col-xs-12 mix-body-bg">
+          <div class="zhongjiang-record ">
+            <p><a href="/sale/promotion/result/6/1/1602/">第六批中奖名单<span class="zj-text">200</span>名,APP激活申请<span class="zj-text">22</span>人数以上 &gt;&gt;</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <img class="mix-tail-image" src="http://7xogkj.com2.z0.glb.qiniucdn.com/222-hongbao-tail.png"/>
+      </div>
+    </div>
+     <!-- end 中奖列表 -->
+    
+    <!-- start 红包区域 -->
+    {% if res.reds %}
+    <div class="hongbao-section">
+      <div class="row">
+	   <img class="mix-head-image" src="http://7xogkj.com2.z0.glb.qiniucdn.com/222-hongbao-head.png"/>
+      </div>
+      <div class="row">
+	<div class="col-xs-12 mix-body-bg">
+	  <div class="hongbao-total"><span>总额: ￥{{ res.reds_money }}</span></div>
+	  {% for red in res.reds %}
+	  <div class="hongbao-record ">
+	    <span class="hongbao-time reds_content" cid="{{ red.id }}">{{ red.created }}</span></br>
+	    <span class="hongbao-text">{{ red.content }}；{{ red.get_status_display }}</span>
+	  </div>
+	  {% endfor %}
+    <div style="text-align: center;color: red"><span >兑换优惠券</span></div>
+    <div style="text-align: left;color: white;font-size: 10px">
+        <p>
+            兑换优惠券说明: <br/>
+            1. 兑换优惠券是将没有兑换过的红包全部兑换成优惠券; <br/>
+            2. 红包金额不足5元则兑换为5元优惠券; <br/>
+            3. 红包金额不足10元但是超过5元则兑换两张5元优惠券; <br/>
+            4. 红包金额大于10元则先以红包总金额发放10元的优惠券,后(按照1,2)发放优惠券到优惠券总金额大于红包总金额为止. <br/>
+            5. 点击下方箭头兑换.
+        </p>
+    </div>
+
+	</div>
+      </div>
+      <div class="row" id="exchange_reds">
+	   <img class="mix-tail-image" src="http://7xogkj.com2.z0.glb.qiniucdn.com/222-hongbao-tail.png"/>
+      </div>
+    </div>
+    {% endif %}
+    
+    </div>
+    {% endif %}
+    {% endblock %}
+
+    {% block content4 %}
+    {% if not res %}
+    <div class="row">
+      <div class="col-xs-2"></div>
+      <div class="col-xs-8">
+	<a class="join-button form-control" href="" value="" type="button"></a>
+	<!--
+        <form action="" method="post">
+          <input type="text" value="{{ pro.sample.outer_id }}" name="outer_id" hidden="hidden"/>
+          <span style="color: red">{{ error_message }}</span>
+          <button class="btn btn-default form-control submit-order" type="submit" style="background: #FF8800;color:white">激活申请</button>
+        </form>
+	-->
+      </div>
+      <div class="col-xs-2"></div>
+    </div>
+    {% endif %}
+
+
+<!--    <div class="col-xs-12" style="text-align: center">
+        <h4>中奖名单</h4>
+    </div>
+    <div class="col-xs-12" style="text-align: center" id="short_result">
+    </div>
+
+    <div class="col-xs-12 active_detail" style="text-align: center">
+        <a href="/sale/promotion/pmt_res/1/1/1602/">更多中奖名单</a>
+    </div>
+
+    <div id="nativeShare"></div>
+-->
+{% endblock %}
+
+{% block tail_script %}
+    <script src="//cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <script>
+        var OSTest = function () {// 客户端平台检测　返回
+            var u = navigator.userAgent;
+            var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+            var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+            if (isAndroid == true) {
+                return 'Android';
+            }
+            else if (isiOS == true) {
+                return 'iOS';
+            }
+            else {
+                return 'web'
+            }
+        };
+        function share_to(uform) {
+            var os = OSTest();
+            var share_link = $("#share_link").attr('cid');
+            if (os == 'iOS') {
+                window.location = 'wx25fcb32689872499://?platform=' + uform + '&url=' + share_link + '&ufrom=' + uform;
+            }else if (os == 'Android') {
+                // 调用android客户端接口内容
+                if (window.AndroidBridge) {
+                    window.AndroidBridge.getPromotionParams(uform, share_link);
+                }
+            }
+            else {
+            }
+        }
+        // 显示中奖结果30名
+        function show_short_rest() {
+            console.log('short res');
+            var Url = "/sale/promotion/pmt_short_res/";
+            $.ajax({
+                type: 'get',
+                url: Url,
+                dataType: 'json',
+                success: resCallBack
+            });
+
+
+            function resCallBack(res) {
+                console.log(res);
+                $.each(res, function (index, da) {
+                    var html = '<div class="col-xs-2"></div>' +
+                            '<div class="col-xs-9">' +
+                            '<img src="' + da[3] + '" alt="" width="40px"/>' +
+                            '<span>' + da[0] + '</span></div>';
+                    $("#short_result").append(html);
+
+                })
+            }
+        }
+
+        // 兑换红包
+        function exchange_reds(){
+            var reds = $(".reds_content");
+            var data = new FormData();
+            var exchange = $('#exchange_reds');
+            if(exchange.hasClass('loading')){
+                return
+            }
+            exchange.addClass('loading');
+
+            $.each(reds,function(index,red){
+                var cid = $(red).attr('cid');
+                data.append('ids', cid);
+            });
+            console.log('data:', data);
+
+            var Url = "/sale/promotion/exchange_reds/";
+            $.ajax({
+                type: 'post',
+                url: Url,
+                data: data,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: resCallBack
+            });
+            function resCallBack(res) {
+                console.log(res);
+                alert("您已经兑换" + res.count + "张优惠券,共" + res.coupon_value + "元.");
+                location.reload();
+                exchange.removeClass('loading');
+
+            }
+        }
+
+        $(document).ready(function () {
+            //show_short_rest();
+            //'wxapp', 'pyq', 'qq', 'sinawb', 'web', 'qqspa'
+            $("#exchange_reds").click(function(){// 点击兑换
+                exchange_reds();
+            });
+            $("#sharecopylink").click(function () {
+                console.log("复制链接");
+                var uform = 'web';
+                share_to(uform);
+            });
+            $("#sharefirends").click(function () {
+                console.log("朋友圈");
+                var uform = 'pyq';
+                share_to(uform);
+            });
+            $("#shareqq").click(function () {
+                console.log("qq");
+                var uform = 'qq';
+                share_to(uform);
+            });
+            $("#shareqqspace").click(function () {
+                console.log("qq空间");
+                var uform = 'qqspa';
+                share_to(uform);
+            });
+            $("#shareweibo").click(function () {
+                console.log("微博");
+                var uform = 'sinawb';
+                share_to(uform);
+            });
+            $("#shareweixin").click(function () {
+                console.log("微信");
+                var uform = 'wxapp';
+                share_to(uform);
+            });
+        });
+
+
+        var selectedColorElement = $("#id-color-yellow");
+        var selectedSizeElement = $("#id-size-3");
+
+        function clearColorSelection() {
+            selectedColorElement.removeClass("highlight-border");
+            selectedColorElement.addClass("visible-border");
+        }
+
+        function clearSizeSelection() {
+            selectedSizeElement.removeClass("highlight-border");
+            selectedSizeElement.addClass("visible-border");
+        }
+
+        $("#id-color-yellow").click(function () {
+            var target = $("#id-color-yellow");
+            if (target != selectedColorElement) {
+                clearColorSelection();
+                target.addClass("highlight-border");
+                selectedColorElement = target;
+            }
+        });
+
+        $("#id-color-blue").click(function () {
+            var target = $("#id-color-blue");
+            if (target != selectedColorElement) {
+                clearColorSelection();
+                target.addClass("highlight-border");
+                selectedColorElement = target;
+            }
+        });
+
+        $("#id-color-pink").click(function () {
+            var target = $("#id-color-pink");
+            if (target != selectedColorElement) {
+                clearColorSelection();
+                target.addClass("highlight-border");
+                selectedColorElement = target;
+            }
+        });
+
+        $("#id-size-3").click(function () {
+            var target = $("#id-size-3");
+            if (target != selectedColorElement) {
+                clearSizeSelection();
+                target.addClass("highlight-border");
+                selectedSizeElement = target;
+            }
+        });
+
+        $("#id-size-5").click(function () {
+            var target = $("#id-size-5");
+            if (target != selectedColorElement) {
+                clearSizeSelection();
+                target.addClass("highlight-border");
+                selectedSizeElement = target;
+            }
+        });
+
+    $("#id-share-button").click(function () {
+	  $("#id-share-section").slideDown();
+	});
+
+    $("#id-cancel-button").click(function () {
+	  $("#id-share-section").slideUp();
+	});
+    
+    $('#receve_award').click(function(){
+        var requestCallBack = function(resp){
+            $('.good-btn').html('<img src="http://7xogkj.com2.z0.glb.qiniucdn.com/222-%E6%89%93%E9%92%A9-%E5%9C%86%E8%A7%92.png" ></img>');
+        };
+        var csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+        swal({
+            title: "睡袋专用优惠券259元",
+            text: "点击即可领取259元睡袋专用优惠,领取优惠券后,请到商城首页,潮童专区选择下面这款睡袋后支付使用.",
+            type: "",
+            showCancelButton: true,
+            imageUrl: "http://7xogkj.com2.z0.glb.qiniucdn.com/222-%E6%B4%BB%E5%8A%A8%E7%9D%A1%E8%A2%8B-%E5%9C%86%E8%A7%92.png",
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: '领取',
+            cancelButtonText: '等会再领'
+        },
+        function () {
+            //发送请求
+            $.ajax({
+                type: 'post',
+                url: '/sale/promotion/receive_award/',
+                data: {"csrfmiddlewaretoken": csrf_token,'sampleorder_id':{{sample_order.id}}},
+                success: requestCallBack,
+                error: function (res) {
+                    alert('领取异常,请联系管理员');
+                }
+            });
+        });
+    });
+    </script>
+{% endblock %}

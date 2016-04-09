@@ -1,0 +1,284 @@
+{% extends "pay/base_pay.html" %}
+
+{% block title %}小鹿美美-订单确认{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}style/order.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}style/style_other.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}style/animation.css">
+    <style style="text/css">
+    .wrap { background:#b81b22; }
+  	.wrap a{font-size:16px;color:white;padding:10px 10px;margin-top:10px;display: inline-block;}
+  	.container-head{margin-top:50px;margin-bottom:0px;background:#EE7700;}
+  	.container-head a {color:white;}
+  	.container-head .glyphicon{font-size:25px;}
+    .well-lg { padding:24px 5px;}
+    .navbar-fixed-top{
+		text-align:center;
+		font-size:25px;
+	}
+    .address-detail {font-size:6px;}
+    .unselectable .utext{
+    	color:#999;
+    	float: left;
+		font-size: 16px;
+    }
+    .money{
+    	display:inline;
+    	font-size:14px;
+    	color:#ff7200;
+    }
+    .price{
+    	
+    }
+    </style>
+{% endblock %}
+
+
+{% block preload_script %}
+<script src="{{ STATIC_URL }}script/pingpp_pay.js"></script>
+<script src="{{ STATIC_URL }}script/pingpp_ap.js"></script>
+{% endblock %}
+
+{% block container %}
+<nav class="navbar navbar-default navbar-fixed-top row">
+	<div class="col-xs-2" >
+	</div>
+	<div class="col-xs-8" >
+	  <span class="h3">订单付款</span>
+	</div>
+	<div class="col-xs-2" >
+	</div>
+</nav>
+
+<div class="container-fluid">
+<div class="well well-lg row container-head">
+	{% if address %}
+    <a href="/mm/addr/list/?origin_url={{ origin_url }}" target="_self">
+    <div >
+    <div class="pull-left glyphicon glyphicon-map-marker" ></div>
+    <div class="col-xs-9">
+    	<div><label>收货人:</label><span>{{ address.receiver_name }}</span><span class="pull-right">{{ address.receiver_mobile }}</span></div>
+    	<div class="address-detail"><label>收货地址:</label><span>{{ address.receiver_state }}&nbsp;{{ address.receiver_city }}
+    	&nbsp;{{ address.receiver_district }}&nbsp;{{ address.receiver_address }}</span></div>
+    </div>
+    <div class="glyphicon glyphicon-chevron-right" target="_self"></div>
+ 	</div>
+    </a>
+    {% else %}
+    <a href="/mm/addr/list/?origin_url={{ origin_url }}" target="_self"><div class="col-xs-offset-1 col-xs-9 ">您还没有添加您地址，点击添加</div></a>
+    {% endif %}
+</div>
+<div class="row">
+<div class="title">选择支付方式</div>
+</div>
+<div class="row">
+<div class="pay_way">
+	{% if xiaolumm %}
+	<div id="wallet" class="wrapper {% if not wallet_payable %}unselectable{% endif %}">
+        <div class="{% if wallet_payable %}check{% else %}check_unable{% endif %}"></div>
+        <div class="img"><img src="{{ STATIC_URL }}images/pay_wallet.png"></div>
+        <div class="{% if wallet_payable %}text{% else %}utext{% endif %}">小鹿钱包 <div class="money">可用余额:<span><em>￥</em>{{ xiaolumm.cash_money }}</span></div></div>
+    </div>
+	{% endif %}
+    {% if weixin_from %}
+    <div id="wx_pub" class="wrapper {% if not wallet_payable %}selected{% endif %}">
+        <div class="check"></div>
+        <div class="img"><img src="{{ STATIC_URL }}images/pay_wechat.png"></div>
+        <div class="text">微信支付</div>
+    </div>
+    {% endif %}
+    {% if alipay_from %}
+    <div id="alipay_wap" class="wrapper {% if not weixin_from and not wallet_payable %}selected{% endif %}">
+        <div class="check"></div>
+        <div class="img"><img src="{{ STATIC_URL }}images/pay_alipay.png"></div>
+        <div class="text">支付宝支付</div>
+    </div>
+    {% endif %}
+   <!-- <div id="upacp_wap" class="wrapper">
+        <div class="check"></div>
+        <div class="img"><img src="{{ STATIC_URL }}images/pay_union.png"></div>
+        <div class="text">银联支付</div>
+    </div>-->
+</div>
+</div>
+<div class="row">
+<div class="title">确认购买商品</div>
+</div>
+<div class="row">
+<div class="product_sure">
+    <div class="wrapper">
+        <div class="img"><img src="{{ product.pic_path }}" /></div>
+        <div class="info">
+        	<div class="name">{{ product.name }}</div>
+            <div class="detail info" style="margin-top: 25px;">
+                尺码类别：<span class="size">{{ sku.properties_alias }}</span>；
+            </div>
+            <div class="detail price" style="margin-top: 25px;">
+                <span class="orange">￥<span class="p">{{ sku.agent_price }}</span></span>
+                &nbsp;X&nbsp;
+                <span class="a">{{ num }}</span>件
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="text">
+            合计：
+            <span class="orange">
+                ￥
+                <span class="price_all">{{ payment }}</span>
+            </span>
+            <span class="grey">
+                （含运费
+                <span class="post">{{ post_fee }}</span>
+                元）
+            </span>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="text">给买家留言：</div>
+        <div class="message">
+            <textarea id="to_seller" placeholder="有什么想对卖家说的"></textarea>
+        </div>
+    </div>
+</div>
+</div>
+<div class="row">
+<div class="title">确认付款金额</div>
+</div>
+<div class="row">
+<div class="price_sure">
+    <div class="wrapper">商品金额总计<div class="price sum">￥<span>{{ real_fee }}</span></div></div>
+    <div class="wrapper">快递费<div class="price post">￥<span>{{ post_fee }}</span></div></div>
+    {% if discount_fee %}<div class="wrapper">妈妈折扣<div class="price discount">￥<span>-{{ discount_fee }}</span></div></div>{% endif %}
+    <div class="line"></div>
+    <div class="wrapper">订单总额<div class="price all">￥<span>{{ payment }}</span></div></div>
+</div>
+</div>
+<form id="order-form" action="#" method="POST">
+<input type="hidden" name="item_id" value="{{ product.id }}" />
+<input type="hidden" name="sku_id" value="{{ sku.id }}" />
+<input type="hidden" name="num" value="{{ num }}" />
+<input type="hidden" name="uuid" value="{{ uuid }}" />
+<input type="hidden" name="post_fee" value="{{ post_fee }}" />
+<input type="hidden" name="discount_fee" value="{{ discount_fee }}" />
+<input type="hidden" id="payment" name="payment" value="{{ payment }}" />
+<input type="hidden" id="user_address_id" name="user_address_id" value="{{ address.id }}" />
+<input type="hidden" name="receiver_name" value="{{ address.receiver_name }}" />
+<input type="hidden" name="receiver_state" value="{{ address.receiver_state }}" />
+<input type="hidden" name="receiver_city" value="{{ address.receiver_city }}" />
+<input type="hidden" name="receiver_district" value="{{ address.receiver_district }}" />
+<input type="hidden" name="receiver_mobile" value="{{ address.receiver_mobile }}" />
+<input type="hidden" name="receiver_address" value="{{ address.receiver_address }}" />
+<input type="hidden" name="receiver_zip" value="{{ address.receiver_zip }}" />
+<input type="hidden" id="channel" name="channel" />
+<input type="hidden" id="message" name="buyer_message" />
+</form>
+<div id="dialog-confirm"></div>
+<div class="row">
+<div id="pay_now">
+    <div class="btn">
+        <img width="16" height="16" style="margin-right: 5px;"  src="{{ STATIC_URL }}images/pay.png" />
+        确认付款
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}
+
+{% block delayed_script %}
+<script>
+    $(document).ready(function(){
+        $('.ui-loader').remove();
+        //View_page_in();//页面载入时的信息写入，若服务器生成页面则无需此函数
+
+        //切换支付方式
+        $('.pay_way').on('tap','.wrapper',function(){
+        	if (!$(this).hasClass('unselectable')){
+            	$('.pay_way .wrapper').removeClass('selected');
+            	$(this).addClass('selected');
+            }
+        })
+
+        $('#pay_now').on('tap',Ctrl_sure_pay);
+
+        $('#pay_now').on('touchstart',function(){
+            $(this).addClass('pressed');
+        })
+        $('#pay_now').on('touchend',function(){
+            $(this).removeClass('pressed');
+        })
+
+        $('.pay_way').on('tap','.wrapper .add',function(){
+            var id = $(this).closest('.wrapper').attr('id');
+            Ctrl_card_add(id);
+        })
+    });
+
+
+    //选择添加卡时的函数，type为pay_credit或者pay_pet，分别为信用卡和储值卡的添加
+    function Ctrl_card_add(type){
+        switch (type){
+            case 'pay_credit':break;//信用卡
+            case 'pay_pet':break;//储值卡
+            default :break;
+        }
+    }
+
+    //确认订单后的付款操作，后续操作请自行添加
+    function Ctrl_sure_pay(){
+        if ($('#pay_now').hasClass('charged')){return;}       	
+        var CHARGE_URL  = '/mm/charge/';
+        var WALLET_PAY  = 'wallet';
+		var channel     = $('.pay_way .wrapper.selected').attr('id');
+		
+		if (typeof channel === "undefined"){
+			alert('请选择支付方式！');
+        	return
+		}
+		$('#message').val($('#to_seller').val());//买家留言
+        $('#channel').val(channel);//支付方式
+		
+		var payment = $('#payment').val();
+        var form_array = $('#order-form').serializeArray();
+        var params = {};
+
+	    $.map(form_array,function(n, i){
+	        params[n['name']] = n['value'];
+	    });
+        
+        if (params.receiver_name == ''||params.receiver_mobile =='' ){
+        	alert('请填写您的收货地址！');
+        	return 
+        }  
+		console.log('channel:'+channel);
+		if(channel == WALLET_PAY && !confirm("确认使用小鹿钱包支付金额（￥"+payment+'元)吗？')){
+			return 
+		}
+		
+        $('#pay_now').addClass('charged');
+        $('#pay_now #btn').addClass('pressed');
+
+        var callback = function(data){
+          
+          if(typeof data.errcode === "undefined"){ 
+          	if (data.channel == WALLET_PAY){//使用钱包支付
+          		window.location.href = '/mm/orderlist/';
+          	}else{
+	          pingpp.createPayment(data, function(result, err) {
+	              window.location.href = '/mm/orderlist/';
+	          });
+	        }
+           }else{
+           	 alert('err:' + data.errmsg);
+           }
+        }
+        
+    	$.post(CHARGE_URL,params,callback,'json');
+        
+    }
+</script>
+{% endblock %}
+
+</body>
+</html>

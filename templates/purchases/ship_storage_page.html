@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <title>关联入库单</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap2.3.2.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}css/base.less" rel="stylesheet/less" type="text/css" />
+    <script src="{{ STATIC_URL }}closure-library/closure/goog/base.js"></script>
+    <style type="text/css">
+    	.simple-text label{
+    		display:inline;
+    	}
+    </style>
+  </head>
+  {% load purchase_tags %}  
+  {% with storages=object.ship_storages purchase_items=object.unfinish_purchase_items %}
+  <body class="container">
+  	<div style="text-align:center;"><a style="float:right;" href="/admin/purchases/purchasestorage/">入库单列表</a></div>
+  	{% if purchase_items %}
+  	<div >
+  		<div><h2>未完成采购项目</h2></div>
+  		<div>
+  			<table id="undist-storage-table" class="table table-bordered table-striped table-condensed">
+  				<thead>
+  					<th>采购项目ID</th>
+  					<th>商品编码</th>
+  					<th>商品名</th>
+  					<th>规格编码</th>
+  					<th>规格名</th>
+  					<th>采购数</th>
+  					<th>未到货数</th>
+  				</thead>
+  				<tbody>
+  					{% for item in purchase_items %}
+  					<tr style="{% cycle "odd" "even" %}">
+  						<td>{{ item.id }}</td>
+  						<td>{{ item.outer_id }}</td>
+  						<td>{{ item.name }}</td>
+  						<td>{{ item.outer_sku_id }}</td>
+  						<td>{{ item.properties_name }}</td>
+  						<td>{{ item.purchase_num }}</td>
+  						<td>{{ item.purchase_num|subtract:item.storage_num }}</td>
+  					</tr>
+  					{% endfor %}
+  				</tbody>
+  			</table>
+  		</div>
+  	</div>
+  	{% endif %}
+  	<div>
+  		<div><h2>关联入库单</h2></div>
+  		<div>
+  			<table id="ship-purchase-table" class="table table-bordered table-striped table-condensed">
+  				<thead>
+  					<th>入库单ID</th>
+  					<th style="width:250px;">入库单信息</th>
+  					<th>商品编码</th>
+  					<th>商品名</th>
+  					<th>规格编码</th>
+  					<th>规格名</th>
+  					<th>到货数</th>
+  				</thead>
+  				<tbody>
+			  		{% for storage in storages %}
+			  			{% with item_len=storage.storage_items|length %}
+			  			{% for item in storage.storage_items %}
+				  		<tr style="{% cycle "odd" "even" %}">
+				  			{% if forloop.first %}
+					    	<td rowspan="{{ item_len }}" class="center-text">{{ storage.id }}</td>
+					    	<td rowspan="{{ item_len }}" class="center-text">
+					    		<div class="simple-text"><label class="label-info">标题 :</label>&nbsp;{{ storage.extra_name }}</div>
+					    		<div class="simple-text"><label class="label-info">原单号 :</label>&nbsp;{{ storage.origin_no }}</div>
+					    		<div class="simple-text"><label class="label-info">供应商 :</label>&nbsp;{{ storage.supplier_name }}</div>
+					    		<div class="simple-text"><label class="label-info">到货日期 :</label>&nbsp;{{ storage.post_date }}</div>
+					    		<div class="simple-text"><label class="label-info">物流信息 :</label>&nbsp;{{ storage.logistic_company }}-{{ storage.out_sid }}</div>
+					    		<div class="simple-text"><label class="label-info">订单状态 :</label>&nbsp;{{ storage.status }}</div>
+					    	</td> 
+							{% endif %}
+	  						<td>{{ item.outer_id }}</td>
+	  						<td>{{ item.name }}</td>
+	  						<td>{{ item.outer_sku_id }}</td>
+	  						<td>{{ item.properties_name }}</td>
+	  						<td>{{ item.ship_num }}</td>
+	  					</tr>
+	  					{% endfor %}
+	  					{% endwith %}
+	  				{% empty %}
+	  					<tr><td colspan="8">没有关联的采购项<td></tr>
+			  		{% endfor %}
+			  	</tbody>
+			 </table>
+		</div>
+  	</div>
+  </body>
+  {% endwith %}
+</html>

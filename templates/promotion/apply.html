@@ -1,0 +1,455 @@
+{% extends "promotion_base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block head_style %}
+    <style>
+        .active_detail {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .form-content {
+            text-align: center;
+        }
+
+        .submit-apply {
+            margin-top: 30px;
+        }
+	
+	.choice {
+          padding: 0px 2px;
+	}
+	
+	.choice span{
+	  display: block;
+	  font-size: 14px;
+	  line-height:26px;
+	  text-align: center;
+	  border-radius: 4px;
+	  padding-top: 2px;
+	  padding-bottom: 4px;
+	}
+
+
+
+	.mobileinput{
+	  background-image:url(http://7xogkj.com2.z0.glb.qiniucdn.com/222-mobileinput.png);
+	  background-repeat:no-repeat;
+	  background-size:100%;
+	  background-color:transparent;
+	  border:0px;
+	  outline: none;
+	  text-align:center;
+	  width: 230px;
+	  height: 40px;
+	  color: white;
+	  font-size:16px;
+	  margin-bottom: 20px;
+	}
+	.submit-button{
+	  background-image:url(http://7xogkj.com2.z0.glb.qiniucdn.com/222-submit-application.png);
+	  background-repeat:no-repeat;
+	  background-size:100%;
+	  background-color:transparent;
+	  border:0px;
+	  width: 230px;
+	  height: 40px;
+	  display: block;
+	  margin-left: auto;
+	  margin-right: auto;
+	}
+
+	.download-button{
+	  background-image:url(http://7xogkj.com2.z0.glb.qiniucdn.com/222-download-button.png);
+	  background-repeat:no-repeat;
+	  background-size:100%;
+	  background-color:transparent;
+	  border:0px;
+	  width: 230px;
+	  height: 40px;
+	  display: block;
+	  margin: auto;
+	}
+
+	.bg-head-start{
+	  background-image:url(http://7xogkj.com2.z0.glb.qiniucdn.com/222-bg-head-start.png);
+	  background-size:100%;
+	  background-repeat:no-repeat;
+	  margin-top:20px;
+	}
+	
+	.bg-body {
+	  background-image:url(http://7xogkj.com2.z0.glb.qiniucdn.com/222-bg-body.png);
+	  #background-size:100%;
+	  background-color:transparent;
+	}
+
+	.bg-tail {
+	  background-image:url(http://7xogkj.com2.z0.glb.qiniucdn.com/222-bg-tail.png);
+	  background-size:100%;
+	  background-repeat:no-repeat;
+	}
+
+
+	.product-background-start {
+	  background-image:url(http://7xogkj.com2.z0.glb.qiniucdn.com/222-sleepingbag-background.png);
+	  background-size:100%;
+	  background-repeat:no-repeat;
+	  margin-top:20px;
+	}
+
+	.product-background-done {
+	  background-image:url(http://7xogkj.com2.z0.glb.qiniucdn.com/222-applictiondone-bg.png);
+	  background-size:100%;
+	  background-repeat:no-repeat;
+	  margin-top:20px;
+	}
+
+	.mama-profile-image {
+	  position:relative;
+	  left: 10%;
+	  top: -16px;
+	  width: 12%;
+	}
+	.mama-label {
+	  color: #ffcf00;
+	  font-weight: bold;
+	  position:relative;
+	  left: 10%;
+	  top: -8px;
+	}
+
+	.border-show {
+	  border:1px solid green;
+	}
+	.border-show-red {
+	  border:1px solid red;
+	}
+
+	.mix-head-image {
+	  width:100%;
+	  vertical-align:bottom;
+	}
+	.mix-head-image-bg {
+	  background-image:url(http://7xogkj.com2.z0.glb.qiniucdn.com/222-head-plain.png);
+	  background-color:transparent;
+	  background-size:100%;
+	  background-repeat: no-repeat;
+	}
+	.mix-tail-image {
+	  width:100%;
+	  vertical-align:top;
+	}
+	.mix-body-bg {
+	  background-image:url(http://7xogkj.com2.z0.glb.qiniucdn.com/222-body-bg.png);
+	  background-color:transparent;
+	  background-size:100% 1px;
+	}
+	.mama-greeting-text {
+	  width:100%;
+	  display:inline-block;
+	  color: white;
+	  font-size: 12px;
+	  text-align:center;
+	  margin:auto;
+	}
+	.color-choice {
+	  display: inline-block;
+	  width:18%;
+	  margin-left: 6px;
+	  margin-right: 6px;
+	  padding: 6px;
+	  font-size: 14px;
+	  text-align: center;
+	  border-radius: 4px;
+	}
+
+	.visible-border {
+	  color: white;
+	  background-image:url(http://7xogkj.com2.z0.glb.qiniucdn.com/222-unselected.png);
+	  background-repeat:no-repeat;
+	  background-size:100%;	
+	}
+	.highlight-border {
+	  color: #220a3d;
+	  background-image:url(http://7xogkj.com2.z0.glb.qiniucdn.com/222-selected.png);
+	  background-repeat:no-repeat;
+	  background-size:100%;
+
+	}
+	.color-size {
+	  margin-top: 10px;
+	}
+	.sleepingbag-section {
+	  margin-top: 20px;
+	}
+	.apply-button-section {
+	  margin-top: 20px;
+	}
+	.zhongjiang-record{
+       background-image:url(//7xogkj.com2.z0.glb.qiniucdn.com/222-%E6%8C%89%E9%94%AE-%E9%A2%86.png);
+      background-color:transparent;
+      background-size:auto 100%;
+      background-repeat: no-repeat;
+      margin-bottom: 14px;
+      margin-left: 6px;
+      margin-right: 6px;
+      padding-left: 40px;
+      font-size:12px;
+    }
+    .zhongjiang-record .zj-text{
+       margin:5px;
+       color: #ffcf00;
+       font-size:12px;
+    }
+    </style>
+{% endblock %}
+
+
+    {% block content2 %}
+    <div {% if not download %} style="position:relative; top:-60px" {% endif %}>
+    {% if not download %}
+    <div class="greetings-section">
+      <div class="row">
+	<div class="col-xs-12 mix-head-image-bg">
+	  <img {% if referal %} src="{{ referal.thumbnail }}" {% else %} src="http://7xogkj.com2.z0.glb.qiniucdn.com/1181123466.jpg"{% endif %} alt="..." class="img-circle mama-profile-image"/>
+	  <span class="mama-label">{% if referal %}{{ referal.nick }}{% else %}小鹿妈妈{% endif %}</span>
+	</div>
+      </div>
+      <div class="row">
+	<div class="col-xs-12 mix-body-bg">
+	  <div class="mama-greeting-text">
+	    <span>啊哈哈，我刚抢完睡袋和红包，你也来吧，<br/>好运发发发哦～～</span>
+	  </div>
+	</div>
+      </div>
+      <div class="row">
+	<img class="mix-tail-image" src="http://7xogkj.com2.z0.glb.qiniucdn.com/222-bg-tail.png"/>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="sleepingbag-section">
+      <div class="row">
+	{% if download %}
+	<img class="mix-head-image" src="http://7xogkj.com2.z0.glb.qiniucdn.com/222-header-applied.png"/>
+	{% else %}
+	<img class="mix-head-image" src="http://7xogkj.com2.z0.glb.qiniucdn.com/222-bg-head-start.png"/>
+	{% endif %}
+      </div>
+      <div class="row">
+	<div class="col-xs-12 mix-body-bg">
+	  <div>
+	    <img id="id-bag" src="{{ img_src }}" style="width:100%"/>
+	  </div>
+	  {% if not download %}
+	  <div class="color-size">
+	    <div class="color-choice"><span style="color:white">颜色 :</span></div>
+	    <div id="id-color-yellow" class="highlight-border color-choice" ><span >黄色</span></div>
+	    <div id="id-color-blue" class="visible-border color-choice"><span>蓝色</span></div>
+	    <div id="id-color-pink" class="visible-border color-choice"><span>粉色</span></div>
+	  </div>
+	  <div class="color-size">
+	    <div class="color-choice"><span style="color:white">尺码 :</span></div>
+	    <div id="id-size-3" class="highlight-border color-choice"><span >0-3岁</span></div>
+	    <div id="id-size-5" class="visible-border color-choice"><span >3-5岁</span></div>
+	  </div>
+	  {% endif %}
+	</div>
+      </div>
+      <div class="row">
+	{% if download %}
+	<img class="mix-tail-image" src="http://7xogkj.com2.z0.glb.qiniucdn.com/222-tail-applied.png"/>
+	{% else %}
+	<img class="mix-tail-image" src="http://7xogkj.com2.z0.glb.qiniucdn.com/222-bg-tail.png"/>
+	{% endif %}
+      </div>
+    </div>
+
+    <div class="apply-button-section">
+      <div class="row">
+		<div class="col-xs-12" style="text-align:center">
+		  {% if download %}
+	          <a class="download-button" href="/sale/promotion/appdownload/" value="" type="button"></a>
+		  {% else %}
+	          <form action="" method="post" onsubmit="return check()">
+	            <input type="text" hidden="hidden" name="ufrom" id="ufrom"/>
+	            <input type="text" hidden="hidden" name="from_customer" id="from_customer" value="{{ from_customer }}"/>
+	            <input type="text" value="{{ pro.sample.outer_id }}" name="outer_id" hidden="hidden"/>
+		        <input id="id-sku" type="text" value="1" name="sku_code" hidden="hidden"/>
+	            <p id="id-errmsg" style="color:#FF8800; text-align:center">{% if mobile_message %}{{ mobile_message }}{% endif %}</p>
+	            <input type="hidden" value="{{ openid }}" name="user_openid"/>
+	            <input id="id-img" type="hidden" value="{{wxprofile.headimgurl}}" name="headimgurl" />
+	            <input id="id-nick" type="hidden" value="{{wxprofile.nickname}}" name="nick" />
+		        {% if active_start %}
+		        <input id="id-mobile"  name="mobile" class="mobileinput" align="center"
+	            {% if mobile %} type="hidden" {% else %} type="tel" {% endif %}
+	            {% if mobile %} value="{{ mobile }}" {% endif %} placeholder="请输入您的手机号">
+	            {% if vipcode_message %}<span> {{ vipcode_message }}</span>{% endif %}
+	            <input class="submit-button" value="" type="submit"/>
+	            {% else %}
+	            <div class="alert alert-danger" >本次试用活动已结束</div><br>
+	            <a class="download-button" href="/sale/promotion/appdownload/" value="" type="button"></a>
+	            {% endif %}
+	          </form>
+	
+		  {% endif %}
+		</div>
+      </div>
+    </div>
+    
+    <!-- start 中奖列表 -->
+    <div class="zhongjiang-section">
+      <div class="row">
+        <img class="mix-head-image" src="http://7xogkj.com2.z0.glb.qiniucdn.com/222-award-header.png"/>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 mix-body-bg">
+          <div class="zhongjiang-record ">
+            <p><a href="/sale/promotion/result/1/1/1602/">第一批中奖名单<span class="zj-text">89</span>名,APP激活申请<span class="zj-text">10</span>人数以上 &gt;&gt;</a></p>
+          </div>
+        </div>
+        <div class="col-xs-12 mix-body-bg">
+          <div class="zhongjiang-record ">
+            <p><a href="/sale/promotion/result/2/1/1602/">第二批中奖名单<span class="zj-text">257</span>名,APP激活申请<span class="zj-text">10</span>人数以上 &gt;&gt;</a></p>
+          </div>
+        </div>
+        <div class="col-xs-12 mix-body-bg">
+          <div class="zhongjiang-record ">
+            <p><a href="/sale/promotion/result/3/1/1602/">第三批中奖名单<span class="zj-text">652</span>名,APP激活申请<span class="zj-text">10</span>人数以上 &gt;&gt;</a></p>
+          </div>
+        </div>
+        <div class="col-xs-12 mix-body-bg">
+          <div class="zhongjiang-record ">
+            <p><a href="/sale/promotion/result/4/1/1602/">第四批中奖名单<span class="zj-text">171</span>名,APP激活申请<span class="zj-text">15</span>人数以上 &gt;&gt;</a></p>
+          </div>
+        </div>
+        <div class="col-xs-12 mix-body-bg">
+          <div class="zhongjiang-record ">
+            <p><a href="/sale/promotion/result/5/1/1602/">第五批中奖名单<span class="zj-text">240</span>名,APP激活申请<span class="zj-text">22</span>人数以上 &gt;&gt;</a></p>
+          </div>
+        </div>
+        <div class="col-xs-12 mix-body-bg">
+          <div class="zhongjiang-record ">
+            <p><a href="/sale/promotion/result/6/1/1602/">第六批中奖名单<span class="zj-text">200</span>名,APP激活申请<span class="zj-text">22</span>人数以上 &gt;&gt;</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <img class="mix-tail-image" src="http://7xogkj.com2.z0.glb.qiniucdn.com/222-hongbao-tail.png"/>
+      </div>
+    </div>
+     <!-- end 中奖列表 -->
+    </div>
+    {% endblock %}
+
+    {% block tail_script %}
+    <script>
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]);
+            return null; //返回参数值
+        }
+        $(document).ready(function () {
+            var ufrom = getUrlParam("ufrom");
+            var ufrom_dom = $("#ufrom").val(ufrom);
+            console.log(ufrom_dom);
+
+        });
+
+	var selectedColorElement = $("#id-color-yellow");
+	var selectedSizeElement = $("#id-size-3");
+	
+	var bluebag = "http://7xogkj.com2.z0.glb.qiniucdn.com/222-bag-blue.png";
+	var pinkbag = "http://7xogkj.com2.z0.glb.qiniucdn.com/222-bag-pink.png";
+	var yellowbag = "http://7xogkj.com2.z0.glb.qiniucdn.com/222-bag-yellow.png";
+	var bagimage = $("#id-bag");
+	var sku = $("#id-sku");
+	
+	
+	function clearColorSelection() {
+          selectedColorElement.removeClass("highlight-border");
+	  selectedColorElement.addClass("visible-border");
+	}
+
+	function clearSizeSelection() {
+          selectedSizeElement.removeClass("highlight-border");
+	  selectedSizeElement.addClass("visible-border");
+	}
+	
+	$("#id-color-yellow").click(function () {
+	  var target = $("#id-color-yellow");
+	  if (target != selectedColorElement) {
+	    clearColorSelection();
+	    target.addClass("highlight-border");
+	    target.removeClass("visible-border");
+	    selectedColorElement = target;
+	    bagimage.attr("src", yellowbag);
+	    sku.val("1");
+	  }
+	});
+
+	$("#id-color-blue").click(function () {
+	  var target = $("#id-color-blue");
+	  if (target != selectedColorElement) {
+          console.log('----------', sku)
+	    clearColorSelection();
+	    target.addClass("highlight-border");
+	    target.removeClass("visible-border");
+	    selectedColorElement = target;
+	    bagimage.attr("src", bluebag);
+	    sku.val("2");
+           console.log('----------', sku.val())
+	  }
+	});
+
+	$("#id-color-pink").click(function () {
+	  var target = $("#id-color-pink");
+	  if (target != selectedColorElement) {
+	    clearColorSelection();
+	    target.addClass("highlight-border");
+	    target.removeClass("visible-border");
+	    selectedColorElement = target;
+	    bagimage.attr("src", pinkbag);
+	    sku.val("3");
+	  }
+	});
+
+	$("#id-size-3").click(function () {
+	  var target = $("#id-size-3");
+	  if (target != selectedColorElement) {
+	    clearSizeSelection();
+	    target.addClass("highlight-border");
+	    target.removeClass("visible-border");
+	    selectedSizeElement = target;
+	  }
+	});
+
+	$("#id-size-5").click(function () {
+	  var target = $("#id-size-5");
+	  if (target != selectedColorElement) {
+	    clearSizeSelection();
+	    target.addClass("highlight-border");
+	    target.removeClass("visible-border");
+	    selectedSizeElement = target;
+	  }
+	});
+
+	function validateMobile(mobile) {
+	  var reg = /^1[34578]\d{9}$/;
+	  return reg.test(mobile);
+	}
+	
+	function check() {
+	  var mobile = $("#id-mobile").val();
+	  if (!validateMobile(mobile)) {
+	    console.log("wrong");
+	    $("#id-errmsg")[0].innerHTML = "哎呀呀～手机号错啦～～";
+	    return false;
+	  }
+	  return true;
+	}
+	
+    </script>
+{% endblock %}

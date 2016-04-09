@@ -1,0 +1,35 @@
+{% extends "weixin/weixin_base.html" %}
+
+{% load url from future %}
+
+{% block title %} 完成考试 {% endblock %}
+
+{% block head_script %}
+    <style>
+        .table > tbody > tr > td, .table > tfoot > tr > td {
+            border: solid 1px #fff;
+        }
+    </style>
+{% endblock %}
+
+{% block container %}
+    <div class="jumbotron">
+        <div class="container">
+            <h3>
+                恭喜你，你已经顺利通过培训考试！
+            </h3>
+            <button
+                    type="button"
+                    id="fat-btn"
+                    class="btn btn-warning btn-lg btn-block"
+                    onclick="location='/m/{{ xlmm }}'">
+                点击进入小鹿美美
+            </button>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="footer" style="text-align:center">
+            <p>© Uni Littles 2015</p>
+        </div>
+    </div>
+{% endblock %}

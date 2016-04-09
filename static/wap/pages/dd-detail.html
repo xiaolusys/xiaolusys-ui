@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>小鹿美美</title>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" id="viewport">
+<script src="../js/common.js"></script>
+    <script src="../js/template.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/sweet-alert.css">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/tmdd.css">
+</head>
+<body>
+<div class="header">
+  <a class="back" href="javascript:history.go(-1)"></a>
+  <h1>订单详情</h1>
+</div>
+
+<!-- 订单信息 start -->
+<div class="panel basic">
+  <div class="panel-top">
+      
+  </div>
+  <div class="panel-bottom">
+
+  </div>
+</div>
+<!-- 订单信息 end -->
+<!-- 物流信息 start -->
+<div class="panel wuliu">
+  <div class="panel-bottom">
+    <ul class="step-list">
+    </ul>
+  </div>
+</div>
+<!-- 收货信息 start -->
+<div class="panel shouhuo">
+  <div class="panel-top">
+    <h2>收货信息</h2>
+  </div>
+  <div class="panel-bottom">
+  </div>
+</div>
+<!-- 收货信息 end -->
+
+<!-- 费用详情 start -->
+<div class="panel feiyong">
+  <div class="panel-top">
+    <h2>费用详情</h2>
+  </div>
+  <div class="panel-bottom">
+  
+  </div>
+</div>
+<!-- 费用详情 end -->
+<div class="buy_button">
+
+</div>
+<div class="template">
+<!-- 订单明细基本信息模板 -->
+<script id="top_template" type="text/html">
+    <ul class="u1">
+      <li><label class="c5f5f5e">订单状态：</label><span class="caaaaaa" id="status_display">{{ status_display }}</span></li>
+      <li><label class="c5f5f5e">订单编号：</label><span class="caaaaaa">{{ tid }}</span></li>
+      <li><label class="c5f5f5e">订单时间：</label><span class="caaaaaa">{{ created }}</span></li>
+      <li><label class="c5f5f5e">订单金额：</label><span class="cf353a0"><em>¥</em>{{ payment }}</span></li>
+        {{ if  out_sid }}
+      <li><label class="c5f5f5e">物流单号：</label><span class="caaaaaa">{{ out_sid }}</span></li>
+        {{ /if }}
+    </ul>
+    <a  class="btn_top_{{ status }} btn_top_style btn_interactive " cid="{{ status }}" href="tuikuan.html?id={{ id }}"></a>
+</script>
+<!-- 订单明细尺码模板 -->
+<script id="top_detail_template" type="text/html">
+<div class="goods clear">
+	<div class="fl goods-img">
+	<a href="/pages/shangpinxq.html?id={{ item_id }}">
+	 <img src="{{ pic_path }}">
+	</a>
+	</div>
+	<div class="fr goods-info">
+	 <p><a href="/pages/shangpinxq.html?id={{ item_id }}">{{ title }}</a></p>
+	 <p>
+	 <span class="size">尺码：{{ sku_name }}</span>
+	 <span class="count">数量：{{ num }}</span>
+	 </p>
+	 <p class="price">单价：<span class="gprice"><em>¥</em>{{ payment }}</span>
+	 <a class="btn_order_status_{{ status }} refund_status_{{ refund_status }} refund_btn_show"
+        onclick="Order_Status_Handdler({{ trade_id }},{{ id }},{{ status }},{{ refund_status }},{{kill_title}});"></a>
+	</div>
+</div>
+</script>
+<!-- 订单明细收货信息模板 -->
+<script id="shouhuo_template" type="text/html">
+<div class="info">
+ <p class="clear">
+ <span class="label">收货人：</span>
+ <span class="value">{{ receiver_name }}</span>
+ </p>
+ <p class="clear">
+ <span class="label">手机号码：</span>
+ <span class="value">{{ receiver_mobile }}</span>
+ </p>
+ <p class="clear">
+ <span class="label">收货地址：</span>
+ <span class="value">{{ receiver_state }} - {{ receiver_city }} - {{ receiver_district }} - {{ receiver_address }}</span>
+ </p>
+</div>
+</script>
+<!-- 费用信息模板 -->
+<script id="shoufei_template" type="text/html">
+<div class="info">
+ <p class="clear">
+ <span class="label">商品总金额：</span>
+ <span class="value"><em>¥</em> {{ total_fee }}</span>
+ </p>
+ <p class="clear">
+ <span class="label">运费：</span>
+ <span class="value"><em>¥</em> {{ post_fee }}</span>
+ </p>
+ <p class="clear">
+ <span class="label">优惠金额：</span>
+ <span class="value"><em>¥</em> -{{ discount_fee }}</span>
+ </p>
+ <p class="clear">
+ <span class="label">应付金额：</span>
+ <span class="value total"><em>¥</em> {{ payment }}</span>
+ </p>
+</div>
+</script>
+<!-- 购买 -->
+<script id="button_buy" type="text/html">
+    <div class="btn-wrap">
+        <a class="btn-buy">购&nbsp;&nbsp;买</a>
+    </div>
+</script>
+</div>
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="../js/pingpp_pay.js"></script>
+<script src="../js/pingpp_ap.js"></script>
+<script src="../js/tmdd.js"></script>
+<script src="../js/tmpay.js"></script>
+<script src="../js/sweet-alert.min.js"></script>
+<script type="text/javascript">
+(function($){
+  //返回顶部
+  $('#js-scroll-top').on('touchend',function(e){
+    e.preventDefault();
+    $('body').animate({scrollTop:0},400);  
+  });
+
+  var startY;
+
+  document.addEventListener('touchstart',function (ev) {
+    startY = ev.touches[0].pageY;
+  }, false);
+
+  document.addEventListener('touchend',function (ev){
+    var endY = ev.changedTouches[0].pageY;
+    var dir = startY - endY;
+    if(dir>0){
+      $('#js-fixed-nav').hide();
+    }else{
+      $('#js-fixed-nav').show();
+    }
+  }, false);
+  
+  var urlConf = {'trade_id':getUrlParam('id')};
+  var order_url = GLConfig.get_trade_details_url.template(urlConf);
+
+  //获取待支付订单列表
+  Set_order_detail(order_url);
+  //确认支付事件响应
+  $(document).on({
+  	click:Confirm_charge,
+  	touchend:Confirm_charge,
+  },'.buy_button .btn-buy');
+  //  fang  2015-8-20
+  //var status=$("#status_display").innerHTML;
+  Wuliu(getUrlParam('id'));
+})(jQuery);
+
+function Confirm_charge(){
+  	var urlConf = {'trade_id':getUrlParam('id')};
+    Ctrl_order_charge(GLConfig.waitpay_charge.template(urlConf));
+};
+</script>
+</body>
+</html>

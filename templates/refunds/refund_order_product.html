@@ -1,0 +1,75 @@
+
+{% load trade_tags %}
+<div class="map-content" style="margin-left: auto; margin-right: auto; width: 800px">
+	<div>
+		<div class="well well-small">
+			<div class="order-userinfo" ><label class="label label-success">原单ID:</label>{{ trade.tid }}</div>
+			<div class="order-userinfo" ><label class="label label-success">买家昵称:</label>{{ trade.buyer_nick }}</div>
+			<div class="order-userinfo" ><label class="label label-success">收货人:</label>{{ trade.receiver_name }}</div>
+		</div>
+		<div class="order-head"><h3 class="head-title">退货订单列表</h3></div>
+		<div class="order-content">
+			<table class="table table-bordered table-striped table-condensed">
+				<thead>
+					<th>序号</th><th style="width:200px;">标题</th><th>规格</th><th>数量</th><th>退款状态</th><th>已处理</th>
+				</thead>
+				<tbody>
+					{% for order in refund_orders %}
+					<tr>
+					<td>{{ forloop.counter }}</td>
+					<td>{{ order.title }}</td>
+					<td>{{ order|refund_sku:'name' }}</td>
+					<td>{{ order|refund_sku:'num' }}</td>
+					<td>待卖家确认收货</td>
+					<td>{% if order.is_reissue %}<img src="{{ STATIC_URL }}admin/img/icon-yes.gif" alt="yes">
+					{% else %}<img src="{{ STATIC_URL }}admin/img/icon-no.gif" alt="no">{% endif %}</td>
+					{% endfor %}
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div>
+		<div class="product-head"><h3 class="head-title">退回商品列表</h3></div>
+		<div class="product-content">
+			<table class="table table-bordered table-stdiped table-condensed">
+				<thead>
+					<th>序号</th><th>标题</th><th>规格</th><th>数量</th><th>二次销售</th><th>已处理</th><th>备注</th>
+{#                    <th>退货原因</th>#}
+				</thead>
+				<tbody>
+					{% for prod in refund_products %}
+					<tr>
+					<td>{{ forloop.counter }}</td>
+					<td>{{ prod.title }}</td>
+					<td>{{ prod.property }}</td>
+					<td>{{ prod.num }}</td>
+					<td>{% if prod.can_reuse %}<img src="{{ STATIC_URL }}admin/img/icon-yes.gif" alt="yes">
+					{% else %}<img src="{{ STATIC_URL }}admin/img/icon-no.gif" alt="no">{% endif %}</td>
+					<td>{% if prod.is_finish %}<img src="{{ STATIC_URL }}admin/img/icon-yes.gif" alt="yes">
+					{% else %}<img src="{{ STATIC_URL }}admin/img/icon-no.gif" alt="no">{% endif %}</td>
+					<td>{{ prod.memo }}</td>
+
+{#                        <td>#}
+{#                            <select class="select_reason" cid="{{ prod.id }}" id="reason_select_{{ prod.id }} " >#}
+{#                                <option value=''>-------</option>#}
+{#                                <option value='0'>其他</option>#}
+{#                                <option value='1'>错拍</option>#}
+{#                                <option value='2'>缺货</option>#}
+{#                                <option value='3'>开线/脱色/脱毛/有色差/有虫洞</option>#}
+{#                                <option value='4'>发错货/漏发</option>#}
+{#                                <option value='5'>没有发货</option>#}
+{#                                <option value='6'>未收到货</option>#}
+{#                                <option value='7'>与描述不符</option>#}
+{#                                <option value='8'>退运费</option>#}
+{#                                <option value='9'>发票问题</option>#}
+{#                                <option value='10'>七天无理由退换货</option>#}
+{#                            </select>#}
+{#                        </td>#}
+					{% endfor %}
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

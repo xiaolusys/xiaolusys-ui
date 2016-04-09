@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>产品退款状况列表</title>
+    <link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdn.bootcss.com/jqcloud/1.0.4/jqcloud-1.0.4.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/jqcloud/1.0.4/jqcloud.css">
+    <script type="text/javascript" src="{{ STATIC_URL }}layer-v1.9.2/layer/layer.js"></script>
+    <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+    <script type="text/javascript" src="//cdn.bootcss.com/highcharts/4.1.9/modules/exporting.js"></script>
+
+    <script src="{{ STATIC_URL }}jquery-datatable-addon/jquery.dataTables.min.js" type="text/javascript"></script>
+
+    <style>
+        .table {
+            margin-top: 30px;
+        }
+
+        .table th {
+            text-align: center;
+        }
+
+        .table tbody td {
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+    <style type="text/css" title="currentStyle">
+        @import "{{ STATIC_URL }}jquery-datatable-addon/css/demo_page.css";
+        @import "{{ STATIC_URL }}jquery-datatable-addon/css/demo_table.css";
+    </style>
+
+
+</head>
+<body class="container">
+<h3 style="margin-top: 40px;height: 30px">产品退款状况列表
+    <small>当前买手：{{ username }}</small>
+</h3>
+<div class="col-xs-8">
+    <table class="table table-bordered table-striped" id="mytable">
+        <thead>
+        <tr>
+            <th>产品ID</th>
+            <th>产品图片</th>
+            <th>24小时内</th>
+            <th>24小时外</th>
+            <th>发货后</th>
+            <th>同款销量</th>
+            <th>接洽人</th>
+            <th>上架时间</th>
+            <th>供应商</th>
+        </tr>
+        </thead>
+        <tbody id="table_tbody">
+        </tbody>
+
+    </table>
+</div>
+<div class="col-xs-4">
+    <span class="glyphicon glyphicon-download-alt" aria-hidden="true" onclick="addPageNumber()"> 更多</span>
+
+    <div id="container" style="min-width:400px;height:400px"></div>
+</div>
+<a onclick="test_fo_data()" style="display: none"> test </a>
+</body>
+
+
+<script>
+    function test_fo_data() {
+        addItem([1, 2, 3, 4, 5, 6]);
+    }
+    var pageNumber = 1;
+
+    var total_out = 0;
+    var total_in = 0;
+    var total_send = 0;
+    var total_sale = 0;
+
+    function addPageNumber() {//加载数据
+        console.log();
+        var url = "/rest/v1/prorefrcd?page=" + pageNumber;
+        $.ajax({
+            "url": url,
+            "data": {},
+            "type": "get",
+            dataType: 'json',
+            success: searTradeCallback,
+            error: function (err) {
+                var resp = JSON.parse(err.responseText);
+                if (resp.detail) {
+                    layer.msg(resp.detail);
+                }
+                closeLayer();
+            }
+        });
+        var index = layer.load(2, {
+            shade: [0.1, 'red'] //0.1透明度的白色背景
+        });
+
+        function closeLayer() {
+            layer.close(index);// 加载完成　关闭加载层显示
+        }
+
+
+        function searTradeCallback(res) {
+            console.log(res);
+            pageNumber += 1;
+            $.each(res.results, function (i, obj) {
+                var pic_str = '<img src="{1}"style="width:70px;" class="img-circle" onclick="popRcdpage({0})">';
+                var pic = String.format(pic_str,
+                        obj.product,
+                        obj.pro_pic
+                );
+                addItem([obj.product,
+                    pic,
+                    obj.ref_num_in,
+                    obj.ref_num_out,
+                    obj.ref_sed_num,
+                    obj.same_mod_sale_num,
+                    obj.pro_contactor,
+                    obj.sale_time,
+                    obj.pro_supplier
+                ]);
+
+                total_out += obj.ref_num_out;
+                total_in += obj.ref_num_in;
+                total_send += obj.ref_sed_num;
+                total_sale += obj.same_mod_sale_num;
+            });
+            closeLayer();//
+            //　绘制柱状图
+            var char_data = [total_in, total_out, total_send, total_sale];
+            zhuChart(char_data)
+        }
+    }
+
+    $(document).ready(function () {
+        //loading层
+        var index = layer.load(2, {
+            shade: [0.1, 'red'] //0.1透明度的白色背景
+        });
+        addPageNumber(pageNumber);
+    });
+
+    function popRcdpage(id) {
+        console.log(id);
+        layer.open({
+            type: 2,
+            title: '产品退款分析页',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['1200px', '70%'],
+            content: '/mm/ref_reason/?pro_id=' + id
+        });
+
+    }
+
+    <!--字符串format函数-->
+    String.format = function () {
+        if (arguments.length == 0)
+            return null;
+        var str = arguments[0];
+        for (var i = 1; i < arguments.length; i++) {
+            var re = new RegExp('\\{' + (i - 1) + '\\}', 'gm');
+            str = str.replace(re, arguments[i]);
+        }
+        return str;
+    };
+
+    function zhuChart(data) {
+        $('#container').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: '总体状况条形图'
+            },
+            subtitle: {
+                text: 'Source: youni.huyi.so'
+            },
+            xAxis: {
+                categories: [
+                    '24小时内总退款',
+                    '24小时外总退款',
+                    '发货后总退款',
+                    '总销量'
+                ]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '数量　(件)'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} 件</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: '{{ username }}',
+                data: data
+            }]
+        });
+    }
+    function addItem(arr) {
+        $("#mytable").dataTable().fnAddData(
+                arr
+        );
+    }
+    function usedataTable(dom) {
+        $(dom).dataTable({
+            //"bJQueryUI": true,
+            "bRetrieve": true,
+            "bAutoWidth": true,//false, //自适应宽度
+            "aaSorting": [[0, "asc"]],
+            "iDisplayLength": 50,
+            "aLengthMenu": [[20, 50, 100, -1], [20, 50, 100, "All"]],
+            //"bInfo":true,
+            //"sPaginationType": "full_numbers",
+            //"sDom": '<"H"Tfr>t<"F"ip>',
+            "oLanguage": {
+                "sLengthMenu": "每页 _MENU_ 条",
+                "sZeroRecords": "抱歉， 没有找到",
+                "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条",
+                "sInfoEmpty": "没有数据",
+                "sSearch": "搜索",
+                "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "前一页",
+                    "sNext": "后一页",
+                    "sLast": "尾页"
+                },
+                "sZeroRecords": "没有检索到数据",
+                "sProcessing": "<img src='/static/img/loading.gif' />"
+            }
+        });
+    }
+
+</script>
+</html>

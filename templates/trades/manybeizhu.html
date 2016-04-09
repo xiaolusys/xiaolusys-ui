@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>一键备注</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap3.2.0.min.css" rel="stylesheet">
+    <link href='{{ STATIC_URL }}jquery/jquery-ui-1.10.1.css' rel='stylesheet'/>
+    <style type="text/css" title="currentStyle">
+        @import "{{ STATIC_URL }}jquery-datatable-addon/css/demo_page.css";
+        @import "{{ STATIC_URL}}jquery-datatable-addon/css/demo_table.css";
+    </style>
+    <style type="text/css">
+
+    </style>
+</head>
+
+<body class="container">
+
+<h1>备注页面</h1>
+
+<div style="margin-top:50px;">
+    <div class="col-lg-10">
+        <div class="form-group">
+            <div class="col-sm-4">
+                <span class="label label-success">备注的订单编号:</span>
+                <textarea class="form-control" rows="36" id="a"></textarea>
+            </div>
+            <div class="col-sm-4">
+                <span class="label label-success">填写备注内容:</span>
+                <textarea class="form-control" rows="15" id="b"></textarea>
+                <br>
+                <br>
+                <span class="label label-success">未找到的订单:</span>
+                <textarea class="form-control" id="not_handler" rows="8"></textarea>
+                <br>
+                <br>
+                <span class="label label-success">找到多个的订单:</span>
+                <textarea class="form-control" id="mu_handler" rows="4"></textarea>
+
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <button type="button" class="btn btn-warning" id="sum">点击备注</button>
+        </div>
+        <div class="col-sm-4" style="margin-top: 150px">
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script src="{{ STATIC_URL }}jquery/jquery-2.1.1.min.js">
+</script>
+<script src="{{ STATIC_URL }}bootstrap/js/bootstrap-3.2.0.min.js">
+</script>
+<script src="{{ STATIC_URL }}jquery-datatable-addon/jquery.dataTables.min.js" type="text/javascript">
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sum").click(function () {
+            var a = $("#a").val();
+            var b = $("#b").val();
+            if ($("#sum").hasClass("loading")) {
+                return
+            }
+            $("#sum").addClass("loading");
+            $.ajax({
+                type: 'post',
+                url: "/trades/beizhu/",
+                data: {'a': a, 'b': b},
+                dataType: 'json',
+                success: callBack
+            });
+            function callBack(res) {
+                $("#sum").removeClass("loading");
+                console.log(res);
+                if (res.code == 0) {
+                    $(res.not_handler).each(function (i,no_handler) {
+                        $("#not_handler").append(no_handler+"\n");
+                    });
+                    $(res.muti_handler).each(function (i,mu_handler) {
+                        $("#mu_handler").append(mu_handler+"\n");
+                    });
+                    alert("成功");
+                }
+            }
+        });
+    });
+</script>
+</html>
+

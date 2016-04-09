@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>小鹿美美</title>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="format-detection" content="email=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta id="viewport" name="viewport" />
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../css/swiper3.07.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/shangpinxq.css">
+    <link rel="stylesheet" href="../css/jquery.webui-popover.min.css">
+</head>
+<body>
+<div class="goods-slide">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <!-- 这里添加题头图 -->
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+  <a class="btn-back" href="javascript:history.go(-1)"></a>
+</div>
+<!-- 商品详细信息 -->
+<div class="goods-content">
+    <div class="goods-info">
+        <h3></h3>
+        <div class="price">
+            <span>¥ </span>
+            <s>¥ </s>
+        </div>
+    </div>
+    <div class="goods-size" >
+        <img src="http://image.xiaolu.so/kexuanchima.png" width="100%">
+    </div>
+    <div class="goods-param">
+        <img class="spcs" src="http://image.xiaolu.so/shangpincanshu.png" width="100%">
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <td>商品名称</td>
+                <td></td>
+            </tr>
+            <!-- <tr>
+                <td>产<span class="space"></span>地</td>
+                <td></td>
+            </tr>
+           <tr>
+                <td>材<span class="space"></span>质</td>
+                <td>97%棉花，3%氨纶</td>
+            </tr>-->
+            <tr>
+                <td>洗涤说明</td>
+                <td>30℃以下手洗；阴凉处悬挂晾干</td>
+            </tr>
+            <tr>
+                <td>备<span class="space"></span>注</td>
+                <td>无</td>
+            </tr>
+            <tr>
+                <td>货品编号</td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="goods-img">
+    <!--<img src="http://image.xiaolu.so/TT-1440400785024-sotp.png" width="100%">-->
+    <img src="http://image.xiaolu.so/chimabiao.png" width="100%">
+    <div class="chi-ma-biao">
+
+    </div>
+    <div class="list">
+    <!-- 这里添加商品图片 -->
+    </div>
+</div>
+<div class="bottom-bar">
+    <div class="shengyu counter"><span>00:00:00</span></div>
+    <div class="buy dz_buy" >立即预定</div>
+</div>
+<div class="cart-container">
+    <a class="p-center" href="javascript:void(0);"></a>
+    <a class="cart" href="javascript:void(0);"><span class="total">0</span><span class="carttime"></span></a>
+</div>
+<div class="scroll-top" id="js-scroll-top"></div>
+<div id="loading"><span class="dots-loader"></span></div>
+<div class="service_box">
+    <ul class="tab_nav">
+        <li><a href="javascript:void(0);"><i class="icon icon_1"></i>联系客服</a></li>
+    </ul>
+</div>
+<div class="footer clearfix">
+<div class="link">
+<a href="/index.html" target="_parent">首页</a>
+<a href="/contact.html" target="_parent">联系我们</a>
+</div>
+<div class="copyright">
+<p >Copyright © 2014-2015 小鹿美美，All Rights Reserved 沪ICP备15013901号-1</p>
+</div>
+</div>
+
+<script id="params" type="text/html">
+    <div class="detail-introduce">
+        <img src="http://image.xiaolu.so/xuanchuan.png" width="100%">
+    </div>
+    <div class="goods-param">
+        <img class="spcs" src="http://image.xiaolu.so/shangpincanshu.png">
+        <hr style="height:1px;border:none;border-top:1px solid #ff6d73;width: 600px;margin: 0 auto;" />
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <td>商品名称：</td>
+                <td>{{ name }}</td>
+            </tr>
+            <tr>
+                <td>货品编号：</td>
+                <td>{{ outer_id }}</td>
+            </tr>
+            {{ if details.material }}
+            <tr>
+                <td>商品材质：</td>
+                <td>{{ details.material }}</td>
+            </tr>
+            {{ /if }}
+            {{ if details.color }}
+            <tr>
+                <td>可选颜色:</td>
+                <td>{{ details.color }}</td>
+            </tr>
+            {{ /if }}
+            {{ if details.note }}
+            <tr>
+                <td valign="top">备<span class="space"></span>注：</td>
+                <td><span>{{ details.note }}</span></td>
+            </tr>
+            {{ /if }}
+            {{ if details.wash_instructions }}
+            <tr>
+                <td valign="top">洗涤说明：</td>
+                <td><span class="wash">{{ details.wash_instructions }}</span></td>
+            </tr>
+            {{ else }}
+            <tr>
+                <td>洗涤说明：</td>
+                <td>30℃以下手洗；阴凉处悬挂晾干</td>
+            </tr>
+            {{ /if }}
+        </table>
+    </div>
+</script>
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/Swiper/3.0.7/js/swiper.jquery.min.js"></script>
+<script src="//cdn.bootcss.com/jquery-mobile/1.4.5/jquery.mobile.min.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/template.js"></script>
+<script src="../js/jquery.webui-popover.min.js"></script>
+<script src="../js/tmsp.js"></script>
+<script src="../js/jquery-shopping.js"></script>
+<script>
+$(document).ready(function(){
+    $('.ui-loader').remove();
+     //商品尺寸切换,动态加载内容需事件委托
+    $(document).on({
+        tap:change_goodsize,
+    },'#js-goods-size li');
+    //返回顶部
+    $(document).on({tap:scroll_top},'#js-scroll-top');
+    //设置商品详情
+    var item_id = getUrlParam('id');
+    var urlConf = {'product_id': item_id};
+    var product_url = GLConfig.get_product_detail_url.template(urlConf);
+    Set_product_detail(product_url);
+    Set_shopcarts_num();
+    need_set_info();
+    //登录后才可以操作
+    $('.add-cart').shoping();
+    $('.cart').listencart();
+    $('.p-center').click(function(){
+        window.location = "gerenzhongxin.html";
+    })
+    $('.dz_buy').click(function(){
+        DoIfLogin({
+            callback:buynow,
+            redirecto:window.location.href
+        });
+    });
+    $(document).on({
+        tap:function () {
+            DoIfLogin({
+                callback:function(){
+                    var params = {
+                        'item_id':getUrlParam('id'),
+                        'profile':JSON.parse(getCookie(PROFILE_COOKIE_NAME) || '{}')
+                    };
+                    loadNTalker(params,callNTKFChatPage);
+                },
+                redirecto:window.location.href
+            });
+        }
+    },'.service_box');
+});
+function change_goodsize() {
+    $('#js-goods-size li.active').removeClass('active').addClass('normal');
+    if ($(this).hasClass('disable'))return;
+    $(this).removeClass('normal').addClass('active');
+    // 将价格显示到主图下方
+    var sku_price = $($(this)[0]).attr("sku_price");
+    $(".goods-info .price").find('span').html('¥ ' + sku_price);
+}
+function scroll_top(e){
+    e.preventDefault();
+    $('body').animate({scrollTop: 0}, 400);
+}  
+function buynow(){
+    //如果未选中商品尺寸,事件不执行
+    if ($('#js-goods-size li.active').length == 0){
+        document.getElementById('js-goods-size').scrollIntoView(false);
+        drawToast('请选择商品尺寸');
+        return;
+    };
+    var item_id = getUrlParam('id');
+    var sku_id = $('#js-goods-size li.active').attr('sku_id');
+    window.location = 'buynow-dz.html?item_id={{item_id}}&sku_id={{sku_id}}'.template({item_id:item_id,sku_id:sku_id});
+}
+
+function callNTKFChatPage(){
+    //对应手机WAP端组代码
+    NTKF.im_openInPageChat("kf_9645_1444459002183");
+}
+</script>
+<link rel="stylesheet" type="text/css" href="../css/sweet-alert.css">
+<script src="../js/sweet-alert.min.js"></script>
+</body>
+</html>

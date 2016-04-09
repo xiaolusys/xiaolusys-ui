@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>小鹿美美</title>
+    <meta charset="UTF-8">
+    <meta id="viewport" name="viewport"/>
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../css/dots-loading.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/gouwuche.css">
+    <link rel="stylesheet" type="text/css" href="../css/sweet-alert.css">
+
+</head>
+<body>
+<div class="header">
+    <a class="back" href="javascript:history.go(-1)"></a>
+    <a class="user" href="gerenzhongxin.html" target="_parent"></a>
+    <h1>购物车</h1>
+</div>
+
+<div class="cart-list"></div>
+<script id="item_template" type="text/html">
+    <div class="item" id="item_{{ id }}" cartid="{{ id }}">
+        <div class="gpic"><a href="shangpinxq.html?id={{ item_id }}" target="_parent"><img src="{{ pic_path }}"></a></div>
+        <div class="gname">{{ title }}</div>
+        <div class="gprice">¥ <span class="item_price" id="itemprice_{{ id }}">{{ price }}</span></div>
+        <div class="gsize">尺码：{{ sku_name }}</div>
+        <div class="goprice"><s>¥{{ std_sale_price }}</s></div>
+        <div class="btn-del" id="shop_cart_{{ id }}" cid="{{ id }}" onclick="del_shop({{ id }})"></div>
+        <div class="gcount">
+            <div class="btn reduce" onclick="minus_shop({{ id }})" name="btn-reduce"></div>
+            <div class="total">
+                <input type="tel" readonly id="num_{{ id }}" value="{{ num }}">
+            </div>
+            <div class="btn plus" onclick="plus_shop({{ id }})" name="btn-plus"></div>
+        </div>
+    </div>
+</script>
+<div id="loading"><span class="dots-loader"></span></div>
+<div class="buy">
+    <p class="coupons">优惠券：0</p>
+    <p class="total">总金额：¥<span id="total_price">0</span></p>
+    <a class="btn-buy" >购&nbsp;&nbsp;买&nbsp;&nbsp;<span id="remain_time"></span></a>
+</div>
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/jquery-mobile/1.4.5/jquery.mobile.min.js"></script>
+<script src="../js/template.js"></script>
+<script src="../js/sweet-alert.min.js"></script>
+<script src="../js/tmsc.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+  $('.ui-loader').remove();
+  //获取
+  get_shop_carts(GLConfig.get_cart_url);
+  $(document).on({
+  	tap:Ctrl_sure_pay,
+  	touchstart:btnPresse,
+  	touchend:btnUnpresse,
+  	},'.buy .btn-buy');
+});
+  
+function Ctrl_sure_pay(){
+  /*去付款*/	
+  var cart_ids = [];
+  $('.item').each(function(index,e){
+    cart_ids[cart_ids.length] = $(e).attr('cartid');
+  });
+  if (cart_ids.length == 0){
+    drawToast("购物车没有商品");
+    return
+  }
+  var pay_link = 'queren-dd.html?cart_ids='+cart_ids.join(',');
+  window.location.href = adjustPageLink(pay_link);
+}
+</script>
+</body>
+</html>

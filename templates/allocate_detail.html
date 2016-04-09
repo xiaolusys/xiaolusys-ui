@@ -1,0 +1,78 @@
+{% extends "wavepick_base.html" %}
+
+{% block title %} 第{{ wave_id }}批详情 {% endblock %}
+
+{% block container %}
+<div class="container">
+
+<div class="row">
+  <div class="col-md-12" style="text-align:center">
+    <h3> 第{{ wave_id }}批详情</h3>
+  </div>
+</div>
+
+<div class="row" style="margin-top:10px">
+  <div class="col-md-12">
+    <div class="input-group input-group-lg">
+      <span class="input-group-addon">扫描SKU:</span>
+      <input id="id_sku" type="text" class="form-control">
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-bordered" style="margin-top:30px">
+      <thead><th>SKU</th><th>格子分配</th></thead>
+      <tbody id="id_tbody">
+      {% for allocate in pick_alloctates %}
+        <tr id="alloc-row-{{ allocate.0 }}"><td>[ {{ allocate.0 }} ]</td><td>{{ allocate.2 }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12" style="text-align:center">
+    <a href="/supplychain/wavepick/createwave/?group_id={{ group_id }}" type="button" class="btn btn-primary" style="display:none">开始下一批</a>
+  </div>
+</div>
+
+</div>
+
+{% endblock %}
+
+{% block tail_script %}
+<script type="text/javascript">
+    
+    var pre_row = null;
+    var callback = function(res){
+        if (res.identity){
+             var alloc_id = "alloc-row-"+res.identity;
+             var row = $("#"+alloc_id);
+             if(pre_row != row && pre_row != null){
+                $(pre_row).css("background-color","green");            
+            } 
+            $(row).css("background-color","yellow");
+            $("#id_sku").val("");
+            pre_row = row;
+            document.getElementById(alloc_id).scrollIntoView();
+        }   
+    };
+    $('#id_sku').keydown(
+        function(event) {  
+          if (event.keyCode == 13) { 
+            var sku_id = $.trim($("#id_sku").val());
+            $.post("/supplychain/wavepick/allocate/{{ wave_id }}/",
+                {"identity":sku_id,"barcode":sku_id},
+                callback,"json"            
+            )
+            
+            event.preventDefault();
+          }
+    });  
+</script>
+{% endblock %}

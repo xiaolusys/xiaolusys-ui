@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>小鹿美美 - 外贸原单，天天惊喜！</title>
+    <meta charset="UTF-8">
+    <meta id="viewport" name="viewport"/>
+    <script src="js/common.js"></script>
+    <script src="js/seckill.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/dots-loading.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/seckill.css">
+</head>
+<body>
+<div class="top">
+    <a href="index.html" class="home"></a>
+    <a href="pages/gerenzhongxin.html" class="user"></a>
+    <h1>秒杀专区</h1>
+</div>
+
+<div class="paixu">
+    <a href="miaosha.html">推荐排序</a>
+    <a href="miaosha.html?order_by=price">价格排序↑</a>
+</div>
+
+<ul class="glist" id="tips">
+</ul>
+<div id="prod_list">
+
+</div>
+<div id="loading"><span class="dots-loader"></span></div>
+<div class="cart-container">
+    <a class="p-center" href="pages/gerenzhongxin.html"></a>
+    <a class="cart" href="javascript:void(0);"><span class="total">0</span><span class="carttime"></span></a>
+</div>
+<div class="scroll-top" id="js-scroll-top"></div>
+<div class="footer clearfix">
+<div class="link">
+<a href="/index.html">首页</a>
+<a href="/contact.html">联系我们</a>
+</div>
+<div class="copyright">
+<p >Copyright © 2014-2015 小鹿美美，All Rights Reserved 沪ICP备15013901号-1</p>
+</div>
+</div>
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="js/jquery-shopping.js"></script>
+<script>
+(function ($) {
+    //返回顶部
+    $(document).on({touchend:scroll_top,click:scroll_top},'#js-scroll-top');
+    $('.cart').listencart();
+    Set_orders();
+    Set_shopcarts_num();
+    need_set_info();
+})(jQuery);
+function scroll_top(e){
+    e.preventDefault();
+    $('body').animate({scrollTop: 0}, 400);
+}  
+</script>
+<link rel="stylesheet" type="text/css" href="css/sweet-alert.css">
+<script src="js/sweet-alert.min.js"></script>
+</body>
+</html>

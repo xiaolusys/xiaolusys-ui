@@ -1,0 +1,50 @@
+{% extends "weixin/weixin_base.html" %}
+
+{% block title %} 选择商品 {% endblock %}
+
+
+{% block container %}
+
+<div class="container-fluid">
+
+  <div class="panel panel-default" style="margin-top:5px">
+    <div class="panel-heading" style="color:#e8792a">选择商品</div>
+    <div class="panel-body">
+      <p style="color:#029fd6">亲，恭喜你通过审核了，您可以选择斗篷或者分腿睡袋，二款选一先到先得哦！</p>
+
+      <div class="row">
+	<div class="col-xs-6" style="text-align:center">
+	  <h5 style="color:#e8792a">选择一：婴幼儿时尚分腿睡袋</h5>
+	  <a href="#" class="thumbnail">
+	    <img src="https://mmbiz.qlogo.cn/mmbiz/yMhOQPTKhLsRWbEbeOiaHBExWQGPyK4ajDrgnPFsnlSARzIJ0S0EwYCYwn6E52IBa23sO88pByhKoOdXgWTo3bw/0" alt="...">
+	  </a>
+	</div>
+	<div class="col-xs-6" style="text-align:center">
+	  <h5 style="color:#e8792a">选择二：婴幼儿时尚斗篷/披风</h5>
+	  <a href="#" class="thumbnail">
+	    <img src="https://mmbiz.qlogo.cn/mmbiz/yMhOQPTKhLtMTpiclRQJZ7aBpwKS3xsvUXAqTHAHJBxx0s4CewutslnXYicWiaZtX34jtECwgv5IkV7gibxczqAo7A/0" alt="...">
+	  </a>
+	</div>
+      </div>
+
+      <div class="row">
+	<div class="col-xs-2"></div>
+	<div class="col-xs-8" style="text-align:center" id="id_msg">
+	  <form method="post" action="/weixin/samplechoose/">{% csrf_token %}
+	  <select id="id_selection" name="selection" class="form-control input-sm">
+	    <option value="1">时尚斗篷/披风</option>
+	    <option value="2">时尚分腿睡袋</option>
+	  </select>
+	  <div class="col-xs-12" style="text-align:center;margin-top:10px" id="id_promt"></div>
+	  <button type="submit" class="btn btn-warning" id="id_submit">确定选择</button>
+	  </form>
+	</div>
+	<div class="col-xs-2"></div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+

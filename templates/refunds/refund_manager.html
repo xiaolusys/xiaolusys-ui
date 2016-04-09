@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>退货单管理</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap2.3.2.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}css/base.less" rel="stylesheet/less" type="text/css" />
+    <link href="{{ STATIC_URL }}css/admin/dialog.css" rel="stylesheet" type="text/css" />
+	<script src="{{ STATIC_URL }}closure-library/closure/goog/base.js"></script>
+     <style type="text/css">
+     	body,div{
+    	margin:0px auto;
+    	padding:0px;
+	    }
+
+		input{
+			width:120px;
+		}
+		select{
+			width:120px;
+		}
+		td {
+			word-break:break-all;
+		}
+		td {
+			margin:5px; padding:5px;
+		}
+		.head-title a{
+			margin-left:20px;
+		}
+		.container table{
+			table-layout:fixed;
+		}
+		.container table td{overflow: hidden;white-space:nowrap;}
+		.map-content {
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		    font-size: 13px;
+		    line-height: 18px;
+		    color: #333;
+		}
+		.order-userinfo {
+			display:inline;
+			margin:0 10px;
+			font-size:20px;
+		}
+		label{
+			display:inline;
+			margin:0 5px;
+		}
+		.label{
+			font-size:20px;
+		}
+		.prompt-dialog{
+			display:none;
+		    z-index:100;
+		    position:absolute;
+		    background: #fff;
+		    margin-bottom:0px;
+		    border: 1px solid #999;
+		}
+		.prompt-dialog input,.prompt-dialog button{
+			margin-left:5px;
+			display:inline;
+			margin-bottom:0px;
+		}
+		.icon-plus{
+			font-size:10px;
+		}
+	</style>
+</head>
+<body>
+	{% with refund_trades=object.refund_trades  unrelate_prods=object.unrelate_prods %}
+	<div class="container">
+		<div id="post-items" style="display:block;">
+		  <fieldset>
+		  	<legend><h1 class="head-title" >退货单列表  <a href="/admin/refunds/refund/add/" title="创建新退货款单" target="_blank"><i class="icon-plus"></i></a></h1></legend>
+			  <table id='id_refund_table' class="table table-bordered table-condensed">
+			    <thead>
+			      <tr><th>序号</th><th>买家昵称</th><th>卖家昵称</th><th>收货人</th><th>退货单数</th><th>创建日期</th><th>退回快递</th><th>快递单号</th><th>退款状态</th><th>原因</th><th>描述</th></tr>
+			    </thead>
+			    {% for trade in refund_trades %}
+			    <tr class="{% if trade.has_refund_prod %}label-warning{% endif %}">
+			    	<td>{{ forloop.counter }}</td>
+			    	<td><a href="javascript:void(0);" class="check-refund-order" style="cursor:pointer;" title="{{ trade.tid }}" seller_id="{{ trade.seller_id }}" tid="{{ trade.tid }}">
+			    		{% if trade.buyer_nick %}{{ trade.buyer_nick }}{% elif trade.mobile %}{{ trade.mobile }}{% else %}****{% endif %}</a></td>
+			    	<td>{{ trade.seller_nick }}</td>
+			    	<td>{{ trade.receiver_name }}</td>
+			    	<td>{{ trade.order_num }}<a></a></td>
+			    	<td>{{ trade.created }}</td>
+			    	<td>{{ trade.company_name }}</td>
+			    	<td>{{ trade.sid }}</td>
+			    	<td>{{ trade.status }}</td>
+			    	<td>{{ trade.reason }}</td>
+			    	<td>{{ trade.desc }}</td>
+			    </tr>
+			    {% endfor %}
+			  </table>
+		  </fieldset>
+		</div>
+		<div id="id-refund-prod-panel" class="product-panel">
+			<h3 class="head-title" id="id-refund-head">
+				<img src="{{ STATIC_URL }}img/tri_right.png" style="cursor:pointer;margin-right:5px;"></img>未关联退回商品列表</h3>
+			<div id="id-refund-goods">
+				<table id="id-refund-table" class="table table-bordered table-striped table-condensed">
+					<thead>
+						<tr>
+						<th>序号</th>
+						<th style="width:140px;">原单ID</th>
+						<th>买家昵称</th>
+						<th>手机</th>
+						<th>固话</th>
+						<th>物流单号</th>
+						<th>物流公司</th>
+						<th style="width:200px;">商品简称</th>
+						<th style="width:150px;">规格</th>
+						<th>数量</th>
+						<th>二次销售</th>
+						<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for prod in unrelate_prods %}
+						<tr>
+					    	<td>{{ forloop.counter }}</td>
+					    	<td>{{ prod.trade_id }}</td>
+					    	<td>{{ prod.buyer_nick }}</td>
+					    	<td>{{ prod.buyer_mobile }}</td>
+					    	<td>{{ prod.buyer_phone }}<a></a></td>
+					    	<td>{{ prod.out_sid }}</td>
+					    	<td>{{ prod.company }}</td>
+					    	<td>{{ prod.title }}</td>
+					    	<td>{{ prod.property }}</td>
+					    	<td>{{ prod.num }}</td>
+					    	<td>{% if prod.can_reuse %}<img src="{{ STATIC_URL }}admin/img/icon-yes.gif" alt="yes">
+							{% else %}<img src="{{ STATIC_URL }}admin/img/icon-no.gif" alt="no">{% endif %}</td>
+					    	<td><button class="relate-refund btn btn-mini btn-primary" rpid="{{ prod.id }}" title="关联到退货单">关联</button></td>
+					    </tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	{% endwith %}
+	<div id="rel-refundorder-dialog" class="prompt-dialog">
+		<label class="label label-important">交易ID：</label><input id="relate_refund_tid" type="text" /><button id="id_rel_refundbtn" class="btn btn-small btn-primary">确定</button>
+	</div>
+</body>
+<script src="{{ STATIC_URL }}script/refund/checkrefund.js"></script>
+<script src="{{ STATIC_URL }}jquery/jquery-1.8.13.min.js"></script>
+<script type="text/javascript">
+	new checkrefund.Manager();
+
+    $(".select_reason").live("change",function(e){
+        var target = e.target;
+        var id = target.getAttribute("id");
+        var cid = target.getAttribute("cid");
+        if (target.value !== '') {
+            $(this).css("border-color", "green");
+            data = {"pro_id": cid, "reason": target.value};
+            url = '/refunds/refund_reason/';
+            function callback(res) {
+                if (res == 'ok') {
+                    $(target).after("<img src='/static/admin/img/icon-yes.gif'>");
+                }
+            }
+
+            $.ajax({url: url, data: data, success: callback});
+        }
+        else{
+            $(this).css("border-color", "red");
+        }
+
+    });
+
+</script>
+</html>

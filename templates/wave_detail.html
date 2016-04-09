@@ -1,0 +1,43 @@
+{% extends "wavepick_base.html" %}
+
+{% block title %} 第{{ wave_id }}批详情 {% endblock %}
+
+{% block container %}
+<div class="container">
+
+<div class="row">
+  <div class="col-md-12" style="text-align:center">
+    <h3> 第{{ wave_id }}批详情</h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-bordered" style="margin-top:10px">
+      <thead>
+        <th style="min-width:45px;">序号</th><th>规格编码/名称</th><th style="min-width:60px;">库位</th><th>数量</th>
+	</thead>
+      <tbody>
+                    {% for outer_id,item in order_items %}
+				    	<tr>
+					    <td >[{{ item.identity }}]</td>
+            			<td >[{{ outer_id }}]<br>{{ item.title }}</td>
+					    <td >{{ item.location }}</td>
+					    <td >{{ item.num }}</td>
+					</tr>
+			    {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12" style="text-align:center">
+    <a href="/supplychain/wavepick/allocate/{{ wave_id }}/" type="button" class="btn btn-primary">开始二次分件</a>
+  </div>
+</div>
+
+</div>
+
+{% endblock %}

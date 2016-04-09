@@ -1,0 +1,98 @@
+{% extends "xiaolumm/daystats_base.html" %}
+{% block title %}重复购买统计{% endblock %}
+{% block head_script %}
+    <script src="//cdn.bootcss.com/jquery/1.7.1/jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}daystat_js/my_js.js"></script>
+
+{% endblock %}
+{% block container %}
+    <form class="form-horizontal" role="form" method="GET" action="/sale/daystats/stats_repeat/">
+        <div class="row" style="margin-top: 40px">
+            <div class="col-xs-4">
+                <label class="control-label" for="df">开始日期:</label>
+                <input type="text" id="f_datepicker" name="df" class="form-control datepicker"
+                       value="{{ start_date }}"/>
+            </div>
+            <div class="col-xs-4">
+                <label class="control-label" for="dt">结束日期:</label>
+                <input type="text" id="t_datepicker" name="dt" class="form-control datepicker" value="{{ end_date }}"/>
+            </div>
+            <div class="col-xs-1">
+                <input type="submit" value="查询" class="btn btn-primary" style="margin-top:27px;"/>
+            </div>
+        </div>
+    </form>
+    <input value="{{ task_id }}" id="task_id_repeat" hidden="hidden">
+    <input value="{{ task_id_2 }}" id="task_id_2" hidden="hidden">
+    <div class="row" style="margin-top: 40px">
+        <table class="table table-bordered" id="repeat_table">
+            <thead>
+            <th>新增(用户数)复购率(%)</th>
+            {% for month in month_range %}
+                <th>{{ month }}月份</th>
+            {% endfor %}
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <div class="row" style="margin-top: 20px"><h2>用户统计</h2></div>
+    <div class="row">
+        <div id="all_data2">
+            <table class="table table-bordered" id="data-table-people">
+                <thead>
+                <th></th>
+                <th>总购买人数</th>
+                <th>总购买mm</th>
+                <th>重复购买</th>
+                <th>重复购买的妈妈</th>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+    <div class="row" style="margin-top: 20px"><h2>销售统计</h2></div>
+    <div class="row">
+        <input id="task_id_sale" value="{{ task_id_sale }}" hidden="hidden">
+        <table class="table table-bordered" id="data-table-sale">
+            <thead>
+            <th></th>
+            <th>销售额</th>
+            <th>总成交单数</th>
+            <th>成交(当天内同一人购买算一单)单数</th>
+            <th>包裹数</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+{% block tail_script %}
+    <link href="{{ STATIC_URL }}jquery-timepicker-addon/timepicker/jquery-ui-timepicker-addon.css" type="text/css"/>
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}jquery-visualize-plugin/visualize.jQuery.css"/>
+    <script src="{{ STATIC_URL }}jquery/jquery-ui-1.8.13.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}jquery-visualize-plugin/visualize.jQuery.js"></script>
+    <script src="{{ STATIC_URL }}jquery-timepicker-addon/timepicker/jquery-ui-timepicker-addon.js"
+            type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}jquery-timepicker-addon/js/jquery-ui-timepicker-zh-CN.js"
+            type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#f_datepicker").datepicker({
+                dateFormat: "yy-mm-dd"
+            });
+
+            $("#t_datepicker").datepicker({
+                dateFormat: "yy-mm-dd"
+            });
+        });
+    </script>
+{% endblock %}

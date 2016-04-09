@@ -1,0 +1,28 @@
+{% extends "weixin/weixin_base.html" %}
+{% load url from future %}
+
+{% block title %} 代理测试 {% endblock %}
+{% block head_script %}
+    <style>
+        .table > tbody > tr > td, .table > tfoot > tr > td {
+            border: solid 1px #fff;
+        }
+    </style>
+{% endblock %}
+
+{% block container %}
+    <div class="container-fluid">
+        <div class="panel panel-default" style="margin-top: 5px" id="id_problem_body">
+            {% include "mmexam/examination/daili_exam_block.html" %}
+        </div>
+
+        <div class="footer" style="text-align:center">
+            <p>© Uni Littles 2015</p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block tail_script %}
+    <script type="text/javascript">
+    </script>
+{% endblock %}

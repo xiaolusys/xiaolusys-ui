@@ -1,0 +1,136 @@
+{% extends "pay/base_addr.html" %}
+
+{% block title %}小鹿美美-新增地址{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ STATIC_URL }}style/profile.css">
+<style style="text/css">
+.bold { 
+	font-size:16px;
+	padding:10px 10px 10px 0px;
+}
+.address{
+	background-color:white;
+	margin-bottom:0px;
+	min-height:80px;
+}
+.address a{
+	color:#555;
+}
+.opt-link a{
+	font-size:30px;
+}
+.opt-link .glyphicon-remove{
+	color:#C63300;
+}
+.opt-link .glyphicon-heart-empty{
+	color:#FFB7DD;
+}
+.del-link{
+	display:none;
+}
+</style>
+{% endblock %}
+
+
+{% block preload_script %}
+<script src="http://cdn.bootcss.com/jquery-mobile/1.4.5/jquery.mobile.min.js"></script>
+{% endblock %}
+
+
+{% block container %}
+
+<nav class="navbar navbar-default navbar-fixed-top row">
+	<div class="col-xs-2" >
+	  <a id="history-url" href="{% if origin_url %}{{ origin_url }}{% else %}javascript:history.back();{% endif %}" class="glyphicon glyphicon-menu-left" target="_self"></a>
+	</div>
+	<div class="col-xs-8" >
+	  <span class="h3">地址列表</span>
+	</div>
+	<div class="col-xs-2" >
+	  <a id="address_plus_link" href="javascript:void(0);" class="glyphicon glyphicon-plus " target="_self"></a>
+	</div>
+</nav>
+
+
+<div class="container-fluid" style="margin-top:65px;">
+<div id="address_plus_module" class="row" style="display:none;">
+<!--此处加载添加地址表单-->
+</div>
+{% csrf_token %}
+<div id="address_list">
+{% for addr in results %}
+<div id="addrid-{{ addr.id }}" addrid="{{ addr.id }}" class="well well-sm row list-row-border address" >
+	<a class="well-link" href="{% if origin_url %}{{ origin_url }}&addrid={{ addr.id }}{% else %}#{% endif %}" target="_self">
+    <div id="addrwell-{{ addr.id }}" class=" col-xs-offset-1 col-xs-9">
+      <div><font class="bold">{{ addr.receiver_name }}</font>&nbsp;&nbsp;&nbsp;{{ addr.receiver_state }}&nbsp;{{ addr.receiver_city }}&nbsp;{{ addr.receiver_district }}</div>
+	  <div>{{ addr.receiver_address }}</div>
+	</div>
+	</a>
+	<div id="optlink-{{ addr.id }}" class="opt-link ">
+		<a class="col-xs-1 glyphicon {% if origin_addrid  %}{% if origin_addrid == addr.id %}glyphicon-heart-empty{% endif %}{% else %}{% if addr.default %}glyphicon-heart-empty{% endif %}{% endif %}"></a>
+		<a id="dellink-{{ addr.id }}" addrid="{{ addr.id }}" class="col-xs-1 glyphicon glyphicon-remove del-link"></a>
+	</div>
+
+</div>
+{% endfor %}
+</div>
+
+</div>
+{% endblock %}
+
+{% block delayed_script %}
+<script type="text/javascript">
+$(function(){
+	$('.ui-loader').remove();
+	
+	$('#address_plus_link').click(function(event){
+		console.log('init ready');
+		if ($(this).hasClass('glyphicon-menu-up')){
+			$('#address_plus_module').slideUp(1000);
+			$(this).removeClass('glyphicon-menu-up').addClass('glyphicon-plus');
+			return 
+		}
+		$(this).addClass('glyphicon-menu-up').removeClass('glyphicon-plus');
+		var callback = function(resp){
+			$('#address_plus_module').html(resp).slideDown(500);
+			
+		};
+	
+		$.get('/mm/addr/?format=html',callback);
+	});
+	
+	$('.del-link').on("click",function(event){
+		
+		var addrId = $(this).attr('addrid');
+		var csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+		var params =  { "pk":addrId, 
+						"status":"delete", 
+						"csrfmiddlewaretoken":csrf_token, 
+						"format":"json" };
+
+		var callback = function(resp){
+			if (resp.success == true){
+				$('#addrid-'+addrId).slideUp(500);
+			}
+		};
+		$.post('/mm/addr/',params,callback,'json');
+	});
+	
+	$(".well").bind("swipeleft", function(event) {
+		var addrid = $(this).attr('addrid');
+		$('#addrwell-'+addrid).removeClass('col-xs-offset-1');
+        $('#dellink-'+addrid).show();
+
+    }); 
+    
+    $(".well").bind("swiperight", function(event) {
+	    var addrid = $(this).attr('addrid');
+		$('#addrwell-'+addrid).addClass('col-xs-offset-1');
+        $('#dellink-'+addrid).hide();
+    }); 
+	
+});
+
+</script>
+{% endblock %}

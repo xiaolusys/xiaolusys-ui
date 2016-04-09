@@ -1,0 +1,93 @@
+{% extends "weixin/weixin_base.html" %}
+
+{% block title %} 推荐有礼 {% endblock %}
+
+{% block container %}
+
+<div class="container-fluid">
+
+  <div class="panel panel-default" style="margin-top:5px">
+    <div class="panel-heading">推荐有礼</div>
+    <div class="panel-body">
+      <p>把优尼世界推荐给好友，只需输入她的手机号即可。</p>
+      <p>好友得优惠，您赢取返利，一举多得！</p>
+      <div class="form-group">
+	<label>输入好友手机:</label><span style="float:right;color:red" id="feedback"></span>
+	<input type="text" class="form-control" placeholder="好友手机号" id="mobile_input">
+	<input type="hidden" id="openid" value="{{ openid }}">
+      </div>
+      <button type="button" class="btn btn-primary" onclick="referalSubmit();">提交推荐</button>
+    </div>
+  </div>
+
+  <div class="panel panel-default" style="margin-top:15px">
+    <div class="panel-heading" style="color:orange">我的返利</div>
+    <div class="panel-body">
+      <p style="color:orange">账户余额: ￥<span style="font-size:26px">{{ referal_bonus }}</span> <button class="btn btn-warning" style="float:right;">提现</button></p>
+      <p>一级好友: {{ direct_referal_count }}人</p>
+      <p>二级好友: {{ indirect_referal_count }}人</p>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-xs-12">
+      <h5 style="color:#3071a9">晒单返利</h5>
+      <p>购买后晒单到朋友圈，可得到额外的<font style="color:red">返利5元</font>奖励。</p>
+    </div>
+    <div class="col-xs-12">
+      <h5 style="color:#3071a9">推荐返利</h5>
+      <p>成功邀请一个好友，最高可获10元奖励。邀请得多，奖励更多哟！</p>
+    </div>
+    <div class="col-xs-12">
+      <h5 style="color:#3071a9">返利规则</h5>
+      <p>详细的返利规则，请<a href="/weixin/referalrules/" style="color:green">点击查看 >></a></p>
+    </div>
+  </div>
+  
+  <div class="footer">
+    <p>© Uni Littles 2014</p>
+  </div>
+  
+</div>
+{% endblock %}
+
+{% block tail_script %}
+
+    <script type="text/javascript">
+      function validateMobile(s) {
+        var validateReg = /^((\+?86)|(\(\+86\)))?1\d{10}$/;
+        return validateReg.test(s);
+      };
+
+      function referalSubmit() {
+        var mobile_input = document.getElementById("mobile_input");
+        var mobile = mobile_input.value;
+        mobile_input.placeholder = "好友手机号";
+      
+        if (mobile == "") return false;
+
+        var feedback = document.getElementById("feedback");
+        feedback.innerHTML = "";
+        if (validateMobile(mobile) == false) {
+          feedback.innerHTML = "号码有误，请重新输入";
+          return false;
+        }
+
+        var openid = document.getElementById("openid").value;
+        var url = "/weixin/addreferal/";
+        var data = {"mobile":mobile, "openid":openid};
+        
+        var callback = function (res) {
+          console.log(res);
+          if (res["code"] == "ok") {
+            mobile_input.value = "";
+            mobile_input.placeholder = "推荐成功，请继续推荐";
+          } else if (res["code"] == "dup") {
+            feedback.innerHTML = "号码已存在，请重新推荐";
+          }
+        };
+        $.ajax({url:url, data:data, success: callback});
+      };
+    </script>
+{% endblock %}

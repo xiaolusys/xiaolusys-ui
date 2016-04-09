@@ -1,0 +1,154 @@
+{% extends "weixin/weixin_pubbase.html" %}
+
+{% block title %}免费试用 2000份全棉卡通分腿睡袋免费送！{% endblock %}
+
+
+{% block container %}
+
+<div class="container-fluid">
+
+  <div class="panel panel-default" style="margin-top:5px">
+    <div class="panel-heading" style="color:orange">8月卡通空气层睡袋活动 公告</div>
+    <div class="panel-body">
+      <!--{% if started %}
+      <p>距离活动结束还有<font style="color:red;"><span style="font-size:20px">{{ days }}</span>天<span style="font-size:20px">{{ hours }}</span>小时<span style="font-size:20px">{{ minutes }}</span>分</font>,为感谢美妈们的积极参与，小鹿美美决定加赠<span style="font-size:20px;color:red;">1000</span>个睡袋,共<span style="font-size:20px;color:red;">2000</span>份全棉卡通空气层分腿睡袋免费送，赶快邀请好友来参加吧！最后一批名单将在17日（星期一）上午10点公布,谢谢参与! </p>
+	  {% else %}
+	  <p>小鹿美美全棉儿童空气层分腿睡袋免费试用开始预热啦！距离活动开始还有<font style="color:red;"><span style="font-size:20px">{{ days }}</span>天<span style="font-size:20px">{{ hours }}</span>小时<span style="font-size:20px">{{ minutes }}</span>分</font>。</p>
+	  {% endif %}-->
+     <!-- <p><span style="font-size:20px">2500</span>份卡通吸汗巾已全部送出 <a href="/weixin/inviteresult/">查看中奖名单&gt;&gt;</a></p>-->
+     <p><span style="font-size:20px">全部试用名单共2147名 <a href="/weixin/inviteresult/">查看中奖名单&gt;&gt;</a></p>
+     <p style="color:red;">免费试用申请已经结束了，试用名单已经全部公布，没有成功的亲们下期活动再加油哦！</p>
+    </div>
+  </div>
+
+  <div class="panel panel-default" style="margin-top:5px">
+  <div class="panel-heading" style="color:red">活动产品展示</div>
+  <div class="panel-body">
+    
+    <form action="/weixin/sampleapply/" method="post" onsubmit="return check()" class="form-group">{% csrf_token %}
+      <input type="hidden" value="5" name="sample_pk"/>
+
+      <div class="row">
+	<div class="col-xs-6" style="text-align:center">
+	  <p style="margin-top:10px"><a href="http://mp.weixin.qq.com/bizmall/mallshelf?id=&t=mall/list&biz=MzA5NTI1NjYyNg==&shelf_id=2&showwxpaytitle=1#wechat_redirect">查看今日特卖 >></a></p>
+	  <a href="" class="thumbnail">
+	    <img id="id_img1" src="https://mmbiz.qlogo.cn/mmbiz/yMhOQPTKhLuib4oia7Uxw0Ttn7TWcdaoxic6hywIyTkXxPxsnGBkbWvhG0YyxQNa7DvaH8TGzicbmJQ0K42Bz2amOA/0?wx_fmt=png" alt="...">
+	  </a>
+	</div>
+	<div class="col-xs-6">
+	  <p style="margin-top:10px">款式选择：</p>
+	  <select class="form-control" name="color" id="id_selection_color">
+	    <option value="0">生日派对</option>
+	    <option value="1">滴滴小车</option>
+	    <option value="2">兔兔果园</option>
+	  </select>
+	  <p style="margin-top:20px">尺寸选择：</p>
+	  <select class="form-control" name="size" id="id_selection_size">
+	    <option value="1">75cm</option>
+	    <option value="2">90cm </option>
+	    <option value="3">105cm </option>
+	  </select>
+ 	</div>
+      </div>
+
+      <div class="row" style="margin-top:10px">
+	<div class="col-xs-2"></div>	  
+	<div class="col-xs-8" style="text-align:center">
+	  {% if started %}
+	  {% if order_number < 1000 %}
+	  <p>今日<font style="color:red; font-size:20px">{{ order_number }}</font>人已申请</p>
+	  {% else %}
+	  <p>今日超过<font style="color:red; font-size:20px">600</font>人已申请</p>
+	  {% endif %}
+	  {% endif %}
+      <p style="margin-top:16px">VIP邀请码：
+      {% if wx_user.referal_from_openid and self_vipcode %}
+      <input class="form-control" type="text" id="id_vipcode" name="fcode" value="{{ self_vipcode }}" readonly="readonly" />
+      {% else %}
+      <input class="form-control" type="text" id="id_vipcode" name="fcode" value="{{ fcode }}"/>
+      {% endif %}
+	  </p>
+	</div>
+	<div class="col-xs-2"></div>
+    </div>
+      
+      <div class="row" style="text-align:center">
+	<p id="id_msg" style="text-align:center;color:red"></p>
+	<div class="col-xs-12" style="text-align:center; margin-top:16px">
+	{% if started %}
+	{% if order_exist %}
+	<p>亲，您的申请已经提交。</p>
+	<p><a href="/wx/sampleads/{{ wx_user.pk }}/">查看您的VIP邀请码页面>></a></p>
+    {% else %}
+	<input type="submit" class="btn btn-warning" value="提交试用申请"/>
+	{% endif %}
+    {% else %} 
+	  <!--<button type="button" class="btn btn-warning" disabled="disabled">申请待开放...</button>
+	  <p style="color:red;margin-top:10px">请提前关注【优尼世界】，申请待开放！</p>-->
+	  <p style="color:red;margin-top:10px">卡通凉席免费试用活动已结束，谢谢美妈们的参与，后期活动更精彩！</p>
+    {% endif %}
+	</div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h5 style="color:#3071a9">申请须知</h5>
+    <p style="color:red">1) 申请提交完成的页面，有您的专属VIP邀请码！</p>
+    <p>2) 审核结果于每天上午10点发布，将在【活动中心】->【审核通知】页面显示，请查阅。</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h5 style="color:#3071a9">常见问题</h5>
+    <p>1) VIP邀请码在哪里? <font style="color:red">在您看到的微信文章里, 请阅读寻找！也可向申请过的朋友索要VIP邀请码。</font></p>
+  </div>
+</div>
+
+
+<div class="footer">
+  <p>© Uni Littles 2015</p>
+</div>
+
+</div>
+{% endblock %}    
+
+{% block tail_script %}
+<script type="text/javascript">
+
+  var imgsrc = [
+	  "https://mmbiz.qlogo.cn/mmbiz/yMhOQPTKhLuib4oia7Uxw0Ttn7TWcdaoxic6hywIyTkXxPxsnGBkbWvhG0YyxQNa7DvaH8TGzicbmJQ0K42Bz2amOA/0?wx_fmt=png",
+	  "https://mmbiz.qlogo.cn/mmbiz/yMhOQPTKhLuib4oia7Uxw0Ttn7TWcdaoxicCfia634xuOP5pobDYFtxKeHLrBNONJ72OO7ibauW5QYQ0zVVacThZDKA/0?wx_fmt=png",
+	  "https://mmbiz.qlogo.cn/mmbiz/yMhOQPTKhLuib4oia7Uxw0Ttn7TWcdaoxicC6Oyunic2mVscEdfU18bRTwCM57XAoFuTU7IVvzhw3KdaiatR1ibkcibJg/0?wx_fmt=png"
+  ];
+
+  $("#id_selection_color").change(function(){ 
+    var val = $(this).children("option:selected").val();
+    $("#id_img1").attr("src",imgsrc[val]);
+  });
+
+  function validateVipCode(s) {
+  var validateReg = /^\d{6,7}$/;
+  return validateReg.test(s);
+  };
+
+  function check() {
+    {% if not started %}
+    return false;
+    {% endif %}
+  
+    var vipcode = $("#id_vipcode").val();  
+    var msg = $("#id_msg");
+    if (validateVipCode(vipcode) == false) {
+
+      msg[0].innerHTML = "错误的F码 (6-7位数字)!";
+      return false;
+    }
+    return true;
+  };
+</script>
+{% endblock %}
+

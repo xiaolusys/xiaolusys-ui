@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>小鹿美美－商品详情</title>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="format-detection" content="email=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta id="viewport" name="viewport" >
+    <link rel="stylesheet" href="{{M_STATIC_URL}}css/common.css">
+    <link rel="stylesheet" href="{{M_STATIC_URL}}css/shangpinxq.css">
+    <script>
+    var oViewport = document.getElementById('viewport');
+    var phoneWidth = parseInt(window.screen.width);
+    var phoneScale = phoneWidth / 640;
+    var ua = navigator.userAgent.toLowerCase();
+    if (/android (\d+\.\d+)/.test(ua)) {
+        var version = parseFloat(RegExp.$1);
+        if (version > 2.3) {
+            oViewport.setAttribute('content', 'width=640, minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi')
+        } else {
+            oViewport.setAttribute('content', 'width=640, target-densitydpi=device-dpi');
+        }
+    } else {
+        oViewport.setAttribute('content', 'width=640, user-scalable=no, target-densitydpi=device-dpi');
+    }
+    </script>
+</head>
+<body>
+<div class="goods-img">
+    <img src="http://image.xiaolu.so/chimabiao.png?imageMogr2/format/jpg/quality/100" width="100%">
+    <div class="chi-ma-biao">
+        <table>
+        {% for sku in product.normal_skus %}
+        {% with sku.size_of_sku.result as chima %}
+            {% if forloop.first %}
+            <thead></thead><th>尺码</th>
+            {% for cm in chima %}
+            <th>{{ cm }}</th>
+            {% endfor %}
+            </thead>
+            {% endif %}
+            <tr><td>{{sku.name}}</td>
+            {% for cm,cv in chima.items %}
+            <td>{{ cv }}</td>
+            {% endfor %}
+            </tr>
+        {% endwith %}
+        {% endfor %}
+        </table>
+    </div>
+    <div class="list">
+    <!-- 这里添加商品图片 -->
+    {% if product.detail.content_images %}
+    {% for img in product.detail.content_images %}
+	    <img src="{{img}}?imageMogr2/thumbnail/640/format/jpg/quality/90"></img>
+	{% endfor %}
+	{% else %}
+	{% for img in product.product_model.content_images %}
+        <img src="{{img}}?imageMogr2/thumbnail/640/format/jpg/quality/90"></img>
+    {% endfor %}
+	{% endif %}
+    </div>
+</div>
+</body>
+</html>

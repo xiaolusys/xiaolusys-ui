@@ -1,0 +1,167 @@
+{% extends "weixin/weixin_base.html" %}
+
+{% block title %} 
+宝宝再也不感冒啦！我刚申请了免费试用这款睡袋，你也快来申请吧！
+{% endblock %}
+
+{% block container %}
+
+<div class="container-fluid">
+  {% if identical %}
+  <div class="row" id="id_donebox">
+    <div class="col-xs-12">
+      {% if wx_user.subscribe %}
+      <p style="color:blue">亲，您的申请已经成功提交！</p>
+      <p style="color:blue">您的VIP邀请码：{{ vipcode }}，快把本页分享给好友, 一起来领可爱的睡袋吧！</p>
+      <p>申请结果请到【齐悦母婴惠】公众号菜单【活动中心】->【审核通知】查看。</p>
+      <!--
+      <p style="color:blue">我们会根据下列数据来审核您的申请：</p>
+      <p style="color:red">1. 您的F码被朋友使用次数。</p>
+      <p style="color:red">2. 您分享的页面被朋友点击次数。</p>
+      -->
+      {% else %}
+      <p style="color:blue">亲，您的申请已经提交！</p>
+      <p style="color:blue">您的VIP邀请码：{{ vipcode }}，快把本页分享给好友, 一起来领可爱的睡袋吧！</p>
+      <p style="color:red">VIP邀请码被使用10次以上，您中奖的几率将大大提升！</p>
+      <p style="color:red">若您还未关注【齐悦母婴惠】，关注后您的申请才会得到及时审核！</p>
+      {% endif %}
+      <p style="color:blue">注：以上文字将在5秒后消失！</p>
+    </div>
+  </div>
+  {% endif %}
+  
+  <div class="panel panel-default" style="margin-top:5px">
+    <div class="panel-heading" style="color:white;background-color:rgb(255,124,0);text-align:center"><b>宝宝再也不感冒啦！</b></div>
+    <div class="panel-body">
+      <div class="row">
+	<div class="col-xs-12">
+	  <a href="" class="thumbnail">
+	    <img src="https://mmbiz.qlogo.cn/mmbiz/yMhOQPTKhLvu5WdzhDicmHmlBpuga4YW6ibGu0FfFiaIPz3OicSibRVDjf7pSdSbEibO2O435ibuLRIdqicZtNzaic7XjLQ/0"/>
+	  </a>
+	</div>
+      </div>
+      <div class="row" style="margin-top:10px">
+	<div class="col-xs-12">
+	  <p>亲，您没看错！这款天猫、京东已经售出20000多件，好评如潮的睡袋，今日开放免<font style="color:red">费试用200份，大家快抢啊！！！</font></p>
+	  <p>超级实用的睡袋，适用<font style="color:red">年龄0-6岁</font>，宝宝穿上就再也不怕感冒咯！</p>
+	</div>
+      </div>
+
+
+      <div style="text-align:center;height:80px;padding-top:20px;">
+	{% if not identical %}
+	<p><a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc2848fa1e1aa94b5&redirect_uri=http://m.xiaolumeimei.com/weixin/freesamples/?f={{ vipcode }}&response_type=code&scope=snsapi_base&state=135#wechat_redirect" class="btn btn-warning">点击申请领取 >></a></p>
+	{% endif %}
+	<p style="color:red">VIP邀请码：{{ vipcode }}</p>
+      </div>
+
+      
+      <div class="row">
+	<div class="col-xs-12" style="margin-top:10px">
+	  <p>哦，对了！这款睡袋还带礼盒包装，直接免费寄送，您是不是一下子觉得世界美好了很多呢～～～</p>
+	  <a href="" class="thumbnail">
+	    <img src="https://mmbiz.qlogo.cn/mmbiz/yMhOQPTKhLv3GC9Flq6Q7vwglrNkxIPZw6an6GW2qKCkpFCA11zvJTGXiaAia8Nt526f342SPNXicmIVJliaakJq2w/0" />
+	  </a>
+	  <p>具体流程非常简单：关注【齐悦母婴惠】公众微信，然后申请就搞定啦！</p>
+	  <p style="color:red">悄悄告诉您：VIP邀请码被使用10次以上，您中奖的几率将大大提升！</p>
+	  <p>赶快行动吧，惊喜等着您！Go！</p>
+	</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="panel panel-default" style="margin-top:5px">
+    <div class="panel-heading" style="color:white;background-color:rgb(255,124,0);text-align:center"><b>流程说明</b></div>
+    <div class="panel-body">
+      <div class="row" style="margin-top:15px">
+	<div class="col-xs-12">
+	  <p>一、申请流程非常简单：关注【齐悦母婴惠】，按照提示申请即可。</p>
+	  <p>二、活动说明及详细规则，请咨询【齐悦母婴惠】（回复“1”可见）。</p>
+	  <p style="color:red">三、申请结果: 进入【齐悦母婴惠】菜单【审核通知】查看。</p>
+	</div>
+      </div>
+    </div>
+  </div>
+    
+  <div class="footer">
+    <p>© Uni Littles 2015</p>
+  </div>
+
+</div>
+{% endblock %}    
+
+{% block tail_script %}    
+<script type="text/javascript" src="{{ STATIC_URL }}script/WeixinApi.js"></script>
+<script type="text/javascript">  
+  var global_timer;
+  function slideup() {
+    $("#id_donebox").slideUp(2000);
+    window.clearInterval(global_timer);
+  };
+
+  global_timer =  window.setInterval(slideup, 3500);
+  
+// 开发阶段，开启WeixinApi的调试模式
+//WeixinApi.enableDebugMode();
+
+// 初始化WeixinApi，等待分享
+/*
+WeixinApi.ready(function(Api) {
+
+    // 微信分享的数据
+    var wxData = {
+        "appId": "wx3192657bff632654", // 服务号可以填写appId
+        "imgUrl" : "https://mmbiz.qlogo.cn/mmbiz/yMhOQPTKhLvu5WdzhDicmHmlBpuga4YW6nwKMuINKhI5Nicyp8baGAwt06DSgFFktcvolIAPHJmUDviaaQguqqPtg/0",
+        "link" : "http://m.xiaolumeimei.com/weixin/sampleads/{{ pk }}/",
+        "desc" : "超级实用的睡袋，适用年龄0-6岁，宝宝穿上就再也不怕感冒咯！",
+        "title": "宝宝再也不感冒啦！我刚申请了免费试用这款睡袋，你也快来申请吧！" 
+    };
+
+    // 分享的回调
+    var wxCallbacks = {
+        // 收藏操作不执行回调，默认是开启(true)的
+        favorite : false,
+
+        // 分享操作开始之前
+        ready : function() {
+            // 你可以在这里对分享的数据进行重组
+            //alert("准备分享");
+        },
+        // 分享被用户自动取消
+        cancel : function(resp) {
+            // 你可以在你的页面上给用户一个小Tip，为什么要取消呢？
+            //alert("分享被取消，msg=" + resp.err_msg);
+        },
+        // 分享失败了
+        fail : function(resp) {
+            // 分享失败了，是不是可以告诉用户：不要紧，可能是网络问题，一会儿再试试？
+            //alert("分享失败，msg=" + resp.err_msg);
+        },
+        // 分享成功
+        confirm : function(resp) {
+            // 分享成功了，我们是不是可以做一些分享统计呢？
+            //alert("感谢分享！请到【审核通知】查询状态！");
+        },
+        // 整个分享过程结束
+        all : function(resp,shareTo) {
+            // 如果你做的是一个鼓励用户进行分享的产品，在这里是不是可以给用户一些反馈了？
+            //alert("分享" + (shareTo ? "到" + shareTo : "") + "结束，msg=" + resp.err_msg);
+        }
+    };
+
+    // 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
+    Api.shareToFriend(wxData, wxCallbacks);
+
+    // 点击分享到朋友圈，会执行下面这个代码
+    Api.shareToTimeline(wxData, wxCallbacks);
+
+    // 点击分享到腾讯微博，会执行下面这个代码
+    Api.shareToWeibo(wxData, wxCallbacks);
+
+    // iOS上，可以直接调用这个API进行分享，一句话搞定
+    Api.generalShare(wxData,wxCallbacks);
+});
+*/
+</script>  
+{% endblock %}
+

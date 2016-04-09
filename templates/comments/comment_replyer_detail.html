@@ -1,0 +1,83 @@
+{% extends "comments/comment_base.html" %}
+
+{% block title %} 
+<title>客服评论展示</title>
+{% endblock %} 
+
+{% block head_script %}
+<script src="/static/jquery/jquery-1.8.13.min.js"></script>
+
+<script type="text/javascript">
+function writegrade(grade,oid) {
+    if (grade == "good") {
+      $("#"+oid).css("background-color","#F08080");
+    }
+    if (grade == "normal") {
+      $("#"+oid).css("background-color","#FFE4B5");
+    }
+    if (grade == "bad") {
+      $("#"+oid).css("background-color","#E0FFFF");
+    }
+
+    $.ajax({
+            url:'/app/comment/write_grade/',
+            data:{grade:grade,oid:oid},
+            success:function() {  console.log('ok'); }
+            });
+};
+</script>
+{% endblock %}
+
+{% block replyer_detail %}
+<div style="width:900px; padding:5px; margin:0px auto; text-align:center;" >
+<table class="table table-bordered table-condensed" >
+<thead>
+<tr>
+<th colspan="5" >{{ replyer }}</th>
+</tr>
+<tr>
+<th style="width:5%">排序</th>
+<th style="width:10%">图片</th>
+<th style="width:35%">客人评价</th>
+<th style="width:35%">客服回复</th>
+<th style="width:15%">打分</th>
+</tr>
+</thead>
+<tbody>
+
+{% for k,v in replyerDetail.items %}
+{% for c in v %}
+<tr style="background-color:{{ c.7 }};" id="{{ c.4 }}">
+<td >{{ forloop.counter }}</td>
+<td ><a href="{{ c.1 }}" target="_blank" ><img src="{{ c.0 }}_sum.jpg" alt=""></a></td>
+<td style="font-size:11px">{{ c.2 }}</td>
+<td style="font-size:11px;color:green">{{ c.3 }}</td>
+<td  width="" >
+<form name="form1" > 
+{% if c.6 == 1 %}
+<input   type="radio" name="{{ c.4 }}" id="{{ c.4 }}1" onclick="writegrade('good','{{ c.4 }}');" checked="checked" > 优 秀<br>
+{% else %}
+<input type="radio" name="{{ c.4 }}" id="{{ c.4 }}1" onclick="writegrade('good','{{ c.4 }}');" > 优 秀<br>
+{% endif %}
+<br>
+{% if c.6 == 2 %}
+<input   type="radio" name="{{ c.4 }}" id="{{ c.4 }}3" onclick="writegrade('normal','{{ c.4 }}');" checked="checked"> 合 格<br>
+{% else %}
+<input type="radio" name="{{ c.4 }}" id="{{ c.4 }}3" onclick="writegrade('normal','{{ c.4 }}');" > 合 格<br>
+{% endif %}
+<br>
+{% if c.6 == 0 %}
+<input type="radio" name="{{ c.4 }}" id="{{ c.4 }}2" onclick="writegrade('bad','{{ c.4 }}');" checked="checked"> 不 合 格
+{% else %}
+<input type="radio" name="{{ c.4 }}" id="{{ c.4 }}2" onclick="writegrade('bad','{{ c.4 }}');" > 不 合 格
+{% endif %}
+</from>
+<br> 
+</td>
+</tr>
+{% endfor %}
+{% endfor %}
+<tbody>
+</table>
+</div>
+{% endblock %}
