@@ -97,6 +97,7 @@ input::-webkit-input-placeholder {
 	height: 41px;
 	margin-top: 4px;
 	margin-left: 1%;
+	padding-right: 80%;
 }
 .act-0405-added-img {
 	width: 16%;
