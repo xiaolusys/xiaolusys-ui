@@ -142,7 +142,7 @@ $(document).ready(function() {
 					$openedImg[0].src = '../img/act-0405-26.png';
 					$openedImg.siblings().text('拼图');
 				} else if (resp.type == 'cash') {
-					$openedImg[0].src = '../img/cash_bg.png';
+					$openedImg[0].src = '../img/act-0405-25.png';
 					$openedImg.siblings().text('红包');
 				}
 			},
