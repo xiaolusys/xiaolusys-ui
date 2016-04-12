@@ -107,15 +107,15 @@ body {
 }
 .act-0405-3-sleepbags p {
 	width: 30%;
-    margin-left: 35%;
-    font-size: 20px;
-    text-align: center;
+	margin-left: 35%;
+	font-size: 20px;
+	text-align: center;
 }
 .act-0405-3-envelopes p {
 	width: 20%;
-    margin-left: 40%;
-    font-size: 20px;
-    text-align: center;
+	margin-left: 40%;
+	font-size: 20px;
+	text-align: center;
 }
 .act-0405-3-sleepbags {
 	width: 88%;
@@ -197,7 +197,7 @@ p {
 .complete-cards {
 	width: 100%;
 }
-.act-get {
+.act-cash-get {
 	width: 80%;
 	margin-left: 10%;
 	margin-top: 20%;
@@ -210,14 +210,14 @@ p {
 	font-size: 12px;
 	color: white;
 }
-.act-get p {
+.act-cash-get p {
 	width: 20%;
 	line-height: 200px;
 	margin-left: 40%;
 	font-size: 20px;
 }
 .complete-get {
-    width: 60%;
-    margin-left: 20%;
-    margin-top: 15%;
+	width: 60%;
+	margin-left: 20%;
+	margin-top: 15%;
 }

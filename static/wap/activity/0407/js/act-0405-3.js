@@ -124,11 +124,9 @@ $(document).ready(function() {
 				if (resp.type == 'card') {
 					h.push('<img src="../img/cardGet_' + resp.value + '.png" class="act-card-get"/>');
 				} else {
-					h.push('<div class="act-get">');
+					h.push('<div class="act-cash-get">');
 					h.push('<p>' + resp.yuan_value + '</p>');
 					h.push('</div>');
-					h.push('');
-					h.push('<img src="../img/cash_bg.png" class="act-card-get"/>');
 				}
 
 				h.push('</div>');
@@ -139,11 +137,13 @@ $(document).ready(function() {
 					$img.removeClass('car_hide');
 				}
 				//change envelop status
-				var $openedImg = $('img[data-id=' + resp.id + ']')[0];
+				var $openedImg = $('img[data-id=' + resp.id + ']');
 				if (resp.type == 'card') {
-					$openedImg.src = '../img/act-0405-26.png';
+					$openedImg[0].src = '../img/act-0405-26.png';
+					$openedImg.siblings().text('拼图');
 				} else if (resp.type == 'cash') {
-					$openedImg.src = '../img/cash_bg.png';
+					$openedImg[0].src = '../img/cash_bg.png';
+					$openedImg.siblings().text('红包');
 				}
 			},
 			error: function(resp) {}
@@ -195,7 +195,7 @@ $(document).ready(function() {
 	requestData();
 	$(document).on('click', '.act-evelops-container .act-evelop', openEnvelope);
 	$(document).on('click', '.act-card-get', closePopup);
-	$(document).on('click', '.act-get', closePopup);
+	$(document).on('click', '.act--cash-get', closePopup);
 	$(document).on('click', '.complete-cards', function() {
 		$('.act-popup').remove();
 		$('.act-cards-container').remove();
