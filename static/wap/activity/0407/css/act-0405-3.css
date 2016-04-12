@@ -94,6 +94,9 @@ body {
 	width: 82%;
 	margin-left: 9%;
 }
+.act-0405-3-sleepbags-record p {
+	text-align: left;
+}
 .act-0405-3-envelopes {
 	width: 88%;
 	height: 100px;
@@ -109,7 +112,7 @@ body {
 	width: 30%;
 	margin-left: 35%;
 	font-size: 20px;
-	text-align: left;
+	text-align: center;
 }
 .act-0405-3-envelopes p {
 	width: 20%;
