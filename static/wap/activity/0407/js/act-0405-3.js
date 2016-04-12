@@ -70,13 +70,13 @@ $(document).ready(function() {
 				resp.envelopes.forEach(function(envelope) {
 					h.push('<div class="col-xs-2 no-padding text-center act-evelops">');
 					if (envelope.status === 'open' && envelope.type === 'card') {
-						h.push('<img class="act-icon act-evelop" src="../img/act-0405-26.png" data-id = "' + envelope.id + '"/>');
+						h.push('<img class="act-icon act-evelop" src="../img/act-0405-26.png" data-id = "' + envelope.id + '" data-status="' + envelope.status + '"/>');
 						h.push('<p>拼图</p>');
 					} else if (envelope.status === 'open' && envelope.type === 'cash') {
-						h.push('<img class="act-icon act-evelop" src="../img/act-0405-25.png" data-id = "' + envelope.id + '"/>');
+						h.push('<img class="act-icon act-evelop" src="../img/act-0405-25.png" data-id = "' + envelope.id + '" data-status="' + envelope.status + '"/>');
 						h.push('<p>红包</p>');
 					} else {
-						h.push('<img class="act-icon act-evelop" src="../img/act-0405-27.png" data-id = "' + envelope.id + '"/>');
+						h.push('<img class="act-icon act-evelop" src="../img/act-0405-27.png" data-id = "' + envelope.id + '" data-status="' + envelope.status + '"/>');
 						h.push('<p>未拆开</p>');
 					}
 					h.push('</div>');
@@ -195,7 +195,7 @@ $(document).ready(function() {
 	requestData();
 	$(document).on('click', '.act-evelops-container .act-evelop', openEnvelope);
 	$(document).on('click', '.act-card-get', closePopup);
-	$(document).on('click', '.act--cash-get', closePopup);
+	$(document).on('click', '.act-cash-get', closePopup);
 	$(document).on('click', '.complete-cards', function() {
 		$('.act-popup').remove();
 		$('.act-cards-container').remove();
@@ -210,7 +210,7 @@ $(document).ready(function() {
 			setupWebViewJavascriptBridge(function(bridge) {
 				var data = {
 					'share_to': '',
-					'active_id': '1'
+					'active_id': '3'
 				};
 				bridge.callHandler('callNativeShareFunc', data, function(response) {
 					console.log("callNativeShareFunc called with:", data);
@@ -220,7 +220,7 @@ $(document).ready(function() {
 			if (window.AndroidBridge) {
 				var data = {
 					'share_to': '',
-					'active_id': '1'
+					'active_id': '3'
 				};
 				window.AndroidBridge.callNativeShareFunc(data.share_to, data.active_id);
 			}
