@@ -68,13 +68,13 @@ $(document).ready(function() {
 				h.push('<div class="act-0405-3-envelopes"><p>' + resp.envelopes.length + '</p></div>');
 				h.push('<div class="act-evelops-container">');
 				resp.envelopes.forEach(function(envelope) {
-					h.push('<div class="col-xs-2 no-padding text-center act-evelops">');
+					h.push('<div class="col-xs-4 no-padding text-center act-evelops">');
 					if (envelope.status === 'open' && envelope.type === 'card') {
 						h.push('<img class="act-icon act-evelop" src="../img/act-0405-26.png" data-id = "' + envelope.id + '" data-status="' + envelope.status + '"/>');
 						h.push('<p>拼图</p>');
 					} else if (envelope.status === 'open' && envelope.type === 'cash') {
 						h.push('<img class="act-icon act-evelop" src="../img/act-0405-25.png" data-id = "' + envelope.id + '" data-status="' + envelope.status + '"/>');
-						h.push('<p>红包</p>');
+						h.push('<p>' + envelope.yuan_value + '</p>');
 					} else {
 						h.push('<img class="act-icon act-evelop" src="../img/act-0405-27.png" data-id = "' + envelope.id + '" data-status="' + envelope.status + '"/>');
 						h.push('<p>未拆开</p>');
@@ -143,7 +143,7 @@ $(document).ready(function() {
 					$openedImg.siblings().text('拼图');
 				} else if (resp.type == 'cash') {
 					$openedImg[0].src = '../img/act-0405-25.png';
-					$openedImg.siblings().text('红包');
+					$openedImg.siblings().text(resp.yuan_value);
 				}
 			},
 			error: function(resp) {}
