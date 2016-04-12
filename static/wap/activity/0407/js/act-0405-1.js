@@ -1,7 +1,7 @@
 $(document).ready(function() {
 var $addImg = $('.act-0405-add img');
 var $addBkg = $('.act-0405-add');
-var baseurl = 'http://m.xiaolumeimei.com';
+var baseurl = 'http://staging.xiaolumeimei.com';
 //倒计时
 var timer = function(intDiff) {
 	window.setInterval(function() {
