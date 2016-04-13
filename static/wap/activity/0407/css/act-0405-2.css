@@ -29,7 +29,7 @@ body{
 #day_show, #hour_show, #minute_show, #second_show {
 	color: #fff;
 	line-height: 48px;
-	font-size: 20px;
+	font-size: 26px;
 	font-family: Arial;
 	text-align: center;
 	display: -webkit-box;
@@ -41,6 +41,7 @@ body{
 	width: 82%;
 	margin-left: 9%;
 	margin-top: 30px;
+	margin-bottom: 40px;
 }
 .act-0405-2-download {
 	width: 82%;
