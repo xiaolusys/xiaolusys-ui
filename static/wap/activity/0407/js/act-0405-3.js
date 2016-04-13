@@ -6,10 +6,10 @@ $(document).ready(function() {
 	//倒计时
 	var timer = function(intDiff) {
 		window.setInterval(function() {
-			var day = 0,
-				hour = 0,
-				minute = 0,
-				second = 0;
+			var day,
+				hour,
+				minute,
+				second;
 
 			//时间默认值		
 			if (intDiff > 0) {
@@ -18,14 +18,10 @@ $(document).ready(function() {
 				minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
 				second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
 			}
-			if (day <= 9) day = '0' + day;
-			if (hour <= 9) hour = '0' + hour;
-			if (minute <= 9) minute = '0' + minute;
-			if (second <= 9) second = '0' + second;
-			$('#day_show').html(day);
-			$('#hour_show').html(hour);
-			$('#minute_show').html(minute);
-			$('#second_show').html(second);
+			$('#day_show').html('<img  src="../img/' + (Math.floor(day / 10)) + '.png" /> <img  src="../img/' + ((day / 10).toString().split('.')[1] || 0) + '.png" />');
+			$('#hour_show').html('<img  src="../img/' + (Math.floor(hour / 10)) + '.png" /> <img  src="../img/' + ((hour / 10).toString().split('.')[1] || 0) + '.png" />');
+			$('#minute_show').html('<img  src="../img/' + (Math.floor(minute / 10)) + '.png" /> <img  src="../img/' + ((minute / 10).toString().split('.')[1] || 0) + '.png" />');
+			$('#second_show').html('<img  src="../img/' + (Math.floor(second / 10)) + '.png" /> <img  src="../img/' + ((second / 10).toString().split('.')[1] || 0) + '.png" />');
 			intDiff--;
 		}, 1000);
 	};
