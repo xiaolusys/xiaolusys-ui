@@ -56,7 +56,7 @@ $(document).ready(function() {
 					if (resp.cards[i] == 1) {
 						h.push('<img src="../img/card_' + i + '.png" class="card_' + i + '">');
 					} else {
-						h.push('<img src="../img/card_' + i + '.png" class="card_' + i + ' card-hide">');
+						h.push('<img src="../img/card_hide_' + i + '.png" class="card_' + i + ' card-hide">');
 					}
 					h.push('</div>');
 				}
@@ -134,7 +134,7 @@ $(document).ready(function() {
 				//show card
 				if (resp.type == 'card' && resp.status == 'close') {
 					var $img = $('.card_' + resp.value);
-					$img.removeClass('car_hide');
+					$img[0].src = '../img/card_' + resp.value;
 				}
 				//change envelop status
 				var $openedImg = $('img[data-id=' + resp.id + ']');

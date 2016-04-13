@@ -34,3 +34,9 @@ p {
 	font-size: 16px;
 	margin: 1%;
 }
+.act-0405-copyright p {
+	text-align: center;
+	font-size: 12px;
+	color: green;
+	margin-top: 40px;
+}
