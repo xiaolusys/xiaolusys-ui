@@ -200,7 +200,7 @@ $(document).ready(function() {
 		$('.act-popup').remove();
 		$('.act-cards-container').remove();
 		var h = [];
-		h.push('<img src="../img/act-0405-20.png" class="complete-get">');
+		h.push('<img src="../img/act-0405-20.png" class="receive-coupon">');
 		$('.act-0405-3-time').after(h.join(''));
 	});
 	$(document).on('click', '.act-0405-3-invite img', function() {
@@ -225,5 +225,15 @@ $(document).ready(function() {
 				window.AndroidBridge.callNativeShareFunc(data.share_to, data.active_id);
 			}
 		}
+	});
+	$(document).on('click', '.receive-coupon', function() {
+		$.ajax({
+			data: {'template_id': 40},
+			type: 'POST',
+			url: baseurl + '/rest/v1/usercoupons',
+			success: function(resp) {
+				console.log('get coupon success!')
+			}
+		});
 	});
 });
