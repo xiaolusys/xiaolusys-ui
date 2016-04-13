@@ -2,7 +2,7 @@ body {
 	-webkit-margin-before: 0;
 	-webkit-margin-after: 0;
 	-webkit-padding-start: 0;
-	background-color: #ffebf4;
+	background-color: #ffebf4 !important;
 	width: 100%;
 	margin: 0;
 }
@@ -82,7 +82,7 @@ body {
 #day_show, #hour_show, #minute_show, #second_show {
 	color: #fff;
 	line-height: 48px;
-	font-size: 20px;
+	font-size: 26px;
 	font-family: Arial;
 	text-align: center;
 	display: -webkit-box;
@@ -93,6 +93,9 @@ body {
 .act-0405-3-invite img, .act-0405-3-envelopes img, .act-0405-3-sleepbags-record {
 	width: 82%;
 	margin-left: 9%;
+}
+.act-0405-3-sleepbags-record p {
+	text-align: left;
 }
 .act-0405-3-envelopes {
 	width: 88%;
@@ -107,15 +110,15 @@ body {
 }
 .act-0405-3-sleepbags p {
 	width: 30%;
-    margin-left: 35%;
-    font-size: 20px;
-    text-align: center;
+	margin-left: 35%;
+	font-size: 20px;
+	text-align: center;
 }
 .act-0405-3-envelopes p {
 	width: 20%;
-    margin-left: 40%;
-    font-size: 20px;
-    text-align: center;
+	margin-left: 40%;
+	font-size: 20px;
+	text-align: center;
 }
 .act-0405-3-sleepbags {
 	width: 88%;
@@ -145,6 +148,12 @@ body {
 	width: 82%;
 	margin-left: 9%;
 	margin-top: 30px;
+}
+.act-0405-detail {
+	width: 82%;
+	margin-left: 9%;
+	margin-top: 30px;
+	margin-bottom: 40px;
 }
 p {
 	text-align: center;
@@ -197,7 +206,7 @@ p {
 .complete-cards {
 	width: 100%;
 }
-.act-get {
+.act-cash-get {
 	width: 80%;
 	margin-left: 10%;
 	margin-top: 20%;
@@ -210,14 +219,20 @@ p {
 	font-size: 12px;
 	color: white;
 }
-.act-get p {
+.act-cash-get p {
 	width: 20%;
 	line-height: 200px;
 	margin-left: 40%;
 	font-size: 20px;
 }
 .complete-get {
-    width: 60%;
-    margin-left: 20%;
-    margin-top: 15%;
+	width: 60%;
+	margin-left: 20%;
+	margin-top: 15%;
+}
+.act-0405-copyright p {
+	text-align: center;
+	font-size: 12px;
+	color: green;
+	margin-top: 40px;
 }

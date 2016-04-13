@@ -36,20 +36,48 @@ $(document).ready(function() {
 		$.ajax({
 			type: 'GET',
 			url: baseurl + '/sale/promotion/apply/3/',
-			success: function(res) {
+			success: function(resp) {
 				//set rest time of activity
-				end_time = res.end_time;
+				end_time = resp.end_time;
 				current_time = (new Date()).getTime();
 				rest_time = parseInt((end_time - current_time) / 1000);
 				console.log('end_time:' + end_time);
 				console.log('current_time:' + current_time);
 				timer(rest_time);
+				addCard();
+				popup(resp);
 			}
 		});
 	};
 	var downloadClick = function() {
 		window.location.href = baseurl + '/sale/promotion/appdownload/';
 	};
-	$('.act-0405-2-download').bind('click', downloadClick);
+	var addCard = function() {
+		var h = [];
+		h.push('<div class="act-cards-container">');
+		for (var i = 1; i < 10; i++) {
+			h.push('<div class="col-xs-4 no-padding act-card">');
+			h.push('<img src="../img/card_hide_' + i + '.png" class="card_' + i + '">');
+			h.push('</div>');
+		}
+		h.push('</div>');
+		$('.act-0405-2-time').after(h.join(''));
+	};
+	var popup = function(resp) {
+		var h = [];
+		h.push('<div class="act-popup" >');
+		// h.push('<img src="' + resp.img + '" class="act-customer-img"/>');
+		// h.push('<p>成功邀请 ' + resp.nick + ' </p>');
+		h.push('<img src="../img/cardGet_1.png" class="act-card-get"/>');
+		h.push('</div>');
+		$('body').append(h.join(''));
+	};
+	var closePopup = function() {
+		var $popup = $('.act-popup');
+		$popup.remove();
+		$('.card_1')[0].src = '../img/card_1.png';
+	};
+	$(document).on('click', '.act-0405-2-download', downloadClick);
+	$(document).on('click', '.act-popup', closePopup);
 	requestData();
 });

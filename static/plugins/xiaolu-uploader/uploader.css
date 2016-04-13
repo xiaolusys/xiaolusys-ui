@@ -1,0 +1,63 @@
+
+.uploader{
+    margin: 0;
+    padding: 0;
+}
+
+.uploader li{
+    list-style: none;
+    text-align: center;
+    width: 140px;
+    height: 140px;
+    border: 1px #D4D4D4 solid;
+    overflow: hidden;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    background: #fff;
+}
+
+.uploader-del,.uploader-cancel{
+    background: url('img/del.png') no-repeat;
+    position : absolute;
+    display: block;
+    width: 30px;
+    height: 30px;
+    right: 5px;
+    bottom: 5px;
+}
+.uploader .uploader-add{
+    text-align: left;
+}
+.uploader-btn{
+    height: 100%;
+    background: url('img/uploadfiy.png') no-repeat center;
+    cursor: pointer;
+}
+.uploader-setCover{
+    position: absolute;
+    bottom: 6px;
+    left: 5px;
+    background: #fff;
+    padding: 2px 4px;
+}
+.uploader-tip{
+    display: none;
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%;
+    height: 100%;
+    line-height: 144px;
+    color: red;
+    background: #fff;
+    text-align: center;
+}
+.uploader-cancel{display: none;}
+.uploader-uploading .uploader-tip,
+.uploader-uploading .uploader-cancel{ display: block;}
+.uploader-uploading .uploader-btn{ visibility:hidden; }
+
+.uploader img{
+    width: 100%;
+}

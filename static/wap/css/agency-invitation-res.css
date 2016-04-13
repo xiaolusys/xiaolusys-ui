@@ -158,13 +158,9 @@ body {
 }
 
 .friends-info-icon .detail-info .friend-desc {
-  display: inline-block;
-  width: 65%;
-  height: 75%;
-  margin-left: 3%;
   position: absolute;
-  top: 27%;
-  left: 22%;
+  top: 20%;
+  left: 21%;
 }
 
 .friends-info-icon .detail-info .friend-desc .join-mama {
@@ -188,3 +184,4 @@ body {
   background: url("http://7xogkj.com2.z0.glb.qiniucdn.com/red-packer-30.png") no-repeat;
   background-size: 100% 100%;
 }
+
