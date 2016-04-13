@@ -13,7 +13,7 @@ body {
 	width: 70%;
 	height: 70px;
 	margin-left: 16%;
-	margin-bottom: 10%;
+	margin-bottom: 41px;
 	background-image: URL(../img/act-0405-6.png);
 	background-position: center;
 	background-repeat: no-repeat;
@@ -25,7 +25,7 @@ body {
 	-webkit-box-orient: horizontal;
 	width: 70%;
 	margin-left: 15%;
-	padding: 3% 1%;
+	margin-bottom: 41px;
 }
 .act-0405-beInvited img {
 	width: 40px;
@@ -44,7 +44,7 @@ body {
 #day_show, #hour_show, #minute_show, #second_show {
 	color: #fff;
 	line-height: 48px;
-	font-size: 20px;
+	font-size: 26px;
 	font-family: Arial;
 	text-align: center;
 	display: -webkit-box;
@@ -85,7 +85,7 @@ input::-webkit-input-placeholder {
 	width: 82%;
 	height: 50px;
 	margin-left: 9%;
-	margin-top: 3%;
+	margin-top: 13px;
 	background-image: URL(../img/act-0405-1.png);
 	background-position: center;
 	background-repeat: no-repeat;
@@ -108,6 +108,7 @@ input::-webkit-input-placeholder {
 .act-0405-rules {
 	width: 82%;
 	margin-left: 9%;
+	margin-bottom: 40px;
 }
 .act-0405-add {
 	margin-bottom: 40px;
