@@ -69,10 +69,12 @@ function dynamic_generate_sku() {
         sku = _.sortBy(sku_of_number).concat(sku_of_character);
         var result = {
             title: '渲染',
-            color: color,
+            color: _.map(color, function(el){
+                return {id: String(el).replace(/[\/ 　:\(\)]/g, ''), label: el};
+            }),
             color_size: count1,
             sku: _.map(sku, function(el){
-                return {id: String(el).replace(/[\/ 　:]/g, ''), label: el};
+                return {id: String(el).replace(/[\/ 　:\(\)]/g, ''), label: el};
             }),
             sku_size: count2
         };
@@ -159,10 +161,12 @@ function dynamic_generate_chi() {
         var result = {
             title: '渲染',
             sku: _.map(sku, function(el){
-                return {id: String(el).replace(/[\/ 　:]/g, ''), label: el};
+                return {id: String(el).replace(/[\/ 　:\(\)]/g, ''), label: el};
             }),
             sku_size: count1,
-            chi_ma: chi_ma,
+            chi_ma: _.map(chi_ma, function(el){
+                return {id: String(el).replace(/[\/ 　:\(\)]/g, ''), label: el};
+            }),
             chi_size: count2
         };
         var html = template('chi-template', result);
