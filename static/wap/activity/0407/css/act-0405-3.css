@@ -15,10 +15,14 @@ body {
 	background-size: 100% 100%;
 	padding-top: 12%;
 }
+.receive-coupon {
+	width: 72%;
+	margin: 10% 14%;
+}
 .act-0405-3-time {
-	width: 70%;
+	width: 76%;
 	height: 70px;
-	margin-left: 15%;
+	margin-left: 12%;
 	background-image: URL(../img/act-0405-6.png);
 	background-position: center;
 	background-repeat: no-repeat;
@@ -82,13 +86,13 @@ body {
 #day_show, #hour_show, #minute_show, #second_show {
 	color: #fff;
 	line-height: 48px;
-	font-size: 26px;
-	font-family: Arial;
-	text-align: center;
 	display: -webkit-box;
 	-webkit-box-flex: 1;
-	margin-top: 8%;
+	margin-top: 6%;
 	padding-left: 8%;
+}
+.act-0405-3-time img {
+	width: 30%;
 }
 .act-0405-3-invite img, .act-0405-3-envelopes img, .act-0405-3-sleepbags-record {
 	width: 82%;
@@ -145,13 +149,11 @@ body {
 	transform: rotate(180deg);
 }
 .act-0405-3-rules {
-	width: 82%;
-	margin-left: 9%;
+	width: 100%;
 	margin-top: 30px;
 }
 .act-0405-detail {
-	width: 82%;
-	margin-left: 9%;
+	width: 100%;
 	margin-top: 30px;
 	margin-bottom: 40px;
 }
@@ -233,6 +235,6 @@ p {
 .act-0405-copyright p {
 	text-align: center;
 	font-size: 12px;
-	color: green;
+	color: #EC5BA8;
 	margin-top: 40px;
 }
