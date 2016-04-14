@@ -30,8 +30,8 @@ body {
 	display: -webkit-box;
 }
 .act-cards-container {
-	width: 88%;
-	margin: 6% 6%;
+	width: 100%;
+	margin-top: 10%;
 	background-image: url('../img/act-0405-36.png');
 }
 .card-hide {
@@ -223,7 +223,7 @@ p {
 }
 .act-cash-get p {
 	width: 20%;
-	line-height: 200px;
+	line-height: 180px;
 	margin-left: 40%;
 	font-size: 20px;
 }
