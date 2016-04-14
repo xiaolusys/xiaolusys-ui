@@ -1,7 +1,8 @@
 $(document).ready(function() {
 	var $addImg = $('.act-0405-add img');
 	var $addBkg = $('.act-0405-add');
-	var baseurl = 'http://staging.xiaolumeimei.com';
+//	var baseurl = 'http://staging.xiaolumeimei.com';
+	var baseurl = 'http://192.168.1.64:9000';
 	//倒计时
 	var timer = function(intDiff) {
 		window.setInterval(function() {
@@ -22,6 +23,9 @@ $(document).ready(function() {
 			$('#minute_show').html('<img  src="../img/' + (Math.floor(minute / 10)) + '.png" /> <img  src="../img/' + ((minute / 10).toString().split('.')[1] || 0) + '.png" />');
 			$('#second_show').html('<img  src="../img/' + (Math.floor(second / 10)) + '.png" /> <img  src="../img/' + ((second / 10).toString().split('.')[1] || 0) + '.png" />');
 			intDiff--;
+			if (intDiff <= 0) {
+				window.location.href = '../html/act-0405-4.html';
+			}
 		}, 1000);
 	};
 	//add activity
