@@ -60,11 +60,12 @@ $(document).ready(function() {
 				$('.act-0405-3-time').after(h.join(''));
 
 				//add envelopes
-				var envLen = (resp.envelopes.length + '').length;
+				var envNum = resp.envelopes.length + '';
+				var envLen = envNum.length;
 				h = [];
-				h.push('<div class="act-0405-3-envelopes">');
+				h.push('<div class="act-0405-3-envelopes"><div class="env-num">');
 				for (var i = 0; i < envLen; i++) {
-					h.push('<img src="../img/' + i + '.png">');
+					h.push('<img src="../img/' + envNum.substr(i, 1) + '.png">');
 				}
 				h.push('</div></div>');
 				h.push('<div class="act-evelops-container">');
@@ -96,14 +97,14 @@ $(document).ready(function() {
 				$('.act-evelops-container').after(h.join(''));
 
 				//add  sleepbags records
-				var award_left = resp.award_left + '';
+				var awardNum = resp.award_left + '';
 				var len = award_left.length;
 				h = [];
 				h.push('<div class="act-0405-3-sleepbags"><div class="bags-num">');
 				for (var i = 0; i < len; i++) {
-					h.push('<img src="../img/' + i + '.png">');
+					h.push('<img src="../img/' + awardNum.substr(i, 1) + '.png">');
 				}
-				h.push('<div></div>')
+				h.push('</div></div>')
 				h.push('<div class="act-sleepbags-container">');
 				resp.award_list.forEach(function(award) {
 					h.push('<div class="col-xs-10 no-padding text-left act-0405-3-sleepbags-record">');
