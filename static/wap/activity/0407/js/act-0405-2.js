@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	var baseurl = 'http://staging.xiaolumeimei.com';
+//	var baseurl = 'http://192.168.1.64:9000';
 	var $top = $('.act-0405-2-top')[0];
 	var screenWidth = document.body.clientWidth;
 	$top.style.height = screenWidth * 1.28 + 'px';
@@ -25,6 +26,9 @@ $(document).ready(function() {
 			$('#minute_show').html('<img  src="../img/' + (Math.floor(minute / 10)) + '.png" /> <img  src="../img/' + ((minute / 10).toString().split('.')[1] || 0) + '.png" />');
 			$('#second_show').html('<img  src="../img/' + (Math.floor(second / 10)) + '.png" /> <img  src="../img/' + ((second / 10).toString().split('.')[1] || 0) + '.png" />');
 			intDiff--;
+			if (intDiff <= 0) {
+				window.location.href = '../html/act-0405-4.html';
+			}
 		}, 1000);
 	};
 	var requestData = function() {

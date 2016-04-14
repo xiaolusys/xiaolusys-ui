@@ -1,8 +1,8 @@
 $(document).ready(function() {
 	var $addImg = $('.act-0405-add img');
 	var $addBkg = $('.act-0405-add');
-//	var baseurl = 'http://staging.xiaolumeimei.com';
-	var baseurl = 'http://192.168.1.64:9000';
+	var baseurl = 'http://staging.xiaolumeimei.com';
+//	var baseurl = 'http://192.168.1.64:9000';
 	//倒计时
 	var timer = function(intDiff) {
 		window.setInterval(function() {
