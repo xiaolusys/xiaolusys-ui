@@ -92,4 +92,45 @@ $(document).ready(function() {
 	};
 	requestData();
 	$(document).on('click', '.act-0405-add img', add);
+	$("#slider").draggable({
+		axis: 'x',
+		containment: 'parent',
+		drag: function(event, ui) {
+			// if (ui.position.left > 250) {
+			// 	$("#well").fadeOut();
+			// } else {
+			// 	// Apparently Safari isn't allowing partial opacity on text with background clip? Not sure.
+			// 	// $("h2 span").css("opacity", 100 - (ui.position.left / 5))
+			// }
+		},
+		stop: function(event, ui) {
+			// if (ui.position.left < 251) {
+			// 	$(this).animate({
+			// 		left: 0
+			// 	})
+			// }
+		}
+	});
+
+	// The following credit: http://www.evanblack.com/blog/touch-slide-to-unlock/
+
+	$('#slider')[0].addEventListener('touchmove', function(event) {
+		event.preventDefault();
+		var el = event.target;
+		var touch = event.touches[0];
+		curX = touch.pageX - this.offsetLeft;
+		if (curX <= 50 || curX > 150) return;
+		if (curX > 50 && curX < 150) {
+			$('#slider').removeClass('act-0405-add-img').addClass('act-0405-added-img')
+		}
+		el.style.webkitTransform = 'translateX(' + curX + 'px)';
+	}, false);
+
+	$('#slider')[0].addEventListener('touchend', function(event) {
+		this.style.webkitTransition = '-webkit-transform 0.3s ease-in';
+		this.addEventListener('webkitTransitionEnd', function(event) {
+			this.style.webkitTransition = 'none';
+		}, false);
+		this.style.webkitTransform = 'translateX(0px)';
+	}, false);
 });
