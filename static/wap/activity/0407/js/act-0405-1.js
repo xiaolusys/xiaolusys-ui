@@ -28,37 +28,34 @@ $(document).ready(function() {
 	var add = function() {
 		var $addImg = $('.act-0405-add img');
 		var celNum = $('input').val();
-		if ($addImg.hasClass('act-0405-add-img')) {
-			$addImg.removeClass('act-0405-add-img').addClass('act-0405-added-img');
-			$.ajax({
-				data: {
-					'mobile': celNum
-				},
-				type: 'post',
-				url: baseurl + '/sale/promotion/apply/3/',
-				success: function(res) {
-					if (res.rcode == 0) {
-						if (res.next == 'download') {
-							window.location.href = '../html/act-0405-2.html';
-						} else if (res.next == 'mainpage') {
-							window.location.href = '../html/act-0405-3.html';
-						} else if (res.next == 'snsauth') {
-							window.location.href = '/sale/promotion/weixin_snsauth_join/3/';
-						} else if (res.next == 'activate') {
-							window.location.href = '/sale/promotion/activate/3/';
-						}
-
-					} else {
-						$addImg.removeClass('act-0405-added-img').addClass('act-0405-add-img');
-						$('input').val('');
-						$('input')[0]['placeholder'] = '请重新输入';
+		$.ajax({
+			data: {
+				'mobile': celNum
+			},
+			type: 'post',
+			url: baseurl + '/sale/promotion/apply/3/',
+			success: function(res) {
+				if (res.rcode == 0) {
+					if (res.next == 'download') {
+						window.location.href = '../html/act-0405-2.html';
+					} else if (res.next == 'mainpage') {
+						window.location.href = '../html/act-0405-3.html';
+					} else if (res.next == 'snsauth') {
+						window.location.href = '/sale/promotion/weixin_snsauth_join/3/';
+					} else if (res.next == 'activate') {
+						window.location.href = '/sale/promotion/activate/3/';
 					}
-				},
-				error: function(res) {
-					console.log(res);
+
+				} else {
+					$addImg.removeClass('act-0405-added-img').addClass('act-0405-add-img');
+					$('input').val('');
+					$('input')[0]['placeholder'] = '请重新输入';
 				}
-			});
-		}
+			},
+			error: function(res) {
+				console.log(res);
+			}
+		});
 	};
 
 	var requestData = function() {
@@ -121,7 +118,8 @@ $(document).ready(function() {
 		curX = touch.pageX - this.offsetLeft;
 		if (curX <= 50 || curX > 150) return;
 		if (curX > 50 && curX < 150) {
-			$('#slider').removeClass('act-0405-add-img').addClass('act-0405-added-img')
+			$('#slider').removeClass('act-0405-add-img').addClass('act-0405-added-img');
+			add();
 		}
 		el.style.webkitTransform = 'translateX(' + curX + 'px)';
 	}, false);
