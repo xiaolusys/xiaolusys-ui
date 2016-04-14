@@ -1,6 +1,6 @@
 $(document).ready(function() {
-	var baseurl = 'http://staging.xiaolumeimei.com';
-//	var baseurl = 'http://192.168.1.64:9000';
+//	var baseurl = 'http://staging.xiaolumeimei.com';
+	var baseurl = 'http://192.168.1.64:9000';
 	var $top = $('.act-0405-3-top')[0];
 	var screenWidth = document.body.clientWidth;
 	$top.style.height = screenWidth * 1.28 + 'px';
@@ -51,14 +51,16 @@ $(document).ready(function() {
 				//add cards
 				var h = [];
 				h.push('<div class="act-cards-container">');
-				for (var i = 1; i < 10; i++) {
+				for (var i = 0; i < 9; i++) {
 					h.push('<div class="col-xs-4 no-padding act-card">');
+					var j = i + 1;
 					if (resp.cards[i] == 1) {
-						h.push('<img src="../img/card_' + i + '.png" class="card_' + i + '">');
+						h.push('<img src="../img/card_' + j + '.png" class="card_' + j + '">');
 					} else {
-						h.push('<img src="../img/card_hide_' + i + '.png" class="card_' + i + '">');
+						h.push('<img src="../img/card_hide_' + j + '.png" class="card_' + j + '">');
 					}
 					h.push('</div>');
+					
 				}
 				h.push('</div>');
 				$('.act-0405-3-time').after(h.join(''));
@@ -153,9 +155,9 @@ $(document).ready(function() {
 				h.push('</div>');
 				$('body').append(h.join(''));
 				//show card
-				if (resp.type == 'card' && resp.status == 'close') {
-					var $img = $('.card_' + resp.value);
-					$img[0].src = '../img/card_' + resp.value;
+				if (resp.type == 'card' && resp.status == 'open') {
+					var $img = $('.card_' + resp.value+1);
+					$img.src = '';
 				}
 				//change envelop status
 				var $openedImg = $('img[data-id=' + resp.id + ']');
@@ -255,6 +257,17 @@ $(document).ready(function() {
 			type: 'POST',
 			url: baseurl + '/rest/v1/usercoupons',
 			success: function(resp) {
+                if(resp.code == 0){
+                	$('.receive-coupon').attr('data-status',0);
+                    $('.modal-body p').text('优惠卷已发放完，欢迎参加本次活动。您的红包可以提现也可在商城消费')
+                }else if(resp.code == 1 && resp.results[0].status == 0){
+                	$('.receive-coupon').attr('data-status',1);
+                    $('.modal-body p').text('您的优惠卷已领取，请尽快到商城退换奖品');
+                } else {
+                	$('.receive-coupon').attr('data-status',2);
+                	$('.modal-body p').text('请到待收货界面查询物流信息');
+                }
+                $("#myModal").modal();
 				console.log('get coupon success!')
 				var os = OSTest();
 				console.log('os share:', os)
