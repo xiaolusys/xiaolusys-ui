@@ -1,5 +1,5 @@
 $(document).ready(function() {
-//	var baseurl = 'http://staging.xiaolumeimei.com';
+	//	var baseurl = 'http://staging.xiaolumeimei.com';
 	var baseurl = 'http://192.168.1.64:9000';
 	var $top = $('.act-0405-3-top')[0];
 	var screenWidth = document.body.clientWidth;
@@ -60,7 +60,6 @@ $(document).ready(function() {
 						h.push('<img src="../img/card_hide_' + j + '.png" class="card_' + j + '">');
 					}
 					h.push('</div>');
-					
 				}
 				h.push('</div>');
 				$('.act-0405-3-time').after(h.join(''));
@@ -96,12 +95,12 @@ $(document).ready(function() {
 				h = [];
 				resp.inactives.forEach(function(inactive) {
 					h.push('<div class="col-xs-4 no-padding text-center act-evelops">');
-					if(nactive.headimgurl == ''){
+					if (nactive.headimgurl == '') {
 						h.push('<img class="act-icon act-inactive" src="../img/act-0405-33.png" />');
-					}else {
-						h.push('<img class="act-icon act-inactive" src="' + inactive.headimgurl + '" />');	
+					} else {
+						h.push('<img class="act-icon act-inactive" src="' + inactive.headimgurl + '" />');
 					}
-					
+
 					h.push('<p>未激活</p>');
 					h.push('</div>');
 				});
@@ -138,9 +137,9 @@ $(document).ready(function() {
 			success: function(resp) {
 				var h = [];
 				h.push('<div class="act-popup" >');
-				if(resp.friend_img == ''){
+				if (resp.friend_img == '') {
 					h.push('<img src="../img/act-0405-33.png" class="act-customer-img"/>');
-				}else {
+				} else {
 					h.push('<img src="' + resp.friend_img + '" class="act-customer-img"/>');
 				}
 				h.push('<p>成功邀请 ' + resp.friend_nick + ' </p>');
@@ -156,7 +155,7 @@ $(document).ready(function() {
 				$('body').append(h.join(''));
 				//show card
 				if (resp.type == 'card' && resp.status == 'open') {
-					var $img = $('.card_' + resp.value+1);
+					var $img = $('.card_' + resp.value + 1);
 					$img.src = '';
 				}
 				//change envelop status
@@ -257,17 +256,17 @@ $(document).ready(function() {
 			type: 'POST',
 			url: baseurl + '/rest/v1/usercoupons',
 			success: function(resp) {
-                if(resp.code == 0){
-                	$('.receive-coupon').attr('data-status',0);
-                    $('.modal-body p').text('优惠卷已发放完，欢迎参加本次活动。您的红包可以提现也可在商城消费')
-                }else if(resp.code == 1 && resp.results[0].status == 0){
-                	$('.receive-coupon').attr('data-status',1);
-                    $('.modal-body p').text('您的优惠卷已领取，请尽快到商城退换奖品');
-                } else {
-                	$('.receive-coupon').attr('data-status',2);
-                	$('.modal-body p').text('请到待收货界面查询物流信息');
-                }
-                $("#myModal").modal();
+				if (resp.code == 0) {
+					$('.receive-coupon').attr('data-status', 0);
+					$('.modal-body p').text('优惠卷已发放完，欢迎参加本次活动。您的红包可以提现也可在商城消费')
+				} else if (resp.code == 1 && resp.results[0].status == 0) {
+					$('.receive-coupon').attr('data-status', 1);
+					$('.modal-body p').text('您的优惠卷已领取，请尽快到商城退换奖品');
+				} else {
+					$('.receive-coupon').attr('data-status', 2);
+					$('.modal-body p').text('请到待收货界面查询物流信息');
+				}
+				$("#myModal").modal();
 				console.log('get coupon success!')
 				var os = OSTest();
 				console.log('os share:', os)
