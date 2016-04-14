@@ -98,6 +98,16 @@ body {
 	width: 82%;
 	margin-left: 9%;
 }
+.act-0405-3-sleepbags .bags-num {
+	width: 30%;
+	margin-left: 35%;
+	text-align: center;
+	margin-top: 5%;
+	display: -webkit-box;
+}
+.bags-num img {
+	width: 12%;
+}
 .act-0405-3-sleepbags-record p {
 	text-align: left;
 }

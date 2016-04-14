@@ -91,8 +91,14 @@ $(document).ready(function() {
 				$('.act-evelops-container').after(h.join(''));
 
 				//add  sleepbags records
+				var award_left = resp.award_left + '';
+				var len = award_left.length;
 				h = [];
-				h.push('<div class="act-0405-3-sleepbags"><p>' + resp.award_left + '</p></div>');
+				h.push('<div class="act-0405-3-sleepbags"><div class="bags-num">');
+				for (var i = 0; i < len; i++) {
+					h.push('<img src="../img/' + i + '.png">');
+				}
+				h.push('<div></div>')
 				h.push('<div class="act-sleepbags-container">');
 				resp.award_list.forEach(function(award) {
 					h.push('<div class="col-xs-10 no-padding text-left act-0405-3-sleepbags-record">');
@@ -224,7 +230,9 @@ $(document).ready(function() {
 	});
 	$(document).on('click', '.receive-coupon', function() {
 		$.ajax({
-			data: {'template_id': 40},
+			data: {
+				'template_id': 40
+			},
 			type: 'POST',
 			url: baseurl + '/rest/v1/usercoupons',
 			success: function(resp) {
