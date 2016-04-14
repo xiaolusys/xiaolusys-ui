@@ -1,5 +1,5 @@
 $(document).ready(function() {
-		var baseurl = 'http://staging.xiaolumeimei.com';
+	var baseurl = 'http://staging.xiaolumeimei.com';
 	// var baseurl = 'http://192.168.1.64:9000';
 	var $top = $('.act-0405-3-top')[0];
 	var screenWidth = document.body.clientWidth;
