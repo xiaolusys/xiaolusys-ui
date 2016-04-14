@@ -89,7 +89,7 @@ $(document).ready(function() {
 				//add envelopes of inactives
 				h = [];
 				resp.inactives.forEach(function(inactive) {
-					h.push('<div class="col-xs-2 no-padding text-center act-evelops">');
+					h.push('<div class="col-xs-4 no-padding text-center act-evelops">');
 					h.push('<img class="act-icon act-inactive" src="' + inactive.headimgurl + '" />');
 					h.push('<p>未激活</p>');
 					h.push('</div>');
@@ -98,7 +98,7 @@ $(document).ready(function() {
 
 				//add  sleepbags records
 				var awardNum = resp.award_left + '';
-				var len = award_left.length;
+				var len = awardNum.length;
 				h = [];
 				h.push('<div class="act-0405-3-sleepbags"><div class="bags-num">');
 				for (var i = 0; i < len; i++) {
