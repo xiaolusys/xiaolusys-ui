@@ -1,5 +1,6 @@
 $(document).ready(function() {
-	var baseurl = 'http://staging.xiaolumeimei.com';
+	// var baseurl = 'http://staging.xiaolumeimei.com';
+	var baseurl = 'http://192.168.1.64:9000/';
 	var $top = $('.act-0405-3-top')[0];
 	var screenWidth = document.body.clientWidth;
 	$top.style.height = screenWidth * 1.28 + 'px';
@@ -23,6 +24,9 @@ $(document).ready(function() {
 			$('#minute_show').html('<img  src="../img/' + (Math.floor(minute / 10)) + '.png" /> <img  src="../img/' + ((minute / 10).toString().split('.')[1] || 0) + '.png" />');
 			$('#second_show').html('<img  src="../img/' + (Math.floor(second / 10)) + '.png" /> <img  src="../img/' + ((second / 10).toString().split('.')[1] || 0) + '.png" />');
 			intDiff--;
+			if (intDiff <= 0) {
+				window.location.href = '../html/act-0405-4.html';
+			}
 		}, 1000);
 	};
 
@@ -52,7 +56,7 @@ $(document).ready(function() {
 					if (resp.cards[i] == 1) {
 						h.push('<img src="../img/card_' + i + '.png" class="card_' + i + '">');
 					} else {
-						h.push('<img src="../img/card_hide_' + i + '.png" class="card_' + i + ' card-hide">');
+						h.push('<img src="../img/card_hide_' + i + '.png" class="card_' + i + '">');
 					}
 					h.push('</div>');
 				}
@@ -90,7 +94,12 @@ $(document).ready(function() {
 				h = [];
 				resp.inactives.forEach(function(inactive) {
 					h.push('<div class="col-xs-4 no-padding text-center act-evelops">');
-					h.push('<img class="act-icon act-inactive" src="' + inactive.headimgurl + '" />');
+					if(nactive.headimgurl == ''){
+						h.push('<img class="act-icon act-inactive" src="../img/act-0405-33.png" />');
+					}else {
+						h.push('<img class="act-icon act-inactive" src="' + inactive.headimgurl + '" />');	
+					}
+					
 					h.push('<p>未激活</p>');
 					h.push('</div>');
 				});
@@ -127,7 +136,11 @@ $(document).ready(function() {
 			success: function(resp) {
 				var h = [];
 				h.push('<div class="act-popup" >');
-				h.push('<img src="' + resp.friend_img + '" class="act-customer-img"/>');
+				if(resp.friend_img == ''){
+					h.push('<img src="../img/act-0405-33.png" class="act-customer-img"/>');
+				}else {
+					h.push('<img src="' + resp.friend_img + '" class="act-customer-img"/>');
+				}
 				h.push('<p>成功邀请 ' + resp.friend_nick + ' </p>');
 				if (resp.type == 'card') {
 					h.push('<img src="../img/cardGet_' + resp.value + '.png" class="act-card-get"/>');

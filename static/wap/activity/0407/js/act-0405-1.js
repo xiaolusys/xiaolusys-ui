@@ -22,12 +22,16 @@ $(document).ready(function() {
 			$('#minute_show').html('<img  src="../img/' + (Math.floor(minute / 10)) + '.png" /> <img  src="../img/' + ((minute / 10).toString().split('.')[1] || 0) + '.png" />');
 			$('#second_show').html('<img  src="../img/' + (Math.floor(second / 10)) + '.png" /> <img  src="../img/' + ((second / 10).toString().split('.')[1] || 0) + '.png" />');
 			intDiff--;
+			if (intDiff <= 0) {
+				window.location.href = '../html/act-0405-4.html';
+			}
 		}, 1000);
 	};
 	//add activity
 	var add = function() {
 		var $addImg = $('.act-0405-add img');
 		var celNum = $('input').val();
+		$addImg.removeClass('act-0405-add-img').addClass('act-0405-added-img');
 		$.ajax({
 			data: {
 				'mobile': celNum
@@ -90,51 +94,51 @@ $(document).ready(function() {
 	requestData();
 	$(document).on('click', '.act-0405-add img', add);
 
-	$("#slider").draggable({
-		axis: 'x',
-		containment: 'parent',
-		drag: function(event, ui) {
-			if (ui.position.left > 550) {
-				$("#well").fadeOut();
-			} else {
-				// Apparently Safari isn't allowing partial opacity on text with background clip? Not sure.
-				// $("h2 span").css("opacity", 100 - (ui.position.left / 5))
-			}
-		},
-		stop: function(event, ui) {
-			if (ui.position.left < 551) {
-				$(this).animate({
-					left: 0
-				})
-			}
-		}
-	});
+	// $("#slider").draggable({
+	// 	axis: 'x',
+	// 	containment: 'parent',
+	// 	drag: function(event, ui) {
+	// 		if (ui.position.left > 550) {
+	// 			$("#well").fadeOut();
+	// 		} else {
+	// 			// Apparently Safari isn't allowing partial opacity on text with background clip? Not sure.
+	// 			// $("h2 span").css("opacity", 100 - (ui.position.left / 5))
+	// 		}
+	// 	},
+	// 	stop: function(event, ui) {
+	// 		if (ui.position.left < 551) {
+	// 			$(this).animate({
+	// 				left: 0
+	// 			})
+	// 		}
+	// 	}
+	// });
 
-	// The following credit: http://www.evanblack.com/blog/touch-slide-to-unlock/
+	// // The following credit: http://www.evanblack.com/blog/touch-slide-to-unlock/
 
-	$('#slider')[0].addEventListener('touchmove', function(event) {
-		event.preventDefault();
-		var el = event.target;
-		var touch = event.touches[0];
-		var screenWidth = window.screen.width;
-		curX = touch.pageX - this.offsetLeft;
-		$('#slider').removeClass('act-0405-add-img').addClass('act-0405-added-img');
-		if (curX <= 0 || curX > screenWidth * 0.574) {
-			return;
-		} else {
-			$('#slider').removeClass('act-0405-add-img').addClass('act-0405-added-img');
-			add();
-		}
+	// $('#slider')[0].addEventListener('touchmove', function(event) {
+	// 	event.preventDefault();
+	// 	var el = event.target;
+	// 	var touch = event.touches[0];
+	// 	var screenWidth = window.screen.width;
+	// 	curX = touch.pageX - this.offsetLeft;
+	// 	$('#slider').removeClass('act-0405-add-img').addClass('act-0405-added-img');
+	// 	if (curX <= 0 || curX > screenWidth * 0.574) {
+	// 		return;
+	// 	} else {
+	// 		$('#slider').removeClass('act-0405-add-img').addClass('act-0405-added-img');
+	// 		add();
+	// 	}
 
-		el.style.webkitTransform = 'translateX(' + curX + 'px)';
-	}, false);
+	// 	el.style.webkitTransform = 'translateX(' + curX + 'px)';
+	// }, false);
 
-	$('#slider')[0].addEventListener('touchend', function(event) {
-		this.style.webkitTransition = '-webkit-transform 0.3s ease-in';
-		this.addEventListener('webkitTransitionEnd', function(event) {
-			this.style.webkitTransition = 'none';
-		}, false);
-		this.style.webkitTransform = 'translateX(0px)';
-	}, false);
+	// $('#slider')[0].addEventListener('touchend', function(event) {
+	// 	this.style.webkitTransition = '-webkit-transform 0.3s ease-in';
+	// 	this.addEventListener('webkitTransitionEnd', function(event) {
+	// 		this.style.webkitTransition = 'none';
+	// 	}, false);
+	// 	this.style.webkitTransform = 'translateX(0px)';
+	// }, false);
 
 });
