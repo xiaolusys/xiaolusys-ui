@@ -98,6 +98,16 @@ body {
 	width: 82%;
 	margin-left: 9%;
 }
+.act-0405-3-sleepbags .bags-num {
+	width: 30%;
+	margin-left: 35%;
+	text-align: center;
+	margin-top: 5%;
+	display: -webkit-box;
+}
+.bags-num img {
+	width: 12%;
+}
 .act-0405-3-sleepbags-record p {
 	text-align: left;
 }
@@ -112,17 +122,14 @@ body {
 	background-size: 100% 100%;
 	display: -webkit-box;
 }
-.act-0405-3-sleepbags p {
-	width: 30%;
-	margin-left: 35%;
-	font-size: 20px;
-	text-align: center;
-}
-.act-0405-3-envelopes p {
+.act-0405-3-envelopes .env-num {
 	width: 20%;
 	margin-left: 40%;
-	font-size: 20px;
 	text-align: center;
+	margin-top: 5%;
+}
+.env-num img {
+	width: 25%;
 }
 .act-0405-3-sleepbags {
 	width: 88%;

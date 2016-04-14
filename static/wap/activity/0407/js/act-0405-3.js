@@ -60,8 +60,13 @@ $(document).ready(function() {
 				$('.act-0405-3-time').after(h.join(''));
 
 				//add envelopes
+				var envLen = (resp.envelopes.length + '').length;
 				h = [];
-				h.push('<div class="act-0405-3-envelopes"><p>' + resp.envelopes.length + '</p></div>');
+				h.push('<div class="act-0405-3-envelopes">');
+				for (var i = 0; i < envLen; i++) {
+					h.push('<img src="../img/' + i + '.png">');
+				}
+				h.push('</div></div>');
 				h.push('<div class="act-evelops-container">');
 				resp.envelopes.forEach(function(envelope) {
 					h.push('<div class="col-xs-4 no-padding text-center act-evelops">');
@@ -91,8 +96,14 @@ $(document).ready(function() {
 				$('.act-evelops-container').after(h.join(''));
 
 				//add  sleepbags records
+				var award_left = resp.award_left + '';
+				var len = award_left.length;
 				h = [];
-				h.push('<div class="act-0405-3-sleepbags"><p>' + resp.award_left + '</p></div>');
+				h.push('<div class="act-0405-3-sleepbags"><div class="bags-num">');
+				for (var i = 0; i < len; i++) {
+					h.push('<img src="../img/' + i + '.png">');
+				}
+				h.push('<div></div>')
 				h.push('<div class="act-sleepbags-container">');
 				resp.award_list.forEach(function(award) {
 					h.push('<div class="col-xs-10 no-padding text-left act-0405-3-sleepbags-record">');
@@ -224,11 +235,32 @@ $(document).ready(function() {
 	});
 	$(document).on('click', '.receive-coupon', function() {
 		$.ajax({
-			data: {'template_id': 40},
+			data: {
+				'template_id': 40
+			},
 			type: 'POST',
 			url: baseurl + '/rest/v1/usercoupons',
 			success: function(resp) {
 				console.log('get coupon success!')
+				var os = OSTest();
+				console.log('os share:', os)
+				if (os == 'iOS') {
+					setupWebViewJavascriptBridge(function(bridge) {
+						var data = {
+							'url': 'com.jimei.xlmm://app/v1/usercoupons/method',
+						};
+						bridge.callHandler('jumpToNativeLocation', data, function(response) {
+							console.log("jumpToNativeLocation called with:", data);
+						});
+					})
+				} else {
+					if (window.AndroidBridge) {
+						var data = {
+							'url': 'com.jimei.xlmm://app/v1/usercoupons/method',
+						};
+						window.AndroidBridge.jumpToNativeLocation(data.url);
+					}
+				}
 			}
 		});
 	});
