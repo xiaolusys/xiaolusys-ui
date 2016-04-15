@@ -24,9 +24,6 @@ body {
 	margin-top: 10%;
 	background-image: url('../img/act-0405-36.png');
 }
-.card-hide {
-	opacity: 0.5;
-}
 .act-card:nth-child(3n+1) {
 	position: relative;
 	left: 12%;
@@ -208,4 +205,13 @@ p {
 	width: 60%;
 	margin-left: 20%;
 	margin-top: 15%;
+}
+.act-coupon p {
+	color: white;
+	font-size: 14px;
+}
+.act-coupon img{
+	margin-top: 10%;
+	width: 60%
+	margin-left: 20%;
 }
