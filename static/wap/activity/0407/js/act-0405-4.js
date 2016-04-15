@@ -16,7 +16,16 @@ $(document).ready(function() {
 				$('.act-0405-4-end').after(h.join(''));
 
 				h = [];
+				var totalMoney = resp.total+'';
+				var len = totalMoney.length;
 				h.push('<div class="act-0405-4-packet">');
+				for (var i = 0; i < len; i++) {
+					if(isNaN(!totalMoney.substr(i, 1))){
+						h.push('<img src="../img/' + totalMoney.substr(i, 1) + '.svg">');	
+					}else {
+						h.push('<img src="../img/point.svg">');
+					}
+				}
 				h.push('<p>' + resp.total + '</p>');
 				h.push('</div>');
 				$('.act-0405-4-top').after(h.join(''));

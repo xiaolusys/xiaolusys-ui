@@ -19,10 +19,10 @@ $(document).ready(function() {
 				minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
 				second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
 			}
-			$('#day_show').html('<img  src="../img/' + (Math.floor(day / 10)) + '.png" /> <img  src="../img/' + ((day / 10).toString().split('.')[1] || 0) + '.png" />');
-			$('#hour_show').html('<img  src="../img/' + (Math.floor(hour / 10)) + '.png" /> <img  src="../img/' + ((hour / 10).toString().split('.')[1] || 0) + '.png" />');
-			$('#minute_show').html('<img  src="../img/' + (Math.floor(minute / 10)) + '.png" /> <img  src="../img/' + ((minute / 10).toString().split('.')[1] || 0) + '.png" />');
-			$('#second_show').html('<img  src="../img/' + (Math.floor(second / 10)) + '.png" /> <img  src="../img/' + ((second / 10).toString().split('.')[1] || 0) + '.png" />');
+			$('#day_show').html('<img  src="../img/' + (Math.floor(day / 10)) + '.svg" /> <img  src="../img/' + ((day / 10).toString().split('.')[1] || 0) + '.svg" />');
+			$('#hour_show').html('<img  src="../img/' + (Math.floor(hour / 10)) + '.svg" /> <img  src="../img/' + ((hour / 10).toString().split('.')[1] || 0) + '.svg" />');
+			$('#minute_show').html('<img  src="../img/' + (Math.floor(minute / 10)) + '.svg" /> <img  src="../img/' + ((minute / 10).toString().split('.')[1] || 0) + '.svg" />');
+			$('#second_show').html('<img  src="../img/' + (Math.floor(second / 10)) + '.svg" /> <img  src="../img/' + ((second / 10).toString().split('.')[1] || 0) + '.svg" />');
 			intDiff--;
 		}, 1000);
 	};
@@ -109,7 +109,7 @@ $(document).ready(function() {
 				h = [];
 				h.push('<div class="act-0405-3-sleepbags"><div class="bags-num">');
 				for (var i = 0; i < len; i++) {
-					h.push('<img src="../img/' + awardNum.substr(i, 1) + '.png">');
+					h.push('<img src="../img/' + awardNum.substr(i, 1) + '.svg">');
 				}
 				h.push('</div></div>')
 				h.push('<div class="act-sleepbags-container">');
