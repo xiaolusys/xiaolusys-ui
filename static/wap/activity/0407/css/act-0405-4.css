@@ -30,6 +30,9 @@ body {
 	width: 82%;
 	margin-left: 9%;
 }
+.act-0405-4-top .act-cards-container {
+	margin-top: 0 !important;
+}
 .act-0405-4-packet {
 	width: 82%;
 	height: 65px;
@@ -39,12 +42,10 @@ body {
 	background-size: 100% 100%;
 	margin: 5% 9%;
 }
-.act-0405-4-packet p {
+.act-0405-4-packet div {
 	width: 40%;
 	margin-left: 30%;
 	line-height: 65px;
-	text-align: center;
-	font-size: 20px;
 }
 }
 .act-0405-4-text {
