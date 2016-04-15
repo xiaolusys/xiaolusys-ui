@@ -59,7 +59,7 @@ $(document).ready(function() {
 					h.push('</div>');
 				}
 				h.push('</div>');
-				$('.act-0405-3-time').after(h.join(''));
+				$('.act-0405-time').after(h.join(''));
 
 				//add envelopes
 				var envNum = resp.envelopes.length + '';
@@ -92,7 +92,7 @@ $(document).ready(function() {
 				h = [];
 				resp.inactives.forEach(function(inactive) {
 					h.push('<div class="col-xs-4 no-padding text-center act-evelops">');
-					if (nactive.headimgurl == '') {
+					if (inactive.headimgurl == '') {
 						h.push('<img class="act-icon act-inactive" src="../img/act-0405-33.png" />');
 					} else {
 						h.push('<img class="act-icon act-inactive" src="' + inactive.headimgurl + '" />');
