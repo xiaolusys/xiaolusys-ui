@@ -58,7 +58,7 @@ $(document).ready(function() {
 			h.push('</div>');
 		}
 		h.push('</div>');
-		$('.act-0405-2-time').after(h.join(''));
+		$('.act-0405-time').after(h.join(''));
 	};
 	var popup = function(resp) {
 		var h = [];
