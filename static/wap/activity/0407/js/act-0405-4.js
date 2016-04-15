@@ -39,7 +39,7 @@ $(document).ready(function() {
 				h = [];
 				var totalMoney = resp.total + '';
 				var len = totalMoney.length;
-				h.push('<div class="act-0405-4-packet"><div>');
+				h.push('<div class="act-0405-4-packet"><div class="totalMoney">');
 				for (var i = 0; i < len; i++) {
 					if (!isNaN(totalMoney.substr(i, 1))) {
 						h.push('<img src="../img/' + totalMoney.substr(i, 1) + '.svg">');
