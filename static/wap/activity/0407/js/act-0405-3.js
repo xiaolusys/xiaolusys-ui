@@ -11,7 +11,9 @@ $(document).ready(function() {
 				hour,
 				minute,
 				second;
-
+			if (intDiff <= 0) {
+				window.location.href = '../html/act-0405-4.html';
+			}
 			//时间默认值		
 			if (intDiff > 0) {
 				day = Math.floor(intDiff / (60 * 60 * 24));
@@ -24,9 +26,6 @@ $(document).ready(function() {
 			$('#minute_show').html('<img  src="../img/' + (Math.floor(minute / 10)) + '.png" /> <img  src="../img/' + ((minute / 10).toString().split('.')[1] || 0) + '.png" />');
 			$('#second_show').html('<img  src="../img/' + (Math.floor(second / 10)) + '.png" /> <img  src="../img/' + ((second / 10).toString().split('.')[1] || 0) + '.png" />');
 			intDiff--;
-			if (intDiff <= 0) {
-				window.location.href = '../html/act-0405-4.html';
-			}
 		}, 1000);
 	};
 
