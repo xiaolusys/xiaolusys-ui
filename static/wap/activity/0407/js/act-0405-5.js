@@ -1,6 +1,4 @@
 $(document).ready(function() {
-	var baseurl = 'http://staging.xiaolumeimei.com';
-//	var baseurl = 'http://192.168.1.64:9000';
 	var screenHeight = document.body.clientHeight;
 	var $div = $('.act-0405-5-container')[0];
 	$div.style.height = screenHeight + 'px';
@@ -8,7 +6,7 @@ $(document).ready(function() {
 	var requestData = function() {
 		$.ajax({
 			type: 'GET',
-			url: baseurl + '/sale/promotion/stats/3/',
+			url: '/sale/promotion/stats/3/',
 			success: function() {
 
 			}
