@@ -9,7 +9,9 @@ $(document).ready(function() {
 				hour,
 				minute,
 				second;
-
+			if (intDiff <= 0) {
+				window.location.href = '../html/act-0405-4.html';
+			}
 			//时间默认值		
 			if (intDiff > 0) {
 				day = Math.floor(intDiff / (60 * 60 * 24));
@@ -22,9 +24,6 @@ $(document).ready(function() {
 			$('#minute_show').html('<img  src="../img/' + (Math.floor(minute / 10)) + '.png" /> <img  src="../img/' + ((minute / 10).toString().split('.')[1] || 0) + '.png" />');
 			$('#second_show').html('<img  src="../img/' + (Math.floor(second / 10)) + '.png" /> <img  src="../img/' + ((second / 10).toString().split('.')[1] || 0) + '.png" />');
 			intDiff--;
-			if (intDiff <= 0) {
-				window.location.href = '../html/act-0405-4.html';
-			}
 		}, 1000);
 	};
 
@@ -55,7 +54,7 @@ $(document).ready(function() {
 					if (resp.cards[i] == 1) {
 						h.push('<img src="../img/card_' + j + '.png" class="card_' + j + '">');
 					} else {
-						h.push('<img src="../img/card_hide_' + j + '.png" class="card_' + j + '">');
+						h.push('<img src="../img/card_hide_' + j + '.png" class="card_' + j + ' card_' + j + '">');
 					}
 					h.push('</div>');
 				}
@@ -154,7 +153,7 @@ $(document).ready(function() {
 				//show card
 				if (resp.type == 'card' && resp.status == 'open') {
 					var $img = $('.card_' + resp.value);
-					$img[0].src = '';
+					$img[0].src = '../img/card_' + resp.value;
 				}
 				//change envelop status
 				var $openedImg = $('img[data-id=' + resp.id + ']');
