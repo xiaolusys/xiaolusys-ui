@@ -19,47 +19,10 @@ body {
 	width: 72%;
 	margin: 10% 14%;
 }
-.act-cards-container {
-	width: 100%;
-	margin-top: 10%;
-	background-image: url('../img/act-0405-36.png');
-}
-.act-card:nth-child(3n+1) {
-	position: relative;
-	left: 12%;
-}
-.act-card:nth-child(3n+3) {
-	position: relative;
-	right: 12%;
-}
-.act-card:nth-child(n+4) {
-	position: relative;
-	margin-top: -12%;
-}
-.act-cards-container img {
-	vertical-align: middle;
-	width: 100%;
-}
-.no-padding {
-	padding-left: 0px !important;
-	padding-right: 0px !important;
-}
-.act-icon {
-	width: 50%;
-}
 .act-inactive {
 	border-radius: 50% 50%;
 	width: 45%;
 	opacity: 0.6;
-}
-.text-center {
-	text-align: center;
-}
-.text-right {
-	text-align: right;
-}
-.text-left {
-	text-align: left;
 }
 .act-evelops-container {
 	padding: 0px 16px;

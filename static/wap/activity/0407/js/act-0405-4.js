@@ -11,22 +11,41 @@ $(document).ready(function() {
 				var h = [];
 				h.push('<div class="act-0405-4-text">');
 				h.push('<p>通过您的邀请，为小鹿美美带来了' + resp.invite_num + '位好友</p>');
-				h.push('<p>您完成了拼图，获得了浴巾</p>');
+				if (resp.stats) {
+					h.push('<p>您完成了拼图，获得了浴巾</p>');
+				} else {
+					h.push('<p>您没有完成拼图，没有获得浴巾</p>');
+				}
+
 				h.push('</div>');
 				$('.act-0405-4-end').after(h.join(''));
 
 				h = [];
-				var totalMoney = resp.total+'';
+				var totalMoney = resp.total + '';
 				var len = totalMoney.length;
 				h.push('<div class="act-0405-4-packet">');
 				for (var i = 0; i < len; i++) {
-					if(isNaN(!totalMoney.substr(i, 1))){
-						h.push('<img src="../img/' + totalMoney.substr(i, 1) + '.svg">');	
-					}else {
+					if (isNaN(!totalMoney.substr(i, 1))) {
+						h.push('<img src="../img/' + totalMoney.substr(i, 1) + '.svg">');
+					} else {
 						h.push('<img src="../img/point.svg">');
 					}
 				}
 				h.push('<p>' + resp.total + '</p>');
+				h.push('</div>');
+
+				//add cards
+				h.push('<div class="act-cards-container">');
+				for (var i = 0; i < 9; i++) {
+					h.push('<div class="col-xs-4 no-padding act-card">');
+					var j = i + 1;
+					if (resp.cards[i] == 1) {
+						h.push('<img src="../img/card_' + j + '.png" class="card_' + j + '">');
+					} else {
+						h.push('<img src="../img/card_hide_' + j + '.png" class="card_' + j + ' card-hide">');
+					}
+					h.push('</div>');
+				}
 				h.push('</div>');
 				$('.act-0405-4-top').after(h.join(''));
 			}
