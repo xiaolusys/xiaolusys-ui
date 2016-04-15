@@ -54,7 +54,7 @@ $(document).ready(function() {
 					if (resp.cards[i] == 1) {
 						h.push('<img src="../img/card_' + j + '.png" class="card_' + j + '">');
 					} else {
-						h.push('<img src="../img/card_hide_' + j + '.png" class="card_' + j + ' card_' + j + '">');
+						h.push('<img src="../img/card_hide_' + j + '.png" class="card_' + j + ' card-hide">');
 					}
 					h.push('</div>');
 				}
@@ -153,7 +153,8 @@ $(document).ready(function() {
 				//show card
 				if (resp.type == 'card' && resp.status == 'open') {
 					var $img = $('.card_' + resp.value);
-					$img[0].src = '../img/card_' + resp.value;
+					$('.card_' + resp.value).removeClass('card-hide');
+					$img[0].src = '../img/card_' + resp.value + '.png';
 				}
 				//change envelop status
 				var $openedImg = $('img[data-id=' + resp.id + ']');
@@ -174,7 +175,7 @@ $(document).ready(function() {
 		var $popup = $('.act-popup');
 		$popup.remove();
 		var hideLength = $('.act-cards-container .card-hide').length;
-		if (hideLength == 8) {
+		if (hideLength == 0) {
 			var h = [];
 			h.push('<div class="act-popup" >');
 			h.push('<img src="../img/act-0405-37.png" class="complete-cards"/>');
@@ -220,7 +221,7 @@ $(document).ready(function() {
 		$('.act-cards-container').remove();
 		var h = [];
 		h.push('<img src="../img/act-0405-20.png" class="receive-coupon">');
-		$('.act-0405-3-time').after(h.join(''));
+		$('.act-0405-time').after(h.join(''));
 	});
 	$(document).on('click', '.act-0405-3-invite img', function() {
 		var os = OSTest();
@@ -253,38 +254,46 @@ $(document).ready(function() {
 			type: 'POST',
 			url: '/rest/v1/usercoupons',
 			success: function(resp) {
+
 				if (resp.code == 0) {
-					$('.receive-coupon').attr('data-status', 0);
-					$('.modal-body p').text('优惠卷已发放完，欢迎参加本次活动。您的红包可以提现也可在商城消费')
+					var h = [];
+					h.push('<div class="act-popup act-coupon" >');
+					h.push('<p>优惠卷已发放完，欢迎参加本次活动。您的红包可以提现也可在商城消费</p>');
+					h.push('<img src="../img/receive.png">');
+					h.push('</div>');
+					$('body').append(h.join(''));
 				} else if (resp.code == 1 && resp.results[0].status == 0) {
-					$('.receive-coupon').attr('data-status', 1);
-					$('.modal-body p').text('您的优惠卷已领取，请尽快到商城退换奖品');
-				} else {
-					$('.receive-coupon').attr('data-status', 2);
-					$('.modal-body p').text('请到待收货界面查询物流信息');
-				}
-				$("#myModal").modal();
-				console.log('get coupon success!')
-				var os = OSTest();
-				console.log('os share:', os)
-				if (os == 'iOS') {
-					setupWebViewJavascriptBridge(function(bridge) {
-						var data = {
-							'url': 'com.jimei.xlmm://app/v1/usercoupons/method',
-						};
-						bridge.callHandler('jumpToNativeLocation', data, function(response) {
-							console.log("jumpToNativeLocation called with:", data);
-						});
-					})
-				} else {
-					if (window.AndroidBridge) {
-						var data = {
-							'url': 'com.jimei.xlmm://app/v1/usercoupons/method',
-						};
-						window.AndroidBridge.jumpToNativeLocation(data.url);
+					var os = OSTest();
+					console.log('os share:', os)
+					if (os == 'iOS') {
+						setupWebViewJavascriptBridge(function(bridge) {
+							var data = {
+								'url': 'com.jimei.xlmm://app/v1/usercoupons/method',
+							};
+							bridge.callHandler('jumpToNativeLocation', data, function(response) {
+								console.log("jumpToNativeLocation called with:", data);
+							});
+						})
+					} else {
+						if (window.AndroidBridge) {
+							var data = {
+								'url': 'com.jimei.xlmm://app/v1/usercoupons/method',
+							};
+							window.AndroidBridge.jumpToNativeLocation(data.url);
+						}
 					}
+				} else {
+					var h = [];
+					h.push('<div class="act-popup act-coupon" >');
+					h.push('<p>请到待收货界面查询物流信息</p>');
+					h.push('<img src="../img/none.png">');
+					h.push('</div>');
+					$('body').append(h.join(''));
 				}
 			}
 		});
 	});
+	$(document).on('click', '.act-coupon', function() {
+		$('.act-popup').remove();
+	})
 });
