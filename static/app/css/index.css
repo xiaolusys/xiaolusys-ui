@@ -225,7 +225,7 @@ nav a:active,
 .glist .gprice s{
   font-size: 18px;
   color:#c1c0bf;
-  padding-left:46px;
+  /*padding-left:46px;*/
 }
 .cart,
 .scroll-top{
