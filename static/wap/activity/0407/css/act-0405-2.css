@@ -14,27 +14,6 @@ body {
 	background-size: 100% 100%;
 	padding-top: 12%;
 }
-.act-0405-2-time {
-	width: 76%;
-	height: 70px;
-	margin-left: 12%;
-	background-image: URL(../img/act-0405-6.png);
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
-	display: -webkit-box;
-}
-#day_show, #hour_show, #minute_show, #second_show {
-	color: #fff;
-	line-height: 48px;
-	display: -webkit-box;
-	-webkit-box-flex: 1;
-	margin-top: 6%;
-	padding-left: 8%;
-}
-.act-0405-2-time img {
-	width: 30%;
-}
 .act-cards-container {
 	width: 88%;
 	margin: 6% 6%;
@@ -63,13 +42,6 @@ body {
 	padding-left: 0px !important;
 	padding-right: 0px !important;
 }
-.act-0405-2-rules {
-	width: 100%;
-}
-.act-0405-detail {
-	width: 100%;
-	margin-bottom: 40px;
-}
 .act-0405-2-download {
 	width: 82%;
 	margin-left: 9%;
@@ -95,10 +67,4 @@ p {
 	width: 80%;
 	margin-left: 10%;
 	margin-top: 15%;
-}
-.act-0405-copyright p {
-	text-align: center;
-	font-size: 12px;
-	color: #EC5BA8;
-	margin-top: 40px;
 }

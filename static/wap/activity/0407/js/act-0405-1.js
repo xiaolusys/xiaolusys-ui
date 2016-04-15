@@ -11,7 +11,6 @@ $(document).ready(function() {
 			if (intDiff <= 0) {
 				window.location.href = '../html/act-0405-4.html';
 			}
-
 			//时间默认值		
 			if (intDiff > 0) {
 				day = Math.floor(intDiff / (60 * 60 * 24));

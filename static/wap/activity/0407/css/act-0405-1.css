@@ -9,23 +9,13 @@ body {
 .act-0405-top img {
 	width: 100%;
 }
-.act-0405-time {
-	width: 76%;
-	height: 70px;
-	margin-left: 12%;
-	margin-bottom: 41px;
-	background-image: URL(../img/act-0405-6.png);
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
-	display: -webkit-box;
-}
 .act-0405-beInvited {
 	display: -webkit-box;
 	-webkit-box-orient: horizontal;
 	width: 70%;
 	margin-left: 15%;
 	margin-bottom: 32px;
+	margin-top: 41px;
 }
 .act-0405-beInvited img {
 	width: 40px;
@@ -39,17 +29,6 @@ body {
 	-webkit-box-flex: 1;
 	text-align: left;
 	margin-left: 10px;
-}
-#day_show, #hour_show, #minute_show, #second_show {
-	color: #fff;
-	line-height: 48px;
-	display: -webkit-box;
-	-webkit-box-flex: 1;
-	margin-top: 8%;
-	padding-left: 8%;
-}
-.act-0405-time img {
-	width: 30%;
 }
 .act-0405-celNumber {
 	width: 82%;
@@ -92,13 +71,6 @@ input::-webkit-input-placeholder {
 .act-0405-add img {
 	width: 100%
 }
-.act-0405-rules {
-	width: 100%;
-}
-.act-0405-detail {
-	width: 100%;
-	margin-bottom: 40px;
-}
 .act-0405-add {
 	margin-bottom: 40px;
 }
@@ -112,10 +84,4 @@ input::-webkit-input-placeholder {
 	height: 86%;
 	margin-left: 51px;
 	background-color: #ffebf4;
-}
-.act-0405-copyright p {
-	text-align: center;
-	font-size: 12px;
-	color: #EC5BA8;
-	margin-top: 40px;
 }
