@@ -1,6 +1,4 @@
 $(document).ready(function() {
-	var baseurl = 'http://staging.xiaolumeimei.com';
-//	var baseurl = 'http://192.168.1.64:9000';
 	var $top = $('.act-0405-2-top')[0];
 	var screenWidth = document.body.clientWidth;
 	$top.style.height = screenWidth * 1.28 + 'px';
@@ -35,7 +33,7 @@ $(document).ready(function() {
 		var end_time, current_time, rest_time;
 		$.ajax({
 			type: 'GET',
-			url: baseurl + '/sale/promotion/apply/3/',
+			url: '/sale/promotion/apply/3/',
 			success: function(resp) {
 				//set rest time of activity
 				end_time = resp.end_time;
@@ -50,7 +48,7 @@ $(document).ready(function() {
 		});
 	};
 	var downloadClick = function() {
-		window.location.href = baseurl + '/sale/promotion/appdownload/';
+		window.location.href = '/sale/promotion/appdownload/';
 	};
 	var addCard = function() {
 		var h = [];

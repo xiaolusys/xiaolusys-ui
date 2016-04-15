@@ -1,6 +1,4 @@
 $(document).ready(function() {
-	var baseurl = 'http://staging.xiaolumeimei.com';
-	// var baseurl = 'http://192.168.1.64:9000';
 	var $top = $('.act-0405-3-top')[0];
 	var screenWidth = document.body.clientWidth;
 	$top.style.height = screenWidth * 1.28 + 'px';
@@ -35,7 +33,7 @@ $(document).ready(function() {
 		var end_time, current_time, rest_time;
 		$.ajax({
 			type: 'GET',
-			url: baseurl + '/sale/promotion/apply/3/',
+			url: '/sale/promotion/apply/3/',
 			success: function(res) {
 				//set rest time of activity
 				end_time = res.end_time;
@@ -46,7 +44,7 @@ $(document).ready(function() {
 		});
 		$.ajax({
 			type: 'GET',
-			url: baseurl + '/sale/promotion/main/3/',
+			url: '/sale/promotion/main/3/',
 			success: function(resp) {
 				//add cards
 				var h = [];
@@ -133,7 +131,7 @@ $(document).ready(function() {
 		envelope_id = $eventTarget.attr('data-id');
 		$.ajax({
 			type: 'GET',
-			url: baseurl + '/sale/promotion/open_envelope/' + envelope_id + '/',
+			url: '/sale/promotion/open_envelope/' + envelope_id + '/',
 			success: function(resp) {
 				var h = [];
 				h.push('<div class="act-popup" >');
@@ -155,8 +153,8 @@ $(document).ready(function() {
 				$('body').append(h.join(''));
 				//show card
 				if (resp.type == 'card' && resp.status == 'open') {
-					var $img = $('.card_' + resp.value + 1);
-					$img.src = '';
+					var $img = $('.card_' + resp.value);
+					$img[0].src = '';
 				}
 				//change envelop status
 				var $openedImg = $('img[data-id=' + resp.id + ']');
@@ -254,7 +252,7 @@ $(document).ready(function() {
 				'template_id': 40
 			},
 			type: 'POST',
-			url: baseurl + '/rest/v1/usercoupons',
+			url: '/rest/v1/usercoupons',
 			success: function(resp) {
 				if (resp.code == 0) {
 					$('.receive-coupon').attr('data-status', 0);
