@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	var baseurl = 'http://staging.xiaolumeimei.com';
-//	var baseurl = 'http://192.168.1.64:9000';
+	//	var baseurl = 'http://192.168.1.64:9000';
 	var $top = $('.act-0405-2-top')[0];
 	var screenWidth = document.body.clientWidth;
 	$top.style.height = screenWidth * 1.28 + 'px';
@@ -13,7 +13,9 @@ $(document).ready(function() {
 				hour,
 				minute,
 				second;
-
+			if (intDiff <= 0) {
+				window.location.href = '../html/act-0405-4.html';
+			}
 			//时间默认值		
 			if (intDiff > 0) {
 				day = Math.floor(intDiff / (60 * 60 * 24));
@@ -26,9 +28,6 @@ $(document).ready(function() {
 			$('#minute_show').html('<img  src="../img/' + (Math.floor(minute / 10)) + '.png" /> <img  src="../img/' + ((minute / 10).toString().split('.')[1] || 0) + '.png" />');
 			$('#second_show').html('<img  src="../img/' + (Math.floor(second / 10)) + '.png" /> <img  src="../img/' + ((second / 10).toString().split('.')[1] || 0) + '.png" />');
 			intDiff--;
-			if (intDiff <= 0) {
-				window.location.href = '../html/act-0405-4.html';
-			}
 		}, 1000);
 	};
 	var requestData = function() {
@@ -66,9 +65,7 @@ $(document).ready(function() {
 	var popup = function(resp) {
 		var h = [];
 		h.push('<div class="act-popup" >');
-		// h.push('<img src="' + resp.img + '" class="act-customer-img"/>');
-		// h.push('<p>成功邀请 ' + resp.nick + ' </p>');
-		h.push('<img src="../img/cardGet_1.png" class="act-card-get"/>');
+		h.push('<img src="../img/getCard_first.png" class="act-card-get"/>');
 		h.push('</div>');
 		$('body').append(h.join(''));
 	};
