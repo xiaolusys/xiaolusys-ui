@@ -220,7 +220,9 @@ $(document).ready(function() {
 		$('.act-popup').remove();
 		$('.act-cards-container').remove();
 		var h = [];
-		h.push('<img src="../img/act-0405-20.png" class="receive-coupon">');
+		if (!$('.receive-coupon').length) {
+			h.push('<img src="../img/act-0405-20.png" class="receive-coupon">');
+		}
 		$('.act-0405-time').after(h.join(''));
 	});
 	$(document).on('click', '.act-0405-3-invite img', function() {
