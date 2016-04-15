@@ -67,7 +67,7 @@ $(document).ready(function() {
 		h.push('<div class="act-popup" >');
 		// h.push('<img src="' + resp.img + '" class="act-customer-img"/>');
 		// h.push('<p>成功邀请 ' + resp.nick + ' </p>');
-		h.push('<img src="../img/cardGet_1.png" class="act-card-get"/>');
+		h.push('<img src="../img/getCard_first.png" class="act-card-get"/>');
 		h.push('</div>');
 		$('body').append(h.join(''));
 	};
