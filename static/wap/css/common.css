@@ -207,6 +207,12 @@ html, body {
     float: right;
 }
 
-.margin-right-sm {
+.app-tag {
+    width: 640px;
+    margin: 0 auto;
+}
+
+.order-confirm-tag {
+    margin-top: 4px;
     margin-right: 10px;
 }
