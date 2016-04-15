@@ -19,6 +19,28 @@
 	width: 40%;
 }
 
+.act-cards-container {
+	width: 100%;
+	margin-top: 10%;
+	background-image: url('../img/act-0405-36.png');
+}
+.act-card:nth-child(3n+1) {
+	position: relative;
+	left: 12%;
+}
+.act-card:nth-child(3n+3) {
+	position: relative;
+	right: 12%;
+}
+.act-card:nth-child(n+4) {
+	position: relative;
+	margin-top: -12%;
+}
+.act-cards-container img {
+	vertical-align: middle;
+	width: 100%;
+}
+
 .act-0405-rules {
 	width: 100%;
 }
@@ -31,4 +53,20 @@
 	font-size: 12px;
 	color: #EC5BA8;
 	margin-top: 40px;
+}
+.text-center {
+	text-align: center;
+}
+.text-right {
+	text-align: right;
+}
+.text-left {
+	text-align: left;
+}
+.no-padding {
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+}
+.act-icon {
+	width: 50%;
 }

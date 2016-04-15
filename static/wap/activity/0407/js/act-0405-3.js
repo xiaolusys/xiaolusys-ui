@@ -85,11 +85,8 @@ $(document).ready(function() {
 					}
 					h.push('</div>');
 				});
-				h.push('</div');
-				$('.act-0405-3-invite').after(h.join(''));
 
 				//add envelopes of inactives
-				h = [];
 				resp.inactives.forEach(function(inactive) {
 					h.push('<div class="col-xs-4 no-padding text-center act-evelops">');
 					if (inactive.headimgurl == '') {
@@ -101,7 +98,8 @@ $(document).ready(function() {
 					h.push('<p>未激活</p>');
 					h.push('</div>');
 				});
-				$('.act-evelops-container').after(h.join(''));
+				h.push('</div');
+				$('.act-0405-3-invite').after(h.join(''));
 
 				//add  sleepbags records
 				var awardNum = resp.award_left + '';
