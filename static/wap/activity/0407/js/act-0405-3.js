@@ -181,6 +181,7 @@ $(document).ready(function() {
 	//dropdown popup
 	var closePopup = function() {
 		var $popup = $('.act-popup');
+		var old_num_cards;
 		if ($('.act-cards-container').length) {
 			old_num_cards = $('.receive-coupon').attr('data-numCards');
 		} else {
