@@ -8,14 +8,22 @@ $(document).ready(function() {
 			type: 'GET',
 			url: '/sale/promotion/stats/3/',
 			success: function(resp) {
+				var num_cards =0;
+				var cards =resp.cards;
+				for(var i =0;i<cards.length;i++){
+					if(cars[i]==1){
+						num_cards = num_cards+1;
+					}
+				} 
 				var h = [];
 				h.push('<div class="act-0405-4-text">');
-				h.push('<p>通过您的邀请，为小鹿美美带来了' + resp.invite_num + '位好友</p>');
-				if (resp.stats) {
-					h.push('<p>您完成了拼图，获得了浴巾</p>');
+				h.push('<p>您邀请了' + resp.invite_num + '位好友，获得了'+resp.total+'元红包。');
+				if (num_cards == 9) {
+					h.push('您完成了拼图,');
 				} else {
-					h.push('<p>您没有完成拼图，没有获得浴巾</p>');
+					h.push('您没有完成拼图,');
 				}
+				h.push('您的现金红包还可以在商场消费或提现。</p>')
 
 				h.push('</div>');
 
