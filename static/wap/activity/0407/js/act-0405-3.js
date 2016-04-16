@@ -113,7 +113,7 @@ $(document).ready(function() {
 				h.push('<div class="act-sleepbags-container collapse">');
 				resp.award_list.forEach(function(award) {
 					h.push('<div class="col-xs-10 no-padding text-left act-0405-3-sleepbags-record">');
-					h.push('<p>' + award.customer_nick + ',打开第' + award.invite_num + '个信封，获得最后一张“拼”图，成功拼成一个睡袋</p>');
+					h.push('<p>' + award.customer_nick + ',打开第' + award.invite_num + '个信封，获得最后一张“拼”图，成功拼成一条浴巾</p>');
 					h.push('</div>');
 				});
 				h.push('</div>');
