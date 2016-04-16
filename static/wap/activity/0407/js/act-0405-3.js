@@ -50,7 +50,7 @@ $(document).ready(function() {
 				//2.查看优惠劵状态，现实对应图片
 				//status == 0拼图完成
 				if (resp.num_cards == 9) {
-					h.push('<img src="../img/act-0405-20.png" class="receive-coupon">');
+					h.push('<img src="../img/receive.png" class="receive-coupon">');
 				} else {
 					//add cards
 					h.push('<div class="act-cards-container" data-numCards="' + resp.num_cards + '">');
