@@ -171,12 +171,13 @@ p {
 }
 .act-coupon p {
 	color: white;
-	font-size: 14px;
+	font-size: 16px;
+	margin: 50px;
 }
 .act-coupon img {
 	margin-top: 10%;
-	width: 60%
-	margin-left:20%;
+	width: 50%;
+	margin-left: 25%;
 }
 .act-0405-show {
 	width: 16% !important;
