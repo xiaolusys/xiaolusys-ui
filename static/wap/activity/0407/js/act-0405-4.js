@@ -23,7 +23,7 @@ $(document).ready(function() {
 				} else {
 					h.push('您没有完成拼图,');
 				}
-				h.push('您的现金红包还可以在商场消费或体现。</p>')
+				h.push('您的现金红包还可以在商场消费或提现。</p>')
 
 				h.push('</div>');
 
