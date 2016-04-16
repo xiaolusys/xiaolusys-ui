@@ -45,20 +45,27 @@ $(document).ready(function() {
 			type: 'GET',
 			url: '/sale/promotion/main/3/',
 			success: function(resp) {
-				//add cards
 				var h = [];
-				h.push('<div class="act-cards-container">');
-				for (var i = 0; i < 9; i++) {
-					h.push('<div class="col-xs-4 no-padding act-card">');
-					var j = i + 1;
-					if (resp.cards[i] == 1) {
-						h.push('<img src="../img/card_' + j + '.png" class="card_' + j + '">');
-					} else {
-						h.push('<img src="../img/card_hide_' + j + '.png" class="card_' + j + ' card-hide">');
+				//1.查看拼图是否完成
+				//2.查看优惠劵状态，现实对应图片
+				//status == 0拼图完成
+				if (resp.num_cards == 9) {
+					h.push('<img src="../img/act-0405-20.png" class="receive-coupon">');
+				} else {
+					//add cards
+					h.push('<div class="act-cards-container" data-numCards="' + resp.num_cards + '">');
+					for (var i = 0; i < 9; i++) {
+						h.push('<div class="col-xs-4 no-padding act-card">');
+						var j = i + 1;
+						if (resp.cards[i] == 1) {
+							h.push('<img src="../img/card_' + j + '.png" class="card_' + j + '">');
+						} else {
+							h.push('<img src="../img/card_hide_' + j + '.png" class="card_' + j + ' card-hide">');
+						}
+						h.push('</div>');
 					}
 					h.push('</div>');
 				}
-				h.push('</div>');
 				$('.act-0405-time').after(h.join(''));
 
 				//add envelopes
@@ -134,7 +141,7 @@ $(document).ready(function() {
 			url: '/sale/promotion/open_envelope/' + envelope_id + '/',
 			success: function(resp) {
 				var h = [];
-				h.push('<div class="act-popup" >');
+				h.push('<div class="act-popup" data-numCards="' + resp.num_cards + '">');
 				if (resp.friend_img == '') {
 					h.push('<img src="../img/act-0405-33.png" class="act-customer-img"/>');
 				} else {
@@ -174,14 +181,17 @@ $(document).ready(function() {
 	//dropdown popup
 	var closePopup = function() {
 		var $popup = $('.act-popup');
+		var old_num_cards = $('.act-cards-container')['data-numCards'];
+		var new_num_cards = $popup['data-numCards'];
 		$popup.remove();
-		var hideLength = $('.act-cards-container .card-hide').length;
-		if (hideLength == 0) {
-			var h = [];
-			h.push('<div class="act-popup" >');
-			h.push('<img src="../img/act-0405-37.png" class="complete-cards"/>');
-			h.push('</div>');
-			$('body').append(h.join(''));
+		if (old_num_cards == 8 && new_num_cards == 9) {
+			if (!$('.receive-coupon').length) {
+				var h = [];
+				h.push('<div class="act-popup" >');
+				h.push('<img src="../img/act-0405-37.png" class="complete-cards"/>');
+				h.push('</div>');
+				$('body').append(h.join(''));
+			}
 		}
 	};
 	var setupWebViewJavascriptBridge = function(callback) {
@@ -222,7 +232,7 @@ $(document).ready(function() {
 		$('.act-cards-container').remove();
 		var h = [];
 		if (!$('.receive-coupon').length) {
-			h.push('<img src="../img/act-0405-20.png" class="receive-coupon">');
+			h.push('<img src="../img/receive.png" class="receive-coupon">');
 		}
 		$('.act-0405-time').after(h.join(''));
 	});
@@ -259,13 +269,6 @@ $(document).ready(function() {
 			success: function(resp) {
 
 				if (resp.code == 0) {
-					var h = [];
-					h.push('<div class="act-popup act-coupon" >');
-					h.push('<p>优惠卷已发放完，欢迎参加本次活动。您的红包可以提现也可在商城消费</p>');
-					h.push('<img src="../img/receive.png">');
-					h.push('</div>');
-					$('body').append(h.join(''));
-				} else if (resp.code == 1 && resp.results[0].status == 0) {
 					var os = OSTest();
 					console.log('os share:', os)
 					if (os == 'iOS') {
@@ -285,11 +288,18 @@ $(document).ready(function() {
 							window.AndroidBridge.jumpToNativeLocation(data.url);
 						}
 					}
+				} else if (resp.code == 1) {
+					var h = [];
+					h.push('<div class="act-popup act-coupon" >');
+					h.push('<p>优惠劵领取受限，欢迎参加本次活动。您的红包可以提现也可在商城消费</p>');
+					h.push('<img src="../img/receive.png">');
+					h.push('</div>');
+					$('body').append(h.join(''));
 				} else {
 					var h = [];
 					h.push('<div class="act-popup act-coupon" >');
-					h.push('<p>请到待收货界面查询物流信息</p>');
-					h.push('<img src="../img/none.png">');
+					h.push('<p>优惠卷没有发放。您的红包可以提现也可在商城消费</p>');
+					h.push('<img src="../img/receive.png">');
 					h.push('</div>');
 					$('body').append(h.join(''));
 				}
