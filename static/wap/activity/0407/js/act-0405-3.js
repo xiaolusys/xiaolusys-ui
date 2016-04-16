@@ -277,7 +277,7 @@ $(document).ready(function() {
 				'template_id': 40
 			},
 			type: 'POST',
-			url: '/rest/v1/usercoupons',
+			url: '/sale/promotion/get_award',
 			success: function(resp) {
 
 				if (resp.code == 0) {
