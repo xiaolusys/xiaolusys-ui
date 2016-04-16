@@ -183,9 +183,9 @@ $(document).ready(function() {
 		var $popup = $('.act-popup');
 		var old_num_cards;
 		if ($('.act-cards-container').length) {
-			old_num_cards = $('.receive-coupon').attr('data-numCards');
-		} else {
 			old_num_cards = $('.act-cards-container').attr('data-numCards');
+		} else {
+			old_num_cards = $('.receive-coupon').attr('data-numCards');
 		}
 		var new_num_cards = $popup.attr('data-numCards');
 		if ($('.receive-coupon').length) {
