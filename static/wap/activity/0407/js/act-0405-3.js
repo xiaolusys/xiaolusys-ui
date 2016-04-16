@@ -277,7 +277,7 @@ $(document).ready(function() {
 				'template_id': 40
 			},
 			type: 'POST',
-			url: '/sale/promotion/get_award',
+			url: '/sale/promotion/get_award/3/',
 			success: function(resp) {
 
 				if (resp.code == 0) {
