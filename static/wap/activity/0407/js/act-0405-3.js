@@ -117,9 +117,9 @@ $(document).ready(function() {
 					h.push('</div>');
 				});
 				h.push('</div>');
-
+				h.push('<div class="col-xs-12">');
 				h.push('<img src="../img/act-0405-21.png" class="act-0405-show" data-toggle="collapse" data-target=".act-sleepbags-container">');
-
+				h.push('</div>');
 				$('.act-0405-show').after(h.join(''));
 			}
 		});
