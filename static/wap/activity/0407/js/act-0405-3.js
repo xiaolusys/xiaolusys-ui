@@ -70,7 +70,7 @@ $(document).ready(function() {
 					h.push('<img src="../img/' + envNum.substr(i, 1) + '.png">');
 				}
 				h.push('</div></div>');
-				h.push('<div class="act-evelops-container">');
+				h.push('<div class="act-evelops-container collapse">');
 				resp.envelopes.forEach(function(envelope) {
 					h.push('<div class="col-xs-4 no-padding text-center act-evelops">');
 					if (envelope.status === 'open' && envelope.type === 'card') {
@@ -110,14 +110,17 @@ $(document).ready(function() {
 					h.push('<img src="../img/' + awardNum.substr(i, 1) + '.svg">');
 				}
 				h.push('</div></div>')
-				h.push('<div class="act-sleepbags-container">');
+				h.push('<div class="act-sleepbags-container collapse">');
 				resp.award_list.forEach(function(award) {
 					h.push('<div class="col-xs-10 no-padding text-left act-0405-3-sleepbags-record">');
 					h.push('<p>' + award.customer_nick + ',打开第' + award.invite_num + '个信封，获得最后一张“拼”图，成功拼成一个睡袋</p>');
 					h.push('</div>');
 				});
 				h.push('</div>');
-				$('.act-0405-env-show').after(h.join(''));
+
+				h.push('<img src="../img/act-0405-21.png" class="act-0405-show" data-toggle="collapse" data-target=".act-sleepbags-container">');
+
+				$('.act-0405-show').after(h.join(''));
 			}
 		});
 	};

@@ -173,8 +173,13 @@ p {
 	color: white;
 	font-size: 14px;
 }
-.act-coupon img{
+.act-coupon img {
 	margin-top: 10%;
 	width: 60%
-	margin-left: 20%;
+	margin-left:20%;
+}
+.act-0405-show {
+	width: 12%;
+	margin-top: 25%;
+	margin-left: 9%;
 }
