@@ -19,11 +19,11 @@ $(document).ready(function() {
 				h.push('<div class="act-0405-4-text">');
 				h.push('<p>您邀请了' + resp.invite_num + '位好友，获得了' + resp.total + '元红包。');
 				if (num_cards == 9) {
-					h.push('您完成了拼图,');
+					h.push('非常抱歉您完成了拼图，');
 				} else {
-					h.push('您没有完成拼图,');
+					h.push('非常抱歉您没有完成拼图，');
 				}
-				h.push('您的现金红包还可以在商场消费或提现。</p>')
+				h.push('您的现金红包可以在商场消费或提现哦！</p>')
 
 				h.push('</div>');
 
