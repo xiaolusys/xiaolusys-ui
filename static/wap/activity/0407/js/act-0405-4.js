@@ -8,16 +8,16 @@ $(document).ready(function() {
 			type: 'GET',
 			url: '/sale/promotion/stats/3/',
 			success: function(resp) {
-				var num_cards =0;
-				var cards =resp.cards;
-				for(var i =0;i<cards.length;i++){
-					if(cars[i]==1){
-						num_cards = num_cards+1;
+				var num_cards = 0;
+				var cards = resp.cards;
+				for (var i = 0; i < cards.length; i++) {
+					if (cards[i] == 1) {
+						num_cards = num_cards + 1;
 					}
-				} 
+				}
 				var h = [];
 				h.push('<div class="act-0405-4-text">');
-				h.push('<p>您邀请了' + resp.invite_num + '位好友，获得了'+resp.total+'元红包。');
+				h.push('<p>您邀请了' + resp.invite_num + '位好友，获得了' + resp.total + '元红包。');
 				if (num_cards == 9) {
 					h.push('您完成了拼图,');
 				} else {
