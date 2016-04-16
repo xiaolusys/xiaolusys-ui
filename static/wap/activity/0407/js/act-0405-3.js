@@ -50,7 +50,7 @@ $(document).ready(function() {
 				//2.查看优惠劵状态，现实对应图片
 				//status == 0拼图完成
 				if (resp.num_cards == 9) {
-					h.push('<img src="../img/receive.png" class="receive-coupon">');
+					h.push('<img src="../img/receive.png" class="receive-coupon" data-numCards="' + resp.num_cards + '">');
 				} else {
 					//add cards
 					h.push('<div class="act-cards-container" data-numCards="' + resp.num_cards + '">');
@@ -181,8 +181,19 @@ $(document).ready(function() {
 	//dropdown popup
 	var closePopup = function() {
 		var $popup = $('.act-popup');
-		var old_num_cards = $('.act-cards-container')['data-numCards'];
-		var new_num_cards = $popup['data-numCards'];
+		if ($('.act-cards-container').length) {
+			old_num_cards = $('.receive-coupon').attr('data-numCards');
+		} else {
+			old_num_cards = $('.act-cards-container').attr('data-numCards');
+		}
+		var new_num_cards = $popup.attr('data-numCards');
+		if ($('.receive-coupon').length) {
+			$('.receive-coupon').attr('data-numCards', new_num_cards);
+		}
+		if ($('.act-cards-container').length) {
+			$('.act-cards-container').attr('data-numCards', new_num_cards);
+		}
+
 		$popup.remove();
 		if (old_num_cards == 8 && new_num_cards == 9) {
 			if (!$('.receive-coupon').length) {
