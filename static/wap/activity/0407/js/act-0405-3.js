@@ -303,7 +303,7 @@ $(document).ready(function() {
 				} else if (resp.code == 1) {
 					var h = [];
 					h.push('<div class="act-popup act-coupon" >');
-					h.push('<p>优惠劵领取受限，欢迎参加本次活动。您的红包可以提现也可在商城消费</p>');
+					h.push('<p>优惠劵已领取，欢迎参加本次活动。您的红包可以提现也可在商城消费</p>');
 					h.push('<img src="../img/receive.png">');
 					h.push('</div>');
 					$('body').append(h.join(''));
