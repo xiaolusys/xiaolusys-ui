@@ -63,7 +63,7 @@ $(document).ready(function() {
 	var popup = function(resp) {
 		var h = [];
 		h.push('<div class="act-popup" >');
-		h.push('<img src="../img/getCard_first.png" class="act-card-get"/>');
+		h.push('<img src="../img/getCard_first.png" class="act-card-first"/>');
 		h.push('</div>');
 		$('body').append(h.join(''));
 	};
