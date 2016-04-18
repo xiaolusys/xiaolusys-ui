@@ -16,7 +16,7 @@ body {
 }
 .act-cards-container {
 	width: 100%;
-	margin-top: 13%;
+	margin-top: 13% !important;
 }
 .card-hide {
 	opacity: 0.5;

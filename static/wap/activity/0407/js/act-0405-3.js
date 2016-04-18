@@ -173,7 +173,7 @@ $(document).ready(function() {
           h.push('<img src="../img/act-0405-21.png" class="act-0405-show" data-toggle="collapse" data-target=".hideOrShow-bags">');
           h.push('</div>');
         }
-        $('.act-show-bags').after(h.join(''));
+        $('.show-bags').after(h.join(''));
       }
     });
   };
