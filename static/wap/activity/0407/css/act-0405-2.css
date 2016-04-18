@@ -15,9 +15,8 @@ body {
 	padding-top: 12%;
 }
 .act-cards-container {
-	width: 88%;
-	margin: 6% 6%;
-	background-image: url('../img/act-0405-36.png');
+	width: 100%;
+	margin-top: 13%;
 }
 .card-hide {
 	opacity: 0.5;
