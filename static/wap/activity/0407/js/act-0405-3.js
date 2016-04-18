@@ -192,7 +192,7 @@ $(document).ready(function() {
           h.push('</div>');
         } else {
           h.push('<div class="act-sleepbags-container">');
-          for (var i = 0; i < awardNum; i++) {
+          for (var i = 0; i < awards.length; i++) {
             h.push('<div class="col-xs-10 no-padding text-left act-0405-3-sleepbags-record">');
             h.push('<p>' + awards[i].customer_nick + '打开第' + awards[i].invite_num + '个信封，获得最后一张“拼”图，成功拼成一条浴巾</p>');
             h.push('</div>');
