@@ -78,7 +78,7 @@ $(document).ready(function() {
           h.push('<img src="../img/' + envNum.substr(i, 1) + '.png">');
         }
         h.push('</div></div>');
-        if (envNum <= 8) {
+        if (envNum <= 8 && envNum > 0) {
           h.push('<div class="act-evelops-container">');
           for (var i = 0; i < envNum; i++) {
             h.push('<div class="col-xs-3 no-padding text-center act-evelops">');
@@ -131,7 +131,7 @@ $(document).ready(function() {
           }
         }
         h.push('</div>')
-        
+
         h.push('<div class="col-xs-12">');
         h.push('<img src="../img/act-0405-21.png" class="act-0405-show" data-toggle="collapse" data-target=".showOrHide-env"> ');
         h.push('</div>');
