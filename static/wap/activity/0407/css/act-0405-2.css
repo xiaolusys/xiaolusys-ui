@@ -24,19 +24,15 @@ body {
 }
 .act-card:nth-child(3n+1) {
 	position: relative;
-	left: 12%;
+	left: 11%;
 }
 .act-card:nth-child(3n+3) {
 	position: relative;
-	right: 12%;
+	right: 11%;
 }
 .act-card:nth-child(n+4) {
 	position: relative;
-	margin-top: -12%;
-}
-.act-cards-container img {
-	vertical-align: middle;
-	width: 100%;
+	margin-top: -12.5%;
 }
 .no-padding {
 	padding-left: 0px !important;
