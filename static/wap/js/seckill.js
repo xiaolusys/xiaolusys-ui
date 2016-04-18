@@ -11,7 +11,7 @@ function show_seckill_list_shop(obj) {
         <p class="gprice">
           <span class="nprice"><em>¥</em> {{ agent_price }} </span>
           <s class="oprice"><em>¥</em> {{ std_sale_price }}</s>
-          <span class="tag">APP支付立减两元</span>
+          <span class="tag">APP支付立减2元</span>
         </p>{{ saleout_dom }}
       </a>
     </li>	 */

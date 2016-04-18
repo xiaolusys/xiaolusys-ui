@@ -338,7 +338,7 @@ function Create_item_dom(p_obj, close_model) {
          <p class="gprice">
          <span class="nprice"><em>¥</em> {{ product_lowest_price }} </span>
          <s class="oprice"><em>¥</em> {{ std_sale_price }}</s>
-         <span class="tag">APP支付立减两元</span>
+         <span class="tag">APP支付立减2元</span>
          </p>{{ saleout_dom }}
          </a>
          </li>
@@ -355,7 +355,7 @@ function Create_item_dom(p_obj, close_model) {
          <p class="gprice">
          <span class="nprice"><em>¥</em> {{ lowest_price }} </span>
          <s class="oprice"><em>¥</em> {{ std_sale_price }}</s>
-         <span class="tag">APP支付立减两元</span>
+         <span class="tag">APP支付立减2元</span>
          </p>{{ saleout_dom }}
          </a>
          </li>
