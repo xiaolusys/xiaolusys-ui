@@ -71,7 +71,6 @@ $(document).ready(function() {
         //add envelopes and inactive
         var envNum = resp.envelopes.length + '';
         var envLen = envNum.length;
-        var inacLen = resp.inactives.length;
         var envelopes = resp.envelopes;
         h = [];
         h.push('<div class="act-0405-3-envelopes"><div class="env-num">');
@@ -137,38 +136,6 @@ $(document).ready(function() {
         h.push('<img src="../img/act-0405-21.png" class="act-0405-show" data-toggle="collapse" data-target=".showOrHide-env"> ');
         h.push('</div>');
 
-
-
-
-        // h.push('<div class="act-evelops-container collapse">');
-        // resp.envelopes.forEach(function(envelope) {
-        //   h.push('<div class="col-xs-4 no-padding text-center act-evelops">');
-        //   if (envelope.status === 'open' && envelope.type === 'card') {
-        //     h.push('<img class="act-icon act-evelop" src="../img/act-0405-26.png" data-id = "' + envelope.id + '" data-status="' + envelope.status + '"/>');
-        //     h.push('<p>拼图</p>');
-        //   } else if (envelope.status === 'open' && envelope.type === 'cash') {
-        //     h.push('<img class="act-icon act-evelop" src="../img/act-0405-25.png" data-id = "' + envelope.id + '" data-status="' + envelope.status + '"/>');
-        //     h.push('<p>' + envelope.yuan_value + '</p>');
-        //   } else {
-        //     h.push('<img class="act-icon act-evelop" src="../img/act-0405-27.png" data-id = "' + envelope.id + '" data-status="' + envelope.status + '"/>');
-        //     h.push('<p>未拆开</p>');
-        //   }
-        //   h.push('</div>');
-        // });
-
-        // //add envelopes of inactives
-        // resp.inactives.forEach(function(inactive) {
-        //   h.push('<div class="col-xs-4 no-padding text-center act-evelops">');
-        //   if (inactive.headimgurl == '') {
-        //     h.push('<img class="act-icon act-inactive" src="../img/act-0405-33.png" />');
-        //   } else {
-        //     h.push('<img class="act-icon act-inactive" src="' + inactive.headimgurl + '" />');
-        //   }
-
-        //   h.push('<p>未激活</p>');
-        //   h.push('</div>');
-        // });
-        // h.push('</div');
         $('.act-0405-3-invite').after(h.join(''));
 
         //add  sleepbags records
@@ -206,21 +173,6 @@ $(document).ready(function() {
           h.push('<img src="../img/act-0405-21.png" class="act-0405-show" data-toggle="collapse" data-target=".hideOrShow-bags">');
           h.push('</div>');
         }
-
-
-
-
-        // h.push('<div class="act-sleepbags-container collapse">');
-        // resp.award_list.forEach(function(award) {
-        //   h.push('<div class="col-xs-10 no-padding text-left act-0405-3-sleepbags-record">');
-        //   h.push('<p>' + award.customer_nick + ',打开第' + award.invite_num + '个信封，获得最后一张“拼”图，成功拼成一条浴巾</p>');
-        //   h.push('</div>');
-        // });
-        // h.push('</div>');
-        // h.push('<div class="col-xs-12">');
-        // h.push('<img src="../img/act-0405-21.png" class="act-0405-show" data-toggle="collapse" data-target=".act-sleepbags-container">');
-        // h.push('</div>');
-        // $('.act-0405-show').after(h.join(''));
       }
     });
   };
