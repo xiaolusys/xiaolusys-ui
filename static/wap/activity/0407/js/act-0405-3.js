@@ -270,7 +270,7 @@ $(document).ready(function() {
 				window.AndroidBridge.callNativeShareFunc(data.share_to, data.active_id);
 			}
 		}
-	});
+	});   
 	$(document).on('click', '.receive-coupon', function() {
 		$.ajax({
 			data: {
