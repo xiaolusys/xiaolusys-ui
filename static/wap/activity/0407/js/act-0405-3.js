@@ -125,7 +125,7 @@ $(document).ready(function() {
             }
             h.push('</div>');
 
-            if (i == 8) {
+            if (i == 7) {
               h.push('</div>');
               h.push('<div class="act-evelops-container showOrHide-env collapse">');
             }
@@ -182,11 +182,11 @@ $(document).ready(function() {
         }
         h.push('</div></div>')
 
-        if (len <= 4) {
+        if (awards.length <= 4) {
           h.push('<div class="act-sleepbags-container">');
           for (var i = 0; i < awardNum; i++) {
             h.push('<div class="col-xs-10 no-padding text-left act-0405-3-sleepbags-record">');
-            h.push('<p>' + awards[i].customer_nick + ',打开第' + awards[i].invite_num + '个信封，获得最后一张“拼”图，成功拼成一条浴巾</p>');
+            h.push('<p>' + awards[i].customer_nick + '打开第' + awards[i].invite_num + '个信封，获得最后一张“拼”图，成功拼成一条浴巾</p>');
             h.push('</div>');
           }
           h.push('</div>');
@@ -194,9 +194,9 @@ $(document).ready(function() {
           h.push('<div class="act-sleepbags-container">');
           for (var i = 0; i < awardNum; i++) {
             h.push('<div class="col-xs-10 no-padding text-left act-0405-3-sleepbags-record">');
-            h.push('<p>' + awards[i].customer_nick + ',打开第' + awards[i].invite_num + '个信封，获得最后一张“拼”图，成功拼成一条浴巾</p>');
+            h.push('<p>' + awards[i].customer_nick + '打开第' + awards[i].invite_num + '个信封，获得最后一张“拼”图，成功拼成一条浴巾</p>');
             h.push('</div>');
-            if (i == 5) {
+            if (i == 3) {
               h.push('</div>');
               h.push('<div class="act-sleepbags-container hideOrShow-bags collapse">');
             }
