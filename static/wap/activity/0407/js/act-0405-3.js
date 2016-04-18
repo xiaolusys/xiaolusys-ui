@@ -89,10 +89,10 @@ $(document).ready(function() {
               h.push('<img class="act-icon act-evelop" src="../img/act-0405-25.png" data-id = "' + envelopes[i].id + '" data-status="' + envelopes[i].status + '"/>');
               h.push('<p>' + envelopes[i].yuan_value + '</p>');
             } else if (envelopes[i].type == 'inactive') {
-              if (inactive.headimgurl == '') {
+              if (envelopes[i].headimgurl == '') {
                 h.push('<img class="act-icon act-inactive" src="../img/act-0405-33.png" />');
               } else {
-                h.push('<img class="act-icon act-inactive" src="' + inactive.headimgurl + '" />');
+                h.push('<img class="act-icon act-inactive" src="' + envelopes[i].headimgurl + '" />');
               }
               h.push('<p>未激活</p>');
             } else {
@@ -112,10 +112,10 @@ $(document).ready(function() {
               h.push('<img class="act-icon act-evelop" src="../img/act-0405-25.png" data-id = "' + envelopes[i].id + '" data-status="' + envelopes[i].status + '"/>');
               h.push('<p>' + envelopes[i].yuan_value + '</p>');
             } else if (envelopes[i].type == 'inactive') {
-              if (inactive.headimgurl == '') {
+              if (envelopes[i].headimgurl == '') {
                 h.push('<img class="act-icon act-inactive" src="../img/act-0405-33.png" />');
               } else {
-                h.push('<img class="act-icon act-inactive" src="' + inactive.headimgurl + '" />');
+                h.push('<img class="act-icon act-inactive" src="' + envelopes[i].headimgurl + '" />');
               }
               h.push('<p>未激活</p>');
             } else {
