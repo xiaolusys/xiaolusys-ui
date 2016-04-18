@@ -111,6 +111,6 @@ $(document).ready(function() {
       }
     }
   };
-  $(document).on({ touchend: share, click: share }, '.act-0405-4-share');
+  $(document).on({ touch: share, click: share }, '.act-0405-4-share');
   requestData();
 });

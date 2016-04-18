@@ -364,11 +364,11 @@ $(document).ready(function() {
   };
 
   requestData();
-  $(document).on({ touchend: openEnvelope, click: openEnvelope }, '.act-evelops-container .act-evelop');
-  $(document).on({ 'touchend': closePopup, click: closePopup }, '.act-card-get');
-  $(document).on({ 'touchend': closePopup, 'click': closePopup }, '.act-cash-get');
-  $(document).on({ 'touchend': cardsComplete, 'click': cardsComplete }, '.complete-cards');
-  $(document).on({ 'touchend': invite, 'click': invite }, '.act-0405-3-invite img');
-  $(document).on({ 'touchend': receiveCoupon, 'click': receiveCoupon }, '.receive-coupon');
-  $(document).on({ 'touchend': closeCoupon, 'click': closeCoupon }, '.act-coupon');
+  $(document).on({ touch: openEnvelope, click: openEnvelope }, '.act-evelops-container .act-evelop');
+  $(document).on({ 'touch': closePopup, click: closePopup }, '.act-card-get');
+  $(document).on({ 'touch': closePopup, 'click': closePopup }, '.act-cash-get');
+  $(document).on({ 'touch': cardsComplete, 'click': cardsComplete }, '.complete-cards');
+  $(document).on({ 'touch': invite, 'click': invite }, '.act-0405-3-invite img');
+  $(document).on({ 'touch': receiveCoupon, 'click': receiveCoupon }, '.receive-coupon');
+  $(document).on({ 'touch': closeCoupon, 'click': closeCoupon }, '.act-coupon');
 });
