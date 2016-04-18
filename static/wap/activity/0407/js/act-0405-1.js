@@ -92,5 +92,5 @@ $(document).ready(function() {
     });
   };
   requestData();
-  $(document).on({ touchend: add, click: add }, '.act-0405-add img');
+  $(document).on({ touch: add, click: add }, '.act-0405-add img');
 });
