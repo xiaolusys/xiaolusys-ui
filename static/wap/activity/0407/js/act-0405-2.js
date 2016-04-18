@@ -86,7 +86,7 @@ $(document).ready(function() {
       return 'web'
     }
   };
-  $(document).on('click', '.act-0405-2-download', downloadClick);
-  $(document).on('click', '.act-popup', closePopup);
+  $(document).on({ touchend: downloadClick, click: downloadClick }, '.act-0405-2-download');
+  $(document).on({ touchend: closePopup, click: closePopup }, '.act-popup');
   requestData();
 });
