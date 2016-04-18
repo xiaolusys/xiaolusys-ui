@@ -279,12 +279,7 @@ $(document).ready(function() {
       return 'web'
     }
   };
-
-  requestData();
-  $(document).on('click', '.act-evelops-container .act-evelop', openEnvelope);
-  $(document).on('click', '.act-card-get', closePopup);
-  $(document).on('click', '.act-cash-get', closePopup);
-  $(document).on('click', '.complete-cards', function() {
+  var cardsComplete = function() {
     $('.act-popup').remove();
     $('.act-cards-container').remove();
     var h = [];
@@ -292,8 +287,8 @@ $(document).ready(function() {
       h.push('<img src="../img/receive.png" class="receive-coupon">');
     }
     $('.act-0405-time').after(h.join(''));
-  });
-  $(document).on('click', '.act-0405-3-invite img', function() {
+  };
+  var invite = function() {
     var os = OSTest();
     console.log('os share:', os)
     if (os == 'iOS') {
@@ -315,8 +310,9 @@ $(document).ready(function() {
         window.AndroidBridge.callNativeShareFunc(data.share_to, data.active_id);
       }
     }
-  });
-  $(document).on('click', '.receive-coupon', function() {
+  };
+
+  var receiveCoupon = function() {
     $.ajax({
       data: {
         'template_id': 40
@@ -362,8 +358,17 @@ $(document).ready(function() {
         }
       }
     });
-  });
-  $(document).on('click', '.act-coupon', function() {
+  };
+  var closeCoupon = function() {
     $('.act-popup').remove();
-  })
+  };
+
+  requestData();
+  $(document).on({ touchend: openEnvelope, click: openEnvelope }, '.act-evelops-container .act-evelop');
+  $(document).on({ 'touchend': closePopup, click: closePopup }, '.act-card-get');
+  $(document).on({ 'touchend': closePopup, 'click': closePopup }, '.act-cash-get');
+  $(document).on({ 'touchend': cardsComplete, 'click': cardsComplete }, '.complete-cards');
+  $(document).on({ 'touchend': invite, 'click': invite }, '.act-0405-3-invite img');
+  $(document).on({ 'touchend': receiveCoupon, 'click': receiveCoupon }, '.receive-coupon');
+  $(document).on({ 'touchend': closeCoupon, 'click': closeCoupon }, '.act-coupon');
 });
