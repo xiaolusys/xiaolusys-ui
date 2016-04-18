@@ -87,7 +87,7 @@ $(document).ready(function() {
 				$('.act-0405-beInvited').append(h.join(''));
 			},
 			error: function(res) {
-				$('input')[0]['placeholder'] = '请重新输入';
+				$('input')[0]['placeholder'] = '手机号码有误';
 			}
 		});
 	};
