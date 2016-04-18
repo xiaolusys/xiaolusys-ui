@@ -12,7 +12,7 @@ $(document).ready(function() {
       if (intDiff <= 0) {
         window.location.href = '../html/act-0405-4.html';
       }
-      //时间默认值		
+      //时间默认值   
       if (intDiff > 0) {
         day = Math.floor(intDiff / (60 * 60 * 24));
         hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
@@ -129,13 +129,12 @@ $(document).ready(function() {
               h.push('<div class="act-evelops-container showOrHide-env collapse">');
             }
           }
+          h.push('</div>')
+
+          h.push('<div class="col-xs-12">');
+          h.push('<img src="../img/act-0405-21.png" class="act-0405-show" data-toggle="collapse" data-target=".showOrHide-env"> ');
+          h.push('</div>');
         }
-        h.push('</div>')
-
-        h.push('<div class="col-xs-12">');
-        h.push('<img src="../img/act-0405-21.png" class="act-0405-show" data-toggle="collapse" data-target=".showOrHide-env"> ');
-        h.push('</div>');
-
         $('.act-0405-3-invite').after(h.join(''));
 
         //add  sleepbags records
