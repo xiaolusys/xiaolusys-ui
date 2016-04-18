@@ -81,7 +81,7 @@ $(document).ready(function() {
         h.push('</div></div>');
         if (envNum <= 8) {
           h.push('<div class="act-evelops-container">');
-          for (var i = 0; i < envLen; i++) {
+          for (var i = 0; i < envNum; i++) {
             h.push('<div class="col-xs-3 no-padding text-center act-evelops">');
             if (envelopes[i].status === 'open' && envelopes[i].type === 'card') {
               h.push('<img class="act-icon act-evelop" src="../img/act-0405-26.png" data-id = "' + envelopes[i].id + '" data-status="' + envelopes[i].status + '"/>');
@@ -104,7 +104,7 @@ $(document).ready(function() {
           }
         } else {
           h.push('<div class="act-evelops-container">');
-          for (var i = 0; i < envLen; i++) {
+          for (var i = 0; i < envNum; i++) {
             h.push('<div class="col-xs-3 no-padding text-center act-evelops">');
             if (envelopes[i].status === 'open' && envelopes[i].type === 'card') {
               h.push('<img class="act-icon act-evelop" src="../img/act-0405-26.png" data-id = "' + envelopes[i].id + '" data-status="' + envelopes[i].status + '"/>');
@@ -184,7 +184,7 @@ $(document).ready(function() {
 
         if (len <= 4) {
           h.push('<div class="act-sleepbags-container">');
-          for (var i = 0; i < len; i++) {
+          for (var i = 0; i < awardNum; i++) {
             h.push('<div class="col-xs-10 no-padding text-left act-0405-3-sleepbags-record">');
             h.push('<p>' + awards[i].customer_nick + ',打开第' + awards[i].invite_num + '个信封，获得最后一张“拼”图，成功拼成一条浴巾</p>');
             h.push('</div>');
@@ -192,7 +192,7 @@ $(document).ready(function() {
           h.push('</div>');
         } else {
           h.push('<div class="act-sleepbags-container">');
-          for (var i = 0; i < len; i++) {
+          for (var i = 0; i < awardNum; i++) {
             h.push('<div class="col-xs-10 no-padding text-left act-0405-3-sleepbags-record">');
             h.push('<p>' + awards[i].customer_nick + ',打开第' + awards[i].invite_num + '个信封，获得最后一张“拼”图，成功拼成一条浴巾</p>');
             h.push('</div>');
