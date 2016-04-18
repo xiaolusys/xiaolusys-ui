@@ -51,20 +51,3 @@ p {
 	font-size: 12px;
 	margin-top: 0;
 }
-.act-popup {
-	position: fixed;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	z-index: 1050;
-	overflow-x: hidden;
-	overflow-y: auto;
-	background: #000;
-	opacity: .7;
-}
-.act-popup img {
-	width: 80%;
-	margin-left: 10%;
-	margin-top: 15%;
-}
