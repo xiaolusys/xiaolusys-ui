@@ -68,7 +68,8 @@
 	padding-right: 0px !important;
 }
 .act-icon {
-	width: 50%;
+	height: 46px;
+	width: 46px;
 }
 .act-popup {
 	position: fixed;
