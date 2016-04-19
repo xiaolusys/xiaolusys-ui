@@ -32,6 +32,7 @@ $(document).ready(function() {
   var add = function() {
     var $addImg = $('.act-0405-add img');
     var celNum = $('input').val();
+    alert('立即加入');
     $.ajax({
       data: {
         'mobile': celNum
@@ -39,6 +40,7 @@ $(document).ready(function() {
       type: 'post',
       url: '/sale/promotion/apply/3/',
       success: function(res) {
+        alert('立即加入');
         if (res.rcode == 0) {
           if (res.next == 'download') {
             window.location.href = '../html/act-0405-2.html';
@@ -56,6 +58,7 @@ $(document).ready(function() {
         }
       },
       error: function(res) {
+        alert('立即加入');
         console.log(res);
       }
     });
