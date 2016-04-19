@@ -199,7 +199,7 @@ $(document).ready(function() {
         if (resp.type == 'card') {
           h.push('<img src="../img/cardGet_' + resp.value + '.png" class="act-card-get"/>');
         } else {
-          h.push('<div class="act-cash-get" onclick="closePopup">');
+          h.push('<div class="act-cash-get">');
           h.push('<p>' + resp.yuan_value + '</p>');
           h.push('</div>');
         }
