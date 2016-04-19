@@ -32,7 +32,6 @@ $(document).ready(function() {
   var add = function() {
     var $addImg = $('.act-0405-add img');
     var celNum = $('input').val();
-    alert('立即加入');
     $.ajax({
       data: {
         'mobile': celNum
@@ -58,7 +57,6 @@ $(document).ready(function() {
         }
       },
       error: function(res) {
-        alert('立即加入');
         console.log(res);
       }
     });
