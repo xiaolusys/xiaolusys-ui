@@ -367,11 +367,11 @@ $(document).ready(function() {
   };
 
   requestData();
-  $(document).on('click .act-evelops-container .act-evelop', openEnvelope);
-  $(document).on('click .act-card-get', closePopup);
-  $(document).on('click .act-cash-get', closePopup);
-  $(document).on('click .complete-cards', cardsComplete);
-  $(document).on('click .act-0405-3-invite img', invite);
-  $(document).on('click .receive-coupon', receiveCoupon);
-  $(document).on('click .act-coupon', closeCoupon);
+  $(document).on('click', '.act-evelops-container .act-evelop', openEnvelope);
+  $(document).on('click', '.act-card-get', closePopup);
+  $(document).on('click', '.act-cash-get', closePopup);
+  $(document).on('click', '.complete-cards', cardsComplete);
+  $(document).on('click', '.act-0405-3-invite', invite);
+  $(document).on('click', '.receive-coupon', receiveCoupon);
+  $(document).on('click', '.act-coupon', closeCoupon);
 });
