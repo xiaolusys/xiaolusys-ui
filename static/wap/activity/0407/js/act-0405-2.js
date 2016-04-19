@@ -89,7 +89,7 @@ $(document).ready(function() {
       return 'web'
     }
   };
-  $(document).on('click .act-0405-2-download', downloadClick);
-  $(document).on('click .act-popup', closePopup);
+  $(document).on('click', '.act-0405-2-download', downloadClick);
+  $(document).on('click', '.act-popup', closePopup);
   requestData();
 });
