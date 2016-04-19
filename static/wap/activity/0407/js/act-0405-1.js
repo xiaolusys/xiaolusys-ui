@@ -52,7 +52,7 @@ $(document).ready(function() {
 
         } else {
           $('input').val('');
-          $('input')[0]['placeholder'] = '请重新输入';
+          $('input')[0]['placeholder'] = '手机号码有误';
         }
       },
       error: function(res) {
