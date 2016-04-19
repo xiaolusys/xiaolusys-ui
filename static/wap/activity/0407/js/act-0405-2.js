@@ -1,4 +1,7 @@
 $(document).ready(function() {
+  $(function() {
+    FastClick.attach(document.body);
+  });
   var $top = $('.act-0405-2-top')[0];
   var screenWidth = document.body.clientWidth;
   $top.style.height = screenWidth * 1.28 + 'px';
@@ -14,7 +17,7 @@ $(document).ready(function() {
       if (intDiff <= 0) {
         window.location.href = '../html/act-0405-4.html';
       }
-      //时间默认值		
+      //时间默认值   
       if (intDiff > 0) {
         day = Math.floor(intDiff / (60 * 60 * 24));
         hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
@@ -86,7 +89,7 @@ $(document).ready(function() {
       return 'web'
     }
   };
-  $(document).on({ touch: downloadClick, click: downloadClick }, '.act-0405-2-download');
-  $(document).on({ touch: closePopup, click: closePopup }, '.act-popup');
+  $(document).on('click .act-0405-2-download', downloadClick);
+  $(document).on('click .act-popup', closePopup);
   requestData();
 });
