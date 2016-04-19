@@ -1,4 +1,7 @@
 $(document).ready(function() {
+  $(function() {
+    FastClick.attach(document.body);
+  });
   var $addImg = $('.act-0405-add img');
   var $addBkg = $('.act-0405-add');
   //倒计时
@@ -11,7 +14,7 @@ $(document).ready(function() {
       if (intDiff <= 0) {
         window.location.href = '../html/act-0405-4.html';
       }
-      //时间默认值		
+      //时间默认值   
       if (intDiff > 0) {
         day = Math.floor(intDiff / (60 * 60 * 24));
         hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
@@ -92,5 +95,5 @@ $(document).ready(function() {
     });
   };
   requestData();
-  $(document).on({ touch: add, click: add }, '.act-0405-add img');
+  $(document).on('click .act-0405-add img', add);
 });

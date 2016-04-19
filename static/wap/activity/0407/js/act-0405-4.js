@@ -1,4 +1,7 @@
 $(document).ready(function() {
+  $(function() {
+    FastClick.attach(document.body);
+  });
   var $top = $('.act-0405-4-top')[0];
   var screenWidth = document.body.clientWidth;
   $top.style.height = screenWidth * 1.28 + 'px';
@@ -111,6 +114,6 @@ $(document).ready(function() {
       }
     }
   };
-  $(document).on({ touch: share, click: share }, '.act-0405-4-share');
+  $(document).on('click .act-0405-4-share', share);
   requestData();
 });
