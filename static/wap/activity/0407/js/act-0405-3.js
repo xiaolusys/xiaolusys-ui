@@ -1,4 +1,7 @@
 $(document).ready(function() {
+  $(function() {
+    FastClick.attach(document.body);
+  });
   var $top = $('.act-0405-3-top')[0];
   var screenWidth = document.body.clientWidth;
   $top.style.height = screenWidth * 1.28 + 'px';
@@ -196,7 +199,7 @@ $(document).ready(function() {
         if (resp.type == 'card') {
           h.push('<img src="../img/cardGet_' + resp.value + '.png" class="act-card-get"/>');
         } else {
-          h.push('<div class="act-cash-get" onclick="closePopup">');
+          h.push('<div class="act-cash-get">');
           h.push('<p>' + resp.yuan_value + '</p>');
           h.push('</div>');
         }
@@ -364,11 +367,11 @@ $(document).ready(function() {
   };
 
   requestData();
-  $(document).on({ touch: openEnvelope, click: openEnvelope }, '.act-evelops-container .act-evelop');
-  $(document).on({ touch: closePopup, click: closePopup }, '.act-card-get');
-  $(document).on({ touch: closePopup, click: closePopup }, '.act-cash-get');
-  $(document).on({ touch: cardsComplete, click: cardsComplete }, '.complete-cards');
-  $(document).on({ touch: invite, click: invite }, '.act-0405-3-invite img');
-  $(document).on({ touch: receiveCoupon, click: receiveCoupon }, '.receive-coupon');
-  $(document).on({ touch: closeCoupon, click: closeCoupon }, '.act-coupon');
+  $(document).on('click', '.act-evelops-container .act-evelop', openEnvelope);
+  $(document).on('click', '.act-card-get', closePopup);
+  $(document).on('click', '.act-cash-get', closePopup);
+  $(document).on('click', '.complete-cards', cardsComplete);
+  $(document).on('click', '.act-0405-3-invite', invite);
+  $(document).on('click', '.receive-coupon', receiveCoupon);
+  $(document).on('click', '.act-coupon', closeCoupon);
 });

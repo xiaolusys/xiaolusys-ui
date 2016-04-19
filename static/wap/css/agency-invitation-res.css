@@ -152,15 +152,14 @@ body {
   top: 50%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  /*background: url("") no-repeat;*/
   background-size: 100% 100%;
-  /*border: solid 2px #000000;*/
 }
 
 .friends-info-icon .detail-info .friend-desc {
   position: absolute;
-  top: 20%;
+  top: 12%;
   left: 21%;
+  width: 62%;
 }
 
 .friends-info-icon .detail-info .friend-desc .join-mama {
