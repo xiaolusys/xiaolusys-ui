@@ -58,7 +58,7 @@ $(document).ready(function() {
         }
       },
       error: function(res) {
-        
+        alert('立即加入');
         console.log(res);
       }
     });
