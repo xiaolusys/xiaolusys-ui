@@ -30,11 +30,31 @@ $(document).ready(function() {
     }, 1000);
   };
 
+  //获取设备ID
+  var getMobileSNCode = function() {
+    var mobileSNCode;
+    var os = OSTest();
+    console.log('os share:', os)
+    if (os == 'iOS') {
+      mobileSNCode = setupWebViewJavascriptBridge(function(bridge) {
+        bridge.callHandler('getNativeMobileSNCode');
+      })
+    } else {
+      if (window.AndroidBridge) {
+        mobileSNCode = window.AndroidBridge.getNativeMobileSNCode();
+      }
+    }
+    console.log('----------->>> mobileSNCode:' + mobileSNCode);
+    return mobileSNCode;
+  };
+
   //请求初始数据
   var requestData = function() {
     var end_time, current_time, rest_time;
+    var mobileSNCode = getMobileSNCode();
     $.ajax({
       type: 'GET',
+      data: { 'mobileSNCode': mobileSNCode },
       url: '/sale/promotion/apply/3/',
       success: function(res) {
         //set rest time of activity
