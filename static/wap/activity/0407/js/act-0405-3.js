@@ -44,8 +44,7 @@ $(document).ready(function() {
         mobileSNCode = window.AndroidBridge.getNativeMobileSNCode();
       }
     }
-    console.log('----------->>> mobileSNCode:' + mobileSNCode);
-    return mobileSNCode;
+    return mobileSNCode || '';
   };
 
   //请求初始数据
