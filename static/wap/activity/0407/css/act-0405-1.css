@@ -9,48 +9,26 @@ body {
 .act-0405-top img {
 	width: 100%;
 }
-.act-0405-time {
-	width: 70%;
-	height: 70px;
-	margin-left: 16%;
-	margin-bottom: 41px;
-	background-image: URL(../img/act-0405-6.png);
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
-	display: -webkit-box;
-}
 .act-0405-beInvited {
 	display: -webkit-box;
 	-webkit-box-orient: horizontal;
 	width: 70%;
 	margin-left: 15%;
 	margin-bottom: 32px;
+	margin-top: 41px;
 }
 .act-0405-beInvited img {
 	width: 40px;
 	height: 40px;
 	border-radius: 80px;
-	border: 1px solid white;
+	border: 2px solid white;
 }
 .act-0405-beInvited div {
 	font-size: 12px;
 	line-height: 20px;
-	color: #EC5BA8;
 	-webkit-box-flex: 1;
 	text-align: left;
 	margin-left: 10px;
-}
-#day_show, #hour_show, #minute_show, #second_show {
-	color: #fff;
-	line-height: 48px;
-	font-size: 26px;
-	font-family: Arial;
-	text-align: center;
-	display: -webkit-box;
-	-webkit-box-flex: 1;
-	margin-top: 8%;
-	padding-left: 8%;
 }
 .act-0405-celNumber {
 	width: 82%;
@@ -85,33 +63,13 @@ input::-webkit-input-placeholder {
 	height: 50px;
 	margin-left: 9%;
 	margin-top: 13px;
-	background-image: URL(../img/act-0405-1.png);
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	cursor: pointer;
 }
-.act-0405-add-img {
-	width: 16%;
-	height: 41px;
-	margin-top: 4px;
-	margin-left: 1%;
-	padding-right: 80%;
-}
-.act-0405-added-img {
-	width: 16%;
-	height: 41px;
-	margin-top: 4px;
-	margin-left: 69%;
-}
-.act-0405-rules {
-	width: 82%;
-	margin-left: 9%;
-}
-.act-0405-detail {
-	width: 82%;
-	margin-left: 9%;
-	margin-bottom: 40px;
+.act-0405-add img {
+	width: 100%
 }
 .act-0405-add {
 	margin-bottom: 40px;
@@ -126,10 +84,4 @@ input::-webkit-input-placeholder {
 	height: 86%;
 	margin-left: 51px;
 	background-color: #ffebf4;
-}
-.act-0405-copyright p {
-	text-align: center;
-	font-size: 12px;
-	color: green;
-	margin-top: 40px;
 }

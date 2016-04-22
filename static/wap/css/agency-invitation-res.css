@@ -159,8 +159,9 @@ body {
 
 .friends-info-icon .detail-info .friend-desc {
   position: absolute;
-  top: 20%;
+  top: 12%;
   left: 21%;
+  width: 62%;
 }
 
 .friends-info-icon .detail-info .friend-desc .join-mama {

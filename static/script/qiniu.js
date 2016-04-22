@@ -531,7 +531,10 @@ function QiniuJsSDK() {
 
         uploader.bind('FileUploaded', (function(_FileUploaded_Handler) {
             return function(up, file, info) {
-
+                if (file.size > 1024 * 1000) {
+                    alert('当前文件大小为:' + file.size / 1000.0 + 'kb,超过1024kb不予上传');
+                    throw new Error("上传文件超过1024kb");
+                }
                 var last_step = function(up, file, info) {
                     if (op.downtoken_url) {
                         var ajax_downtoken = that.createAjax();

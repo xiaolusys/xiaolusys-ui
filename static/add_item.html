@@ -1144,7 +1144,7 @@
         <script id="chi-template" type="text/html">
             {{ each chi_ma as one_chi i}}
             <tr>
-                <td>{{ one_chi }}</td>
+                <td>{{ one_chi.label }}</td>
                 <td>
                     <select class="form-control step-choose">
                         <option value="1">1</option>
@@ -1158,7 +1158,7 @@
                     </select>
                 </td>
                 {{ each sku as one_sku j}}
-                <td><input type="text" id="{{ one_sku.id }}_{{ one_chi }}_size" class="form-control"/></td>
+                <td><input type="text" id="{{ one_sku.id }}_{{ one_chi.id }}_size" class="form-control"/></td>
                 {{/each}}
             </tr>
             {{/each}}
@@ -1167,24 +1167,24 @@
             {{ each color as one_color i}}
             <tr>
                 <td rowspan="{{ sku_size }}">
-                    <span class="color-name">{{ one_color }}</span>
+                    <span class="color-name">{{ one_color.label }}</span>
                 </td>
                 {{ each sku as one_sku j}}
                 {{ if j==0 }}
                 <td><span class="color-name">{{ one_sku.label }}</span></td>
-                <td><input type="text" id="{{ one_color }}_{{ one_sku.id }}_outerid" class="form-control c_outerid"/></td>
-                <td><input type="text" id="{{ one_color }}_{{ one_sku.id }}_remainnum" class="form-control c_remainnum"/></td>
-                <td><input type="text" id="{{ one_color }}_{{ one_sku.id }}_cost" class="form-control c_cost"/></td>
-                <td><input type="text" id="{{ one_color }}_{{ one_sku.id }}_pricestd" class="form-control c_pricestd"/></td>
-                <td><input type="text" id="{{ one_color }}_{{ one_sku.id }}_agentprice" class="form-control c_agentprice"/></td>
+                <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_outerid" class="form-control c_outerid"/></td>
+                <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_remainnum" class="form-control c_remainnum"/></td>
+                <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_cost" class="form-control c_cost"/></td>
+                <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_pricestd" class="form-control c_pricestd"/></td>
+                <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_agentprice" class="form-control c_agentprice"/></td>
                 {{ else }}
                 <tr>
                     <td><span class="color-name">{{ one_sku.label }}</span></td>
-                    <td><input type="text" id="{{ one_color }}_{{ one_sku.id }}_outerid" class="form-control "/></td>
-                    <td><input type="text" id="{{ one_color }}_{{ one_sku.id }}_remainnum" class="form-control"/></td>
-                    <td><input type="text" id="{{ one_color }}_{{ one_sku.id }}_cost" class="form-control"/></td>
-                    <td><input type="text" id="{{ one_color }}_{{ one_sku.id }}_pricestd" class="form-control"/></td>
-                    <td><input type="text" id="{{ one_color }}_{{ one_sku.id }}_agentprice" class="form-control"/></td>
+                    <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_outerid" class="form-control "/></td>
+                    <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_remainnum" class="form-control"/></td>
+                    <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_cost" class="form-control"/></td>
+                    <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_pricestd" class="form-control"/></td>
+                    <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_agentprice" class="form-control"/></td>
                 </tr>
                 {{ /if }}
                 {{/each}}

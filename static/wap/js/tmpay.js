@@ -55,9 +55,9 @@ function Set_user_orderinfo(suffix){
         $('.buy .cou span').html('<em>￥</em>' + data.discount_fee);
         $('.buy .total span').html('<em>￥</em>' + data.total_payment);
         
-        if (data.wallet_payable){
-            $('.pay-type .pay-list').append('<li class="normal" name="select-pay"><i id="wallet"></i>妈妈钱包</li>');
-        }
+        //if (data.wallet_payable){
+        //    $('.pay-type .pay-list').append('<li class="normal" name="select-pay"><i id="wallet"></i>妈妈钱包</li>');
+        //}
         if (data.weixin_payable){
             $('.pay-type .pay-list').append('<li class="normal" name="select-pay"><i id="wx_pub"></i>微信支付</li>');
         }

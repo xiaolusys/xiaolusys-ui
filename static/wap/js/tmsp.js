@@ -58,8 +58,9 @@ function Create_product_detailsku_dom(obj) {
          <div class="goods-info">
          <h3>{{name}}</h3>
          <div class="price">
-         <span>¥ {{ product_lowest_price }}</span>
+         <span id="price">¥ {{ product_lowest_price }}</span>
          <s>¥{{ std_sale_price }}</s>
+         <span class="tag">APP支付立减2元</span>
          </div>
          <span id="product_id" style="display:none">{{id}}</span>
          </div>

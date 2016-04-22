@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/shangpinxq.css">
     <link rel="stylesheet" href="../css/jquery.webui-popover.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/download-banner-1.css">
     <script id="ntkf_template" type="text/html">
     var NTKF_PARAM = {
         siteid:"kf_9645",        //企业ID，必填，取值参见文档开始表
@@ -30,6 +31,12 @@
     </script>
 </head>
 <body>
+<div class="download-banner-div">
+    <div class="banner-image">
+        <div class="close-download" id="not_show_btn"></div>
+        <div class="download-click" id="download_app"></div>
+    </div>
+</div>
 <div class="goods-slide">
     <div class="swiper-container">
         <div class="swiper-wrapper">
@@ -176,6 +183,7 @@
 <script src="../js/jquery.webui-popover.min.js"></script>
 <script src="../js/tmsp.js"></script>
 <script src="../js/jquery-shopping.js"></script>
+<script src="../js/app_download.js"></script>
 <script>
 $(document).ready(function(){
     $('.ui-loader').remove();
@@ -233,7 +241,7 @@ function change_goodsize() {
     $(this).removeClass('normal').addClass('active');
     // 将价格显示到主图下方
     var sku_price = $($(this)[0]).attr("sku_price");
-    $(".goods-info .price").find('span').html('¥ ' + sku_price);
+    $(".goods-info .price").find('#price').html('¥ ' + sku_price );
 }
 function scroll_top(e){
     e.preventDefault();
@@ -262,6 +270,9 @@ function callNTKFChatPage(){
 $(document).ready(function(){
   var item_id = getUrlParam('id');
   shareDetailPage(item_id);
+
+  // 判断是否显示下载框
+  Judge_download()
 });
 </script>
 <link rel="stylesheet" type="text/css" href="../css/sweet-alert.css">

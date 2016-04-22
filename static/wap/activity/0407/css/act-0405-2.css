@@ -14,63 +14,28 @@ body {
 	background-size: 100% 100%;
 	padding-top: 12%;
 }
-.act-0405-2-time {
-	width: 70%;
-	height: 70px;
-	margin-left: 16%;
-	background-image: URL(../img/act-0405-6.png);
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
-	display: -webkit-box;
-}
-#day_show, #hour_show, #minute_show, #second_show {
-	color: #fff;
-	line-height: 48px;
-	font-size: 26px;
-	font-family: Arial;
-	text-align: center;
-	display: -webkit-box;
-	-webkit-box-flex: 1;
-	margin-top: 8%;
-	padding-left: 8%;
-}
 .act-cards-container {
-	width: 88%;
-	margin: 6% 6%;
-	background-image: url('../img/act-0405-36.png');
+	width: 100%;
+	margin-top: 13% !important;
 }
 .card-hide {
 	opacity: 0.5;
 }
 .act-card:nth-child(3n+1) {
 	position: relative;
-	left: 12%;
+	left: 11%;
 }
 .act-card:nth-child(3n+3) {
 	position: relative;
-	right: 12%;
+	right: 11%;
 }
 .act-card:nth-child(n+4) {
 	position: relative;
-	margin-top: -12%;
-}
-.act-cards-container img {
-	vertical-align: middle;
-	width: 100%;
+	margin-top: -12.5%;
 }
 .no-padding {
 	padding-left: 0px !important;
 	padding-right: 0px !important;
-}
-.act-0405-2-rules {
-	width: 82%;
-	margin-left: 9%;
-}
-.act-0405-detail {
-	width: 82%;
-	margin-left: 9%;
-	margin-bottom: 40px;
 }
 .act-0405-2-download {
 	width: 82%;
@@ -81,26 +46,7 @@ p {
 	font-size: 12px;
 	margin-top: 0;
 }
-.act-popup {
-	position: fixed;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	z-index: 1050;
-	overflow-x: hidden;
-	overflow-y: auto;
-	background: #000;
-	opacity: .7;
-}
-.act-popup img {
-	width: 80%;
-	margin-left: 10%;
-	margin-top: 15%;
-}
-.act-0405-copyright p {
-	text-align: center;
-	font-size: 12px;
-	color: green;
-	margin-top: 40px;
+.act-card-first {
+	width: 100%;
+	margin-top: 32%;
 }
