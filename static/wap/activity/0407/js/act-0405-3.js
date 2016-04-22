@@ -44,7 +44,9 @@ $(document).ready(function() {
         mobileSNCode = window.AndroidBridge.getNativeMobileSNCode();
       }
     }
-    console.log('----------->>> mobileSNCode:' + mobileSNCode);
+    if (mobileSNCode == 'undefined') {
+      mobileSNCode = '';
+    }
     return mobileSNCode;
   };
 
