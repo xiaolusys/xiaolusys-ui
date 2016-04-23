@@ -70,7 +70,7 @@ $(document).ready(function() {
           }, function(response) {});
         })
       } else {
-        window.location.href = '/static/wap/pages/shangpinxq.html?id=' + $target.data('productid');
+        window.location.href = '/pages/shangpinxq.html?id=' + $target.data('productid');
       }
     });
 
