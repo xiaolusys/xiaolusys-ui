@@ -85,7 +85,11 @@ $(document).ready(function() {
           }
         })
         .done(function(resp) {
-          popUp();
+          if (resp.code === 0) {
+            popUp();
+          } else {
+            window.Toast.show(resp.res);
+          }
         })
         .fail(function(resp) {
           if (resp.status = 403) {
