@@ -4,6 +4,8 @@ $(document).ready(function() {
     FastClick.attach(document.body);
   });
 
+  var activityId = 5;
+
   var topTen = [{
     id: 81908903008,
     name: '韩系印花连衣裙',
@@ -63,10 +65,6 @@ $(document).ready(function() {
         window.AndroidBridge.jumpToNativeLocation('{"target_url":"com.jimei.xlmm://app/v1/products?product_id=' + $target.data('productid') + '"}');
       } else if (isIOS()) {
         setupWebViewJavascriptBridge(function(bridge) {
-          var data = {
-            'share_to': '',
-            'active_id': '3'
-          };
           bridge.callHandler('jumpToNativeLocation', {
             target_url: 'com.jimei.xlmm://app/v1/products?product_id=' + $target.data('productid')
           }, function(response) {});
@@ -118,7 +116,7 @@ $(document).ready(function() {
       setupWebViewJavascriptBridge(function(bridge) {
         var data = {
           'share_to': '',
-          'active_id': '3'
+          'active_id': activityId
         };
         bridge.callHandler('callNativeShareFunc', data, function(response) {
           console.log("callNativeShareFunc called with:", data);
@@ -127,7 +125,7 @@ $(document).ready(function() {
     } else if (isAndroid() && window.AndroidBridge) {
       var data = {
         'share_to': '',
-        'active_id': '3'
+        'active_id': activityId
       };
       window.AndroidBridge.callNativeShareFunc(data.share_to, data.active_id);
     }
@@ -173,8 +171,9 @@ $(document).ready(function() {
     };
   }
 
-  var countDown = function() {
-    var eventTime = new Date('2016/4/25,10:00:00');
+
+  var countDown = function(ts) {
+    var eventTime = new Date(ts);
     var timeinterval = setInterval(function() {
       var tr = getTimeRemaining(eventTime);
       $('.js-days').text(tr.days);
@@ -187,8 +186,19 @@ $(document).ready(function() {
     }, 1000);
   };
 
+  var fetchEvent = function() {
+    $.ajax({
+      url: '/sale/promotion/apply/' + activityId + '/',
+      type: 'get',
+    }).done(function(resp) {
+      if (resp.end_time) {
+        countDown(resp.endtime);
+      }
+    });
+  };
+
   render();
   bindEvents();
-  countDown();
+  fetchEvent();
 
 });
