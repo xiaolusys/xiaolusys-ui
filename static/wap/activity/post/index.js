@@ -192,7 +192,7 @@ $(document).ready(function() {
       type: 'get',
     }).done(function(resp) {
       if (resp.end_time) {
-        countDown(resp.endtime);
+        countDown(resp.end_time);
       }
     });
   };
