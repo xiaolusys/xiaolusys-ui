@@ -62,7 +62,7 @@ $(document).ready(function() {
     $(document).on('click', '.js-buy', function(e) {
       var $target = $(e.currentTarget);
       if (isAndroid() && typeof window.AndroidBridge !== 'undefined') {
-        window.AndroidBridge.jumpToNativeLocation('{"target_url":"com.jimei.xlmm://app/v1/products?product_id=' + $target.data('productid') + '"}');
+        window.AndroidBridge.jumpToNativeLocation('com.jimei.xlmm://app/v1/products?product_id=' + $target.data('productid'));
       } else if (isIOS()) {
         setupWebViewJavascriptBridge(function(bridge) {
           bridge.callHandler('jumpToNativeLocation', {
