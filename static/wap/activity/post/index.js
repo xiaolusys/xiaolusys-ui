@@ -91,7 +91,7 @@ $(document).ready(function() {
       var productId = $target.data('productid');
       var modelId = Number($target.data('modelid'));
       var url = '';
-      if(modelId) {
+      if (modelId) {
         url = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
       } else {
         url = 'com.jimei.xlmm://app/v1/products?product_id=' + productId;
@@ -101,7 +101,7 @@ $(document).ready(function() {
       } else if (isIOS()) {
         setupWebViewJavascriptBridge(function(bridge) {
           bridge.callHandler('jumpToNativeLocation', {
-            target_url:  url
+            target_url: url
           }, function(response) {});
         })
       } else {
@@ -145,9 +145,12 @@ $(document).ready(function() {
   var isAndroid = function() {
     return test('Android');
   };
+  var isWechat = function() {
+    return this.test('MicroMessenger');
+  }
 
   var share = function() {
-    if (isIOS()) {
+    if (isIOS() && !isWechat()) {
       setupWebViewJavascriptBridge(function(bridge) {
         var data = {
           'share_to': '',
