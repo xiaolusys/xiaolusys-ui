@@ -53,7 +53,7 @@ $(document).ready(function() {
             }
           });
         });
-      })
+      });
     } else {
       if (window.AndroidBridge) {
         mobileSNCode = window.AndroidBridge.getNativeMobileSNCode();
