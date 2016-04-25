@@ -6,53 +6,80 @@ $(document).ready(function() {
 
   var activityId = 5;
 
+  var setupWebViewJavascriptBridge = function(callback) {
+    if (window.WebViewJavascriptBridge) {
+      return callback(WebViewJavascriptBridge);
+    }
+    if (window.WVJBCallbacks) {
+      return window.WVJBCallbacks.push(callback);
+    }
+    window.WVJBCallbacks = [callback];
+    var WVJBIframe = document.createElement('iframe');
+    WVJBIframe.style.display = 'none';
+    WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+    document.documentElement.appendChild(WVJBIframe);
+    setTimeout(function() {
+      document.documentElement.removeChild(WVJBIframe)
+    }, 0)
+  };
+
   var topTen = [{
     id: 81908903008,
     name: '韩系印花连衣裙',
     productId: 39238,
+    modelId: 10965,
   }, {
     id: 81928970006,
     name: '显瘦开衩连衣裙',
     productId: 38157,
+    modelId: 0,
   }, {
     id: 82028792010,
     name: '白搭字母T',
     productId: 38736,
+    modelId: 10770,
   }, {
     id: 82118368002,
     name: '破洞牛仔裤',
     productId: 34499,
+    modelId: 8985,
   }, {
     id: 82028979003,
     name: '简约衬衫',
     productId: 36917,
+    modelId: 10007,
   }, {
     id: 91428993005,
     name: '旗袍复古公主裙',
     productId: 39424,
+    modelId: 11045,
   }, {
     id: 91428993004,
     name: '小清新印花连衣裙',
     productId: 38838,
+    modelId: 10804,
   }, {
     id: 81928914001,
     name: '中式棉麻风',
     productId: 35277,
+    modelId: 9290,
   }, {
     id: 82128807001,
     name: '瘦腿弹力丝袜',
     productId: 33051,
+    modelId: 8413,
   }, {
     id: 82228970006,
     name: '减龄卡通套装',
     productId: 38941,
+    modelId: 10848,
   }, ];
 
   var render = function() {
     var h = [];
     $.each(topTen, function(index, item) {
       h.push('<li>');
-      h.push('<img class="js-buy col-xs-12" data-productid=' + item.productId + ' src="./images/' + item.productId + '.png">');
+      h.push('<img class="js-buy col-xs-12" data-modelid=' + item.modelId + ' data-productid=' + item.productId + ' src="./images/' + item.productId + '.png">');
       h.push('</li>');
     });
     $('#container ul').append(h.join(''));
@@ -61,16 +88,27 @@ $(document).ready(function() {
   var bindEvents = function() {
     $(document).on('click', '.js-buy', function(e) {
       var $target = $(e.currentTarget);
+      var productId = $target.data('productid');
+      var modelId = Number($target.data('modelid'));
+      var url = '';
+      var webUrl = '';
+      if (modelId) {
+        webUrl = '/tongkuan.html?id=' + modelId;
+        url = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
+      } else {
+        webUrl = '/pages/shangpinxq.html?id=' + productId;
+        url = 'com.jimei.xlmm://app/v1/products?product_id=' + productId;
+      }
       if (isAndroid() && typeof window.AndroidBridge !== 'undefined') {
-        window.AndroidBridge.jumpToNativeLocation('com.jimei.xlmm://app/v1/products?product_id=' + $target.data('productid'));
-      } else if (isIOS()) {
+        window.AndroidBridge.jumpToNativeLocation(url);
+      } else if (isIOS() && !isWechat()) {
         setupWebViewJavascriptBridge(function(bridge) {
           bridge.callHandler('jumpToNativeLocation', {
-            target_url: 'com.jimei.xlmm://app/v1/products?product_id=' + $target.data('productid')
+            target_url: url
           }, function(response) {});
         })
       } else {
-        window.location.href = '/pages/shangpinxq.html?id=' + $target.data('productid');
+        window.location.href = webUrl;
       }
     });
 
@@ -110,9 +148,12 @@ $(document).ready(function() {
   var isAndroid = function() {
     return test('Android');
   };
+  var isWechat = function() {
+    return test('MicroMessenger');
+  }
 
   var share = function() {
-    if (isIOS()) {
+    if (isIOS() && !isWechat()) {
       setupWebViewJavascriptBridge(function(bridge) {
         var data = {
           'share_to': '',
