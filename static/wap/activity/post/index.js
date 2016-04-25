@@ -91,9 +91,12 @@ $(document).ready(function() {
       var productId = $target.data('productid');
       var modelId = Number($target.data('modelid'));
       var url = '';
+      var webUrl = '';
       if (modelId) {
+        webUrl = '/tongkuan.html?id=' + modelId;
         url = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
       } else {
+        webUrl = '/pages/shangpinxq.html?id=' + productId;
         url = 'com.jimei.xlmm://app/v1/products?product_id=' + productId;
       }
       if (isAndroid() && typeof window.AndroidBridge !== 'undefined') {
@@ -105,7 +108,7 @@ $(document).ready(function() {
           }, function(response) {});
         })
       } else {
-        window.location.href = '/pages/shangpinxq.html?id=' + $target.data('productid');
+        window.location.href = webUrl;
       }
     });
 
