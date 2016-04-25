@@ -178,7 +178,7 @@ $(document).ready(function() {
     h.push('<div class="popup">');
     h.push('<div class="content">');
     h.push('<img class="js-redpacket  col-xs-12 col-md-6 col-md-offset-3" src="./images/redpacket.png">')
-    h.push('<img class="js-share col-md-6 col-md-offset-3col-xs-8 col-xs-offset-2 mragin-top-xs" src="./images/share-btn.png">')
+    h.push('<img class="js-share col-md-4 col-md-offset-4 col-xs-8 col-xs-offset-2 mragin-top-xs" src="./images/share-btn.png">')
     h.push('</div>');
     h.push('<div class="popup-overlay">');
     h.push('</div>');
