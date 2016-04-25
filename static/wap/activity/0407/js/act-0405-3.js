@@ -36,8 +36,10 @@ $(document).ready(function() {
     var os = OSTest();
     console.log('os share:', os)
     if (os == 'iOS') {
-      mobileSNCode = setupWebViewJavascriptBridge(function(bridge) {
-        bridge.callHandler('getNativeMobileSNCode');
+      setupWebViewJavascriptBridge(function(bridge) {
+        bridge.callHandler('getNativeMobileSNCode', {}, function(resp) {
+          mobileSNCode = resp;
+        });
       })
     } else {
       if (window.AndroidBridge) {
