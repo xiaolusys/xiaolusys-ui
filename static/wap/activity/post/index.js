@@ -146,7 +146,7 @@ $(document).ready(function() {
     return test('Android');
   };
   var isWechat = function() {
-    return this.test('MicroMessenger');
+    return test('MicroMessenger');
   }
 
   var share = function() {
