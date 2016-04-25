@@ -128,7 +128,6 @@ $(document).ready(function() {
           }
         })
         .fail(function(resp) {
-          popUp();
           if (resp.status = 403) {
             window.Toast.show('领取失败,请登录后再领取!');
           } else {
