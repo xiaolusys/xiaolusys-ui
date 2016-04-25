@@ -98,7 +98,7 @@ $(document).ready(function() {
       }
       if (isAndroid() && typeof window.AndroidBridge !== 'undefined') {
         window.AndroidBridge.jumpToNativeLocation(url);
-      } else if (isIOS()) {
+      } else if (isIOS() && !isWechat()) {
         setupWebViewJavascriptBridge(function(bridge) {
           bridge.callHandler('jumpToNativeLocation', {
             target_url: url
