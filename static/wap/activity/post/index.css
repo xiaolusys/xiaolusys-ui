@@ -1,0 +1,64 @@
+.no-padding {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.mragin-top-xs {
+  margin-top: 16px;
+}
+
+.mragin-top-sm {
+  margin-top: 32px;
+}
+
+.mragin-bottom-xs {
+  margin-bottom: 16px;
+}
+
+.countdown {
+  text-align: right;
+  padding-left: 4%;
+  color: #ff0000;
+  font-size: 18;
+}
+
+.countdown > span {
+  text-align: center;
+  display: inline-block;
+  color: #fff;
+  height: 28px;
+  width: 28px;
+  line-height: 28px;
+  padding: 1px;
+  background: url("./images/countdown-bg.png") center center no-repeat;
+  background-size: contain;
+}
+
+.product-list {
+  -webkit-padding-start: 0px;
+}
+
+.popup > .content {
+  position: fixed;
+  top: 5%;
+  right: 0;
+  bottom: 10%;
+  left: 0;
+  z-index: 100;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: transparent;
+}
+
+.popup > .popup-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+

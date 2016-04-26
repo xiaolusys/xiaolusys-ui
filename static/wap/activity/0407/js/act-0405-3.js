@@ -33,37 +33,50 @@ $(document).ready(function() {
   //获取设备ID
   var getMobileSNCode = function() {
     var mobileSNCode;
+    var end_time, current_time, rest_time;
     var os = OSTest();
     console.log('os share:', os)
     if (os == 'iOS') {
-      mobileSNCode = setupWebViewJavascriptBridge(function(bridge) {
-        bridge.callHandler('getNativeMobileSNCode');
+      setupWebViewJavascriptBridge(function(bridge) {
+        bridge.callHandler('getNativeMobileSNCode', {}, function(resp) {
+          mobileSNCode = resp;
+          $.ajax({
+            type: 'GET',
+            data: { 'mobileSNCode': mobileSNCode },
+            url: '/sale/promotion/apply/3/',
+            success: function(res) {
+              //set rest time of activity
+              end_time = res.end_time;
+              current_time = (new Date()).getTime();
+              rest_time = parseInt((end_time - current_time) / 1000);
+              timer(rest_time);
+            }
+          });
+        });
       })
     } else {
       if (window.AndroidBridge) {
         mobileSNCode = window.AndroidBridge.getNativeMobileSNCode();
+        $.ajax({
+          type: 'GET',
+          data: { 'mobileSNCode': mobileSNCode },
+          url: '/sale/promotion/apply/3/',
+          success: function(res) {
+            //set rest time of activity
+            end_time = res.end_time;
+            current_time = (new Date()).getTime();
+            rest_time = parseInt((end_time - current_time) / 1000);
+            timer(rest_time);
+          }
+        });
       }
     }
-    console.log('----------->>> mobileSNCode:' + mobileSNCode);
-    return mobileSNCode;
+    return mobileSNCode || '';
   };
 
   //请求初始数据
   var requestData = function() {
-    var end_time, current_time, rest_time;
-    var mobileSNCode = getMobileSNCode();
-    $.ajax({
-      type: 'GET',
-      data: { 'mobileSNCode': mobileSNCode },
-      url: '/sale/promotion/apply/3/',
-      success: function(res) {
-        //set rest time of activity
-        end_time = res.end_time;
-        current_time = (new Date()).getTime();
-        rest_time = parseInt((end_time - current_time) / 1000);
-        timer(rest_time);
-      }
-    });
+    getMobileSNCode();
     $.ajax({
       type: 'GET',
       url: '/sale/promotion/main/3/',

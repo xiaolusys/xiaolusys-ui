@@ -9,6 +9,15 @@
     left: 50%;
     margin-left: -320px;
 }
+.download-banner-div.fixed{
+    position: fixed;
+    width: 640px;
+    top: 0px;
+    bottom: 40px;
+    left: 50%;
+    margin-left: -320px;
+    z-index: 9999;
+}
 .download_hidden{
     display: none;
 }
