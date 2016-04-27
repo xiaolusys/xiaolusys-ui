@@ -79,7 +79,7 @@ $(document).ready(function() {
     var h = [];
     $.each(topTen, function(index, item) {
       h.push('<li>');
-      h.push('<img class="js-buy col-xs-12" data-modelid=' + item.modelId + ' data-productid=' + item.productId + ' src="./images/' + item.productId + '.png">');
+      h.push('<img class="js-buy col-xs-12 col-md-6 col-md-offset-3" data-modelid=' + item.modelId + ' data-productid=' + item.productId + ' src="./images/' + item.productId + '.png">');
       h.push('</li>');
     });
     $('#container ul').append(h.join(''));
@@ -176,8 +176,8 @@ $(document).ready(function() {
     var h = [];
     h.push('<div class="popup">');
     h.push('<div class="content">');
-    h.push('<img class="js-redpacket col-xs-12" src="./images/redpacket.png">')
-    h.push('<img class="js-share col-xs-8 col-xs-offset-2 mragin-top-xs" src="./images/share-btn.png">')
+    h.push('<img class="js-redpacket  col-xs-12 col-md-6 col-md-offset-3" src="./images/redpacket.png">')
+    h.push('<img class="js-share col-md-4 col-md-offset-4 col-xs-8 col-xs-offset-2 mragin-top-xs" src="./images/share-btn.png">')
     h.push('</div>');
     h.push('<div class="popup-overlay">');
     h.push('</div>');

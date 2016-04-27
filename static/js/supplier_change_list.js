@@ -4,19 +4,19 @@ $(".category_select").live("change",function(e){
 	var target = e.target;
 	var sid = target.getAttribute('sid');
 	var cat_id = $(target).val();
-	
+
 	var url = "/supplychain/supplier/brand/"+sid+"/";
     var callback = function (res) {
       if (res.category.toString() == cat_id) {
           $(target).after("<img src='/static/admin/img/icon-yes.gif '>");
       }
     };
-	
+
 	var csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
     var data = {"csrfmiddlewaretoken":csrf_token,
     					"format":"json",
     					"category":cat_id};
-    					
+
     var headers = {
 	    'X-HTTP-Method-Override': 'PATCH'
 	   };
@@ -28,7 +28,7 @@ $('.btn-charge').live('click',function(e){
 	e.preventDefault();
 	var target = e.target;
 	var sid = target.getAttribute('sid');
-	
+
 	var url = "/supplychain/supplier/brand/charge/"+sid+"/";
         var callback = function (res) {
           if (res["success"] == true) {
@@ -38,7 +38,7 @@ $('.btn-charge').live('click',function(e){
           	$(target.parentElement.parentElement).slideUp(2000);
           }
         };
-	
+
 	var csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
     var data = {"csrfmiddlewaretoken":csrf_token,
     					"format":"json"};
@@ -51,7 +51,7 @@ $('.status_select').live("change",function(e){
 	var target = e.target;
 	var pid = target.getAttribute('pid');
 	var status = target.value;
-	
+
 	var url = "/supplychain/supplier/product/"+pid+"/";
     var callback = function (res) {
       if (res["status"] != "ignored") {
@@ -62,12 +62,12 @@ $('.status_select').live("change",function(e){
         }
       }
     };
-	
+
 	var csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
-    var data = {"status": status, 
+    var data = {"status": status,
 				"csrfmiddlewaretoken":csrf_token,
 				"format":"json"};
-    
+
     var headers = {
 	    'X-HTTP-Method-Override': 'PATCH'
 	   };
@@ -90,16 +90,16 @@ $(".sale_category_select").live("change",function(e){
           $(target).after("<img src='/static/admin/img/icon-yes.gif '>");
         }
     };
-    
+
     var csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
     var data = {"csrfmiddlewaretoken":csrf_token,
                         "format":"json",
                         "sale_category":cat_id};
-	
+
 	var headers = {
 	    'X-HTTP-Method-Override': 'PATCH'
 	   };
-	
+
     $.ajax({"url":url,"data":data,"success":callback,"type":"POST", "headers":headers});
 });
 
@@ -107,6 +107,23 @@ $(".sale_category_select").live("change",function(e){
 $(function () {
 	var time_selectors = $(".select_saletime");
 	if (time_selectors.length==null || time_selectors.length == 0)return;
+
+        $('input.select_saletime').each(function(index, el){
+            var $that = $(this);
+            var saleproduct_id = parseInt($(this).attr('id'));
+            $.ajax({
+                url: '/supplychain/supplier/saleproduct_schedule_date/',
+                type: 'get',
+                dataType: 'json',
+                data: {saleproduct_id: saleproduct_id},
+                success: function(result){
+                    if(result.select_dates && result.select_dates.length > 0){
+                        $that.after('<br>上架日期:<br>' + result.select_dates.join('<br>'));
+                    }
+                }
+            });
+        });
+
 	time_selectors.datepicker({
 	    dateFormat: "yy-mm-dd 00:00:00"
 	}).change(function (e) {
@@ -121,16 +138,16 @@ $(function () {
 	           }
 	           $(e.target).after("<img src='/static/admin/img/icon-yes.gif '>");
 	        };
-		
+
 		var csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
-	    var data = {"sale_time": sale_time, 
+	    var data = {"sale_time": sale_time,
 					"csrfmiddlewaretoken":csrf_token,
 					"format":"json"};
-	    
+
 	    var headers = {
 		    'X-HTTP-Method-Override': 'PATCH'
 		   };
-	
+
 	    $.ajax({"url":url,"data":data,"success":callback,"type":"POST","headers":headers });
 	});
 });
@@ -184,4 +201,3 @@ $(".supplier_type").live("change", function (e) {
     };
     $.ajax({"url": url, "data": data, "success": callback, "type": "POST"});
 });
-

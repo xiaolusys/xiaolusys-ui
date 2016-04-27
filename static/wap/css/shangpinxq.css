@@ -2,7 +2,7 @@
   width: 640px;
   min-height: 640px;
   border-bottom: 1px solid #9e9e9e;
-  margin: 0 auto;
+  margin: 0px auto;
   position: relative;
 }
 .swiper-pagination-bullet-active {
