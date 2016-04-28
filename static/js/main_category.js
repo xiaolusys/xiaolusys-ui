@@ -345,7 +345,7 @@ function submit_data() {
         swal("tips", "请填写完整的基本信息(^_^)", "error");
         return
     }
-    var all_input = $("table:visible input");
+    var all_input = $("table:visible input:visible");
     for (var i = 0; i < all_input.length; i++) {
         if (all_input.eq(i).val().trim() == "") {
             swal("tips", "请填写完整的商品数据(^_^)", "error");
@@ -372,7 +372,7 @@ function submit_data() {
         //console.log(one_color)
         for (var j = 0; j < all_sku.length; j++) {
             var one_sku = all_sku[j].replace(/[\/ 　:()+]/g, '');
-            result_data[all_color[i] + "_" + all_sku[j] + "_outerid"] = $("#" + one_color + "_" + one_sku + "_outerid").val().trim();
+            //result_data[all_color[i] + "_" + all_sku[j] + "_outerid"] = $("#" + one_color + "_" + one_sku + "_outerid").val().trim();
             result_data[all_color[i] + "_" + all_sku[j] + "_remainnum"] = $("#" + one_color + "_" + one_sku + "_remainnum").val().trim();
             result_data[all_color[i] + "_" + all_sku[j] + "_cost"] = $("#" + one_color + "_" + one_sku + "_cost").val().trim();
             result_data[all_color[i] + "_" + all_sku[j] + "_pricestd"] = $("#" + one_color + "_" + one_sku + "_pricestd").val().trim();
