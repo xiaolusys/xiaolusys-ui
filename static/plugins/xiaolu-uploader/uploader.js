@@ -40,7 +40,7 @@ $.fn.uploader = function(options, param){
                 $that.uploader('addItem', data);
             },
             Key: function (up, file) {
-                return null;
+                return FileNameHandler(file.name);
             }
         }
     });

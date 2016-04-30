@@ -3,6 +3,7 @@
  */
 
 $(document).ready(function () {
+    console.log('123');
     $("#id_mobile_input").click(function () {// 点击输入手机号码框： 页面上调避免输入法挡住输入框
         console.log("点击输入手机号码框");
         $("body").css("margin-bottom", "200px");
@@ -76,7 +77,7 @@ function verifycode() {
         function callback(res) {
             console.log('res', res);
             $("#id_verify_msg")[0].innerHTML = res.msg;
-            if (res.rcode == 0) {
+            if (res.rcode == 0 || res.rcode == 2) {
                 $("#next_step").attr("disabled", false);
             }
         }

@@ -43,3 +43,19 @@
 .m-pull-left {
   float: left;
 }
+.request-verify{
+    z-index: 9;
+    position: absolute;
+    line-height: 35px;
+    right: -90px;
+    top: 91px;
+    display: inline-block;
+    border: solid 1px #FEF7F7;
+    height: 35px;
+    background-color: #EB3E3E;
+    border-radius:8px;
+    font-size: 12px;
+    width: 80px;
+    text-align: center;
+    color: #FEF7F7;
+}
