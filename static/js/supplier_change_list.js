@@ -104,6 +104,15 @@ $(".sale_category_select").live("change",function(e){
 });
 
 
+var parseQueryString = function (url) {
+   var reg = /([^\?\=\&]+)\=([^\?\=\&]*)/g;
+   var obj = {};
+   while (reg.exec (url)) {
+       obj[RegExp.$1] = RegExp.$2;
+   }
+   return obj;
+}
+
 $(function () {
 	var time_selectors = $(".select_saletime");
 	if (time_selectors.length==null || time_selectors.length == 0)return;
@@ -122,6 +131,20 @@ $(function () {
                     }
                 }
             });
+
+        });
+
+        $('#input-saleproduct-date').datepicker({
+            dateFormat: 'yy-mm-dd'
+        }).change(function(e){
+            var urlParams = parseQueryString(window.location.href);
+
+            urlParams['sale_time__gte'] = $(this).val();
+            urlParams['sale_time__lte'] = $(this).val();
+            window.location = '/admin/supplier/saleproduct/?' + $.param(urlParams);
+        });
+        $('#select-saleproduct-date').click(function(){
+            $('#input-saleproduct-date').focus();
         });
 
 	time_selectors.datepicker({
