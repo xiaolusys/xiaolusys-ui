@@ -1,0 +1,59 @@
+.head-img {
+    
+}
+
+.hl {
+    border: solid 1px green;
+}
+
+.attender-row {
+    height: 60px;
+    margin-bottom:10px;
+}
+
+.duplicate {
+    color:#D1D0CE;
+}
+
+.attender-left {
+    height: 100%;
+    width: 28%;
+    display: inline-block;
+    vertical-align:top;
+}
+
+.attender-middle {
+    height:100%;
+    width: 46%;
+    display: inline-block;
+    vertical-align:top;
+}
+
+.attender-right {
+    height:100%;
+    width: 22%;
+    display: inline-block;
+    vertical-align:top;
+}
+
+.attender-name {
+    margin-top:10px;
+}
+
+.signup-status {
+    margin-top:10px;
+}
+
+.course-time {
+    width: 46%;
+    display: inline-block;
+    padding-left: 5px;
+}
+
+.signup-number {
+    width: 46%;
+    display: inline-block;
+    text-align: right;
+    float: right;
+    padding-right:5px;
+}
