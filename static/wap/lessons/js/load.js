@@ -18,9 +18,9 @@ function loadLessonTopics() {
                 content.push('<br/>时间：'+arr[i].start_time_display+'</p>');
                 content.push('<h3>'+arr[i].title+'</h3>');
                 content.push('<p>'+arr[i].description+'</p>');
-                if (arr[i].is_started == 0) {
+                if (arr[i].is_started == 1) {
                     //content.push('<a href="#" class="btn btn-success" style="margin-right:10px" role="button">进入课堂 >></a>');
-                    content.push('<p style="text-align:center"><img style="width:50%" src="'+qrcode_links[arr[i].customer_id_last_digit]+'" /><br/><span style="color:red">课程即将开始，请保存并微信扫描入群！</span>');
+                    content.push('<p style="text-align:center"><img style="width:50%" src="'+qrcode_links[arr[i].customer_idx]+'" /><br/><span style="color:red">课程即将开始，请保存并微信扫描入群！</span>');
                     content.push('<br/><a href="'+arr[i].content_link+'" class="btn btn-primary" role="button">查看内容 >></a></p>');
                 } else { 
                     content.push('<p><a href="'+arr[i].content_link+'" class="btn btn-primary" role="button">查看内容 >></a></p>');
