@@ -12,8 +12,9 @@ function loadLessonInfo(lesson_id) {
                 var data = arr[0];
                 var content = [];
                 content.push('<h3>'+data.title+'</h3>');
-                content.push('<div class="course-time"><p>时间：'+data.start_time_display+'</p></div>');
-                content.push('<div class="signup-number"><p>签到：<span style="font-weight:bold">'+data.num_attender+'人</span></p></div>');
+                content.push('<div><div class="course-time"><p>时间：'+data.start_time_display+'</p></div>');
+                content.push('<div class="signup-number"><p>签到：<span style="font-weight:bold">'+data.num_attender+'人</span></p></div></div>');
+                content.push('<div class="course-time"><p>授课：'+data.instructor_name+'&nbsp;'+data.instructor_title+'</p></div>');
                 $("#id-lesson").append(content.join(''));
             }
         }
@@ -21,8 +22,8 @@ function loadLessonInfo(lesson_id) {
     $.ajax({url:url, success:callback});
 }
 
-function loadLessonAttendRecord(lesson_id) {
-    var record_url = '/rest/lesson/lessonattendrecord?lesson_id=' + lesson_id;
+function loadLessonAttendRecord(params) {
+    var record_url = '/rest/lesson/lessonattendrecord?'+params;
     var url = BASE_URL + record_url;
     var callback = function (res) {
         if (res) {
@@ -31,9 +32,9 @@ function loadLessonAttendRecord(lesson_id) {
                 var content = [];
 
                 if (arr[i].status == 1) {
-                    content.push('<div class="attender-row duplicate">');
-                } else {
                     content.push('<div class="attender-row">');
+                } else {
+                    content.push('<div class="attender-row duplicate">');
                 }
                 content.push('<div class="attender-left">');
                 content.push('<img src="'+arr[i].student_image+'" class="img-circle" style="height:100%;">');
@@ -70,9 +71,10 @@ function getLessonIdParam() {
 
 $(document).ready(function() {
     var lesson_id = getLessonIdParam();
+    var params = location.search
     if (lesson_id) {
         loadLessonInfo(lesson_id);
-        loadLessonAttendRecord(lesson_id);
+        loadLessonAttendRecord(params);
     }
 });
 
