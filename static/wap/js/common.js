@@ -122,6 +122,7 @@ var GLConfig = {
     app_download: "/download/get_app_download_link",   //添加热度值
     mama_shop: "/products/get_mama_shop", // 获取代理用户店铺基础信息
     activitys_url: "/activitys",// 活动页面h5入口
+    activitys_all_events_url: "/activitys/get_all_events",// all events
     agency_invitation_res:'/rest/v2/referal',//代理邀请结果(我的邀请页面)
     get_mama_fortune:'/rest/v2/fortune'//代理财富
 
