@@ -744,9 +744,11 @@
                                 <th>
                                     系统规格名称
                                 </th>
+                                <!--
                                 <th>
                                     供应商货号/编码
                                 </th>
+                                -->
                                 <th width="15%">
                                     预留数
                                 </th>
@@ -1172,7 +1174,7 @@
                 {{ each sku as one_sku j}}
                 {{ if j==0 }}
                 <td><span class="color-name">{{ one_sku.label }}</span></td>
-                <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_outerid" class="form-control c_outerid"/></td>
+                <!--  <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_outerid" class="form-control c_outerid"/></td>-->
                 <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_remainnum" class="form-control c_remainnum"/></td>
                 <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_cost" class="form-control c_cost"/></td>
                 <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_pricestd" class="form-control c_pricestd"/></td>
@@ -1180,7 +1182,7 @@
                 {{ else }}
                 <tr>
                     <td><span class="color-name">{{ one_sku.label }}</span></td>
-                    <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_outerid" class="form-control "/></td>
+                    <!--  <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_outerid" class="form-control "/></td>-->
                     <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_remainnum" class="form-control"/></td>
                     <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_cost" class="form-control"/></td>
                     <td><input type="text" id="{{ one_color.id }}_{{ one_sku.id }}_pricestd" class="form-control"/></td>
