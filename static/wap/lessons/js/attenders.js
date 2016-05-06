@@ -2,21 +2,18 @@
 var BASE_URL = 'http://staging.xiaolumeimei.com';
 
 function loadLessonInfo(lesson_id) {
-    var lesson_url = '/rest/lesson/lesson?lesson_id=' + lesson_id;
+    var lesson_url = '/rest/lesson/lesson/get_lesson_info?lesson_id=' + lesson_id;
     var url = BASE_URL + lesson_url;
 
     var callback = function (res) {
         if (res) {
-            var arr = res.results
-            if (arr.length > 0) {
-                var data = arr[0];
-                var content = [];
-                content.push('<h3>'+data.title+'</h3>');
-                content.push('<div><div class="course-time"><p>时间：'+data.start_time_display+'</p></div>');
-                content.push('<div class="signup-number"><p>签到：<span style="font-weight:bold">'+data.num_attender+'人</span></p></div></div>');
-                content.push('<div class="course-time"><p>授课：'+data.instructor_name+'&nbsp;'+data.instructor_title+'</p></div>');
-                $("#id-lesson").append(content.join(''));
-            }
+            var data = res;
+            var content = [];
+            content.push('<h3>'+data.title+'</h3>');
+            content.push('<div><div class="course-time"><p>时间：'+data.start_time_display+'</p></div>');
+            content.push('<div class="signup-number"><p>签到：<span style="font-weight:bold">'+data.num_attender+'人</span></p></div></div>');
+            content.push('<div class="course-time"><p>授课：'+data.instructor_name+'&nbsp;'+data.instructor_title+'</p></div>');
+            $("#id-lesson").append(content.join(''));
         }
     };
     $.ajax({url:url, success:callback});
