@@ -16,7 +16,7 @@ function loadLessonTopics() {
                 content.push('<div class="caption" style="margin-top:-60px">');
                 content.push('<p style="color:white">主讲：'+arr[i].instructor_name+' '+arr[i].instructor_title);
                 content.push('<br/>时间：'+arr[i].start_time_display+'</p>');
-                content.push('<h3>'+arr[i].title+'</h3>');
+                content.push('<h3><a href="'+arr[i].m_static_url+'lessons/html/attenders.html?lesson_id='+arr[i].id +'">'+arr[i].title+'</a></h3>');
                 content.push('<p>'+arr[i].description+'</p>');
                 if (arr[i].is_started == 1) {
                     //content.push('<a href="#" class="btn btn-success" style="margin-right:10px" role="button">进入课堂 >></a>');
