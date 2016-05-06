@@ -1,5 +1,5 @@
-var BASE_URL = 'http://127.0.0.1:8000';
-//var BASE_URL = 'http://staging.xiaolumeimei.com';
+//var BASE_URL = 'http://127.0.0.1:8000';
+var BASE_URL = 'http://staging.xiaolumeimei.com';
 
 function loadLessonInfo(lesson_id) {
     var lesson_url = '/rest/lesson/lesson/get_lesson_info?lesson_id=' + lesson_id;
