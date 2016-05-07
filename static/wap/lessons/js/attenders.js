@@ -67,23 +67,8 @@ function getLessonIdParam() {
     return null;
 }
 
-function sharePage(){
-//分享店铺链接
-    if (!GLConfig.weixin){return;}
-    var share_url = GLConfig.baseApiUrl + GLConfig.api_share_page;
-    $.ajax({
-        type: "get",
-        url: share_url,
-        data: "",
-        success: listenWeixinShareEvent,
-        error: function (data) {
-            console.log('error:',data);
-        }
-    });
-}
-
 function listenWeixinShareEvent(configParams) {
-    var imgUrl      = configParams.share_img;
+    var imgUrl      = 'http://7xogkj.com2.z0.glb.qiniucdn.com/logo2.png'
     var lineLink    = '/rest/lessons/snsauth/' + global_lesson_id;
     var descContent = '讲师点名啦，赶快签到吧！小鹿大学正在高薪招聘讲师，一起组团来应聘！';
     var shareTitle  = '小鹿大学 课程签到';
@@ -107,7 +92,7 @@ function listenWeixinShareEvent(configParams) {
             // 分享标题
             desc: descContent,
             // 分享描述
-            link: makeLinkUrl(lineLink,{'ufrom':'wxapp'}),
+            link: lineLink,
             // 分享链接
             imgUrl: imgUrl,
             // 分享图标
@@ -123,6 +108,22 @@ function listenWeixinShareEvent(configParams) {
         });
     });
 }
+
+function sharePage(){
+    console.log('global_lesson_id', global_lesson_id);
+    if (!GLConfig.weixin){return;}
+    var share_url = GLConfig.baseApiUrl + GLConfig.api_share_page;
+    $.ajax({
+        type: "get",
+        url: share_url,
+        data: "",
+        success: listenWeixinShareEvent,
+        error: function (data) {
+            console.log('error:',data);
+        }
+    });
+}
+
 
 
 
