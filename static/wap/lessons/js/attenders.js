@@ -68,6 +68,7 @@ function getLessonIdParam() {
 }
 
 function listenWeixinShareEvent(configParams) {
+    console.log(configParams);
     var imgUrl      = 'http://7xogkj.com2.z0.glb.qiniucdn.com/logo2.png'
     var lineLink    = '/rest/lessons/snsauth/' + global_lesson_id;
     var descContent = '讲师点名啦，赶快签到吧！小鹿大学正在高薪招聘讲师，一起组团来应聘！';
@@ -111,8 +112,9 @@ function listenWeixinShareEvent(configParams) {
 
 function sharePage(){
     console.log('global_lesson_id', global_lesson_id);
-    if (!GLConfig.weixin){return;}
+    //if (!GLConfig.weixin){return;}
     var share_url = GLConfig.baseApiUrl + GLConfig.api_share_page;
+    console.log(share_url);
     $.ajax({
         type: "get",
         url: share_url,
