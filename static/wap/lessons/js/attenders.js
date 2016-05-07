@@ -20,7 +20,7 @@ function loadLessonInfo(lesson_id) {
 }
 
 function loadLessonAttendRecord(params) {
-    var record_url = '/rest/lesson/lessonattendrecord?'+params;
+    var record_url = '/rest/lesson/lessonattendrecord'+params;
     var url = BASE_URL + record_url;
     var callback = function (res) {
         if (res) {
@@ -68,6 +68,7 @@ function getLessonIdParam() {
 
 $(document).ready(function() {
     var lesson_id = getLessonIdParam();
+    
     var params = location.search
     if (lesson_id) {
         loadLessonInfo(lesson_id);
