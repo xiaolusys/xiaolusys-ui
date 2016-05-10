@@ -6,7 +6,10 @@
     $.extend($.fn, {
     	//监听购物车点击事件
         listencart: function (options) {
-            window.location.href = "/mall/#/shop/bag"
+            var self = this;
+            $(self).data('click', true).on('click', function(){
+                window.location.href = "/mall/#/shop/bag"
+            });
         },
         shoping: function (options) {
             var self = this,
