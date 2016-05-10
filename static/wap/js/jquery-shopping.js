@@ -6,19 +6,7 @@
     $.extend($.fn, {
     	//监听购物车点击事件
         listencart: function (options) {
-        	var self = this;
-        	var C = {
-                init: function () {
-                    $(self).data('click', true).on('click', this.doIflogin);
-                },
-                doIflogin:function(){
-                	DoIfLogin({
-			    		callback:function(){window.location=adjustPageLink('/pages/gouwuche.html');},
-			    		redirecto:adjustPageLink('/pages/gouwuche.html')
-			    	});
-                }
-            };
-        	C.init();
+            window.location.href = "/mall/#/shop/bag"
         },
         shoping: function (options) {
             var self = this,
