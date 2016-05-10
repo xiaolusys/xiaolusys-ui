@@ -440,8 +440,7 @@ nav a:active,
     left: 101px;
     background: url(../images/icon-gouwuche.png) no-repeat rgba(0, 0, 0, 0.6);
     width: 80px;
-    border-bottom-right-radius: 5px;
-    border-top-right-radius: 5px;
+    border-radius: 5px;
 }
 
 .cart .total {
