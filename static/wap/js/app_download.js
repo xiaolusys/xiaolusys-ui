@@ -32,7 +32,10 @@ $("#not_show_btn").click(function () {// 如果点击不显示
 $("#download_app").click(function () {//如果点击下载
     // 点击下载APP
     var requestUrl = GLConfig.baseApiUrl + GLConfig.app_download;
-    var mm_linkid = getUrlParam("mm_linkid");
+    var mm_linkid = getCookie("mm_linkid");
+    if (mm_linkid == null) {
+        mm_linkid = getUrlParam("mm_linkid");
+    }
     var weixin = isWeiXin();
 
     if (weixin == false) {
