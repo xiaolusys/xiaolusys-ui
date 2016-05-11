@@ -124,7 +124,8 @@ var GLConfig = {
     activitys_url: "/activitys",// 活动页面h5入口
     activitys_all_events_url: "/activitys/get_all_events",// all events
     agency_invitation_res:'/rest/v2/referal',//代理邀请结果(我的邀请页面)
-    get_mama_fortune:'/rest/v2/fortune'//代理财富
+    get_mama_fortune:'/rest/v2/fortune',//代理财富
+    get_fan_download_qrcode: "/rest/v2/fortune/get_mama_app_download_link" // app h5关于粉丝页面 获取下载app二维码
 
 };
 

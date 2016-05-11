@@ -11,10 +11,22 @@
     <meta name="format-detection" content="email=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="../css/fans-explain.css">
+    <script src="../js/common.js"></script>
     <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <script src="//cdn.bootcss.com/jquery/2.1.1/jquery.js"></script>
 </head>
 <body>
+<div class="m-fans-container" style="text-align: center; padding: 12px">
+    <p>亲,<br/>安利一下每天都有新款的<br/>小鹿美美APP<br/>请微信扫码下载!</p>
+</div>
+<div class="row" style="margin-top: 15px">
+    <div class="col-xs-2"></div>
+    <div class="col-xs-8">
+        <img id="app_download_qrcode" src="" class="img-rounded"
+             width="100%" alt=""/>
+    </div>
+    <div class="col-xs-2"></div>
+</div>
 <div class="m-fans-container">
     <ul>
         <li>如何获得粉丝？</li>
@@ -31,7 +43,33 @@
             避免了之前您的朋友没有从您分享的链接，直接通过微信网页版或从微信公众号购买而不能得到返利的损失。</br>
             <p>活动期间，粉丝订单的佣金可额外增加10%。</p>
         </div>
+        <br/>
+
     </ul>
 </div>
+
+<script>
+    $(document).ready(function () {
+        var requestUrl = GLConfig.get_fan_download_qrcode;
+        $.ajax({
+            type: 'get',
+            url: requestUrl,
+            dataType: 'json',
+            success: setQrcodePicImage,
+            error: function (data) {
+                console.log('debug profile:', data);
+                if (data.status == 403) {
+                    drawToast('您还没有登陆哦!');
+                }
+            }
+        });
+    });
+    function setQrcodePicImage(res) {
+        console.log(res);
+        if (res.code == 0 && res.qrcode_url != "") {
+            $("#app_download_qrcode").attr('src', res.qrcode_url);
+        }
+    }
+</script>
 </body>
 </html>

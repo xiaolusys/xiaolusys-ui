@@ -117,7 +117,7 @@ $(function () {
 	var time_selectors = $(".select_saletime");
 	if (time_selectors.length==null || time_selectors.length == 0)return;
 
-        $('input.select_saletime').each(function(index, el){
+        $('p.schedule_date').each(function(index, el){
             var $that = $(this);
             var saleproduct_id = parseInt($(this).attr('id'));
             $.ajax({
@@ -127,11 +127,33 @@ $(function () {
                 data: {saleproduct_id: saleproduct_id},
                 success: function(result){
                     if(result.select_dates && result.select_dates.length > 0){
-                        $that.after('<br>上架日期:<br>' + result.select_dates.join('<br>'));
+                        $that.html('上架日期:<br>' + result.select_dates.join('<br>'));
                     }
                 }
             });
+        });
 
+        $('p.sale_date').each(function(){
+            var $that = $(this);
+            var saleproduct_id = parseInt($(this).attr('id'));
+            $.ajax({
+                url: '/supplychain/supplier/saleproduct_sale_date/',
+                type: 'get',
+                dataType: 'json',
+                data: {saleproduct_id: saleproduct_id},
+                success: function(result){
+                    if(JSON.stringify(result.sale_dates) != '{}'){
+                        var n = 0;
+                        var tmp = [];
+                        for(var x in result.sale_dates){
+                            tmp.push(x + ': ' + result.sale_dates[x]);
+                            n += result.sale_dates[x];
+                        }
+                        tmp.push('总计: ' + n);
+                        $that.html('销售统计:<br>' + tmp.join('<br>'));
+                    }
+                }
+            });
         });
 
         $('#input-saleproduct-date').datepicker({
