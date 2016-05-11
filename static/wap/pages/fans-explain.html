@@ -11,6 +11,7 @@
     <meta name="format-detection" content="email=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="../css/fans-explain.css">
+    <script src="../js/common.js"></script>
     <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <script src="//cdn.bootcss.com/jquery/2.1.1/jquery.js"></script>
 </head>
@@ -31,7 +32,40 @@
             避免了之前您的朋友没有从您分享的链接，直接通过微信网页版或从微信公众号购买而不能得到返利的损失。</br>
             <p>活动期间，粉丝订单的佣金可额外增加10%。</p>
         </div>
+        <br/>
+        <li id="msg-qrcode">邀请粉丝微信扫码下方二维码哦~</li>
     </ul>
 </div>
+<div class="row" style="margin-top: 15px">
+    <div class="col-xs-4"></div>
+    <div class="col-xs-4">
+        <img id="app_download_qrcode" src="http://7xogkj.com2.z0.glb.qiniucdn.com/1462957194.svg" class="img-rounded"
+             width="100%" alt=""/>
+    </div>
+    <div class="col-xs-4"></div>
+</div>
+<script>
+    $(document).ready(function () {
+        var requestUrl = GLConfig.baseApiUrl + GLConfig.get_fan_download_qrcode;
+        $.ajax({
+            type: 'get',
+            url: requestUrl,
+            dataType: 'json',
+            success: setQrcodePicImage,
+            error: function (data) {
+                console.log('debug profile:', data);
+                if (data.status == 403) {
+                    drawToast('您还没有登陆哦!');
+                }
+            }
+        });
+    });
+    function setQrcodePicImage(res) {
+        console.log(res);
+        if (res.code == 0 && res.qrcode_url != "") {
+            $("#app_download_qrcode").attr('src', res.qrcode_url);
+        }
+    }
+</script>
 </body>
 </html>
