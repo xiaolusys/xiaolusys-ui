@@ -18,6 +18,19 @@
 <body>
 <div class="m-fans-container">
     <ul>
+        <li id="msg-qrcode">邀请粉丝微信扫码下方二维码哦~</li>
+    </ul>
+</div>
+<div class="row" style="margin-top: 15px">
+    <div class="col-xs-4"></div>
+    <div class="col-xs-4">
+        <img id="app_download_qrcode" src="http://7xogkj.com2.z0.glb.qiniucdn.com/1462957194.svg" class="img-rounded"
+             width="100%" alt=""/>
+    </div>
+    <div class="col-xs-4"></div>
+</div>
+<div class="m-fans-container">
+    <ul>
         <li>如何获得粉丝？</li>
         </br>
         <div class="col-sm-* m-fans-content">
@@ -33,20 +46,13 @@
             <p>活动期间，粉丝订单的佣金可额外增加10%。</p>
         </div>
         <br/>
-        <li id="msg-qrcode">邀请粉丝微信扫码下方二维码哦~</li>
+
     </ul>
 </div>
-<div class="row" style="margin-top: 15px">
-    <div class="col-xs-4"></div>
-    <div class="col-xs-4">
-        <img id="app_download_qrcode" src="http://7xogkj.com2.z0.glb.qiniucdn.com/1462957194.svg" class="img-rounded"
-             width="100%" alt=""/>
-    </div>
-    <div class="col-xs-4"></div>
-</div>
+
 <script>
     $(document).ready(function () {
-        var requestUrl = GLConfig.baseApiUrl + GLConfig.get_fan_download_qrcode;
+        var requestUrl = GLConfig.get_fan_download_qrcode;
         $.ajax({
             type: 'get',
             url: requestUrl,
