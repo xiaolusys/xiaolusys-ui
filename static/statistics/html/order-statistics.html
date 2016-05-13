@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css"
+          rel="stylesheet">
+    <link href="../../DataTables/datatables.css">
+    <script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <script src="../../wap/js/common.js"></script>
+    <script src="../js/moment.js"></script>
+    <script src="../../DataTables/datatables.min.js"></script>
+    <script src="../js/order-statistics.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <link href="../../layer-v1.9.2/layer/skin/layer.css">
+    <script src="../../layer-v1.9.2/layer/layer.js"></script>
+    <title>产品销量实时统计</title>
+</head>
+<body>
+<div class="container">
+    <h1>产品销量实时统计</h1>
+    <h4>上架时间段:</h4>
+
+    <div class="row">
+        <div class='col-sm-3'><input type='text' class="form-control" id='datetimepicker1'/></div>
+        <div class='col-sm-3'><input type='text' class="form-control" id='datetimepicker2'/></div>
+        <div class='col-sm-4'>
+            <button class="btn btn-default" id="data-search-child" type="button">童装</button>
+            <button class="btn btn-default" id="data-search-female" type="button">女装</button>
+            <button class="btn btn-default" id="data-search-all" type="button">所有</button>
+        </div>
+        <div class='col-sm-2'><input class="btn btn-default" id="time-consuming" type="text" readonly/></div>
+    </div>
+
+    <div class="row" style="margin-top: 30px">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <td>款式id</td>
+                <td>类别id</td>
+                <td>名称</td>
+                <td>成本</td>
+                <td>售价</td>
+                <td>销量</td>
+                <td>头图</td>
+                <td>编码</td>
+                <td>库存</td>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <td>款式id</td>
+                <td>类别id</td>
+                <td>名称</td>
+                <td>成本</td>
+                <td>售价</td>
+                <td>销量</td>
+                <td>头图</td>
+                <td>编码</td>
+                <td>库存</td>
+            </tr>
+            </tfoot>
+            <tbody id="sale-data">
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/html" id="sale-data-template">
+    <tr>
+        <td class="model_id-{{ model_id }}">{{ model_id }}</td>
+        <td class="category_id-{{ category_id }}">{{ category_id }}</td>
+        <td class="name-{{ name }}" style="width: 200px">{{ name }} </td>
+        <td class="cost-{{ cost }}">{{ cost }}</td>
+        <td class="agent_price-{{ agent_price }}">{{ agent_price }}</td>
+        <td class="pro_sale_num-{{ pro_sale_num }}">{{ pro_sale_num }}</td>
+        <td class="pic_path-{{ pic_path }}"><img src="{{ pic_path }}" width="50px"/></td>
+        <td class="outer_id-{{ outer_id }}">{{ outer_id }}</td>
+        <td class="collect_num-{{ collect_num }}">{{ collect_num }}</td>
+    </tr>
+</script>
+</body>
+</html>
