@@ -404,7 +404,7 @@ function Create_item_dom(p_obj, close_model) {
     return hereDoc(Item_dom).template(p_obj);
 }
 
-function Set_promotes_product(suffix) {
+function Set_preview_product_by_paging(suffix) {
     //预览商品列表
     var pageNum  = 1;
     var nextPage = true;

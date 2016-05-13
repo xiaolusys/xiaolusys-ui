@@ -134,7 +134,15 @@
     //获取今日海报
     Set_posters('/posters/preview.json?' + urlparams);
     //获取今日推荐商品
-    Set_promotes_product()('/products/promote_preview_paging.json?' + urlparams);
+    var paginate_product_func = Set_preview_product_by_paging();
+    paginate_product_func('/products/promote_preview_paging.json?' + urlparams);
+    $(window).scroll(function () {
+        var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());//浏览器的高度加上滚动条的高度
+	    var scroll_height = $(document).height() - totalheight;
+	    if (($(document).height() - 600 <= totalheight) && scroll_height < 600 ) {
+	        paginate_product_func('/products/promote_preview_paging.json?' + urlparams);
+	    }
+    });
     //获取购物车商品数
     Set_shopcarts_num();
 	//设置分页
