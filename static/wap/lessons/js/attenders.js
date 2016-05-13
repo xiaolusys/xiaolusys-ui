@@ -79,7 +79,7 @@ $(document).ready(function() {
             lesson_id = match[0];
         }
     }
-    var union_id = getParamValue("union_id");
+    var union_id = getParamValue("unionid");
     
     if (lesson_id) {
         loadLessonInfo(lesson_id);
