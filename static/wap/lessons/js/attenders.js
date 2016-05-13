@@ -20,8 +20,11 @@ function loadLessonInfo(lesson_id) {
     $.ajax({url:url, success:callback});
 }
 
-function loadLessonAttendRecord(params) {
-    var record_url = '/rest/lesson/lessonattendrecord'+params;
+function loadLessonAttendRecord(lesson_id, union_id) {
+    var record_url = '/rest/lesson/lessonattendrecord?lesson_id='+lesson_id;
+    if (union_id) {
+        record_url = record_url + "&unionid="+union_id;
+    }
     var url = BASE_URL + record_url;
     var callback = function (res) {
         if (res) {
@@ -50,7 +53,7 @@ function loadLessonAttendRecord(params) {
     $.ajax({url:url, success:callback});
 }
 
-function getLessonIdParam() { 
+function getParamValue(key) { 
     var url = location.search; //获取url中"?"符后的字串 
     var theRequest = new Object();
     
@@ -59,7 +62,7 @@ function getLessonIdParam() {
         strs = str.split("&"); 
         for(var i = 0; i < strs.length; i ++) {
             pair = strs[i].split("=")
-            if (pair[0] == 'lesson_id') {
+            if (pair[0] == key) {
                 return pair[1];
             }
         } 
@@ -68,12 +71,19 @@ function getLessonIdParam() {
 }
 
 $(document).ready(function() {
-    var lesson_id = getLessonIdParam();
+    var lesson_id = getParamValue("lesson_id");
+    var re = /\d+/g;
+    if (lesson_id) {
+        var match = lesson_id.match(re);
+        if (match) {
+            lesson_id = match[0];
+        }
+    }
+    var union_id = getParamValue("union_id");
     
-    var params = location.search
     if (lesson_id) {
         loadLessonInfo(lesson_id);
-        loadLessonAttendRecord(params);
+        loadLessonAttendRecord(lesson_id, union_id);
     }
 });
 
