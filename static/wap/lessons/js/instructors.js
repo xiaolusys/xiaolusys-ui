@@ -30,7 +30,7 @@ function renderDataList(res) {
     if (res) {
         var arr = res.results
         nextPage = res.next;
-        console.log(res.count);
+        
         $("#id-instructor-num")[0].innerHTML = res.count+' 名';
         
         for(var i=0; i<arr.length; i++) {
@@ -66,7 +66,7 @@ function loadNextPage() {
     var windowHeight = $(window).height();
     var documentHeight = $(document).height();
 
-    if (scrollTop == documentHeight - windowHeight) {
+    if (scrollTop >= documentHeight - windowHeight - 20) {
         if (nextPage) {
             $.ajax({url:nextPage, success:renderDataList});
         }
@@ -74,7 +74,7 @@ function loadNextPage() {
     
 }
 
-function getUnionIdParam() { 
+function getParamValue(key) { 
     var url = location.search; //获取url中"?"符后的字串 
     var theRequest = new Object();
     
@@ -83,7 +83,7 @@ function getUnionIdParam() {
         strs = str.split("&"); 
         for(var i = 0; i < strs.length; i ++) {
             pair = strs[i].split("=")
-            if (pair[0] == 'unionid') {
+            if (pair[0] == key) {
                 return pair[1];
             }
         } 
@@ -93,7 +93,7 @@ function getUnionIdParam() {
 
 
 $(document).ready(function() {
-    var union_id = getUnionIdParam();
+    var union_id = getParamValue('unionid');
     if (union_id) {
         loadInstructorMyself(union_id);
     }
