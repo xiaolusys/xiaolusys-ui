@@ -17,14 +17,20 @@ function createSaleDataDom(obj) {
 }
 
 var taskId = '';
+function cleanData() {
+    var table = $('.table-bordered').DataTable();
+    table.destroy();
+    $("#sale-data").empty();
+
+}
 
 $(function () {
     var childClickBtn = $("#data-search-child");
     var femaleClickBtn = $("#data-search-female");
     var allClickBtn = $("#data-search-all");
 
-
     childClickBtn.click(function () {
+        cleanData();
         var time_left = $("#datetimepicker1").val();
         var time_right = $("#datetimepicker2").val();
         if (time_left == "" || time_right == "") {
@@ -35,6 +41,7 @@ $(function () {
         getTaskRequest(data, childClickBtn);
     });
     femaleClickBtn.click(function () {
+        cleanData();
         var time_left = $("#datetimepicker1").val();
         var time_right = $("#datetimepicker2").val();
         if (time_left == "" || time_right == "") {
@@ -45,6 +52,7 @@ $(function () {
         getTaskRequest(data, childClickBtn);
     });
     allClickBtn.click(function () {
+        cleanData();
         var time_left = $("#datetimepicker1").val();
         var time_right = $("#datetimepicker2").val();
         if (time_left == "" || time_right == "") {
