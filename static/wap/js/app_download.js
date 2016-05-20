@@ -9,7 +9,6 @@ function Judge_download() {
     }
     else {//不显示下载按钮
         $('.download-banner-div').parent().remove();
-
     }
 }
 
