@@ -8,7 +8,7 @@ function Judge_download() {
         $('.download-banner-div').removeClass('download_hidden');
     }
     else {//不显示下载按钮
-        $('.download-banner-div').addClass('download_hidden');
+        $('.download-banner-div').removeClass('fixed').addClass('download_hidden');
 
     }
 }
@@ -26,7 +26,7 @@ $("#not_show_btn").click(function () {// 如果点击不显示
     setCookie('is_download_show', '0', 1);
     var is_download_show = getCookie('is_download_show');
     console.log("is_download_show: ", is_download_show);
-    $('.download-banner-div').addClass('download_hidden');// 隐藏
+    $('.download-banner-div').removeClass('fixed').addClass('download_hidden');// 隐藏
 });
 
 $("#download_app").click(function () {//如果点击下载
