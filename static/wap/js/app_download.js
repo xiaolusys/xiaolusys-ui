@@ -1,6 +1,5 @@
 function Judge_download() {
     var is_download_show = getCookie('is_download_show');
-    console.log('is_download_show: ', is_download_show);
     if (is_download_show == null) {// 如果没有cookie设置
         setCookie('is_download_show', '1', 1);
     }
