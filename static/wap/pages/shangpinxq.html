@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="format-detection" content="email=no"/>
     <meta name="format-detection" content="telephone=no"/>
-       <meta id="viewport" name="viewport" />
+    <meta id="viewport" name="viewport"/>
     <script src="../js/common.js"></script>
     <link rel="stylesheet" href="../css/swiper3.07.min.css">
     <link rel="stylesheet" type="text/css" href="../css/dots-loading.css">
@@ -15,29 +15,32 @@
     <link rel="stylesheet" href="../css/jquery.webui-popover.min.css">
     <link rel="stylesheet" type="text/css" href="../css/download-banner-1.css?v=2">
     <script id="ntkf_template" type="text/html">
-    var NTKF_PARAM = {
+        var NTKF_PARAM = {
         siteid:"kf_9645",        //企业ID，必填，取值参见文档开始表
         settingid:"kf_9645_1444459002183",        //缺省客服配置ID，必填，取值参见文档开始表
-        uid:"{{profile.id}}",        //用户ID,未登录可以为空
-        uname:"{{profile.nick_alias}}({{profile.mobile}})",        //用户名，未登录可以为空
+        uid:"{{ profile.id }}",        //用户ID,未登录可以为空
+        uname:"{{ profile.nick_alias }}({{ profile.mobile }})",        //用户名，未登录可以为空
         isvip:"0" ,         //是否为vip用户
         userlevel:"1" ,    //网站自定义会员级别
         ntalkerparam:{
-　　          item:{        //注意：详情页这里是item，其它地方是items
-　　              id:"{{item_id}}"         //商品ID
-　　          }
+        　　          item:{        //注意：详情页这里是item，其它地方是items
+        　　              id:"{{ item_id }}"         //商品ID
+        　　          }
         }
-    };
+        };
     </script>
 </head>
 <body>
-<div class="download-banner-div fixed">
-    <div class="banner-image">
-        <div class="close-download" id="not_show_btn"></div>
-        <div class="download-click" id="download_app"></div>
+<div class="download-banner fixed">
+    <div class="download-banner-div">
+        <div class="banner-image">
+            <div class="close-download" id="not_show_btn"></div>
+            <div class="download-click" id="download_app"></div>
+        </div>
+        <div style="margin-top: 99px"></div>
     </div>
 </div>
-<div style="margin-top: 99px"></div>
+
 <div class="goods-slide">
     <div class="swiper-container">
         <div class="swiper-wrapper">
@@ -47,18 +50,19 @@
         </div>
         <div class="swiper-pagination"></div>
     </div>
-  <a class="btn-back" href="javascript:void(0);" data-ajax="false"></a>
+    <a class="btn-back" href="javascript:void(0);" data-ajax="false"></a>
 </div>
 <!-- 商品详细信息 -->
 <div class="goods-content">
     <div class="goods-info">
         <h3></h3>
+
         <div class="price">
             <span>¥ </span>
             <s>¥ </s>
         </div>
     </div>
-    <div class="goods-size" >
+    <div class="goods-size">
         <img src="http://image.xiaolu.so/kexuanchima.png" width="100%">
     </div>
 
@@ -95,16 +99,17 @@
 <div class="goods-img">
     <!--<img src="http://image.xiaolu.so/TT-1440400785024-sotp.png" width="100%">-->
     <img src="http://image.xiaolu.so/chimabiao.png" width="100%">
+
     <div class="chi-ma-biao">
 
     </div>
     <div class="list">
-    <!-- 这里添加商品图片 -->
+        <!-- 这里添加商品图片 -->
     </div>
 </div>
 <ul class="bottom-bar">
     <li class="shengyu">剩余时间：<span>14:24:08</span></li>
-    <li class="add-cart" name="btn-add-cart" >加入购物车</li>
+    <li class="add-cart" name="btn-add-cart">加入购物车</li>
     <li class="buy buy-now" name="btn-buynow">立即购买</li>
 </ul>
 <div class="cart-container">
@@ -119,13 +124,13 @@
     </ul>
 </div>
 <div class="footer clearfix">
-<div class="link">
-<a href="/index.html" target="_parent">首页</a>
-<a href="/contact.html" target="_parent">联系我们</a>
-</div>
-<div class="copyright">
-<p >Copyright © 2014-2015 小鹿美美，All Rights Reserved 沪ICP备15013901号-1</p>
-</div>
+    <div class="link">
+        <a href="/index.html" target="_parent">首页</a>
+        <a href="/contact.html" target="_parent">联系我们</a>
+    </div>
+    <div class="copyright">
+        <p>Copyright © 2014-2015 小鹿美美，All Rights Reserved 沪ICP备15013901号-1</p>
+    </div>
 </div>
 
 <script id="params" type="text/html">
@@ -134,7 +139,7 @@
     </div>
     <div class="goods-param">
         <img class="spcs" src="http://image.xiaolu.so/shangpincanshu.png">
-        <hr style="height:1px;border:none;border-top:1px solid #ff6d73;width: 600px;margin: 0 auto;" />
+        <hr style="height:1px;border:none;border-top:1px solid #ff6d73;width: 600px;margin: 0 auto;"/>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <td>商品名称：</td>
@@ -186,95 +191,99 @@
 <script src="../js/jquery-shopping.js"></script>
 <script src="../js/app_download.js"></script>
 <script>
-$(document).ready(function(){
-    $('.ui-loader').remove();
-     //商品尺寸切换,动态加载内容需事件委托
-    $(document).on({
-        tap:change_goodsize,
-    },'#js-goods-size li');
-    //返回顶部
-    $(document).on({tap:scroll_top},'#js-scroll-top');
-    //设置商品详情
-    var item_id = getUrlParam('id');
-    var urlConf = {'product_id': item_id};
-    var product_url = GLConfig.get_product_detail_url.template(urlConf);
-    Set_product_detail(product_url);
-    Set_shopcarts_num();
-    need_set_info();
-    //登录后才可以操作
-    $('.add-cart').shoping();
-    $('.cart').listencart();
-    $('.p-center').click(function(){
-        window.location = adjustPageLink("gerenzhongxin.html");
-    })
-    $('.btn-back').click(function(){
-        var referer_url = document.referrer.trim();
-        if (isNone(referer_url) || referer_url==''){
-            window.location = adjustPageLink("../index.html");
-        }else{
-            history.go(-1);
-        }
-    })
-    $('.buy-now').click(function(){
-        DoIfLogin({
-            callback:buynow,
-            redirecto:window.location.href
-        });
-    });
-    $(document).on({
-        tap:function () {
+    $(document).ready(function () {
+        $('.ui-loader').remove();
+        //商品尺寸切换,动态加载内容需事件委托
+        $(document).on({
+            tap: change_goodsize,
+        }, '#js-goods-size li');
+        //返回顶部
+        $(document).on({tap: scroll_top}, '#js-scroll-top');
+        //设置商品详情
+        var item_id = getUrlParam('id');
+        var urlConf = {'product_id': item_id};
+        var product_url = GLConfig.get_product_detail_url.template(urlConf);
+        Set_product_detail(product_url);
+        Set_shopcarts_num();
+        need_set_info();
+        //登录后才可以操作
+        $('.add-cart').shoping();
+        $('.cart').listencart();
+        $('.p-center').click(function () {
+            window.location = adjustPageLink("gerenzhongxin.html");
+        })
+        $('.btn-back').click(function () {
+            var referer_url = document.referrer.trim();
+            if (isNone(referer_url) || referer_url == '') {
+                window.location = adjustPageLink("../index.html");
+            } else {
+                history.go(-1);
+            }
+        })
+        $('.buy-now').click(function () {
             DoIfLogin({
-                callback:function(){
-                    var params = {
-                        'item_id':getUrlParam('id'),
-                        'profile':JSON.parse(getCookie(PROFILE_COOKIE_NAME) || '{}')
-                    };
-                    loadNTalker(params,callNTKFChatPage);
-                },
-                redirecto:window.location.href
+                callback: buynow,
+                redirecto: window.location.href
             });
+        });
+        $(document).on({
+            tap: function () {
+                DoIfLogin({
+                    callback: function () {
+                        var params = {
+                            'item_id': getUrlParam('id'),
+                            'profile': JSON.parse(getCookie(PROFILE_COOKIE_NAME) || '{}')
+                        };
+                        loadNTalker(params, callNTKFChatPage);
+                    },
+                    redirecto: window.location.href
+                });
+            }
+        }, '.service_box');
+    });
+    function change_goodsize() {
+        $('#js-goods-size li.active').removeClass('active').addClass('normal');
+        if ($(this).hasClass('disable'))return;
+        $(this).removeClass('normal').addClass('active');
+        // 将价格显示到主图下方
+        var sku_price = $($(this)[0]).attr("sku_price");
+        $(".goods-info .price").find('#price').html('¥ ' + sku_price);
+    }
+    function scroll_top(e) {
+        e.preventDefault();
+        $('body').animate({scrollTop: 0}, 400);
+    }
+    function buynow() {
+        //如果未选中商品尺寸,事件不执行
+        if ($('#js-goods-size li.active').length == 0) {
+            document.getElementById('js-goods-size').scrollIntoView(false);
+            drawToast('请选择商品尺寸');
+            return;
         }
-    },'.service_box');
-});
-function change_goodsize() {
-    $('#js-goods-size li.active').removeClass('active').addClass('normal');
-    if ($(this).hasClass('disable'))return;
-    $(this).removeClass('normal').addClass('active');
-    // 将价格显示到主图下方
-    var sku_price = $($(this)[0]).attr("sku_price");
-    $(".goods-info .price").find('#price').html('¥ ' + sku_price );
-}
-function scroll_top(e){
-    e.preventDefault();
-    $('body').animate({scrollTop: 0}, 400);
-}  
-function buynow(){
-    //如果未选中商品尺寸,事件不执行
-    if ($('#js-goods-size li.active').length == 0){
-        document.getElementById('js-goods-size').scrollIntoView(false);
-        drawToast('请选择商品尺寸');
-        return;
-    };
-    var item_id = getUrlParam('id');
-    var sku_id = $('#js-goods-size li.active').attr('sku_id');
-    var buy_link = 'buynow-dd.html?item_id={{item_id}}&sku_id={{sku_id}}'.template({item_id:item_id,sku_id:sku_id});
-    window.location = adjustPageLink(buy_link);
-}
-function callNTKFChatPage(){
-    //对应手机WAP端组代码
-    NTKF.im_openInPageChat("kf_9645_1444459002183");
-}
+        ;
+        var item_id = getUrlParam('id');
+        var sku_id = $('#js-goods-size li.active').attr('sku_id');
+        var buy_link = 'buynow-dd.html?item_id={{item_id}}&sku_id={{sku_id}}'.template({
+            item_id: item_id,
+            sku_id: sku_id
+        });
+        window.location = adjustPageLink(buy_link);
+    }
+    function callNTKFChatPage() {
+        //对应手机WAP端组代码
+        NTKF.im_openInPageChat("kf_9645_1444459002183");
+    }
 </script>
 <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script src="../js/wx-share.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-  var item_id = getUrlParam('id');
-  shareDetailPage(item_id);
+    $(document).ready(function () {
+        var item_id = getUrlParam('id');
+        shareDetailPage(item_id);
 
-  // 判断是否显示下载框
-  Judge_download()
-});
+        // 判断是否显示下载框
+        Judge_download()
+    });
 </script>
 <link rel="stylesheet" type="text/css" href="../css/sweet-alert.css">
 <script src="../js/sweet-alert.min.js"></script>

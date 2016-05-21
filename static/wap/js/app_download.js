@@ -4,12 +4,13 @@ function Judge_download() {
         setCookie('is_download_show', '1', 1);
     }
     else if (is_download_show == '1') {//如果是1则显示下载按钮
-        $('.download-banner-div').removeClass('download_hidden');
+        $('.download-banner').removeClass('download_hidden');
     }
     else {//不显示下载按钮
-        $('.download-banner-div').parent().remove();
+        $('.download-banner').addClass('download_hidden');
     }
 }
+
 
 function isWeiXin() {//判断当前浏览器是否是微信内置浏览器
     var ua = window.navigator.userAgent.toLowerCase();
@@ -24,7 +25,7 @@ $("#not_show_btn").click(function () {// 如果点击不显示
     setCookie('is_download_show', '0', 1);
     var is_download_show = getCookie('is_download_show');
     console.log("is_download_show: ", is_download_show);
-    $('.download-banner-div').parent().remove();
+    $('.download-banner').addClass('download_hidden');
 });
 
 $("#download_app").click(function () {//如果点击下载
