@@ -10,6 +10,11 @@ $(function () {
     });
 });
 
+$(function () {
+    $('.assign-date').datetimepicker({
+        format: 'Y-M-D'
+    });
+});
 
 function moreType(getData, func) {
     var dateTotalRequestUrl = '/statistics/stats/salestats/get_all_num_type_list';
@@ -43,56 +48,31 @@ $(function () {
 
     $('.timely-type').click(function () {
         timely_type = $(this).attr('timely-type');
-        var html = '';
+        console.log(timely_type);
+        var date = $("#condition-date-field");
+        var week = $("#condition-week-field");
+        var month = $("#condition-month-field");
         if (timely_type == 6) {
-            html = '<div class="col-sm-6"><input type="text" class="form-control" id="datetimepicker6"/></div>';
-            layer.open({
-                title: '日期',
-                type: 1,
-                area: ['290px', '340px'], //宽高
-                content: html,
-                shadeClose: true
-            });
-            var date = $('#datetimepicker6');
-            date.datetimepicker({format: 'Y-M-D'});
+            week.val('');
+            month.val('');
             date.on('dp.change', function (e) {
                 date_field = $(date).val();
-                $("#condition-date-field").val(date_field);
                 console.log("date_field:", date_field, e.date);
             });
         }
-
         if (timely_type == 7) {
-            html = '<div class="col-sm-6"><input type="text" class="form-control" id="datetimepicker7"/></div>';
-            layer.open({
-                title: '周(请选择周一的日期)',
-                type: 1,
-                area: ['290px', '340px'], //宽高
-                content: html,
-                shadeClose: true
-            });
-            var week = $('#datetimepicker7');
-            week.datetimepicker({format: 'Y-M-D'});
+            date.val('');
+            month.val('');
             week.on('dp.change', function (e) {
                 date_field = $(week).val();
-                $("#condition-date-field").val(date_field);
                 console.log("date_field:", date_field, e.date);
             });
         }
         if (timely_type == 8) {
-            html = '<div class="col-sm-6"><input type="text" class="form-control" id="datetimepicker8"/></div>';
-            layer.open({
-                title: '月(请选择月份第一天日期)',
-                type: 1,
-                area: ['290px', '340px'], //宽高
-                content: html,
-                shadeClose: true
-            });
-            var month = $('#datetimepicker8');
-            month.datetimepicker({format: 'Y-M-D'});
+            date.val('');
+            week.val('');
             month.on('dp.change', function (e) {
                 date_field = $(month).val();
-                $("#condition-date-field").val(date_field);
                 console.log("date_field:", date_field, e.date);
             });
         }
@@ -158,7 +138,7 @@ function setRefundData(data) {
             val.return_goods_rate = (val.return_goods_num / total_num).toFixed(4);
         }
         // 退货率 = 退货数量/(销售数量(不含退款) + 退货数量 + 发货前退款数量 +　缺货退款数量)
-
+        val.total_num = total_num;
         var stats = createSaleDataDom(val);
         $("#stats-data").append(stats);
     });
