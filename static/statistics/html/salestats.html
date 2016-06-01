@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+    <script src="../../wap/js/common.js"></script>
+    <script src="../js/salestats.js"></script>
+    <link href="../../layer-v1.9.2/layer/skin/layer.css">
+    <script src="../../layer-v1.9.2/layer/layer.js"></script>
+    <script src="../../layer-v1.9.2/layer/extend/layer.ext.js"></script>
+    <title>销量统计</title>
+</head>
+<body>
+<div class="container">
+    <div class="col-md-12 chart" id="timely-type-6"></div>
+    <div class="col-md-8 chart" id="timely-type-7"></div>
+    <div class="col-md-8 chart" id="timely-type-8"></div>
+    <div class="col-md-6 chart" id="timely-type-9"></div>
+    <div class="col-md-6 chart" id="timely-type-10"></div>
+</div>
+
+<script>
+    $(function () {
+        var type = [6, 7, 8, 9, 10];
+        $.each(type, function (i, v) {
+            var getData = {"record_type": 16, "timely_type": v};
+            moreType(getData, setStatsData);
+        });
+    });
+</script>
+
+</body>
+</html>

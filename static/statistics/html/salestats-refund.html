@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css"
+          rel="stylesheet">
+    <link href="../../DataTables/datatables.css">
+    <script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="../../wap/js/common.js"></script>
+    <script src="../js/moment.js"></script>
+    <script src="../../DataTables/datatables.min.js"></script>
+    <script src="../js/salestats-refund.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <link href="../../layer-v1.9.2/layer/skin/layer.css">
+    <script src="../../layer-v1.9.2/layer/layer.js"></script>
+    <title>退款状况</title>
+</head>
+<body>
+
+<div class="container">
+    <h1>退货统计</h1>
+    <div class="row" style="margin-top: 30px">
+        <div class='col-sm-6'><input type='text' class="form-control" id='datetimepicker1'/></div>
+        <div class='col-sm-6'><input type='text' class="form-control" id='datetimepicker2'/></div>
+    </div>
+
+    <div class="row" style="margin-top: 30px">
+        <div class="col-sm-4 dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="true">时间<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="#" class="dimension timely-type" timely-type="6">日</a></li>
+                <li><a href="#" class="dimension timely-type" timely-type="7">周</a></li>
+                <li><a href="#" class="dimension timely-type" timely-type="8">月</a></li>
+            </ul>
+        </div>
+
+        <div class="col-sm-4 dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="true">TOP <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="#" class="dimension limit" limit="10">TOP 10</a></li>
+                <li><a href="#" class="dimension limit" limit="20">TOP 20</a></li>
+                <li><a href="#" class="dimension limit" limit="50">TOP 50</a></li>
+            </ul>
+        </div>
+
+        <div class="col-sm-4 dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="true">对象<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="#" class="dimension record-type" record-type="7">款式</a></li>
+                <li><a href="#" class="dimension record-type" record-type="13">供应商</a></li>
+                <li><a href="#" class="dimension record-type" record-type="14">BD</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class='col-sm-4'><input id="condition-date-field" type='text' readonly class="form-control"/></div>
+        <div class='col-sm-4'><input id="condition-limit" type='text' readonly class="form-control"/></div>
+        <div class='col-sm-4'><input id="condition-record-type" type='text' readonly class="form-control"/></div>
+    </div>
+
+    <div class="row" style="margin-top: 30px">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <td style="width: 7%">对应id</td>
+                <td style="width: 8%">名称</td>
+                <td style="width: 8%">图片/网址</td>
+                <td style="width: 8%">状态</td>
+                <td style="width: 8%">日期</td>
+                <td style="width: 7%">时间类型</td>
+                <td style="width: 8%">记录类型</td>
+                <td style="width: 7%">金额</td>
+                <td style="width: 10%">销量(不含退款)</td>
+                <td style="width: 9%">发货前退款数</td>
+                <td style="width: 7%">退货数量</td>
+                <td style="width: 8%">缺货退款数</td>
+                <td style="width: 6%">退货率</td>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <td style="width: 7%">对应id</td>
+                <td style="width: 8%">名称</td>
+                <td style="width: 8%">图片/网址</td>
+                <td style="width: 8%">状态</td>
+                <td style="width: 8%">日期</td>
+                <td style="width: 7%">时间类型</td>
+                <td style="width: 8%">记录类型</td>
+                <td style="width: 7%">金额</td>
+                <td style="width: 10%">销量(不含退款)</td>
+                <td style="width: 9%">发货前退款数</td>
+                <td style="width: 7%">退货数量</td>
+                <td style="width: 8%">缺货退款数</td>
+                <td style="width: 6%">退货率</td>
+            </tr>
+            </tfoot>
+            <tbody id="stats-data">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/html" id="stats-template-model">
+    <tr id="{{ id }}">
+        <td class="">{{ current_id }}</td>
+        <td class="">{{ name }}</td>
+        <td class=""><img src="{{ pic_path }}" alt="" width="80px"/></td>
+        <td class="">{{ get_status_display }}</td>
+        <td class="">{{ date_field }}</td>
+        <td class="">{{ get_timely_type_display }}</td>
+        <td class="">{{ get_record_type_display }}</td>
+        <td class="">{{ payment }}</td>
+        <td class="">{{ paid_num }}</td>
+        <td class="">{{ cancel_num }}</td>
+        <td class="">{{ return_goods_num }}</td>
+        <td class="">{{ out_stock_num }}</td>
+        <td class="">{{ return_goods_rate }}</td>
+    </tr>
+</script>
+<script type="text/html" id="stats-template-supplier">
+    <tr id="{{ id }}">
+        <td class="">{{ current_id }}</td>
+        <td class="">{{ name }}</td>
+        <td class=""><a href="{{ pic_path }}" target="_blank">供应商网址</a></td>
+        <td class="">{{ get_status_display }}</td>
+        <td class="">{{ date_field }}</td>
+        <td class="">{{ get_timely_type_display }}</td>
+        <td class="">{{ get_record_type_display }}</td>
+        <td class="">{{ payment }}</td>
+        <td class="">{{ paid_num }}</td>
+        <td class="">{{ cancel_num }}</td>
+        <td class="">{{ return_goods_num }}</td>
+        <td class="">{{ out_stock_num }}</td>
+        <td class="">{{ return_goods_rate }}</td>
+    </tr>
+</script>
+<script type="text/html" id="stats-template-bd">
+    <tr id="{{ id }}">
+        <td class="">{{ current_id }}</td>
+        <td class="">{{ name }}</td>
+        <td class="">{{ pic_path }}</td>
+        <td class="">{{ get_status_display }}</td>
+        <td class="">{{ date_field }}</td>
+        <td class="">{{ get_timely_type_display }}</td>
+        <td class="">{{ get_record_type_display }}</td>
+        <td class="">{{ payment }}</td>
+        <td class="">{{ paid_num }}</td>
+        <td class="">{{ cancel_num }}</td>
+        <td class="">{{ return_goods_num }}</td>
+        <td class="">{{ out_stock_num }}</td>
+        <td class="">{{ return_goods_rate }}</td>
+    </tr>
+</script>
+</body>
+</html>
