@@ -21,52 +21,59 @@
 
 <div class="container">
     <h1>退货统计</h1>
+
     <div class="row" style="margin-top: 30px">
         <div class='col-sm-6'><input type='text' class="form-control" id='datetimepicker1'/></div>
         <div class='col-sm-6'><input type='text' class="form-control" id='datetimepicker2'/></div>
     </div>
 
     <div class="row" style="margin-top: 30px">
-        <div class="col-sm-4 dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="true">时间<span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li><a href="#" class="dimension timely-type" timely-type="6">日</a></li>
-                <li><a href="#" class="dimension timely-type" timely-type="7">周</a></li>
-                <li><a href="#" class="dimension timely-type" timely-type="8">月</a></li>
-            </ul>
+        <div class="col-lg-2">
+            <div class="input-group">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">天</button>
+                  </span>
+                <input id="condition-date-field" type='text' class="form-control assign-date timely-type" timely-type="6" placeholder="指定某个日期"/>
+            </div>
         </div>
-
-        <div class="col-sm-4 dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="true">TOP <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <div class="col-lg-2">
+            <div class="input-group">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">周</button>
+                  </span>
+                <input id="condition-week-field" type='text' class="form-control assign-date timely-type" timely-type="7" placeholder="指定某周第一天"/>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="input-group">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">月</button>
+                  </span>
+                <input id="condition-month-field" type='text' class="form-control assign-date timely-type" timely-type="8" placeholder="指定某月第一天"/>
+            </div>
+        </div>
+        <div class='col-sm-3'>
+            <input id="condition-limit" type='text' class="form-control" placeholder="TOP ?" data-toggle="dropdown"/>
+            <ul class="dropdown-menu" aria-labelledby="condition-limit">
                 <li><a href="#" class="dimension limit" limit="10">TOP 10</a></li>
                 <li><a href="#" class="dimension limit" limit="20">TOP 20</a></li>
                 <li><a href="#" class="dimension limit" limit="50">TOP 50</a></li>
+                <li><a href="#" class="dimension limit" limit="100">TOP 100</a></li>
             </ul>
         </div>
-
-        <div class="col-sm-4 dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="true">对象<span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <div class='col-sm-3 dropdown'>
+            <input id="condition-record-type" type='text' class="form-control" placeholder="款式?供应商?BD?"
+                   data-toggle="dropdown"/>
+            <ul class="dropdown-menu" aria-labelledby="condition-record-type">
                 <li><a href="#" class="dimension record-type" record-type="7">款式</a></li>
                 <li><a href="#" class="dimension record-type" record-type="13">供应商</a></li>
                 <li><a href="#" class="dimension record-type" record-type="14">BD</a></li>
             </ul>
         </div>
     </div>
-    <div class="row">
-        <div class='col-sm-4'><input id="condition-date-field" type='text' readonly class="form-control"/></div>
-        <div class='col-sm-4'><input id="condition-limit" type='text' readonly class="form-control"/></div>
-        <div class='col-sm-4'><input id="condition-record-type" type='text' readonly class="form-control"/></div>
-    </div>
 
-    <div class="row" style="margin-top: 30px">
+
+    <div class="row" style="margin-top: 50px">
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -78,7 +85,7 @@
                 <td style="width: 7%">时间类型</td>
                 <td style="width: 8%">记录类型</td>
                 <td style="width: 7%">金额</td>
-                <td style="width: 10%">销量(不含退款)</td>
+                <td style="width: 10%">销量</td>
                 <td style="width: 9%">发货前退款数</td>
                 <td style="width: 7%">退货数量</td>
                 <td style="width: 8%">缺货退款数</td>
@@ -95,7 +102,7 @@
                 <td style="width: 7%">时间类型</td>
                 <td style="width: 8%">记录类型</td>
                 <td style="width: 7%">金额</td>
-                <td style="width: 10%">销量(不含退款)</td>
+                <td style="width: 10%">销量</td>
                 <td style="width: 9%">发货前退款数</td>
                 <td style="width: 7%">退货数量</td>
                 <td style="width: 8%">缺货退款数</td>
@@ -118,7 +125,7 @@
         <td class="">{{ get_timely_type_display }}</td>
         <td class="">{{ get_record_type_display }}</td>
         <td class="">{{ payment }}</td>
-        <td class="">{{ paid_num }}</td>
+        <td class="">{{ total_num }}</td>
         <td class="">{{ cancel_num }}</td>
         <td class="">{{ return_goods_num }}</td>
         <td class="">{{ out_stock_num }}</td>
@@ -135,7 +142,7 @@
         <td class="">{{ get_timely_type_display }}</td>
         <td class="">{{ get_record_type_display }}</td>
         <td class="">{{ payment }}</td>
-        <td class="">{{ paid_num }}</td>
+        <td class="">{{ total_num }}</td>
         <td class="">{{ cancel_num }}</td>
         <td class="">{{ return_goods_num }}</td>
         <td class="">{{ out_stock_num }}</td>
@@ -152,7 +159,7 @@
         <td class="">{{ get_timely_type_display }}</td>
         <td class="">{{ get_record_type_display }}</td>
         <td class="">{{ payment }}</td>
-        <td class="">{{ paid_num }}</td>
+        <td class="">{{ total_num }}</td>
         <td class="">{{ cancel_num }}</td>
         <td class="">{{ return_goods_num }}</td>
         <td class="">{{ out_stock_num }}</td>
