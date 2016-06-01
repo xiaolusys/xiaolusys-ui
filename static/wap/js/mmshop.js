@@ -3,6 +3,12 @@
  * 代理店铺商品展示
  */
 
+function getUrlParam(name) {
+    var r = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location);
+    if (r != null) return unescape(r[1]);
+    return null; //返回参数值
+}
+
 var mm_linkid_for_shop = getUrlParam('mm_linkid');
 var link_ufrom = getUrlParam('ufrom');
 

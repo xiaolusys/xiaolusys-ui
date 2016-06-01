@@ -2,6 +2,11 @@
  * Created on 3/7/16.
  * 代理店铺商品展示
  */
+function getUrlParam(name) {
+    var r = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location);
+    if (r != null) return unescape(r[1]);
+    return null; //返回参数值
+}
 
 function createProductDom(obj) {
     var product = $("#item_dom").html();
