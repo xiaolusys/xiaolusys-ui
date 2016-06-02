@@ -306,68 +306,23 @@ function Confirm_Sign_For(oid) {
 
 function Wuliu(tid) {
     //获取物流信息
-    //alert(urlParams['id'])
-    var requestUrl = "/rest/wuliu/";
-    var requestCallBack = function(info) {
-        //alert(ret);
-        console.log("debug wuliu:",info);
-        if (info.response_content.result) {
-
-            if (parseInt(info.response_content.ret.status) > 1) {
-                var data1 = info.response_content.ret.data;
-                if (data1.length > 2) {
-                    for (var i = data1.length - 2; i < data1.length; i++) {
-                        if (i > data1.length - 2) {
-                            var address = "<li> <p class='text'>" + data1[i].content + "</p><p class='time'>" + data1[i].time + "</p><div class='dotted'></div></li><li></li>";
-                            $(".step-list").append(address);
-                        } else {
-                            var address = "<li> <p class='text'>" + data1[i].content + "</p><p class='time'>" + data1[i].time + "</p><div class='dotted'></div></li>";
-                            $(".step-list").append(address);
-                        }
-                    }
-                } else {
-                    for (var i = 0; i < data1.length; i++) {
-                        var address = "<li> <p class='text'>" + data1[i].content + "</p><p class='time'>" + data1[i].time + "</p><div class='dotted'></div></li><li></li>";
-                        $(".step-list").append(address);
-                    }
-                }
-            }
-            //针对有物流单，暂时没有数据
-            else if (parseInt(info.response_content.ret.status) == 1) {
-                //加上前一个状态，就是配货
-                var address = " <li><p class='text'>您的商品配货完成</p><p class='time'>" + info.response_content.create_time + "</p><div class='dotted'></div> </li>";
-                $(".step-list").append(address);
-                var address = " <li><p class='text'>您的商品已出库</p><p class='time'>" + info.response_content.time + "</p><div class='dotted'></div> </li><li></li>";
-                $(".step-list").append(address);
-            }
-            //根据从数据库来查询的数据的格式
-            else {
-                var data1 = info.response_content.ret;
-                if (data1.length > 2) {
-                    for (var i = data1.length - 2; i < data1.length; i++) {
-                        if (i > data1.length - 2) {
-
-                            var address = "<li> <p class='text'>" + data1[i].content + "</p><p class='time'>" + data1[i].time + "</p><div class='dotted'></div></li><li></li>";
-                            $(".step-list").append(address);
-                        } else {
-                            var address = "<li> <p class='text'>" + data1[i].content + "</p><p class='time'>" + data1[i].time + "</p><div class='dotted'></div></li>";
-                            $(".step-list").append(address);
-                        }
-                    }
-                } else {
-                    for (var i = 0; i < data1.length; i++) {
-                        var address = "<li> <p class='text'>" + data1[i].content + "</p><p class='time'>" + data1[i].time + "</p><div class='dotted'></div></li><li></li>";
-                        $(".step-list").append(address);
-                    }
-                }
-            }
+    var requestUrl = "/rest/v1/wuliu/get_wuliu_by_tid?tid=" + tid;
+    var requestCallBack = function (res) {
+        console.log("debug wuliu info:", res);
+        if (res.data.length > 0) {
+            console.log('has wuliu info');
+            $.each(res.data, function (i, v) {
+                var wuliu_info = "<li> <p class='text'>" + v.content + "</p><p class='time'>" + v.time + "</p><div class='dotted'></div></li><li></li>";
+                $(".step-list").append(wuliu_info);
+            });
         }
-
         else {
-            var address = " <li><p class='text'>" + info.response_content.message + "</p><p class='time'>" + info.response_content.time + "</p><div class='dotted'></div> </li><li></li>";
-            $(".step-list").append(address);
+            console.log('no wuliu info');
+            var wuliu_info = "<li> <p class='text'>" + res.message + "</p><p class='time'></p><div class='dotted'></div></li><li></li>";
+            $(".step-list").append(wuliu_info);
         }
-    }
+    };
+
     // 发送请求
     $.ajax({
         type: 'get',
