@@ -15,12 +15,12 @@
     <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
     <link href="../../layer-v1.9.2/layer/skin/layer.css">
     <script src="../../layer-v1.9.2/layer/layer.js"></script>
-    <title>退款状况</title>
+    <title>销量统计信息</title>
 </head>
 <body>
 
 <div class="container">
-    <h1>退货统计</h1>
+    <h1>销量信息统计</h1>
 
     <div class="row" style="margin-top: 30px">
         <div class='col-sm-6'><input type='text' class="form-control" id='datetimepicker1'/></div>
@@ -52,7 +52,7 @@
                 <input id="condition-month-field" type='text' class="form-control assign-date timely-type" timely-type="8" placeholder="指定某月第一天"/>
             </div>
         </div>
-        <div class='col-sm-3'>
+        <div class='col-sm-2'>
             <input id="condition-limit" type='text' class="form-control" placeholder="TOP ?" data-toggle="dropdown"/>
             <ul class="dropdown-menu" aria-labelledby="condition-limit">
                 <li><a href="#" class="dimension limit" limit="10">TOP 10</a></li>
@@ -61,13 +61,24 @@
                 <li><a href="#" class="dimension limit" limit="100">TOP 100</a></li>
             </ul>
         </div>
-        <div class='col-sm-3 dropdown'>
+        <div class='col-sm-1 dropdown'>
             <input id="condition-record-type" type='text' class="form-control" placeholder="款式?供应商?BD?"
                    data-toggle="dropdown"/>
             <ul class="dropdown-menu" aria-labelledby="condition-record-type">
                 <li><a href="#" class="dimension record-type" record-type="7">款式</a></li>
                 <li><a href="#" class="dimension record-type" record-type="13">供应商</a></li>
                 <li><a href="#" class="dimension record-type" record-type="14">BD</a></li>
+            </ul>
+        </div>
+        <div class='col-sm-3 dropdown'>
+            <input id="condition-status" type='text' class="form-control" placeholder="未付款?已付款?发货前退款?缺货退款?退货退款?"
+                   data-toggle="dropdown"/>
+            <ul class="dropdown-menu" aria-labelledby="condition-record-type">
+                <li><a href="#" class="dimension record-status" status="0">未付款</a></li>
+                <li><a href="#" class="dimension record-status" status="1">已付款</a></li>
+                <li><a href="#" class="dimension record-status" status="2">发货前退款</a></li>
+                <li><a href="#" class="dimension record-status" status="3">缺货退款</a></li>
+                <li><a href="#" class="dimension record-status" status="4">退货退款</a></li>
             </ul>
         </div>
     </div>
