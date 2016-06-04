@@ -56,28 +56,27 @@ $(function () {
         if (timely_type == 6) {
             week.val('');
             month.val('');
-            date.on('dp.change', function (e) {
-                date_field = $(date).val();
-                console.log("date_field:", date_field, e.date);
-            });
+            //date.on('dp.change', function (e) {
+            //    date_field = $(date).val();
+            //    console.log("date_field:", date_field, e.date);
+            //});
         }
         if (timely_type == 7) {
             date.val('');
             month.val('');
-            week.on('dp.change', function (e) {
-                date_field = $(week).val();
-                console.log("date_field:", date_field, e.date);
-            });
+            //week.on('dp.change', function (e) {
+            //    date_field = $(week).val();
+            //    console.log("date_field:", date_field, e.date);
+            //});
         }
         if (timely_type == 8) {
             date.val('');
             week.val('');
-            month.on('dp.change', function (e) {
-                date_field = $(month).val();
-                console.log("date_field:", date_field, e.date);
-            });
+            //month.on('dp.change', function (e) {
+            //    date_field = $(month).val();
+            //    console.log("date_field:", date_field, e.date);
+            //});
         }
-
     });
 
     $('.limit').click(function () {
@@ -100,9 +99,16 @@ $(function () {
         requestData()
     });
 
+
     function requestData() {
+        $.each($('.timely-type'), function (i, v) {
+            var d = $(v).val();
+            if (d != '') {
+                date_field = d;
+            }
+        });
         console.log('参数:', date_field, timely_type, limit, record_type);
-        if (date_field != '' && timely_type != 0 && limit != 0 && record_type != 0 && status!='') {
+        if (date_field != '' && timely_type != 0 && limit != 0 && record_type != 0 && status != '') {
             var date_field_from = $("#datetimepicker1").val();
             var date_field_to = $("#datetimepicker2").val();
             var data = {

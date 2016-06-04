@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+    <script src="../../wap/js/common.js"></script>
+    <script src="../js/moment.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../js/salestats.js"></script>
+    <script src="../js/salestats-sort.js"></script>
+    <link href="../../layer-v1.9.2/layer/skin/layer.css">
+    <script src="../../layer-v1.9.2/layer/layer.js"></script>
+    <script src="../../layer-v1.9.2/layer/extend/layer.ext.js"></script>
+    <title>统计排序</title>
+</head>
+<body>
+<div class="container">
+    <h3>销量状态统计排序</h3>
+</div>
+<hr/>
+<div class="container" style="margin-top: 30px">
+    <div class='col-sm-3'>
+        <h4>总销量:
+            <small id="status-total-1">0</small>
+        </h4>
+    </div>
+    <div class='col-sm-3'>
+        <input type='text' class="form-control" id='date-field-1' status="1" placeholder="指定日期"/>
+    </div>
+</div>
+<div class="col-md-12 chart" id="status-1"></div>
+<hr/>
+
+<div class="container">
+    <div class='col-sm-3'>
+        <h4>总发货前退款:
+            <small id="status-total-2">0</small>
+        </h4>
+    </div>
+    <div class='col-sm-3'>
+        <input type='text' class="form-control" id='date-field-2' status="2" placeholder="指定日期"/>
+    </div>
+</div>
+<div class="col-md-12 chart" id="status-2"></div>
+<hr/>
+
+<div class="container">
+    <div class='col-sm-3'>
+        <h4>总缺货退款:
+            <small id="status-total-3">0</small>
+        </h4>
+    </div>
+    <div class='col-sm-3'>
+        <input type='text' class="form-control" id='date-field-3' status="3" placeholder="指定日期"/>
+    </div>
+</div>
+<div class="col-md-12 chart" id="status-3"></div>
+<hr/>
+
+<div class="container">
+    <div class='col-sm-3'>
+        <h4>总退货退款:
+            <small id="status-total-4">0</small>
+        </h4>
+    </div>
+    <div class='col-sm-3'>
+        <input type='text' class="form-control" id='date-field-4' status="4" placeholder="指定日期"/>
+    </div>
+</div>
+<div class="col-md-12 chart" id="status-4"></div>
+<hr/>
+</body>
+
+</html>

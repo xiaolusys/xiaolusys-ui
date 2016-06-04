@@ -22,9 +22,9 @@ function moreType(getData, func) {
 function setChart(dom, titleText, subtitleText, xAxisCgs, yAxisTitleText, tooltipSuf, series) {
 
     $(dom).highcharts({
-        //chart: {
-        //    type: 'column'
-        //},
+        chart: {
+            type: 'column'
+        },
         title: {
             text: titleText,
             x: -20 //center
