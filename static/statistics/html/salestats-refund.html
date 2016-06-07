@@ -21,11 +21,37 @@
 
 <div class="container">
     <h1>销量信息统计</h1>
+    <hr/>
+    <h3>聚合到记录类型: &nbsp;&nbsp;&nbsp;
+        <small class="ta_digit" id="ta_paid_num"></small>
+        <small class="ta_digit" id="ta_cancel_num"></small>
+        <small class="ta_digit" id="ta_out_stock_num"></small>
+        <small class="ta_digit" id="ta_return_goods_num"></small>
+        <small class="ta_digit" id="ta_no_pay_num"></small>
+        <small class="ta_digit" id="ta_cancel_rate"></small>
+        <small class="ta_digit" id="ta_out_stock_rate"></small>
+        <small class="ta_digit" id="ta_return_goods_rate"></small>
+        <small class="ta_digit" id="ta_no_pay_rate"></small>
+    </h3>
+
 
     <div class="row" style="margin-top: 30px">
         <div class='col-sm-6'><input type='text' class="form-control" id='datetimepicker1'/></div>
         <div class='col-sm-6'><input type='text' class="form-control" id='datetimepicker2'/></div>
     </div>
+    <hr/>
+
+    <h3>指定日期:&nbsp;&nbsp;&nbsp;
+        <small class="t_digit" id="t_paid_num"></small>
+        <small class="t_digit" id="t_cancel_num"></small>
+        <small class="t_digit" id="t_out_stock_num"></small>
+        <small class="t_digit" id="t_return_goods_num"></small>
+        <small class="t_digit" id="t_no_pay_num"></small>
+        <small class="t_digit" id="t_cancel_rate"></small>
+        <small class="t_digit" id="t_out_stock_rate"></small>
+        <small class="t_digit" id="t_return_goods_rate"></small>
+        <small class="t_digit" id="t_no_pay_rate"></small>
+    </h3>
 
     <div class="row" style="margin-top: 30px">
         <div class="col-lg-2">
@@ -33,7 +59,8 @@
                   <span class="input-group-btn">
                     <button class="btn btn-default" type="button">天</button>
                   </span>
-                <input id="condition-date-field" type='text' class="form-control assign-date timely-type" timely-type="6" placeholder="指定某个日期"/>
+                <input id="condition-date-field" type='text' class="form-control assign-date timely-type"
+                       timely-type="6" placeholder="指定某个日期"/>
             </div>
         </div>
         <div class="col-lg-2">
@@ -41,7 +68,8 @@
                   <span class="input-group-btn">
                     <button class="btn btn-default" type="button">周</button>
                   </span>
-                <input id="condition-week-field" type='text' class="form-control assign-date timely-type" timely-type="7" placeholder="指定某周第一天"/>
+                <input id="condition-week-field" type='text' class="form-control assign-date timely-type"
+                       timely-type="7" placeholder="指定某周第一天"/>
             </div>
         </div>
         <div class="col-lg-2">
@@ -49,7 +77,17 @@
                   <span class="input-group-btn">
                     <button class="btn btn-default" type="button">月</button>
                   </span>
-                <input id="condition-month-field" type='text' class="form-control assign-date timely-type" timely-type="8" placeholder="指定某月第一天"/>
+                <input id="condition-month-field" type='text' class="form-control assign-date timely-type"
+                       timely-type="8" placeholder="指定某月第一天"/>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="input-group">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">年</button>
+                  </span>
+                <input id="condition-year-field" type='text' class="form-control assign-date timely-type"
+                       timely-type="10" placeholder="指定某年第一天"/>
             </div>
         </div>
         <div class='col-sm-2'>
@@ -59,6 +97,9 @@
                 <li><a href="#" class="dimension limit" limit="20">TOP 20</a></li>
                 <li><a href="#" class="dimension limit" limit="50">TOP 50</a></li>
                 <li><a href="#" class="dimension limit" limit="100">TOP 100</a></li>
+                <li><a href="#" class="dimension limit" limit="200">TOP 200</a></li>
+                <li><a href="#" class="dimension limit" limit="300">TOP 300</a></li>
+                <li><a href="#" class="dimension limit" limit="1000">全部</a></li>
             </ul>
         </div>
         <div class='col-sm-1 dropdown'>
@@ -68,21 +109,22 @@
                 <li><a href="#" class="dimension record-type" record-type="7">款式</a></li>
                 <li><a href="#" class="dimension record-type" record-type="13">供应商</a></li>
                 <li><a href="#" class="dimension record-type" record-type="14">BD</a></li>
+                <li><a href="#" class="dimension record-type" record-type="16">总计</a></li>
             </ul>
         </div>
-        <div class='col-sm-3 dropdown'>
+        <div class='col-sm-1 dropdown'>
             <input id="condition-status" type='text' class="form-control" placeholder="未付款?已付款?发货前退款?缺货退款?退货退款?"
                    data-toggle="dropdown"/>
             <ul class="dropdown-menu" aria-labelledby="condition-record-type">
-                <li><a href="#" class="dimension record-status" status="0">未付款</a></li>
-                <li><a href="#" class="dimension record-status" status="1">已付款</a></li>
-                <li><a href="#" class="dimension record-status" status="2">发货前退款</a></li>
-                <li><a href="#" class="dimension record-status" status="3">缺货退款</a></li>
-                <li><a href="#" class="dimension record-status" status="4">退货退款</a></li>
+                <li><a href="#" class="dimension record-status" id="record-status0" status="0">未付款</a></li>
+                <li><a href="#" class="dimension record-status" id="record-status1" status="1">已付款</a></li>
+                <li><a href="#" class="dimension record-status" id="record-status2" status="2">发货前退款</a></li>
+                <li><a href="#" class="dimension record-status" id="record-status3" status="3">缺货退款</a></li>
+                <li><a href="#" class="dimension record-status" id="record-status4" status="4">退货退款</a></li>
             </ul>
         </div>
     </div>
-
+    <hr/>
 
     <div class="row" style="margin-top: 50px">
         <table class="table table-bordered">
@@ -96,10 +138,11 @@
                 <td style="width: 7%">时间类型</td>
                 <td style="width: 8%">记录类型</td>
                 <td style="width: 7%">金额</td>
-                <td style="width: 10%">销量</td>
+                <td style="width: 7%">销量</td>
                 <td style="width: 9%">发货前退款数</td>
                 <td style="width: 7%">退货数量</td>
                 <td style="width: 8%">缺货退款数</td>
+                <td style="width: 6%">未付款</td>
                 <td style="width: 6%">退货率</td>
             </tr>
             </thead>
@@ -113,10 +156,11 @@
                 <td style="width: 7%">时间类型</td>
                 <td style="width: 8%">记录类型</td>
                 <td style="width: 7%">金额</td>
-                <td style="width: 10%">销量</td>
+                <td style="width: 7%">销量</td>
                 <td style="width: 9%">发货前退款数</td>
                 <td style="width: 7%">退货数量</td>
                 <td style="width: 8%">缺货退款数</td>
+                <td style="width: 6%">未付款</td>
                 <td style="width: 6%">退货率</td>
             </tr>
             </tfoot>
@@ -140,6 +184,7 @@
         <td class="">{{ cancel_num }}</td>
         <td class="">{{ return_goods_num }}</td>
         <td class="">{{ out_stock_num }}</td>
+        <td class="">{{ no_pay_num }}</td>
         <td class="">{{ return_goods_rate }}</td>
     </tr>
 </script>
@@ -157,6 +202,7 @@
         <td class="">{{ cancel_num }}</td>
         <td class="">{{ return_goods_num }}</td>
         <td class="">{{ out_stock_num }}</td>
+        <td class="">{{ no_pay_num }}</td>
         <td class="">{{ return_goods_rate }}</td>
     </tr>
 </script>
@@ -174,6 +220,7 @@
         <td class="">{{ cancel_num }}</td>
         <td class="">{{ return_goods_num }}</td>
         <td class="">{{ out_stock_num }}</td>
+        <td class="">{{ no_pay_num }}</td>
         <td class="">{{ return_goods_rate }}</td>
     </tr>
 </script>
