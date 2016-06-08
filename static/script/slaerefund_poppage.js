@@ -38,10 +38,10 @@ function Create_btn(status) {
          */
     }
 
-    if (status == "申请退款" || status == "同意申请" || status == "退货途中") {
+    if (status == "退款待审" || status == "同意申请" || status == "退货途中") {
         return hereDoc(Btn_Dom1);
     }
-    else if (status == "确认退款，等待返款") {
+    else if (status == "等待返款") {
         return hereDoc(Btn_Dom2);
     }
 
