@@ -22,8 +22,8 @@ $(function () {
     });
 });
 
-function moreType(getData, func) {
-    var dateTotalRequestUrl = '/statistics/stats/salestats/get_all_num_type_list';
+function moreType(getData, func, url) {
+    var dateTotalRequestUrl = url;//;
     $.ajax({
         type: 'get',
         url: dateTotalRequestUrl,
@@ -70,12 +70,18 @@ $(function () {
             "date_field_to": $("#datetimepicker2").val()
         };
         console.log('get init data:', data);
-        moreType(data, setAnnotateData)
+        moreType(data, setAnnotateData, '/statistics/stats/salestats/get_annotate_type_list')
     }
 });
 
 
 $(function () {
+
+    $("#sort-table").click(function () {
+        console.log('sort table');
+        $('.table-bordered').DataTable();
+    });
+
     var date_field = '';
     var timely_type = 0;
     var limit = 0;
@@ -122,7 +128,7 @@ $(function () {
             date.val('');
             week.val('');
         }
-        if(timely_type==10){
+        if (timely_type == 10) {
             date.val('');
             week.val('');
             month.val('');
@@ -195,7 +201,6 @@ $(function () {
         });
         console.log('参数:', date_field, timely_type, limit, record_type);
         if (date_field != '' && timely_type != 0 && limit != 0 && record_type != 0 && status != '') {
-
             var data = {
                 "date_field": date_field,
                 "timely_type": timely_type,
@@ -205,7 +210,7 @@ $(function () {
                 "date_field_from": date_field_from,
                 "date_field_to": date_field_to
             };
-            moreType(data, setRefundData)
+            moreType(data, setRefundData, '/statistics/stats/salestats/get_all_num_type_list')
         }
     }
 
@@ -220,7 +225,8 @@ $(function () {
                 "date_field_from": date_field_from,
                 "date_field_to": date_field_to
             };
-            moreType(data, setAnnotateData)
+            // 请求　分组聚合后的数据
+            moreType(data, setAnnotateData, '/statistics/stats/salestats/get_annotate_type_list')
         }
     }
 });
@@ -234,10 +240,7 @@ function createSaleDataDom(obj) {
     if (obj.record_type == 13) {
         template = $("#stats-template-supplier").html();
     }
-    if (obj.record_type == 14) {
-        template = $("#stats-template-bd").html();
-    }
-    if (obj.record_type == 16) {
+    if (obj.record_type == 14 || obj.record_type == 16) {
         template = $("#stats-template-bd").html();
     }
     return hereDoc(template).template(obj)
@@ -246,7 +249,7 @@ function createSaleDataDom(obj) {
 
 function setRefundData(data) {
 
-    console.log("data: ", data);
+    console.log("assign date field  data: ", data);
     var t_paid_num = 0;
     var t_cancel_num = 0;
     var t_out_stock_num = 0;
@@ -298,103 +301,144 @@ function setRefundData(data) {
     $("#t_return_goods_rate").html('退货率:' + t_return_goods_rate);
     $("#t_no_pay_rate").html('逃单率:' + t_no_pay_rate);
 
-
 }
 
+var items = {};
 function setAnnotateData(data) {
-    console.log("annotate data", data);
-    var items = {};
-    $.each(data, function (i, val) {
-        console.log(val.current_id in items, val.cancel_num);
-
-        if (val.current_id in items) {
-            items[val.current_id]['paid_num'] += val.paid_num;
-            items[val.current_id]['cancel_num'] += val.cancel_num;
-            items[val.current_id]['return_goods_num'] += val.return_goods_num;
-            items[val.current_id]['out_stock_num'] += val.out_stock_num;
-            items[val.current_id]['no_pay_num'] += val.no_pay_num;
-        }
-        else {
-            items[val.current_id] = {};
-            items[val.current_id]['cancel_num'] = val.cancel_num;
-            items[val.current_id]['paid_num'] = val.paid_num;
-            items[val.current_id]['return_goods_num'] = val.return_goods_num;
-            items[val.current_id]['out_stock_num'] = val.out_stock_num;
-            items[val.current_id]['no_pay_num'] = val.no_pay_num;
-            items[val.current_id]['current_id'] = val.current_id;
-            items[val.current_id]['date_field'] = val.date_field;
-            items[val.current_id]['get_record_type_display'] = val.get_record_type_display;
-            items[val.current_id]['get_status_display'] = val.get_status_display;
-            items[val.current_id]['get_timely_type_display'] = val.get_timely_type_display;
-            items[val.current_id]['id'] = val.id;
-            items[val.current_id]['name'] = val.name;
-            items[val.current_id]['num'] = val.num;
-            items[val.current_id]['parent_id'] = val.parent_id;
-            items[val.current_id]['pic_path'] = val.pic_path;
-            items[val.current_id]['payment'] = val.payment;
-            items[val.current_id]['status'] = val.status;
-            items[val.current_id]['timely_type'] = val.timely_type;
-            items[val.current_id]['record_type'] = val.record_type;
-        }
-    });
-
-    console.log("items:", items);
-
-    var ta_paid_num = 0;
-    var ta_cancel_num = 0;
-    var ta_out_stock_num = 0;
-    var ta_return_goods_num = 0;
-    var ta_no_pay_num = 0;
-
-    $.each(items, function (i, val) {
-        val.return_goods_rate = 0.00;
-        var total_num = val.paid_num + val.cancel_num + val.return_goods_num + val.out_stock_num;
-        if (total_num != 0) {
-            val.return_goods_rate = (val.return_goods_num / total_num).toFixed(4);
-        }
-        // 退货率 = 退货数量/(销售数量(不含退款) + 退货数量 + 发货前退款数量 +　缺货退款数量)
-        val.total_num = total_num;
-        var stats = createSaleDataDom(val);
-        $("#stats-data").append(stats);
-
-        // 总计
-        ta_paid_num += total_num;// 总付款数量
-        ta_cancel_num += val.cancel_num;//总退款数量
-        ta_out_stock_num += val.out_stock_num;//总缺货数量
-        ta_return_goods_num += val.return_goods_num;//总退货数量
-        ta_no_pay_num += val.no_pay_num;//总逃单数量
-    });
-
-    var table = $('.table-bordered').DataTable();
-    var ta_cancel_rate = 0;
-    var ta_out_stock_rate = 0;
-    var ta_return_goods_rate = 0;
-    var ta_no_pay_rate = 0;
-    if (ta_paid_num == 0) {
-        ta_cancel_rate = 0;
-        ta_out_stock_rate = 0;
-        ta_return_goods_rate = 0;
-        ta_no_pay_rate = 0;
-    }
-    else {
-        ta_cancel_rate = ( ta_cancel_num / ta_paid_num).toFixed(4);// 发货前退款率
-        ta_out_stock_rate = ( ta_out_stock_num / ta_paid_num).toFixed(4);//缺货率
-        ta_return_goods_rate = ( ta_return_goods_num / ta_paid_num).toFixed(4);//退货率
-        ta_no_pay_rate = ( ta_no_pay_num / ta_paid_num).toFixed(4);//逃单率
-    }
-
     $('.t_digit').html('');
-    $("#ta_paid_num").html('总付款:' + ta_paid_num);
-    $("#ta_cancel_num").html('总退款:' + ta_cancel_num);
-    $("#ta_out_stock_num").html('总缺货:' + ta_out_stock_num);
-    $("#ta_return_goods_num").html('总退货:' + ta_return_goods_num);
-    $("#ta_no_pay_num").html('总逃单:' + ta_no_pay_num);
-    $("#ta_cancel_rate").html('退款率:' + ta_cancel_rate);
-    $("#ta_out_stock_rate").html('缺货率:' + ta_out_stock_rate);
-    $("#ta_return_goods_rate").html('退货率:' + ta_return_goods_rate);
-    $("#ta_no_pay_rate").html('逃单率:' + ta_no_pay_rate);
+    items = {};
+    console.log("annotate data", data);
+    var record_type = $("#condition-record-type").attr('record-type');
+    $.each(data, function (i, val) {
+        items[val.current_id] = {};
+        items[val.current_id]['current_id'] = val.current_id;
+        items[val.current_id]['name'] = val.name;
+        items[val.current_id]['pic_path'] = val.pic_path;
+
+        items[val.current_id]['nopay_payment'] = 0;
+        items[val.current_id]['paid_payment'] = 0;
+        items[val.current_id]['cacl_payment'] = 0;
+        items[val.current_id]['ostk_payment'] = 0;
+        items[val.current_id]['rtg_payment'] = 0;
+
+        items[val.current_id]['nopay_num'] = 0;
+        items[val.current_id]['paid_num'] = 0;
+        items[val.current_id]['cacl_num'] = 0;
+        items[val.current_id]['ostk_num'] = 0;
+        items[val.current_id]['rtg_num'] = 0;
+
+        var date_field_from = $("#datetimepicker1").val();
+        var date_field_to = $("#datetimepicker2").val();
+        var target_data = {
+            "record_type": record_type,
+            "current_id": val.current_id,
+            "date_field_from": date_field_from,
+            "date_field_to": date_field_to
+        };
+        moreType(target_data, setCollectData, '/statistics/stats/salestats/get_target_stats_info')
+    });
+
 }
 
+function setCollectData(statsinfos) {
+    var current_id = statsinfos.current_id;
+    items[current_id].nopay_payment = statsinfos.nopay_payment.toFixed(2);
+    items[current_id].paid_payment = statsinfos.paid_payment.toFixed(2);
+    items[current_id].cacl_payment = statsinfos.cacl_payment.toFixed(2);
+    items[current_id].ostk_payment = statsinfos.ostk_payment.toFixed(2);
+    items[current_id].rtg_payment = statsinfos.rtg_payment.toFixed(2);
+    items[current_id].cacl_num = statsinfos.cacl_num;
+    items[current_id].nopay_num = statsinfos.nopay_num;
+    items[current_id].ostk_num = statsinfos.ostk_num;
+    items[current_id].paid_num = statsinfos.paid_num;
+    items[current_id].rtg_num = statsinfos.rtg_num;
+    var value = items[current_id];
+    var a_total_num =
+        Number(statsinfos.paid_num) + Number(statsinfos.cacl_num) + Number(statsinfos.rtg_num) + Number(statsinfos.ostk_num);
+    console.log('a_total_num num', a_total_num, value);
+
+    if (a_total_num != 0) {
+        value.return_goods_rate = (value.rtg_num / a_total_num ).toFixed(4);
+    }
+    // 退货率 = 退货数量/(销售数量(不含退款) + 退货数量 + 发货前退款数量 +　缺货退款数量)
+    value.total_num = a_total_num;
+    var annotate_html = createAnnoDataDom(value);
+    $("#stats-data").append(annotate_html);
+}
+
+function createAnnoDataDom(obj) {
+    var template = $("#stats-template-annotate").html();
+    return hereDoc(template).template(obj)
+}
+
+//
+//$.each(items, function (i, value) {
+//    var current_id = value.current_id;
+//    items[current_id].nopay_payment = value.nopay_payment;
+//    items[current_id].paid_payment = value.paid_payment;
+//    items[current_id].cacl_payment = value.cacl_payment;
+//    items[current_id].ostk_payment = value.ostk_payment;
+//    items[current_id].rtg_payment = value.rtg_payment;
+//
+//    items[current_id].nopay_num = value.nopay_num;
+//    items[current_id].paid_num = value.paid_num;
+//    items[current_id].cacl_num = value.cacl_num;
+//    items[current_id].ostk_num = value.ostk_num;
+//    items[current_id].rtg_num = value.rtg_num;
+//
+//    console.log("items[current_id]", items[current_id]);
+//    value.return_goods_rate = 0.00;
+//    var a_total_num =
+//        Number(items[current_id].paid_num) +
+//        Number(items[current_id].cacl_num) +
+//        Number(items[current_id].rtg_num) +
+//        Number(items[current_id].ostk_num);
+//
+//    console.log('a_total_num num', a_total_num, value);
+//
+//    if (a_total_num != 0) {
+//        value.return_goods_rate = (value.rtg_num / a_total_num ).toFixed(4);
+//    }
+//    // 退货率 = 退货数量/(销售数量(不含退款) + 退货数量 + 发货前退款数量 +　缺货退款数量)
+//    value.total_num = a_total_num;
+//    var annotate_html = createAnnoDataDom(value);
+//    $("#stats-data").append(annotate_html);
+//    // 总计
+//    ta_paid_num += a_total_num;// 总付款数量
+//    ta_cancel_num += value.cacl_num;//总退款数量
+//    ta_out_stock_num += value.ostk_num;//总缺货数量
+//    ta_return_goods_num += value.rtg_num;//总退货数量
+//    ta_no_pay_num += value.nopay_num;//总逃单数量
+//});
+
+//var table = $('.table-bordered').DataTable();
+//var ta_cancel_rate = 0;
+//var ta_out_stock_rate = 0;
+//var ta_return_goods_rate = 0;
+//var ta_no_pay_rate = 0;
+//if (ta_paid_num == 0) {
+//    ta_cancel_rate = 0;
+//    ta_out_stock_rate = 0;
+//    ta_return_goods_rate = 0;
+//    ta_no_pay_rate = 0;
+//}
+//else {
+//    ta_cancel_rate = ( ta_cancel_num / ta_paid_num).toFixed(4);// 发货前退款率
+//    ta_out_stock_rate = ( ta_out_stock_num / ta_paid_num).toFixed(4);//缺货率
+//    ta_return_goods_rate = ( ta_return_goods_num / ta_paid_num).toFixed(4);//退货率
+//    ta_no_pay_rate = ( ta_no_pay_num / ta_paid_num).toFixed(4);//逃单率
+//}
+//
+//$('.t_digit').html('');
+//$("#ta_paid_num").html('总付款:' + ta_paid_num);
+//$("#ta_cancel_num").html('总退款:' + ta_cancel_num);
+//$("#ta_out_stock_num").html('总缺货:' + ta_out_stock_num);
+//$("#ta_return_goods_num").html('总退货:' + ta_return_goods_num);
+//$("#ta_no_pay_num").html('总逃单:' + ta_no_pay_num);
+//$("#ta_cancel_rate").html('退款率:' + ta_cancel_rate);
+//$("#ta_out_stock_rate").html('缺货率:' + ta_out_stock_rate);
+//$("#ta_return_goods_rate").html('退货率:' + ta_return_goods_rate);
+//$("#ta_no_pay_rate").html('逃单率:' + ta_no_pay_rate);
 
 Date.prototype.reduceFormatDate = function (days) {// 计算当前时间指定天数前的日期　格式化为　yyyy-mm-dd
     Date.prototype.reduceDays = function (days) {

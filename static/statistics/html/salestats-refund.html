@@ -36,8 +36,9 @@
 
 
     <div class="row" style="margin-top: 30px">
-        <div class='col-sm-6'><input type='text' class="form-control" id='datetimepicker1'/></div>
-        <div class='col-sm-6'><input type='text' class="form-control" id='datetimepicker2'/></div>
+        <div class='col-sm-4'><input type='text' class="form-control" id='datetimepicker1'/></div>
+        <div class='col-sm-4'><input type='text' class="form-control" id='datetimepicker2'/></div>
+        <div class='col-sm-4'><button class="btn btn-default" id='sort-table'>排序</button></div>
     </div>
     <hr/>
 
@@ -221,6 +222,26 @@
         <td class="">{{ return_goods_num }}</td>
         <td class="">{{ out_stock_num }}</td>
         <td class="">{{ no_pay_num }}</td>
+        <td class="">{{ return_goods_rate }}</td>
+    </tr>
+</script>
+
+
+<script type="text/html" id="stats-template-annotate">
+    <tr>
+        <td class="">{{ current_id }}</td>
+        <td class="">{{ name }}</td>
+        <td class=""><img src="{{ pic_path }}" alt="" width="80px"/></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class="">{{ paid_payment }}</td>
+        <td class="">{{ total_num }}</td>
+        <td class="">{{ cacl_num }}</td>
+        <td class="">{{ rtg_num }}</td>
+        <td class="">{{ ostk_num }}</td>
+        <td class="">{{ nopay_num }}</td>
         <td class="">{{ return_goods_rate }}</td>
     </tr>
 </script>
