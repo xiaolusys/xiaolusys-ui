@@ -158,7 +158,10 @@ function expressNochange() {
 
 
 function createReceiptDataDom(obj) {
-    var template = $("#receipt-data").html();
+    var template = $("#receipt-data-false").html();
+    if (obj.status == true) {
+        template = $("#receipt-data-true").html();
+    }
     return hereDoc(template).template(obj)
 }
 
@@ -172,7 +175,7 @@ function setInitReceiptData(res) {
         });
     }
     else {
-        layer.msg('没有记录');
+        layer.msg('记录不存在');
     }
 }
 
@@ -250,6 +253,10 @@ function searchReceipt() {
 
 function receiptSearch() {
     var express_no = $("#express-no-search").val();
+    if (express_no == '') {
+        layer.msg('快递号不能为空的!');
+        return
+    }
     console.log('receipt search express no:', express_no);
     var url = '/warehouse/receipt?search=' + express_no;
     serverData('', setInitReceiptData, url, 'get');

@@ -147,7 +147,8 @@ memo
     </tr>
     </tfoot>
 </table>
-<script type="text/html" id="receipt-data">
+
+<script type="text/html" id="receipt-data-false">
     <tr id="{{ id }}" class="receipt-data-item">
         <td>{{ id }}</td>
         <td>{{ creator }}</td>
@@ -157,7 +158,22 @@ memo
         <td>{{ express_company }}</td>
         <td>{{ created }}</td>
         <td>{{ modified }}</td>
-        <td>{{ status }}</td>
+        <td style="background: #F0DB4F">{{ status }}</td>
+        <td><span class="glyphicon glyphicon-edit" onclick="modifyReceipt(this)" data-toggle="modal"
+                  data-target="#myModal"></span></td>
+    </tr>
+</script>
+<script type="text/html" id="receipt-data-true">
+    <tr id="{{ id }}" class="receipt-data-item">
+        <td>{{ id }}</td>
+        <td>{{ creator }}</td>
+        <td>{{ receipt_type_display }}</td>
+        <td>{{ weight }}</td>
+        <td>{{ express_no }}</td>
+        <td>{{ express_company }}</td>
+        <td>{{ created }}</td>
+        <td>{{ modified }}</td>
+        <td style="background: #1ABC9C">{{ status }}</td>
         <td><span class="glyphicon glyphicon-edit" onclick="modifyReceipt(this)" data-toggle="modal"
                   data-target="#myModal"></span></td>
     </tr>
