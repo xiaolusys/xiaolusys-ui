@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>仓库收货工作页面</title>
+    <link href="/static/bootstrap/css/bootstrap3.2.0.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/jquery/jquery-ui-1.10.1.css"/>
+    <script src="/static/jquery/jquery-1.8.13.min.js"></script>
+    <script src='/static/jquery/addons/jquery.form.js'></script>
+    <script src="/static/bootstrap/js/bootstrap-3.2.0.min.js"></script>
+    <script src="../../wap/js/common.js"></script>
+    <link href="../../layer-v1.9.2/layer/skin/layer.css">
+    <script src="../../layer-v1.9.2/layer/layer.js"></script>
+    <script src="../js/warehose-receipt.js"></script>
+</head>
+<body class="container">
+
+<!--
+creator
+receipt_type
+weight
+weight_time
+express_no
+express_company
+created
+modified
+memo
+-->
+
+<h3>仓库收货记录:</h3>
+
+<div class="form-inline">
+    <div class="form-group">
+        <label>快递号:</label>
+        <input type="text" class="form-control" id="express_no" onkeypress="expressNochange()">
+        <label>重量:</label>
+        <input type="number" class="form-control" id="weight" value="0">
+        <label>类型:</label>
+        <select class="form-control" id="receipt_type">
+            <option value="0" selected>其他</option>
+            <option value="1">用户退货</option>
+            <option value="2">采购订货</option>
+        </select>
+
+        <label>快递公司:</label>
+        <select class="form-control" id="express_company">
+            <optgroup label="常用" class="usually-express">
+                <option value="-1" selected>其他</option>
+            </optgroup>
+            <optgroup label="不常用" class="unusually-express">
+            </optgroup>
+            <optgroup label="其他" class="other-express">
+            </optgroup>
+        </select>
+        <button class="btn btn-default" id="add-receipt" onclick="addReceipt()">添加</button>
+    </div>
+
+    <div class="input-group col-lg-2">
+        <input type="text" class="form-control" placeholder="快递单号搜索" id="express-no-search"
+               aria-describedby="basic-addon2" onkeypress="searchReceipt()">
+        <span class="input-group-addon" onclick="receiptSearch()">S</span>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body" id="modify-object" cid="">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label>类型:</label>
+                        <select class="form-control" id="receipt_type_modify">
+                            <option value="0">其他</option>
+                            <option value="1">用户退货</option>
+                            <option value="2" selected>采购订货</option>
+                        </select>
+                        <label>重量:</label>
+                        <input type="number" class="form-control" id="weight_modify">
+                    </div>
+                    <div class="form-inline" style="margin-top: 20px">
+                        <label>快递号:</label>
+                        <input type="text" class="form-control" id="express_no_modify">
+                        <label>快递公司:</label>
+                        <select class="form-control" id="express_company_modify">
+                            <optgroup label="常用" class="usually-express"></optgroup>
+                            <optgroup label="不常用" class="unusually-express"></optgroup>
+                            <optgroup label="其他" class="other-express">
+                                <option value="-1" selected>其他</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="close-modify">关闭</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="saveModify()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered" style="margin-top: 30px">
+    <thead>
+    <tr>
+        <td>ID</td>
+        <td>创建人</td>
+        <td>类型</td>
+        <td>重量</td>
+        <td>快递号</td>
+        <td>快递公司</td>
+        <td>创建时间</td>
+        <td>修改时间</td>
+        <td>是否拆包</td>
+        <td>修改</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="receipt-data-item" hidden="hidden">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td>ID</td>
+        <td>创建人</td>
+        <td>类型</td>
+        <td>重量</td>
+        <td>快递号</td>
+        <td>快递公司</td>
+        <td>创建时间</td>
+        <td>修改时间</td>
+        <td>是否拆包</td>
+        <td>修改</td>
+    </tr>
+    </tfoot>
+</table>
+<script type="text/html" id="receipt-data">
+    <tr id="{{ id }}" class="receipt-data-item">
+        <td>{{ id }}</td>
+        <td>{{ creator }}</td>
+        <td>{{ receipt_type_display }}</td>
+        <td>{{ weight }}</td>
+        <td>{{ express_no }}</td>
+        <td>{{ express_company }}</td>
+        <td>{{ created }}</td>
+        <td>{{ modified }}</td>
+        <td>{{ status }}</td>
+        <td><span class="glyphicon glyphicon-edit" onclick="modifyReceipt(this)" data-toggle="modal"
+                  data-target="#myModal"></span></td>
+    </tr>
+</script>
+</body>
+</html>
