@@ -15,10 +15,48 @@ var top10_pic_model = {
 };
 
 function showTop10Pics(activity_id) {
-    var topic_url = '/sale/promotion/top10/top10/get_top10_by_activityid';
-    var url = BASE_URL + topic_url+"?activity_id="+activity_id;
+    var topic_url = '/sale/promotion/promotion/goods/get_desc_pics_by_promotionid';
+    var url = BASE_URL + topic_url+"?promotion_id="+activity_id;
+
     //alert("url="+url);
     var callback = function (res) {
+        console.log(res);
+        top10_pics= [];
+
+        if (res) {
+
+            $(".table tbody").html("");
+
+            console.log("res length=",res.length);
+            if(res.length == 0){
+
+            }
+            else{
+                for(i=0; i<res.length;i++){
+                    top10_pics[i] = cloneObject(top10_pic_model);
+                    top10_pics[i].activity_id = g_activity_id;
+                    if(i < res.length){
+                        top10_pics[i].location_id = res[i].location_id;
+                        top10_pics[i].pic_type=res[i].pic_type;
+                        top10_pics[i].model_id=0;
+                        top10_pics[i].product_name="";
+                        top10_pics[i].pic_path=res[i].pic_path;
+                    }
+                }
+            }
+
+
+        }
+        else{
+            alert("pic empty1");
+        }
+
+        var topic_url = '/sale/promotion/promotion/goods/get_goods_pics_by_promotionid';
+        var url = BASE_URL + topic_url+"?promotion_id="+activity_id;
+        $.ajax({url:url, success:callback2});
+    };
+
+    var callback2 = function (res) {
         console.log(res);
         if (res) {
 
@@ -26,7 +64,7 @@ function showTop10Pics(activity_id) {
 
             var arr = res
             console.log(arr.length == 0);
-            if(arr.length == 0){
+            if(arr.length == 0 && top10_pics.length ==0){
                 //显示15个空记录
                 console.log("pic empty 2");
                 initTable();
@@ -34,7 +72,26 @@ function showTop10Pics(activity_id) {
                 return;
             }
 
-            initTableWithData(arr);
+            var num = top10_pics.length;
+            var max = g_pic_num;
+            if(g_pic_num < num+arr.length)
+                max = num+arr.length
+            for(i=0; i<max-num;i++){
+                top10_pics[i+num] = cloneObject(top10_pic_model);
+                top10_pics[i+num].activity_id = g_activity_id;
+                if(i < arr.length){
+                    top10_pics[i+num].location_id = arr[i].location_id;
+                    top10_pics[i+num].pic_type=3;
+                    top10_pics[i+num].model_id=arr[i].model_id;
+                    top10_pics[i+num].product_name=arr[i].product_name;
+                    top10_pics[i+num].pic_path=arr[i].product_img;
+                }
+                else{
+                    top10_pics[i+num].location_id = i+num+1;
+                }
+            }
+
+            initTableWithData(top10_pics);
 
         }
         else{
@@ -77,8 +134,7 @@ function goodsNumChange(obj,event){
     if(keynum != 13) return;
 
     //alert("changed value is " + obj);
-    //要算上banner 优惠券 2个种类说明 1个底部图片共5张
-    g_pic_num = parseInt(obj) + 5;
+    g_pic_num = parseInt(obj);
     showTop10Pics(g_activity_id);
 
     if(top10_pics.length > g_pic_num){
@@ -96,7 +152,7 @@ function modelidChange(obj,event){
     if(keynum != 13) return;
 
     var tr_id=$(obj).closest('tr').attr('id');
-    console.log("tr ="+ tr_id);
+    console.log("tr ="+ tr_id + " modelid="+obj.value);
     top10_pics[tr_id].model_id = obj.value;
     //找出商品名和商品头图链接
     var product_url = BASE_URL + "/rest/v1/products/modellist/"+obj.value;
@@ -203,15 +259,7 @@ function initTableWithData(arr){
 
     console.log("initTableWithData picnum:"+ g_pic_num+" arr.length:", arr.length);
     for(i =0; i< num; i++){
-        top10_pics[i] = cloneObject(top10_pic_model);
-        top10_pics[i].activity_id = g_activity_id;
-        if(i < arr.length){
-            top10_pics[i].location_id = arr[i].location_id;
-            top10_pics[i].pic_type=arr[i].pic_type;
-            top10_pics[i].model_id=arr[i].model_id;
-            top10_pics[i].product_name=arr[i].product_name;
-            top10_pics[i].pic_path=arr[i].pic_path;
-        }
+
         insertRowWithData(i, arr);
     }
 }
@@ -223,7 +271,7 @@ function insertRowWithData(rowid, arr)
 
   var rowinfo = "";
   if(arr.length <= rowid){
-      rowinfo = '<tr id=' +rowid + ' >' +
+      rowinfo += '<tr id=' +rowid + ' >' +
                 '<td><input class="location_id" type="text"  onkeydown="locationChange(this,event)" value="'+ (rowid+1)+ '"> </td>' +
           '<td><div class="col-sm-3 dropdown">' +
                 '<input id="dropdownMenu'+ rowid + '" type="button" class="btn dropdown-toggle"  data-toggle="dropdown" value="选择类型"/>' +
@@ -283,7 +331,7 @@ function insertRowWithData(rowid, arr)
         pic_path = arr[rowid].pic_path;
       }
 
-      rowinfo = '<tr id=' +rowid + ' >' +
+      rowinfo += '<tr id=' +rowid + ' >' +
                     '<td><input class="location_id" type="text"  onkeydown="locationChange(this,event)" value="'+ location_id+ '"> </td>' +
               '<td><div class="col-sm-3 dropdown">' +
                     '<input id="dropdownMenu'+ rowid + '" type="button" class="btn dropdown-toggle"  data-toggle="dropdown" value='+pic_type +' />' +
@@ -360,23 +408,28 @@ function commitClick(obj){
     var json = JSON.stringify(top10_pics);
     console.log("json=", json);
 
-    var topic_url = '/sale/promotion/top10/top10/save_pics';
+    var topic_url = '/sale/promotion/promotion/goods/save_pics';
     var url = BASE_URL + topic_url;
     //alert("url="+url);
     var callback = function (res) {
         console.log(res);
         if (res) {
-            alert("保存成功!");
+            if(res.code ==0){
+                alert("保存成功!");
+            }
+            else if(res.code ==1){
+                alert(res.info);
+            }
         }
     };
     $.ajax({
             url: url,
-            data: {"arr": json, "act_id": g_activity_id},
+            data: {"arr": json, "promotion_id": g_activity_id},
             type: "post",
             dataType: "json",
             success: callback,
             error: function(e) {
-                alert("保存失败,请检查数据是否都填了!");
+                alert("保存失败,请检查数据是否都填了!"+e);
             }
         });
 }
