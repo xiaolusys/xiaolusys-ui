@@ -12,32 +12,31 @@
     <script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
     <script src='/static/jquery/addons/jquery.form.js'></script>
     <script src="/static/bootstrap/js/bootstrap-3.2.0.min.js"></script>
-    <script src="/static/jquery/jquery-ui-1.8.13.min.js"></script>
     <script src="../../wap/js/common.js"></script>
     <script src="../../layer-v1.9.2/layer/layer.js"></script>
     <script src="../../layer-v1.9.2/layer/extend/layer.ext.js"></script>
     <script src="../js/xiaolumm-ninepic.js"></script>
     <script src="../../statistics/js/moment.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <style>
+        .sale-name {
+            background-color: #00FFFF;
+            width: 130px;
+            height: 40px;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body class="container" style="margin-bottom: 300px">
 <h3 style="margin-top: 30px">产品推广操作页面</h3>
 
 
-<div class="form-inline" style="margin-top: 30px">
-    <div class="form-group">
-        <label>选款信息:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp　未来</label>
-        <select class="form-control" id="preday">
-            <option value="0">1天</option>
-            <option value="1">2天</option>
-            <option value="2" selected>3天</option>
-            <option value="3">4天</option>
-            <option value="4">5天</option>
-            <option value="5">6天</option>
-            <option value="6">7天</option>
-        </select>
-    </div>
+<h4>选款信息：</h4>
+
+<div class="row" style="margin-top: 30px">
+    <div class="col-sm-2"><input type="text" class="form-control" id="datetimepicker1" placeholder="指定日期"></div>
 </div>
+<hr/>
 <div class="row" id="sale-product-info" style="margin-top: 30px">
 </div>
 <hr/>
@@ -48,7 +47,6 @@
 
 </div>
 
-<hr/>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -113,7 +111,6 @@
     <div class="col-md-2"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
     <div class="col-md-2"></div>
 </div>
-<hr/>
 
 <table class="table table-bordered">
     <thead>
@@ -152,11 +149,12 @@
 </table>
 
 
-<hr/>
-
-<form id="create-form">
+<form id="create-form" style="margin-top: 10px">
     <div class="form-inline">
         <div class="form-group">
+            <div class="col-sm-2" style="margin-right: 100px">
+                <input name="start_time" type="text" id="start_time" class="form-control" placeholder="展示时间">
+            </div>
             <label>标题:</label>
             <input type="text" class="form-control" id="title" name="title">
             <label>类型:</label>
@@ -171,8 +169,6 @@
                 <option value="7">7张图</option>
                 <option value="8">8张图</option>
             </select>
-            <label>显示时间:</label>
-            <input type="text" class="form-control" id="start_time" name="start_time">
             <label>是否推送:</label>
             <select class="form-control" id="is_pushed" name="is_pushed">
                 <option value="1" selected>不发推送</option>
@@ -192,19 +188,17 @@
     </div>
 </form>
 
-<hr/>
-
 
 <script type="text/html" id="sale-product-info-template">
-    <div class="col-sm-3 col-md-2">
+    <div class="col-sm-2 col-md-2">
         <div class="thumbnail">
             <img src="{{ pic_path }}" alt="{{ name }}">
 
             <div class="caption">
-                <div class="form-group">
+                <div class="form-group sale-name">
                     {{ name }}
-                    <label>款式id:</label> {{ model_id }}
                 </div>
+                <label>款式id:</label> {{ model_id }}
             </div>
         </div>
     </div>

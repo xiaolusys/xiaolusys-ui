@@ -41,8 +41,8 @@ function createNinepicDataDom(obj) {
 
 function getSaleProductInfo() {
     var url = '/m/ninepic/get_promotion_product';
-    var preday = $("#preday").val();
-    serverData({"preday": preday}, setSaleProductInfo, url, 'get')
+    var date = $("#datetimepicker1").val();
+    serverData({"date": date}, setSaleProductInfo, url, 'get')
 }
 
 function setSaleProductInfo(res) {
@@ -56,6 +56,14 @@ function setSaleProductInfo(res) {
 
 // 创建记录 后回调
 function callbackCreateNinePic(res) {
+    console.log("call back crated nine", res);
+    var xx = createNinepicDataDom(res);
+    if (res.id) {// 修改成功
+        $('table #' + res.id).remove();//删除表格中的旧数据
+        $("#nine-pic-tbody-content").append(xx);//替换更新后的数据
+    }
+}
+function callbackModifyNinePic(res) {
     console.log("call back crated nine", res);
     var xx = createNinepicDataDom(res);
     var id = $("#modify-object").attr('cid');
@@ -75,7 +83,7 @@ function saveNineModify() {
     });
 
     var url = '/m/ninepic/' + id;
-    serverData(data, callbackCreateNinePic, url, 'patch');
+    serverData(data, callbackModifyNinePic, url, 'patch');
     return false
 }
 
@@ -168,7 +176,7 @@ $(document).ready(function () {
         ninePicTargetDays += 1;
         getTargetDaysNinepic(ninePicTargetDays)
     });
-    $("#preday").change(function () {
+    $("#datetimepicker1").on('dp.change',function () {
         getSaleProductInfo();
     });
 
@@ -276,6 +284,13 @@ Date.prototype.reduceFormatDate = function (days) {// 计算当前时间指定�
 $(function () {
     $('#start_time').datetimepicker({
         format: 'YYYY-MM-DD HH:mm:ss'
+    });
+    $('#sale-product-date').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss'
+    });
+
+    $('#datetimepicker1').datetimepicker({
+        format: 'YYYY-MM-DD'
     });
 
     $('#start_time-modify').datetimepicker({
