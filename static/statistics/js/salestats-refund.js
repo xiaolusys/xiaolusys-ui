@@ -48,29 +48,53 @@ function cleanData() {
 // 首次加载请求数据
 
 $(function () {
-    $("#datetimepicker1").val(Date.prototype.reduceFormatDate(4)); // 4天前的时间
-    $("#datetimepicker2").val(Date.prototype.reduceFormatDate(0));//　今天
+    //$("#datetimepicker1").val(Date.prototype.reduceFormatDate(4)); // 4天前的时间
+    //$("#datetimepicker2").val(Date.prototype.reduceFormatDate(0));//　今天
+    //var limit = $("#condition-limit");
+    //limit.val('TOP 100');
+    //limit.attr('limit', 100);
+    //var record_type = $("#condition-record-type");
+    //record_type.val('款式');
+    //record_type.attr('record-type', 7);
+    //var status = $("#condition-status");
+    //status.val('已付款');
+    //status.attr('status', 1);
+    //$("#record-status1").trigger('click', initData());
+    //function initData() {
+    //    var data = {
+    //        "timely_type": 6, // 聚合仅仅聚合日期
+    //        "limit": 100,
+    //        "record_type": 7,
+    //        "status": 1,
+    //        "date_field_from": $("#datetimepicker1").val(),
+    //        "date_field_to": $("#datetimepicker2").val()
+    //    };
+    //    console.log('get init data:', data);
+    //    moreType(data, setAnnotateData, '/statistics/stats/salestats/get_annotate_type_list')
+    //}
+    var target_date = Date.prototype.reduceFormatDate(4);
+    $("#condition-date-field").val(target_date);//　今天
     var limit = $("#condition-limit");
     limit.val('TOP 100');
     limit.attr('limit', 100);
     var record_type = $("#condition-record-type");
-    record_type.val('款式');
-    record_type.attr('record-type', 7);
+    record_type.val('总计');
+    record_type.attr('record-type', 16);
     var status = $("#condition-status");
     status.val('已付款');
     status.attr('status', 1);
-    $("#record-status1").trigger('click', initData());
-    function initData() {
+    $("#record-status1").trigger('click', initToadyData());
+
+    function initToadyData() {
         var data = {
-            "timely_type": 6, // 聚合仅仅聚合日期
+            "timely_type": 6,
+            "date_field": target_date,
             "limit": 100,
-            "record_type": 7,
-            "status": 1,
-            "date_field_from": $("#datetimepicker1").val(),
-            "date_field_to": $("#datetimepicker2").val()
+            "record_type": 16,// 总计
+            "status": 1
         };
         console.log('get init data:', data);
-        moreType(data, setAnnotateData, '/statistics/stats/salestats/get_annotate_type_list')
+        moreType(data, setRefundData, '/statistics/stats/salestats/get_all_num_type_list')
     }
 });
 
@@ -83,7 +107,7 @@ $(function () {
     });
 
     var date_field = '';
-    var timely_type = 0;
+    var timely_type = 6;
     var limit = 0;
     var record_type = 0;
     var status = '';
@@ -341,6 +365,7 @@ function setAnnotateData(data) {
 }
 
 function setCollectData(statsinfos) {
+    console.log("statsinfos: ", statsinfos);
     var current_id = statsinfos.current_id;
     items[current_id].nopay_payment = statsinfos.nopay_payment.toFixed(2);
     items[current_id].paid_payment = statsinfos.paid_payment.toFixed(2);
@@ -362,6 +387,7 @@ function setCollectData(statsinfos) {
     }
     // 退货率 = 退货数量/(销售数量(不含退款) + 退货数量 + 发货前退款数量 +　缺货退款数量)
     value.total_num = a_total_num;
+    value.obsolete_supplier = statsinfos.obsolete_supplier;
     var annotate_html = createAnnoDataDom(value);
     $("#stats-data").append(annotate_html);
 }
@@ -371,74 +397,7 @@ function createAnnoDataDom(obj) {
     return hereDoc(template).template(obj)
 }
 
-//
-//$.each(items, function (i, value) {
-//    var current_id = value.current_id;
-//    items[current_id].nopay_payment = value.nopay_payment;
-//    items[current_id].paid_payment = value.paid_payment;
-//    items[current_id].cacl_payment = value.cacl_payment;
-//    items[current_id].ostk_payment = value.ostk_payment;
-//    items[current_id].rtg_payment = value.rtg_payment;
-//
-//    items[current_id].nopay_num = value.nopay_num;
-//    items[current_id].paid_num = value.paid_num;
-//    items[current_id].cacl_num = value.cacl_num;
-//    items[current_id].ostk_num = value.ostk_num;
-//    items[current_id].rtg_num = value.rtg_num;
-//
-//    console.log("items[current_id]", items[current_id]);
-//    value.return_goods_rate = 0.00;
-//    var a_total_num =
-//        Number(items[current_id].paid_num) +
-//        Number(items[current_id].cacl_num) +
-//        Number(items[current_id].rtg_num) +
-//        Number(items[current_id].ostk_num);
-//
-//    console.log('a_total_num num', a_total_num, value);
-//
-//    if (a_total_num != 0) {
-//        value.return_goods_rate = (value.rtg_num / a_total_num ).toFixed(4);
-//    }
-//    // 退货率 = 退货数量/(销售数量(不含退款) + 退货数量 + 发货前退款数量 +　缺货退款数量)
-//    value.total_num = a_total_num;
-//    var annotate_html = createAnnoDataDom(value);
-//    $("#stats-data").append(annotate_html);
-//    // 总计
-//    ta_paid_num += a_total_num;// 总付款数量
-//    ta_cancel_num += value.cacl_num;//总退款数量
-//    ta_out_stock_num += value.ostk_num;//总缺货数量
-//    ta_return_goods_num += value.rtg_num;//总退货数量
-//    ta_no_pay_num += value.nopay_num;//总逃单数量
-//});
 
-//var table = $('.table-bordered').DataTable();
-//var ta_cancel_rate = 0;
-//var ta_out_stock_rate = 0;
-//var ta_return_goods_rate = 0;
-//var ta_no_pay_rate = 0;
-//if (ta_paid_num == 0) {
-//    ta_cancel_rate = 0;
-//    ta_out_stock_rate = 0;
-//    ta_return_goods_rate = 0;
-//    ta_no_pay_rate = 0;
-//}
-//else {
-//    ta_cancel_rate = ( ta_cancel_num / ta_paid_num).toFixed(4);// 发货前退款率
-//    ta_out_stock_rate = ( ta_out_stock_num / ta_paid_num).toFixed(4);//缺货率
-//    ta_return_goods_rate = ( ta_return_goods_num / ta_paid_num).toFixed(4);//退货率
-//    ta_no_pay_rate = ( ta_no_pay_num / ta_paid_num).toFixed(4);//逃单率
-//}
-//
-//$('.t_digit').html('');
-//$("#ta_paid_num").html('总付款:' + ta_paid_num);
-//$("#ta_cancel_num").html('总退款:' + ta_cancel_num);
-//$("#ta_out_stock_num").html('总缺货:' + ta_out_stock_num);
-//$("#ta_return_goods_num").html('总退货:' + ta_return_goods_num);
-//$("#ta_no_pay_num").html('总逃单:' + ta_no_pay_num);
-//$("#ta_cancel_rate").html('退款率:' + ta_cancel_rate);
-//$("#ta_out_stock_rate").html('缺货率:' + ta_out_stock_rate);
-//$("#ta_return_goods_rate").html('退货率:' + ta_return_goods_rate);
-//$("#ta_no_pay_rate").html('逃单率:' + ta_no_pay_rate);
 
 Date.prototype.reduceFormatDate = function (days) {// 计算当前时间指定天数前的日期　格式化为　yyyy-mm-dd
     Date.prototype.reduceDays = function (days) {

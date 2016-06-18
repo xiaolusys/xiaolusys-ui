@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>九张图操作页面</title>
+    <link href="/static/bootstrap/css/bootstrap3.2.0.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/jquery/jquery-ui-1.10.1.css"/>
+    <link href="../../layer-v1.9.2/layer/skin/layer.css">
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css"
+          rel="stylesheet">
+
+    <script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <script src='/static/jquery/addons/jquery.form.js'></script>
+    <script src="/static/bootstrap/js/bootstrap-3.2.0.min.js"></script>
+    <script src="../../wap/js/common.js"></script>
+    <script src="../../layer-v1.9.2/layer/layer.js"></script>
+    <script src="../../layer-v1.9.2/layer/extend/layer.ext.js"></script>
+    <script src="../js/xiaolumm-ninepic.js"></script>
+    <script src="../../statistics/js/moment.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <style>
+        .sale-name {
+            background-color: #00FFFF;
+            width: 130px;
+            height: 40px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="container" style="margin-bottom: 300px">
+<h3 style="margin-top: 30px">产品推广操作页面</h3>
+
+
+<h4>选款信息：</h4>
+
+<div class="row" style="margin-top: 30px">
+    <div class="col-sm-2"><input type="text" class="form-control" id="datetimepicker1" placeholder="指定日期"></div>
+</div>
+<hr/>
+<div class="row" id="sale-product-info" style="margin-top: 30px">
+</div>
+<hr/>
+
+<h5>图片详情</h5>
+
+<div class="row" id="pics-model-imgs" style="margin-top: 30px">
+
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <form id="modify-form">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body" id="modify-object" cid="">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label>标题:</label>
+                            <input type="text" class="form-control" id="title-modify" name="title">
+                            <label>类型:</label>
+                            <select class="form-control" id="cate_gory-modify" name="cate_gory">
+                                <option value="9" selected>9张图</option>
+                                <option value="1">1张图</option>
+                                <option value="2">2张图</option>
+                                <option value="3">3张图</option>
+                                <option value="4">4张图</option>
+                                <option value="5">5张图</option>
+                                <option value="6">6张图</option>
+                                <option value="7">7张图</option>
+                                <option value="8">8张图</option>
+                            </select>
+                            <label>显示时间:</label>
+                            <input type="text" class="form-control" id="start_time-modify" name="start_time">
+                            <label>是否推送:</label>
+                            <select class="form-control" id="is_pushed-modify" name="is_pushed">
+                                <option value="1">不发推送</option>
+                                <option value="0">发推送</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-inline" style="margin-top: 30px">
+                        <div class="form-group">
+                            <label>选品id:</label>
+                            <input type="text" class="form-control" id="detail_modelids-modify" name="detail_modelids"/>
+                            <label>文案描述:</label>
+                        <textarea class="form-control" name="description" rows="5" id="description-modify"
+                                  cols="40"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="close-modify">关闭</button>
+                    <button class="btn btn-primary" data-dismiss="modal" onclick="saveNineModify()">保存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-2"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
+    <div class="col-md-4">
+        <a id="target-nine-date"></a>
+    </div>
+    <div class="col-md-2"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
+    <div class="col-md-2"></div>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <td>ID</td>
+        <td>轮数</td>
+        <td>开始时间</td>
+        <td>创建人</td>
+        <td>文案</td>
+        <td>详情款式</td>
+        <td>是否推送</td>
+        <td>类型</td>
+        <td>图片详情</td>
+        <td>标题</td>
+        <td>修改</td>
+    </tr>
+    </thead>
+    <tbody id="nine-pic-tbody-content">
+
+    </tbody>
+    <tfoot>
+    <tr>
+        <td>ID</td>
+        <td>轮数</td>
+        <td>开始时间</td>
+        <td>创建人</td>
+        <td>文案</td>
+        <td>详情款式</td>
+        <td>是否推送</td>
+        <td>类型</td>
+        <td>图片详情</td>
+        <td>标题</td>
+        <td>修改</td>
+    </tr>
+    </tfoot>
+</table>
+
+
+<form id="create-form" style="margin-top: 10px">
+    <div class="form-inline">
+        <div class="form-group">
+            <div class="col-sm-2" style="margin-right: 100px">
+                <input name="start_time" type="text" id="start_time" class="form-control" placeholder="展示时间">
+            </div>
+            <label>标题:</label>
+            <input type="text" class="form-control" id="title" name="title">
+            <label>类型:</label>
+            <select class="form-control" id="cate_gory" name="cate_gory">
+                <option value="9" selected>9张图</option>
+                <option value="1">1张图</option>
+                <option value="2">2张图</option>
+                <option value="3">3张图</option>
+                <option value="4">4张图</option>
+                <option value="5">5张图</option>
+                <option value="6">6张图</option>
+                <option value="7">7张图</option>
+                <option value="8">8张图</option>
+            </select>
+            <label>是否推送:</label>
+            <select class="form-control" id="is_pushed" name="is_pushed">
+                <option value="1" selected>不发推送</option>
+                <option value="0">发推送</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-inline" style="margin-top: 30px">
+        <div class="form-group">
+            <label>选品id:</label>
+            <input type="text" class="form-control" id="detail_modelids" name="detail_modelids"/>
+            <label>文案描述:</label>
+            <textarea class="form-control" id="description" name="description" rows="5" cols="40"></textarea>
+            <button class="btn btn-default" type="submit" id="add-ninepic">添加</button>
+        </div>
+    </div>
+</form>
+
+
+<script type="text/html" id="sale-product-info-template">
+    <div class="col-sm-2 col-md-2">
+        <div class="thumbnail">
+            <img src="{{ pic_path }}" alt="{{ name }}">
+
+            <div class="caption">
+                <div class="form-group sale-name">
+                    {{ name }}
+                </div>
+                <label>款式id:</label> {{ model_id }}
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="nine-pic-tbody">
+    <tr id="{{ id }}">
+        <td>{{ id }}</td>
+        <td>{{ turns_num }}</td>
+        <td>{{ start_time }}</td>
+        <td>{{ auther }}</td>
+        <td>{{ description }}</td>
+        <td>{{ detail_modelids }}</td>
+        <td>{{ is_pushed }}</td>
+        <td>{{ cate_gory_display }}</td>
+        <td>
+            <a class="nine-pic-array-{{ id }}" pics="{{ pic_arry }}" onclick="showNinePic(this)">查看/上传</a>
+        </td>
+        <td>{{ title }}</td>
+        <td><span class="glyphicon glyphicon-edit" onclick="modifyNinepic(this)" data-toggle="modal"
+                  data-target="#myModal"></span></td>
+    </tr>
+</script>
+
+<script type="text/html" id="design-pic-template">
+    <div class="col-sm-3 col-md-2">
+        <div class="thumbnail">
+            <img src="{{ pic }}">
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="design-pic-upload-template">
+
+    <div class="col-sm-3 col-md-2">
+        <div class="thumbnail">
+            <div class="caption">
+                <h3>上传图片 id:({{ target_id }})</h3>
+
+                <p></p>
+                <a cid="{{ target_id }}" id="uploadfile">
+                    <input type="file" id="pickfiles" title="" style="width: 95px;">
+                </a>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+<input hidden="" id="domain" value="http://image.xiaolu.so/">
+<input hidden="" id="uptoken_url" value="/mm/qiniu/?format=json">
+<script type="text/javascript" src="//cdn.bootcss.com/plupload/2.1.7/plupload.full.min.js"></script>
+<script type="text/javascript" src="//cdn.bootcss.com/plupload/2.1.7/i18n/zh_CN.js"></script>
+<script type="text/javascript" src="/static/script/ui.js"></script>
+<script type="text/javascript" src="/static/script/qiniu.js"></script>
+<script type="text/javascript" src="/static/js/upload_nine_pic.js"></script>
+</body>
+</html>

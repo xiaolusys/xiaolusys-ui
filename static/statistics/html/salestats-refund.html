@@ -16,6 +16,11 @@
     <link href="../../layer-v1.9.2/layer/skin/layer.css">
     <script src="../../layer-v1.9.2/layer/layer.js"></script>
     <title>销量统计信息</title>
+    <style>
+        .obsolete-supplier-true {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 
@@ -38,7 +43,9 @@
     <div class="row" style="margin-top: 30px">
         <div class='col-sm-4'><input type='text' class="form-control" id='datetimepicker1'/></div>
         <div class='col-sm-4'><input type='text' class="form-control" id='datetimepicker2'/></div>
-        <div class='col-sm-4'><button class="btn btn-default" id='sort-table'>排序</button></div>
+        <div class='col-sm-4'>
+            <button class="btn btn-default" id='sort-table'>排序</button>
+        </div>
     </div>
     <hr/>
 
@@ -192,7 +199,7 @@
 <script type="text/html" id="stats-template-supplier">
     <tr id="{{ id }}">
         <td class="">{{ current_id }}</td>
-        <td class="">{{ name }}</td>
+        <td class="obsolete-supplier-{{ obsolete_supplier }}">{{ name }}</td>
         <td class=""><a href="{{ pic_path }}" target="_blank">供应商网址</a></td>
         <td class="">{{ get_status_display }}</td>
         <td class="">{{ date_field }}</td>
@@ -230,7 +237,7 @@
 <script type="text/html" id="stats-template-annotate">
     <tr>
         <td class="">{{ current_id }}</td>
-        <td class="">{{ name }}</td>
+        <td class="obsolete-supplier-{{ obsolete_supplier }}">{{ name }}</td>
         <td class=""><img src="{{ pic_path }}" alt="" width="80px"/></td>
         <td class=""></td>
         <td class=""></td>
