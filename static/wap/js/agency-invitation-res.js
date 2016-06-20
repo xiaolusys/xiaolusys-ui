@@ -46,11 +46,17 @@ $(document).ready(function() {
   $(".js-invite").click(function() {
     var data = { 'share_to': '', 'active_id': '4' };
     if (detector.isIOS()) {
+      if (window.webkit) {
+        window.webkit.messageHandlers.callNativeShareFunc.postMessage(JSON.stringify(data));
+        return;
+      }
       setupWebViewJavascriptBridge(function(bridge) {
         bridge.callHandler('callNativeShareFunc', data, null);
       });
+      return;
     } else if (detector.isAndroid() && window.AndroidBridge) {
       window.AndroidBridge.callNativeShareFunc(data.share_to, data.active_id);
+      return;
     }
   });
 
