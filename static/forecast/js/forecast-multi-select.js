@@ -141,7 +141,6 @@ $('.ms-selectable a.btn-minus').click(function(){
 　
  // 单SKU选中后隐藏
  var $selectableInput = $('input[id=' + data_id + '-selectable-input]');
- console.log('input:', parseInt($selectableInput.val()||'0'));
  if (parseInt($selectableInput.val()||'0') > 0){
     var calc_val = parseInt($selectableInput.val()||'0') - 1;
     $selectableInput.val(calc_val);
@@ -189,7 +188,6 @@ $('.ms-selectable a.btn-plus').click(function(){
 $('.ms-container a.switch').click(function(){
  var data_id = $(this).attr('data-id');
  var data_channel = $(this).attr('data-channel');
- console.log(data_id, data_channel);
  var selectableLi = $('li[id$=-' + data_id + '-' + data_channel + '-li].selected');
  var optArrow = $(this).find('i:last');
  if (optArrow.hasClass('glyphicon-menu-down')){
@@ -216,7 +214,7 @@ function initModal(){
         totalNum += oNum;
         selectedNum += sNum;
     }
-    console.log('select:', selectedNum, totalNum);
+
     if (selectedNum > 0) {
             var tempObj = {
             totalNum:totalNum,
@@ -234,19 +232,45 @@ function initModal(){
     }
 }
 
+function selectAll(){
+    // 选中全部记录
+    $('input[id$=-selectable-input]').val(0);
+    $('li[id$=-selectable-li]').removeClass('selected').addClass('hidden');
+
+    var selectInputs = $('input[name$=-selection-input]');
+    for(var i=0; i< selectInputs.length; i++){
+        console.log('debug max:', selectInputs[i].max);
+        $(selectInputs[i]).val(selectInputs[i].max);
+    }
+    $('li[id$=-selection-li]').removeClass('hidden').addClass('selected');
+}
+
+function cancelAll(){
+    // 取消全部选中记录
+    $('input[name$=-selection-input]').val(0);
+    $('li[id$=-selection-li]').removeClass('selected').addClass('hidden');
+
+    var selectInputs = $('input[id$=-selectable-input]');
+    for(var i=0; i< selectInputs.length; i++){
+        $(selectInputs[i]).val(selectInputs[i].max);
+    }
+    $('li[id$=-selectable-li]').removeClass('hidden').addClass('selected');
+}
+
 // 初始化
 $(function(){
 
+    $('.btn-select-all').click(selectAll);
+    $('.btn-cancel-all').click(cancelAll);
+
     $("form").submit(function(e){
         e.preventDefault();
-        console.log('submit:', $(this));
         var params = {};
         var formDatas = $(this).serializeArray();
         $.each(formDatas,function(index, option){
-            console.log('data:', option, index);
             params[option.name] = option.value;
         })
-        console.log('params',params);
+
         $.ajax({
             url:$(this).attr('action'),
             type:'post',
