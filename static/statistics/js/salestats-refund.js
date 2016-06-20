@@ -281,7 +281,7 @@ function setRefundData(data) {
     var t_no_pay_num = 0;
     $.each(data, function (i, val) {
         val.return_goods_rate = 0.00;
-        var total_num = val.paid_num + val.cancel_num + val.return_goods_num + val.out_stock_num;
+        var total_num = val.paid_num + val.return_goods_num + val.out_stock_num;
         if (total_num != 0) {
             val.return_goods_rate = (val.return_goods_num / total_num).toFixed(4);
         }
@@ -379,7 +379,7 @@ function setCollectData(statsinfos) {
     items[current_id].rtg_num = statsinfos.rtg_num;
     var value = items[current_id];
     var a_total_num =
-        Number(statsinfos.paid_num) + Number(statsinfos.cacl_num) + Number(statsinfos.rtg_num) + Number(statsinfos.ostk_num);
+        Number(statsinfos.paid_num) + Number(statsinfos.rtg_num) + Number(statsinfos.ostk_num);
     console.log('a_total_num num', a_total_num, value);
 
     if (a_total_num != 0) {
