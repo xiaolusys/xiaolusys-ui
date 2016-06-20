@@ -180,7 +180,7 @@
 
 <script type="text/html" id="stats-template-model">
     <tr id="{{ id }}">
-        <td class="">{{ current_id }}</td>
+        <td class=""><a target="_blank" onclick="jumpToSaleProduct({{ current_id }})">{{ current_id }}</a></td>
         <td class="">{{ name }}</td>
         <td class=""><img src="{{ pic_path }}" alt="" width="80px"/></td>
         <td class="">{{ get_status_display }}</td>
@@ -237,6 +237,25 @@
 <script type="text/html" id="stats-template-annotate">
     <tr>
         <td class="">{{ current_id }}</td>
+        <td class="obsolete-supplier-{{ obsolete_supplier }}">{{ name }}</td>
+        <td class=""><img src="{{ pic_path }}" alt="" width="80px"/></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class=""></td>
+        <td class="">{{ paid_payment }}</td>
+        <td class="">{{ total_num }}</td>
+        <td class="">{{ cacl_num }}</td>
+        <td class="">{{ rtg_num }}</td>
+        <td class="">{{ ostk_num }}</td>
+        <td class="">{{ nopay_num }}</td>
+        <td class="">{{ return_goods_rate }}</td>
+    </tr>
+</script>
+
+<script type="text/html" id="stats-template-annotate-model">
+    <tr>
+        <td class=""><a onclick="jumpToSaleProduct({{ current_id }})">{{ current_id }}</a></td>
         <td class="obsolete-supplier-{{ obsolete_supplier }}">{{ name }}</td>
         <td class=""><img src="{{ pic_path }}" alt="" width="80px"/></td>
         <td class=""></td>

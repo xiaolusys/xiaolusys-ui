@@ -393,10 +393,13 @@ function setCollectData(statsinfos) {
 }
 
 function createAnnoDataDom(obj) {
+    var record_type = $("#condition-record-type").attr('record-type');
     var template = $("#stats-template-annotate").html();
+    if (record_type == '7') {
+        template = $("#stats-template-annotate-model").html();
+    }
     return hereDoc(template).template(obj)
 }
-
 
 
 Date.prototype.reduceFormatDate = function (days) {// 计算当前时间指定天数前的日期　格式化为　yyyy-mm-dd
@@ -412,3 +415,30 @@ Date.prototype.reduceFormatDate = function (days) {// 计算当前时间指定�
     var someFormattedDate = y + '-' + mm + '-' + dd;
     return someFormattedDate
 };
+
+
+function jumpToSaleProduct(model_id) {
+    console.log("product id is :", model_id);
+    var url = '/rest/v1/products/get_product_by_model_id';
+    moreType({"model_id": model_id}, createNewPage, url);
+    function createNewPage(res) {
+        console.log("model_id producs :", res);
+        if (res.length > 0) {
+            var pro = res[0];
+            var sale_product = pro.sale_product;
+            var targetUrl = '/admin/supplier/saleproduct/?id=' + sale_product;
+            //window.open(targetUrl);
+            layer.open({
+                type: 2,
+                title: '选品页',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['100%', '60%'],
+                content: targetUrl
+            });
+        }
+        else {
+            layer.msg('没有找到选品信息');
+        }
+    }
+}
