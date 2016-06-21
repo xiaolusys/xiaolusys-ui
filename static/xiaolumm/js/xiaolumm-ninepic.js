@@ -167,16 +167,20 @@ $(document).ready(function () {
     getTargetDaysNinepic(ninePicTargetDays);
     $(".glyphicon-chevron-left").click(function () {
         $("#nine-pic-tbody-content").empty();
+        var html = '<tr hidden="hidden" class="tr-nine-pic"></tr>';
+        $("#nine-pic-tbody-content").append(html);
         ninePicTargetDays -= 1;
         getTargetDaysNinepic(ninePicTargetDays)
     });
 
     $(".glyphicon-chevron-right").click(function () {
         $("#nine-pic-tbody-content").empty();
+        var html = '<tr hidden="hidden" class="tr-nine-pic"></tr>';
+        $("#nine-pic-tbody-content").append(html);
         ninePicTargetDays += 1;
         getTargetDaysNinepic(ninePicTargetDays)
     });
-    $("#datetimepicker1").on('dp.change',function () {
+    $("#datetimepicker1").on('dp.change', function () {
         getSaleProductInfo();
     });
 
