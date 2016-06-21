@@ -531,11 +531,13 @@ function QiniuJsSDK() {
 
         uploader.bind('FileUploaded', (function(_FileUploaded_Handler) {
             return function(up, file, info) {
-                console.log("file ---->:", file.name);
+                console.log("file name",file.name);
                 var suffix = /([^\s]+(?=\.(apk))\.\2)/gi;
                 if (suffix.test(file.name)) {
-
                 } else {
+                    var reg = /[\u4e00-\u9fa5]+/g;
+                    file.name = file.name.replace(reg, escape(Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)));
+                    console.log("replace result:", file.name);
                     if (file.size > 1024 * 1000) {
                         alert('当前文件大小为:' + file.size / 1000.0 + 'kb,超过1024kb不予上传');
                         throw new Error("上传文件超过1024kb");
