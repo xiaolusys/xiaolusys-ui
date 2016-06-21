@@ -60,7 +60,7 @@ function callbackCreateNinePic(res) {
     var xx = createNinepicDataDom(res);
     if (res.id) {// 修改成功
         $('table #' + res.id).remove();//删除表格中的旧数据
-        $("#nine-pic-tbody-content").append(xx);//替换更新后的数据
+        $(".tr-nine-pic").first("tr").before(xx);//替换更新后的数据
     }
 }
 function callbackModifyNinePic(res) {
@@ -98,7 +98,7 @@ function setTodayNiepic(res) {
 function getTargetDaysNinepic(days) {
     var date = Date.prototype.reduceFormatDate(days);//当天的日期
     $("#target-nine-date").html(date);
-    var url = '/m/ninepic';
+    var url = '/m/ninepic?page_size=100';
     console.log("data is ", date);
     serverData({"search": date}, setTodayNiepic, url, 'get')
 }
