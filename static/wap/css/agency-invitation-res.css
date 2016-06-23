@@ -180,9 +180,12 @@ body {
   display: inline-block;
   width: 35px;
   height: 35px;
+  line-height: 50px;
+  text-align: center;
+  font-weight: 900;
+  color: #fff;
   bottom: 0;
   left: 85%;
-  background: url("http://7xogkj.com2.z0.glb.qiniucdn.com/red-packer-30.png") no-repeat;
+  background: url("http://7xogkj.com1.z0.glb.clouddn.com/readpacket.png") no-repeat;
   background-size: 100% 100%;
 }
-
