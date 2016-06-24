@@ -349,7 +349,7 @@ function Create_item_dom(p_obj, close_model) {
     function Model_dom() {
         /*
          <li>
-         <a href="/mall/product/details/{{ product_model.id }}">
+         <a href="/tongkuan.html?id={{ product_model.id }}">
          <img src="{{ product_model.head_img }}">
          <p class="gname">{{ product_model.name }}</p>
          <p class="gprice">
