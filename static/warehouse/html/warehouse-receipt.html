@@ -12,6 +12,14 @@
     <link href="../../layer-v1.9.2/layer/skin/layer.css">
     <script src="../../layer-v1.9.2/layer/layer.js"></script>
     <script src="../js/warehose-receipt.js"></script>
+    <style>
+        .add1{
+            background-color: #DFF0D8;
+        }
+        .add2{
+            background-color: #FFFFFF;
+        }
+    </style>
 </head>
 <body class="container">
 
@@ -149,7 +157,7 @@ memo
 </table>
 
 <script type="text/html" id="receipt-data-false">
-    <tr id="{{ id }}" class="receipt-data-item">
+    <tr id="{{ id }}" class="receipt-data-item {{ background }}">
         <td>{{ id }}</td>
         <td>{{ creator }}</td>
         <td>{{ receipt_type_display }}</td>
@@ -164,7 +172,7 @@ memo
     </tr>
 </script>
 <script type="text/html" id="receipt-data-true">
-    <tr id="{{ id }}" class="receipt-data-item">
+    <tr id="{{ id }}" class="receipt-data-item {{ background }}">
         <td>{{ id }}</td>
         <td>{{ creator }}</td>
         <td>{{ receipt_type_display }}</td>

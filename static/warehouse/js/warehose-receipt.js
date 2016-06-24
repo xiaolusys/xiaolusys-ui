@@ -156,8 +156,15 @@ function expressNochange() {
     }
 }
 
-
+var trBackColor = 'add1';
 function createReceiptDataDom(obj) {
+    obj.background = trBackColor;
+    if (trBackColor == "add1") {
+        trBackColor = 'add2';
+    }
+    else {
+        trBackColor = 'add1';
+    }
     var template = $("#receipt-data-false").html();
     if (obj.status == true) {
         template = $("#receipt-data-true").html();
