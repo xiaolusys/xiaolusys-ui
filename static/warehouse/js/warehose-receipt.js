@@ -189,6 +189,9 @@ function setReceiptData(res) {
     else {
         layer.msg(res.info);
     }
+    // 添加过后清除　快递输入框和重量框
+    $("#express_no").val('');
+    $("#weight").val(0);
 }
 
 function modifyReceipt(tar) {
