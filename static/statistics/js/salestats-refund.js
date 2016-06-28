@@ -72,7 +72,7 @@ $(function () {
     //    console.log('get init data:', data);
     //    moreType(data, setAnnotateData, '/statistics/stats/salestats/get_annotate_type_list')
     //}
-    var target_date = Date.prototype.reduceFormatDate(4);
+    var target_date = Date.prototype.reduceFormatDate(0);
     $("#condition-date-field").val(target_date);//　今天
     var limit = $("#condition-limit");
     limit.val('TOP 100');
