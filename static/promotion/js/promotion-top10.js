@@ -209,6 +209,7 @@ function modelidChange(obj,event){
         }
     };
 
+    //商品才去找图片和名称
     if(top10_pics[tr_id].pic_type == 5 || top10_pics[tr_id].pic_type == 6){
         $.ajax({url:product_url, success:callback});
     }
