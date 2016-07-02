@@ -16,7 +16,7 @@ var top10_pic_model = {
 };
 
 function showTop10Pics(activity_id) {
-    var topic_url = '/sale/promotion/promotion/goods/get_desc_pics_by_promotionid';
+    var topic_url = '/sale/promotion/promotion/goods/get_goods_pics_by_promotionid';
     var url = BASE_URL + topic_url+"?promotion_id="+activity_id;
 
     //alert("url="+url);
@@ -27,78 +27,107 @@ function showTop10Pics(activity_id) {
         if (res) {
 
             $(".table tbody").html("");
+//            var rowinfo = ' <tr>' +
+//                           '<td>位置</th>'+
+//                           '<td>图片类型</th>'+
+//                            '<td>商品名称</th>'+
+//                            '<td>商品款式id</th>'+
+//                            '<td>图片链接</th>'+
+//                            '<td>操作</th>'+
+//                        '</tr>';
+//            $(".table").append(rowinfo);
 
             console.log("res length=",res.length);
             if(res.length == 0){
-
-            }
-            else{
-                for(i=0; i<res.length;i++){
-                    top10_pics[i] = cloneObject(top10_pic_model);
-                    top10_pics[i].activity_id = g_activity_id;
-                    if(i < res.length){
-                        top10_pics[i].location_id = res[i].location_id;
-                        top10_pics[i].pic_type=res[i].pic_type;
-                        top10_pics[i].model_id=0;
-                        top10_pics[i].product_name="";
-                        top10_pics[i].pic_path=res[i].pic_path;
-                    }
-                }
-            }
-
-
-        }
-        else{
-            alert("pic empty1");
-        }
-
-        var topic_url = '/sale/promotion/promotion/goods/get_goods_pics_by_promotionid';
-        var url = BASE_URL + topic_url+"?promotion_id="+activity_id;
-        $.ajax({url:url, success:callback2});
-    };
-
-    var callback2 = function (res) {
-        console.log(res);
-        if (res) {
-
-            $(".table tbody").html("");
-
-            var arr = res
-            console.log(arr.length == 0);
-            if(arr.length == 0 && top10_pics.length ==0){
-                //显示15个空记录
                 console.log("pic empty 2");
                 initTable();
                 initData();
                 return;
             }
-
-            var num = top10_pics.length;
-            var max = g_pic_num;
-            if(g_pic_num < num+arr.length)
-                max = num+arr.length
-            for(i=0; i<max-num;i++){
-                top10_pics[i+num] = cloneObject(top10_pic_model);
-                top10_pics[i+num].activity_id = g_activity_id;
-                if(i < arr.length){
-                    top10_pics[i+num].location_id = arr[i].location_id;
-                    top10_pics[i+num].pic_type=3;
-                    top10_pics[i+num].model_id=arr[i].model_id;
-                    top10_pics[i+num].product_name=arr[i].product_name;
-                    top10_pics[i+num].pic_path=arr[i].product_img;
+            else{
+                var num = top10_pics.length;
+                var max = g_pic_num;
+                if(g_pic_num < res.length)
+                    max = num
+                for(i=0; i<max;i++){
+                    top10_pics[i] = cloneObject(top10_pic_model);
+                    top10_pics[i].activity_id = g_activity_id;
+                    if(i < res.length){
+                        top10_pics[i].location_id = res[i].location_id;
+                        top10_pics[i].pic_type=res[i].pic_type;
+                        top10_pics[i].model_id=res[i].model_id;
+                        top10_pics[i].product_name=res[i].product_name;
+                        top10_pics[i].pic_path=res[i].product_img;
+                    }
+                    else{
+                        top10_pics[i].location_id = i+1;
+                    }
                 }
-                else{
-                    top10_pics[i+num].location_id = i+num+1;
-                }
+                initTableWithData(top10_pics);
             }
 
-            initTableWithData(top10_pics);
 
         }
         else{
             alert("pic empty1");
         }
+
+//        var topic_url = '/sale/promotion/promotion/goods/get_goods_pics_by_promotionid';
+//        var url = BASE_URL + topic_url+"?promotion_id="+activity_id;
+//        $.ajax({url:url, success:callback2});
     };
+
+//    var callback2 = function (res) {
+//        console.log(res);
+//        if (res) {
+//
+//            $(".table tbody").html("");
+//            var rowinfo = ' <tr>' +
+//               '<th>位置</th>'+
+//               '<th>图片类型</th>'+
+//                '<th>商品名称</th>'+
+//                '<th>商品款式id</th>'+
+//                '<th>图片链接</th>'+
+//                '<th>操作</th>'+
+//            '</tr>';
+//            $(".table").append(rowinfo);
+//
+//            var arr = res
+//            console.log(arr.length == 0);
+//            if(arr.length == 0 && top10_pics.length ==0){
+//                //显示15个空记录
+//                console.log("pic empty 2");
+//                initTable();
+//                initData();
+//                return;
+//            }
+//
+//            var num = top10_pics.length;
+//            var max = g_pic_num;
+//            if(g_pic_num < num+arr.length)
+//                max = num+arr.length
+//            for(i=0; i<max-num;i++){
+//                top10_pics[i+num] = cloneObject(top10_pic_model);
+//                top10_pics[i+num].activity_id = g_activity_id;
+//                if(i < arr.length){
+//                    top10_pics[i+num].location_id = arr[i].location_id;
+//                    top10_pics[i+num].pic_type=3;
+//                    top10_pics[i+num].model_id=arr[i].model_id;
+//                    top10_pics[i+num].product_name=arr[i].product_name;
+//                    top10_pics[i+num].pic_path=arr[i].product_img;
+//                }
+//                else{
+//                    top10_pics[i+num].location_id = i+num+1;
+//                }
+//            }
+//
+//            initTableWithData(top10_pics);
+//
+//        }
+//        else{
+//            alert("pic empty1");
+//        }
+//    };
     $.ajax({url:url, success:callback});
 }
 
@@ -180,7 +209,9 @@ function modelidChange(obj,event){
         }
     };
 
-    $.ajax({url:product_url, success:callback});
+    if(top10_pics[tr_id].pic_type == 5 || top10_pics[tr_id].pic_type == 6){
+        $.ajax({url:product_url, success:callback});
+    }
 }
 
 function initTable(){
@@ -223,14 +254,17 @@ function insertRow(rowid)
                 '<input id="dropdownMenu'+ rowid + '" type="button" class="btn dropdown-toggle"  data-toggle="dropdown" value="选择类型"/>' +
                 '<ul class="dropdown-menu" aria-labelledby="condition-record-type">' +
                     '<li><a  class="dimension banner-type"  type-id="0">Banner</a></li>' +
-                    '<li><a  class="dimension banner-type"  type-id="1">优惠券</a></li>' +
-                    '<li><a  class="dimension banner-type"  type-id="2">商品分类说明</a></li>' +
-                    '<li><a  class="dimension banner-type"  type-id="3">商品</a></li>' +
-                    '<li><a  class="dimension banner-type"  type-id="4">底部</a></li>' +
+                    '<li><a  class="dimension banner-type"  type-id="1">优惠券领前</a></li>' +
+                    '<li><a  class="dimension banner-type"  type-id="2">优惠券领后</a></li>' +
+                    '<li><a  class="dimension banner-type"  type-id="3">主题入口</a></li>' +
+                    '<li><a  class="dimension banner-type"  type-id="4">分类说明</a></li>' +
+                    '<li><a  class="dimension banner-type"  type-id="5">横放商品</a></li>' +
+                    '<li><a  class="dimension banner-type"  type-id="6">竖放商品</a></li>' +
+                    '<li><a  class="dimension banner-type"  type-id="7">分享</a></li>' +
                 '</ul>' +
             '</div></td>' +
           '<td class="model_name"></td>' +
-          '<td><input class="model_id" type="text"  placeholder="商品才输入modelid" onkeydown="modelidChange(this,event)" ></td>' +
+          '<td><input class="model_id" type="text"  placeholder="输入modelid或优惠券id" onkeydown="modelidChange(this,event)" ></td>' +
           '<td><img class="preview_img" src="" style="float: right" width="100px" height="100px"></td>'+
           '<td><a class="btn btn-info pic_of_top10" style="margin-top: 5px;float: right" onclick="uploadPic(this)"' +
                                'cid="upload_top10.html">上传图片</a></td>' +
@@ -278,14 +312,17 @@ function insertRowWithData(rowid, arr)
                 '<input id="dropdownMenu'+ rowid + '" type="button" class="btn dropdown-toggle"  data-toggle="dropdown" value="选择类型"/>' +
                 '<ul class="dropdown-menu" aria-labelledby="condition-record-type">' +
                     '<li><a  class="dimension banner-type"  type-id="0">Banner</a></li>' +
-                    '<li><a  class="dimension banner-type"  type-id="1">优惠券</a></li>' +
-                    '<li><a  class="dimension banner-type"  type-id="2">商品分类说明</a></li>' +
-                    '<li><a  class="dimension banner-type"  type-id="3">商品</a></li>' +
-                    '<li><a  class="dimension banner-type"  type-id="4">底部</a></li>' +
+                    '<li><a  class="dimension banner-type"  type-id="1">优惠券领前</a></li>' +
+                    '<li><a  class="dimension banner-type"  type-id="2">优惠券领后</a></li>' +
+                    '<li><a  class="dimension banner-type"  type-id="3">主题入口</a></li>' +
+                    '<li><a  class="dimension banner-type"  type-id="4">分类说明</a></li>' +
+                    '<li><a  class="dimension banner-type"  type-id="5">横放商品</a></li>' +
+                    '<li><a  class="dimension banner-type"  type-id="6">竖放商品</a></li>' +
+                    '<li><a  class="dimension banner-type"  type-id="7">分享</a></li>' +
                 '</ul>' +
             '</div></td>' +
           '<td class="model_name"></td>' +
-          '<td><input class="model_id" type="text"  placeholder="商品才输入modelid" onkeydown="modelidChange(this,event)" ></td>' +
+          '<td><input class="model_id" type="text"  placeholder="输入modelid或优惠券id" onkeydown="modelidChange(this,event)" ></td>' +
           '<td><img class="preview_img" src="" style="float: right" width="100px" height="100px"></td>'+
           '<td><a class="btn btn-info pic_of_top10" style="margin-top: 5px;float: right" onclick="uploadPic(this)"' +
                                'cid="upload_top10.html">上传图片</a></td>' +
@@ -304,16 +341,25 @@ function insertRowWithData(rowid, arr)
             pic_type = "Banner";
             break;
         case 1:
-            pic_type = "优惠券";
+            pic_type = "优惠券领前";
             break;
         case 2:
-            pic_type = "商品分类说明";
+            pic_type = "优惠券领后";
             break;
         case 3:
-            pic_type = "商品";
+            pic_type = "主题入口";
             break;
         case 4:
-            pic_type = "底部";
+            pic_type = "分类说明";
+            break;
+        case 5:
+            pic_type = "横放商品";
+            break;
+        case 6:
+            pic_type = "竖放商品";
+            break;
+        case 7:
+            pic_type = "分享";
             break;
       }
 
@@ -338,14 +384,17 @@ function insertRowWithData(rowid, arr)
                     '<input id="dropdownMenu'+ rowid + '" type="button" class="btn dropdown-toggle"  data-toggle="dropdown" value='+pic_type +' />' +
                     '<ul class="dropdown-menu" aria-labelledby="condition-record-type">' +
                         '<li><a  class="dimension banner-type"  type-id="0">Banner</a></li>' +
-                        '<li><a  class="dimension banner-type"  type-id="1">优惠券</a></li>' +
-                        '<li><a  class="dimension banner-type"  type-id="2">商品分类说明</a></li>' +
-                        '<li><a  class="dimension banner-type"  type-id="3">商品</a></li>' +
-                        '<li><a  class="dimension banner-type"  type-id="4">底部</a></li>' +
+                        '<li><a  class="dimension banner-type"  type-id="1">优惠券领前</a></li>' +
+                        '<li><a  class="dimension banner-type"  type-id="2">优惠券领后</a></li>' +
+                        '<li><a  class="dimension banner-type"  type-id="3">主题入口</a></li>' +
+                        '<li><a  class="dimension banner-type"  type-id="4">分类说明</a></li>' +
+                        '<li><a  class="dimension banner-type"  type-id="5">横放商品</a></li>' +
+                        '<li><a  class="dimension banner-type"  type-id="6">竖放商品</a></li>' +
+                        '<li><a  class="dimension banner-type"  type-id="7">分享</a></li>' +
                     '</ul>' +
                 '</div></td>' +
               '<td class="model_name">'+ model_name+'</td>' +
-              '<td><input class="model_id" type="text"  placeholder="商品才输入modelid" onkeydown="modelidChange(this,event)" value='+ model_id+'></td>' +
+              '<td><input class="model_id" type="text"  placeholder="输入modelid或优惠券id" onkeydown="modelidChange(this,event)" value='+ model_id+'></td>' +
               '<td><img class="preview_img" src='+ pic_path+' style="float: right" width="100px" height="100px"></td>'+
               '<td><a class="btn btn-info pic_of_top10" style="margin-top: 5px;float: right" onclick="uploadPic(this)"' +
                                    'cid="upload_top10.html">上传图片</a></td>' +
@@ -358,6 +407,7 @@ function insertRowWithData(rowid, arr)
 
     $(".banner-type").click(function(){
         var rowid= $(this).closest('tr').attr('id');
+        console.log(rowid);
         console.log( $(this).attr('type-id'));
         $("#dropdownMenu"+rowid).val($(this).html());
         top10_pics[rowid].pic_type = $(this).attr('type-id');
