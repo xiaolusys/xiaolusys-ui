@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript">window.BWEUM || (BWEUM = {});
+    BWEUM.info = {
+        "beacon": "bi-collector.oneapm.com/beacon/rum/python",
+        "queueTime": 0,
+        "licenseKey": "vEJEz~YijVzz2n3n",
+        "agent": "//bi-collector.oneapm.com/static/js/bw-send-411.4.5.js",
+        "transactionName": "FSQjEycGLCc3IgdZWSxuBzI7BDY9OS9cVlojMik0NAsneiYzHF1ZNiguKXsRKzEhMklxZhIFLjA7Cy01MhcaVUFsJiQz",
+        "applicationID": 2277013,
+        "errorBeacon": "bi-collector.oneapm.com/beacon/error/python",
+        "applicationTime": 50
+    }
+    </script>
+    <meta http-equiv="X-UA-Compatible" name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>小鹿美美APP下载</title>
+    <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../../jquery/jquery-2.1.1.min.js"></script>
+</head>
+
+<body style="background-color:#220a3d">
+<div class="container">
+
+    <img src="http://7xogkj.com2.z0.glb.qiniucdn.com/weixin_tip" alt="" width="100%" id="weixin_label" hidden="hidden">
+
+    <div id="download" style="text-align: center; display: block;" hidden="hidden">
+        <h1 style="color: white;">APP下载</h1>
+        <img src="http://7xogkj.com2.z0.glb.qiniucdn.com/1181123466.jpg" alt="" class="img-circle">
+
+        <div class="col-xs-12" style="text-align: center;height: 180px; margin-bottom: 100px">
+            <div class="row" style="margin-top: 60px">
+                <div class="col-xs-1"></div>
+                <!--添加二维码图片-->
+                <div class="col-xs-4" hidden="hidden" style="margin-top: 30px; display: block;"
+                     id="qrcode_android_download">
+                    <img src="http://image.xiaolu.so/xlmm_14677208934621467720884.svg"
+                         id="androidDownloadQrcode" width="100px">
+                </div>
+                <div class="col-xs-2"></div>
+                <div class="col-xs-4" hidden="hidden" style="margin-top: 30px; display: block;"
+                     id="qrcode_ios_download">
+                    <img src="http://7xogkj.com2.z0.glb.qiniucdn.com/appstore_download_link.svg"
+                         id="iosDownloadQrcode" width="100px">
+                </div>
+                <div class="col-xs-1"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-1"></div>
+            <div class="col-xs-4" hidden="hidden" style="margin-top: 30px; display: block;" id="click_android_download">
+                <!--添加二维码图片-->
+                <a class="btn btn-default form-control" type="submit" id="androidDownLink"
+                   href="http://image.xiaolu.so/xlmm_1467720759402Xlmm_v1181_2016-07-05_xlmm_1181_jiagu_signed.apk"
+                   style="background:#FFB329;color:white">Android下载</a>
+            </div>
+            <div class="col-xs-2"></div>
+            <div class="col-xs-4" hidden="hidden" style="margin-top: 30px; display: block;" id="click_ios_download">
+                <a class="btn btn-default form-control" type="submit" id="iosDownLink"
+                   href="https://itunes.apple.com/us/app/xiao-lu-mei-mei/id1051166985"
+                   style="background:#FFB329;color:white">iOS下载</a>
+
+                <div class="col-xs-1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var OSTest = function () {// 客户端平台检测　返回
+        var u = navigator.userAgent;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isAndroid == true) {
+            return 'Android';
+        }
+        else if (isiOS == true) {
+            return 'iOS';
+        }
+        else {
+            return 'web'
+        }
+    };
+
+    function startAndroidAPP(downloadLink) {
+        window.location = downloadLink;
+    }
+
+    function startiOSAPP(downloadLink) {
+        window.location = downloadLink;
+    }
+
+    function isWeiXin() {//判断当前浏览器是否是微信内置浏览器
+        var ua = window.navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    $(document).ready(function () {
+        var os = OSTest();
+        if (isWeiXin()) {//如果是微信内置浏览器则提示在外部浏览器打开
+            $("#weixin_label").show();
+            $("body").css("background", "#220A3D");
+            $("#download").hide();
+        }
+        else {
+            var callback = function (res) {
+                console.log(res);
+                $("#androidDownloadQrcode").attr('src', res.qrcode_link);
+                $("#iosDownloadQrcode").attr('src', res.ios_qrcode_link);
+                $("#androidDownLink").attr('href', res.download_link);
+                $("#iosDownLink").attr('href', res.ios_download_link);
+                if (os == 'Android') {
+                    startAndroidAPP(res.download_link);//启动app
+                }
+                else if (os == "iOS") {
+                    startiOSAPP(res.ios_download_link);//启动ios app
+                }
+                else {
+                    $("#qrcode_android_download").show();
+                    $("#qrcode_ios_download").show();
+                    $("#click_android_download").show();
+                    $("#click_ios_download").show();
+                }
+            };
+
+            $.ajax({
+                "url": '/sale/apprelease/newversion.json',
+                "type": "get",
+                "success": callback
+            });
+            $("#download").show();
+        }
+    });
+</script>
+</body>
+</html>
