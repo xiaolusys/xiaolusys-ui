@@ -21,7 +21,7 @@ function renderGroups(data) {
         content.push('<img src="'+arr[i].head_img_url+'" class="img-circle" style="height:100%;">');
         content.push('</div><div class="attender-middle">');
         content.push('<p class="attender-name">'+arr[i].nick+'</p>');
-        content.push('<p>群编号：'+arr[i].group_uni_key+'</p>');
+        content.push('<p>群编号：'+arr[i].group_uni_key+' &nbsp; &nbsp;<a href="mama_qr_code.html?group_id=' + arr[i].group_uni_key + '">签到码</a></p>');
         content.push('</div><div class="attender-right">');
         content.push('<p class="signup-status">报名成功</p>');
         content.push('<p>'+arr[i].modified_display+'</p>');
