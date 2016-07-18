@@ -6,7 +6,7 @@ function renderHeader(data) {
     var content = [];
     content.push('<div style="text-align:center"><h3>小鹿妈妈聚100万粉丝活动</h3><div>');
     content.push('<div class="admin-header"><div class="admin-head-img"><img src="'+data.head_img_url+'" class="img-circle" style="height:100%;"</></div>');
-    content.push('<div style="margin-top:10px"><p>活动辅导员：'+data.nick+'</p></div>');
+    content.push('<div style="margin-top:10px"><p>活动辅导员：<a href="/mall/activity/summer/mat/success">'+data.nick+'</a></p></div>');
     content.push('<div><p>报名妈妈数：<span style="font-weight:bold">'+data.groups_count + '/' + data.all_groups_count+'人</span></p></div></div>');
     content.push('<hr/>');
     $("#id-header").append(content.join(''));
