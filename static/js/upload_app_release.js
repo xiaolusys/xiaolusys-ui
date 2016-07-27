@@ -25,8 +25,10 @@ $(function () {
             'FileUploaded': function (up, file, info) {
                 var domain = up.getOption('domain');
                 var res = jQuery.parseJSON(info);
+                console.log('res ....', res);
                 var pic_link = domain + res.key; //获取上传成功后的文件的Url
                 $("#download_link").val(pic_link);// 填写url到页面
+                $("#hash_value").val(res.hash);// 填写url到页面
             },
             'Error': function (up, err, errTip) {
             }
