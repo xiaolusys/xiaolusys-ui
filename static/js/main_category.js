@@ -5,42 +5,6 @@ var supplier_id;
 var saleproduct_id;
 var saleproduct;
 var wash_tip = "洗涤时请深色、浅色衣物分开洗涤。最高洗涤温度不要超过40度，不可漂白。有涂层、印花表面不能进行熨烫，会导致表面剥落。不可干洗，悬挂晾干。";
-$(function () {
-
-    $("#shelf_time").datepicker({
-        dateFormat: "yy-mm-dd"
-    });
-
-    $('.checkbox-group-choose').change(function(){
-        var checkbox_group_id = '#' + $(this).val();
-        if($(this).prop('checked'))
-            $(checkbox_group_id).show();
-        else{
-            $(checkbox_group_id+' :checkbox').prop('checked', false);
-            $(checkbox_group_id).hide();
-        }
-    });
-    $('#no-chima').change(function(){
-        if($(this).prop('checked')){
-            $('#chima-table').hide();
-        }
-        else{
-            $('#chima-table').show();
-        }
-    });
-
-    var urlParams = parseUrlParams(window.location.href);
-    supplier_id = urlParams["supplier_id"];
-    saleproduct_id = urlParams["saleproduct"];
-    if(!supplier_id || !saleproduct_id){
-        alert("请从选品列表进来");
-        return;
-    }
-    saleproduct = get_sale_product(saleproduct_id);
-    get_category(saleproduct.product_category);
-    get_supplier();
-    $('#new-product').bind("click", submit_data);
-});
 function get_sale_product(saleproduct_id){
     //获取选品信息
     var obj;
