@@ -2,7 +2,7 @@
  * Created by jishu_linjie on 8/8/16.
  */
 function createLessonSign(obj) {
-    var mamaLesson = $("#mama-lesson-tpl").html();
+    var mamaLesson = $("#lesson-sign-tpl").html();
     return hereDoc(mamaLesson).template(obj)
 }
 $(document).ready(function () {
@@ -30,7 +30,8 @@ function getMamaLesson() {
     function lessonCallback(res) {
         console.log(res);
         if (res.code == 0) {
-            var html = createLessonSign(res);
+            res.attend_record.info = res.info;
+            var html = createLessonSign(res.attend_record);
             $('#lesson-sign-content').append(html);
         } else {
             drawToast(res.info);

@@ -7,21 +7,26 @@
     <title>听课签到</title>
     <script src="../../../wap/js/common.js"></script>
     <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../../../wap/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/lesson-common.css">
 </head>
 <body>
 
 <div class="container" id="id-container">
-    <div id="lesson-sign-content">
+    <div id="lesson-sign-content" style="margin-top: 100px">
 
     </div>
 </div>
 
 <script type="text/html" id="lesson-sign-tpl">
-<p>
-    {{ info }}
-</p>
-
+    <div>
+        <span id="attend-record-id" hidden="hidden">{{ id }}</span>
+        <img src="{{ student_image }}" class="img-circle" width="40px">
+        <span>{{ info }}</span>
+        {{ student_nick }}
+        <div style="margin-top: 30px">{{ title }}
+            <span>签到时间: {{ signup_date }} - {{ signup_time }}</span>
+        </div>
+    </div>
 </script>
 
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
