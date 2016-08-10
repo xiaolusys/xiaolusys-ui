@@ -12,7 +12,7 @@
 <body>
 
 <div class="container" id="id-container">
-    <div id="mama-lesson-content">
+    <div id="mama-lesson-content" style="margin-right:15px">
 
     </div>
 </div>
@@ -25,7 +25,7 @@
             <div class="signup-number"><p>签到：<span style="font-weight:bold">{{ num_attender }}人</span></p></div>
         </div>
         <div class="course-time"><p>授课：{{ instructor_name }}&nbsp;{{ instructor_title }}</p></div>
-        <div class="course-time"><p>签到链接(复制链接让学员签到)：{{ lesson_attend_record_url }}</p></div>
+        <div class="course-time"><p>签到链接(复制链接让学员签到)：</p><p style="border:1px solid red">{{ lesson_attend_record_url }}</p></div>
     </div>
 </script>
 
