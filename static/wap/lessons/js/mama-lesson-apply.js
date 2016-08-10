@@ -5,6 +5,7 @@ function createLessonTpl(obj) {
     var mamaLesson = $("#mama-lesson-tpl").html();
     return hereDoc(mamaLesson).template(obj)
 }
+
 $(document).ready(function () {
     console.log('In apply mama lesson page');
     getMamaLesson();
