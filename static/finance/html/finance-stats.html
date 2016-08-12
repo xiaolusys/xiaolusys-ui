@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>财务简单统计页面</title>
+    <link href="/static/bootstrap/css/bootstrap3.2.0.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/jquery/jquery-ui-1.10.1.css"/>
+    <link href="../../layer-v1.9.2/layer/skin/layer.css">
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css"
+          rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <script src='/static/jquery/addons/jquery.form.js'></script>
+    <script src="/static/bootstrap/js/bootstrap-3.2.0.min.js"></script>
+    <script src="../../wap/js/common.js"></script>
+    <script src="../../layer-v1.9.2/layer/layer.js"></script>
+    <script src="../../layer-v1.9.2/layer/extend/layer.ext.js"></script>
+    <script src="../js/finance-stats.js"></script>
+    <script src="../../statistics/js/moment.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/3.2.2/echarts.common.min.js"></script>
+</head>
+
+<body class="container" style="margin-bottom: 300px">
+
+<div class="row" style="margin-top: 30px">
+    <div class="col-sm-2">
+        <input type="text" class="form-control date-picker" id="date-from" placeholder="开始日期">
+    </div>
+    <div class="col-sm-2">
+        <input type="text" class="form-control date-picker" id="date-to" placeholder="截止日期">
+    </div>
+    <button type="button" class="btn btn-warning" id="search">查询</button>
+</div>
+
+
+<div class="row" style="margin-top: 30px">
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>channel</th>
+                <th>渠道</th>
+                <th>数量(单)</th>
+                <th>金额(元)</th>
+            </tr>
+            </thead>
+            <tbody id="channel-pay-tbody">
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <div id="channel-pay-stats" style="width: 400px;height:200px;"></div>
+    </div>
+</div>
+<script type="text/html" id="channel-pay-template">
+    <tr>
+        <td>{{ channel }}</td>
+        <td>{{ channel_display }}</td>
+        <td>{{ count }}</td>
+        <td>{{ sum_payment }}</td>
+    </tr>
+</script>
+
+
+<div class="row" style="margin-top: 30px">
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>状态码</th>
+                <th>状态名</th>
+                <th>数量(单)</th>
+                <th>金额(元)</th>
+            </tr>
+            </thead>
+            <tbody id="refund-stats-tbody">
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <div id="refund-stats" style="width: 400px;height:200px;"></div>
+    </div>
+</div>
+<script type="text/html" id="refund-stats-template">
+    <tr>
+        <td>{{ refund_status }}</td>
+        <td>{{ refund_status_display }}</td>
+        <td>{{ count }}</td>
+        <td>{{ sum_payment }}</td>
+    </tr>
+</script>
+
+
+<div class="row" style="margin-top: 30px">
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>sku_id</th>
+                <th>押金名</th>
+                <th>数量(单)</th>
+                <th>金额(元)</th>
+            </tr>
+            </thead>
+            <tbody id="deposit-stats-tbody">
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <div id="deposit-stats" style="width: 400px;height:200px;"></div>
+    </div>
+</div>
+<script type="text/html" id="deposit-stats-template">
+    <tr>
+        <td>{{ sku_id }}</td>
+        <td>{{ deposit_display }}</td>
+        <td>{{ count }}</td>
+        <td>{{ sum_payment }}</td>
+    </tr>
+</script>
+
+
+<div class="row" style="margin-top: 30px">
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>日期</th>
+                <th>订单数</th>
+                <th>成本(元)</th>
+                <th>交易额(元)</th>
+                <th>利润比</th>
+            </tr>
+            </thead>
+            <tbody id="cost-stats-tbody">
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <div id="cost-stats" style="width: 700px;height:500px;"></div>
+    </div>
+</div>
+
+<script type="text/html" id="cost-stats-template">
+    <tr>
+        <td>{{ date }}</td>
+        <td>{{ sum_num }}</td>
+        <td>{{ sum_cost }}</td>
+        <td>{{ sum_payment }}</td>
+        <td>{{ profit }}</td>
+    </tr>
+</script>
+
+
+<div class="row" style="margin-top: 30px">
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>category_id</th>
+                <th>类别名</th>
+                <th>件数</th>
+                <th>总成本(元)</th>
+            </tr>
+            </thead>
+            <tbody id="stock-stats-tbody">
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <div id="stock-stats" style="width: 700px;height:500px;"></div>
+    </div>
+</div>
+
+<script type="text/html" id="stock-stats-template">
+    <tr>
+        <td>{{ category_id }}</td>
+        <td>{{ category_display }}</td>
+        <td>{{ sum_num }}</td>
+        <td>{{ sum_cost }}</td>
+    </tr>
+</script>
+
+
+<script type="text/javascript" src="//cdn.bootcss.com/plupload/2.1.7/plupload.full.min.js"></script>
+<script type="text/javascript" src="//cdn.bootcss.com/plupload/2.1.7/i18n/zh_CN.js"></script>
+</body>
+</html>
