@@ -104,7 +104,7 @@ var refundStats = function (dateFrom, dateTo) {
             },
             series: [
                 {
-                    name: '支付渠道',
+                    name: '退款状态',
                     type: 'pie',
                     radius: '55%',
                     center: ['50%', '60%'],
@@ -123,6 +123,62 @@ var refundStats = function (dateFrom, dateTo) {
     };
     serverData(data, func, url, 'get')
 };
+
+
+var returnGoodStats = function (dateFrom, dateTo) {
+    var data = {'date_from': dateFrom, 'date_to': dateTo};
+    var url = '/apis/finance/v1/return_good_stats';
+    var func = function (res) {
+        console.log(res);
+        var returnGoodNames = [];
+        var countData = [];
+        $('#return-good-stats-tbody').empty();
+        $.each(res.results, function (k, v) {
+            returnGoodNames.push(v.return_good_status_display);
+            countData.push({'value': v.count, 'name': v.return_good_status_display});
+            createTemplateDom(v, 'return-good-stats-template', 'return-good-stats-tbody');
+        });
+        var myChart = echarts.init(document.getElementById('return-good-stats'));
+        var option = {
+            title: {
+                text: '发货退款状态占比',
+                subtext: '发货退款单数占比',
+                x: 'right'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: returnGoodNames
+            },
+            series: [
+                {
+                    name: '退货状态',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: countData,
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        myChart.setOption(option);
+    };
+    serverData(data, func, url, 'get')
+};
+
+
+
+
 
 var depositStats = function (dateFrom, dateTo) {
     var data = {'date_from': dateFrom, 'date_to': dateTo};
@@ -309,6 +365,7 @@ var getSumDate = function () {
         depositStats(dateFrom, dateTo);
         costStats(dateFrom, dateTo);
         stockStats(dateFrom, dateTo);
+        returnGoodStats(dateFrom, dateTo);
     } else {
         layer.msg('请选择时间');
     }

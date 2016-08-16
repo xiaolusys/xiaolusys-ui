@@ -91,6 +91,38 @@
 </script>
 
 
+
+
+<div class="row" style="margin-top: 30px">
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>状态码</th>
+                <th>描述</th>
+                <th>单数</th>
+                <th>退款金额(元)</th>
+            </tr>
+            </thead>
+            <tbody id="return-good-stats-tbody">
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <div id="return-good-stats" style="width: 400px;height:200px;"></div>
+    </div>
+</div>
+
+<script type="text/html" id="return-good-stats-template">
+    <tr>
+        <td>{{ return_goods_status }}</td>
+        <td>{{ return_good_status_display }}</td>
+        <td>{{ count }}</td>
+        <td>{{ sum_payment }}</td>
+    </tr>
+</script>
+
+
 <div class="row" style="margin-top: 30px">
     <div class="col-sm-6">
         <table class="table table-bordered">
@@ -180,6 +212,8 @@
         <td>{{ sum_cost }}</td>
     </tr>
 </script>
+
+
 
 
 <script type="text/javascript" src="//cdn.bootcss.com/plupload/2.1.7/plupload.full.min.js"></script>
