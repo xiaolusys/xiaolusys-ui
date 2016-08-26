@@ -197,11 +197,11 @@ function modelidChange(obj,event){
             }
 
             top10_pics[tr_id].product_name = arr[0].name;
-            top10_pics[tr_id].pic_path =  arr[0].pic_path;
+            top10_pics[tr_id].pic_path =  arr[0].head_img;
             console.log("modelidChange end top10_pics=", top10_pics);
             console.log("td="+ $($(obj).closest('tr').children('td').eq(2)).text());
             $($(obj).closest('tr').children('td').eq(2)).html(arr[0].name);
-            $($(obj).closest('tr').children('td').eq(4).children()).attr('src', arr[0].pic_path);
+            $($(obj).closest('tr').children('td').eq(4).children()).attr('src', arr[0].head_img);
 
         }
         else{
