@@ -193,13 +193,15 @@
 <script type="text/html" id="sale-product-info-template">
     <div class="col-sm-2 col-md-2">
         <div class="thumbnail">
+            <a href="http://m.xiaolumeimei.com/mall/product/details/{{ model_id }}" target="_blank">
             <img src="{{ pic_path }}" alt="{{ name }}">
+            </a>
 
             <div class="caption">
                 <div class="form-group sale-name">
                     {{ name }}
                 </div>
-                <label>款式id:</label> {{ model_id }}
+                <label>款式id:</label>{{ model_id }}
             </div>
         </div>
     </div>
