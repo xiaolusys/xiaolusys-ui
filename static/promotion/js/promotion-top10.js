@@ -185,7 +185,7 @@ function modelidChange(obj,event){
     console.log("tr ="+ tr_id + " modelid="+obj.value);
     top10_pics[tr_id].model_id = obj.value;
     //找出商品名和商品头图链接
-    var product_url = BASE_URL + "/rest/v1/products/modellist/"+obj.value;
+    var product_url = BASE_URL + "/rest/v2/modelproducts/get_headimg?modelId="+obj.value;
     var callback = function (res) {
         console.log(res);
         if (res) {
