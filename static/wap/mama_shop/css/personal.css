@@ -11,6 +11,11 @@ body {
     border: solid 1px green;
 }
 
+.head-thumbnail {
+    width: 28%;
+}
+
+
 .xlmm-orange {
     color: #faac14;
 }
