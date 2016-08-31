@@ -9,7 +9,7 @@ function loadMamaFortune() {
     var callback = function (res) {
         if (res) {
             var fortune = res['mama_fortune'];
-            var extra = res['extra_info'];
+            var extra = fortune['extra_info'];
             
             var content = [];
             content.push('<div><img class="img-circle" style="width:20%" src=">'+extra.thumbnail+'</></div>');
