@@ -12,7 +12,7 @@ function loadMamaFortune() {
             var extra = fortune['extra_info'];
             
             var content = [];
-            content.push('<div><img class="img-circle" style="width:20%" src=">'+extra.thumbnail+'</></div>');
+            content.push('<div><img class="img-circle" style="width:20%" src=">'+extra.thumbnail+'"</></div>');
             content.push('<div><span>ID: ' + fortune.mama_id+'</span></div>');
             content.push('<div><span>店主期限:  ' + extra.surplus_days + '</span></div>');
             $("#id-profile").append(content.join(''));
