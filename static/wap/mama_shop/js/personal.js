@@ -10,6 +10,7 @@ function renderTrialMamaList(res) {
         trial_mama_next_page = res['next'];
         var arr = res['results'];
         for (var i=0; i<arr.length; ++i) {
+            var content = [];
             content.push('<div class="attender-row">');
             content.push('<div class="attender-left">');
             content.push('<img src="'+arr[i].thumbnail+'" class="img-circle" style="height:100%;">');
