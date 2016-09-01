@@ -15,6 +15,10 @@ function format_time(charge_time) {
 function renderTrialMamaList(res) {
     if (res) {
         var invite_num = res['count'];
+        if (invite_num > 0) {
+            $("#id-task1-status")[0].innerHTML = "已完成";
+            $("#id-task1-status").addClass("xlmm-orange");
+        }
         var invite_award = invite_num * 12 + 8;
         $("#id-invite-num")[0].innerHTML = invite_award+'元/'+invite_num+'人';
         
@@ -83,15 +87,30 @@ function loadMamaFortune() {
 
 
 function loadTrialMama(){
-    var fortune_url = '/rest/v1/pmt/xlmm/get_referal_mama?last_renew_type=trial';
-    var url = BASE_URL + fortune_url;
+    var trial_mama_url = '/rest/v1/pmt/xlmm/get_referal_mama?last_renew_type=trial';
+    var url = BASE_URL + trial_mama_url;
     $.ajax({url:url, success:renderTrialMamaList});
 }
 
+function checkClickCarry() {
+    var click_carry_ulr = '/rest/v2/mama/clickcarry?page_size=1&page=1';
+    var url = BASE_URL + click_carry_url;
+
+    var callback = function (res) {
+        if (res) {
+            var arr = res['results'];
+            $("#id-task2-status")[0].innerHTML = "已完成("+arr[0].click_num+"位访客)";
+            $("#id-task2-status").addClass("xlmm-orange");
+        }
+    };
+
+    $.ajax({url:url, success:callback});
+}
 
 $(document).ready(function() {
     loadMamaFortune();
     loadTrialMama();
+    checkClickCarry();
 
     $(window).on("scroll", function () {
         loadTrialMamaNextPage();

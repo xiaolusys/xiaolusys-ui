@@ -11,6 +11,10 @@ body {
     border: solid 1px green;
 }
 
+.table th, .table td {
+    text-align: center;
+}
+
 .head-thumbnail {
     width: 28%;
 }
