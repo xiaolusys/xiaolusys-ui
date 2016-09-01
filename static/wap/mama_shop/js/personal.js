@@ -93,7 +93,7 @@ function loadTrialMama(){
 }
 
 function checkClickCarry() {
-    var click_carry_ulr = '/rest/v2/mama/clickcarry?page_size=1&page=1';
+    var click_carry_url = '/rest/v2/mama/clickcarry?page_size=1&page=1';
     var url = BASE_URL + click_carry_url;
 
     var callback = function (res) {
