@@ -4,6 +4,14 @@ var BASE_URL = 'http://m.xiaolumeimei.com';
 
 var trial_mama_next_page = null;
 
+function format_time(charge_time) {
+    var idx = charge_time.search('T');
+    var content = [];
+    content.push(charge_time.substr(5,5));
+    content.push(charge_time.substr(idx+1,5));
+    return content.join(' ');
+}
+
 function renderTrialMamaList(res) {
     if (res) {
         var invite_num = res['count'];
@@ -16,14 +24,13 @@ function renderTrialMamaList(res) {
             content.push('<img src="'+arr[i].thumbnail+'" class="img-circle" style="height:100%;">');
             content.push('</div><div class="attender-middle">');
             content.push('<p class="attender-name">'+arr[i].nick+'</p>');
-            content.push('<p>'+get_time(arr[i].charge_time)+'</p>');
+            content.push('<p>'+format_time(arr[i].charge_time)+'</p>');
             content.push('</div><div class="attender-right">');
             if (i == 0) {
                 content.push('<p class="signup-status">奖励20元</p>');
             } else {
                 content.push('<p class="signup-status">奖励12元</p>');
             }
-            content.push('<p>'+get_date(arr[i].charge_time)+'</p>');
             content.push('</div></div>');
             $("#id-invite-list").append(content.join(''));
         }
@@ -36,7 +43,7 @@ function loadTrialMamaNextPage() {
     var documentHeight = $(document).height();
 
     if (scrollTop >= documentHeight - windowHeight - 20) {
-        if (nextPage) {
+        if (trial_mama_next_page) {
             $.ajax({url:trial_mama_next_page, success:renderTrialMamaList});
         }
     }
@@ -69,15 +76,6 @@ function loadMamaFortune() {
     $.ajax({url:url, success:callback});
 }
 
-function get_time(charge_time) {
-    var idx = charge_time.search('T');
-    return charge_time.substr(idx+1);
-}
-
-function get_date(charge_time) {
-    var idx = charge_time.search('T');
-    return charge_time.substr(0,idx);
-}
 
 function loadTrialMama(){
     var fortune_url = '/rest/v1/pmt/xlmm/get_referal_mama?last_renew_type=trial';
