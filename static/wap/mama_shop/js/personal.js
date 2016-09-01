@@ -18,10 +18,11 @@ function renderTrialMamaList(res) {
         if (invite_num > 0) {
             $("#id-task1-status")[0].innerHTML = "已完成";
             $("#id-task1-status").addClass("xlmm-orange");
+
+            var invite_award = (invite_num - 1) * 12 + 20;
+            $("#id-invite-num")[0].innerHTML = invite_award+'元/'+invite_num+'人';
         }
-        var invite_award = invite_num * 12 + 8;
-        $("#id-invite-num")[0].innerHTML = invite_award+'元/'+invite_num+'人';
-        
+
         trial_mama_next_page = res['next'];
         
         var arr = res['results'];
@@ -34,7 +35,7 @@ function renderTrialMamaList(res) {
             content.push('<p class="attender-name">'+arr[i].nick+'</p>');
             content.push('<p>'+format_time(arr[i].charge_time)+'</p>');
             content.push('</div><div class="attender-right xlmm-orange">');
-            if (i == 0) {
+            if (i == arr.length-1) {
                 content.push('<p class="signup-status">奖励20元</p>');
             } else {
                 content.push('<p class="signup-status">奖励12元</p>');
