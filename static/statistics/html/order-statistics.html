@@ -22,12 +22,21 @@
     <h4>上架时间段:</h4>
 
     <div class="row">
-        <div class='col-sm-3'><input type='text' class="form-control" id='datetimepicker1'/></div>
-        <div class='col-sm-3'><input type='text' class="form-control" id='datetimepicker2'/></div>
-        <div class='col-sm-4'>
-            <button class="btn btn-default" id="data-search-child" type="button">童装</button>
-            <button class="btn btn-default" id="data-search-female" type="button">女装</button>
-            <button class="btn btn-default" id="data-search-all" type="button">所有</button>
+        <div class='col-sm-2'><input type='text' class="form-control" id='datetimepicker1'/></div>
+        <div class='col-sm-2'><input type='text' class="form-control" id='datetimepicker2'/></div>
+        <div class='col-sm-6'>
+            <form class="form-inline">
+                <label class="form-group">选择类目</label>
+                <select name="category1" class="form-control">
+                    <option value="">---</option>
+                </select>
+                <select name="category2" class="form-control">
+                </select>
+                <select name="category3" class="form-control">
+                </select>
+                <button class="btn btn-default" id="data-search-query" type="button">查询</button>
+                <button class="btn btn-default" id="data-search-all" type="button">所有</button>
+            </form>
         </div>
         <div class='col-sm-2'><input class="btn btn-default" id="time-consuming" type="text" readonly/></div>
     </div>
