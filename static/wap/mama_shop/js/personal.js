@@ -104,7 +104,7 @@ function getParamValue(key) {
 
 $(document).ready(function() {
     loadMamaFortune();
-    loaTrialMama();
+    loadTrialMama();
 
     $(window).on("scroll", function () {
         loadTrialMamaNextPage();
