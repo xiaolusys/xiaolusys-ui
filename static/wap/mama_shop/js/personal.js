@@ -15,7 +15,11 @@ function format_time(charge_time) {
 function renderTrialMamaList(res) {
     if (res) {
         var invite_num = res['count'];
+        var invite_award = invite_num * 12 + 8;
+        $("#id-invite-num")[0].innerHTML = invite_award+'元/'+invite_num+'人';
+        
         trial_mama_next_page = res['next'];
+        
         var arr = res['results'];
         for (var i=0; i<arr.length; ++i) {
             var content = [];
@@ -72,6 +76,10 @@ function loadMamaFortune() {
                 $("#id-award").hide();
             }
         }
+        loadTrialMama(); // after loadMamaFortune();
+        $(window).on("scroll", function () {
+            loadTrialMamaNextPage();
+        });
     };
     $.ajax({url:url, success:callback});
 }
@@ -103,11 +111,11 @@ function getParamValue(key) {
 
 $(document).ready(function() {
     loadMamaFortune();
-    loadTrialMama();
+    //loadTrialMama();
 
-    $(window).on("scroll", function () {
-        loadTrialMamaNextPage();
-    });
+    //$(window).on("scroll", function () {
+    //    loadTrialMamaNextPage();
+    //});
 
 });
 
