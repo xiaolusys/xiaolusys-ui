@@ -46,7 +46,7 @@ function loadTrialMamaNextPage() {
     var windowHeight = $(window).height();
     var documentHeight = $(document).height();
 
-    if (scrollTop >= documentHeight - windowHeight - 20) {
+    if (scrollTop >= documentHeight - windowHeight) {
         console.log(scrollTop, documentHeight, windowHeight);
         if (trial_mama_next_page) {
             $.ajax({url:trial_mama_next_page, success:renderTrialMamaList});
