@@ -47,6 +47,7 @@ function loadTrialMamaNextPage() {
     var documentHeight = $(document).height();
 
     if (scrollTop >= documentHeight - windowHeight - 20) {
+        console.log(scrollTop, documentHeight, windowHeight);
         if (trial_mama_next_page) {
             $.ajax({url:trial_mama_next_page, success:renderTrialMamaList});
         }
@@ -76,10 +77,6 @@ function loadMamaFortune() {
                 $("#id-award").hide();
             }
         }
-        loadTrialMama(); // after loadMamaFortune();
-        $(window).on("scroll", function () {
-            loadTrialMamaNextPage();
-        });
     };
     $.ajax({url:url, success:callback});
 }
@@ -92,30 +89,12 @@ function loadTrialMama(){
 }
 
 
-function getParamValue(key) { 
-    var url = location.search; //获取url中"?"符后的字串 
-    var theRequest = new Object();
-    
-    if (url.indexOf("?") != -1) { 
-        var str = url.substr(1); 
-        strs = str.split("&"); 
-        for(var i = 0; i < strs.length; i ++) {
-            pair = strs[i].split("=")
-            if (pair[0] == key) {
-                return pair[1];
-            }
-        } 
-    } 
-    return null;
-}
-
 $(document).ready(function() {
     loadMamaFortune();
-    //loadTrialMama();
+    loadTrialMama();
 
-    //$(window).on("scroll", function () {
-    //    loadTrialMamaNextPage();
-    //});
-
+    $(window).on("scroll", function () {
+        loadTrialMamaNextPage();
+    });
 });
 
