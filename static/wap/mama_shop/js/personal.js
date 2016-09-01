@@ -33,7 +33,7 @@ function renderTrialMamaList(res) {
             content.push('</div><div class="attender-middle">');
             content.push('<p class="attender-name">'+arr[i].nick+'</p>');
             content.push('<p>'+format_time(arr[i].charge_time)+'</p>');
-            content.push('</div><div class="attender-right">');
+            content.push('</div><div class="attender-right xlmm-orange">');
             if (i == 0) {
                 content.push('<p class="signup-status">奖励20元</p>');
             } else {
