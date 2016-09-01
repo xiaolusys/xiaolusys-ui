@@ -79,7 +79,7 @@ function get_date(charge_time) {
 }
 
 function loadTrialMama(){
-    var fortune_url = '/rest/v2/pmt/xlmm/get_referal_mama?last_renew_type=trial';
+    var fortune_url = '/rest/v1/pmt/xlmm/get_referal_mama?last_renew_type=trial';
     var url = BASE_URL + fortune_url;
     $.ajax({url:url, success:renderTrialMamaList});
 }
