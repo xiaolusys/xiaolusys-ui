@@ -78,7 +78,7 @@ function get_date(charge_time) {
     return charge_time.substr(0,idx);
 }
 
-function loadTrailMama(){
+function loadTrialMama(){
     var fortune_url = '/rest/v2/pmt/xlmm/get_referal_mama?last_renew_type=trial';
     var url = BASE_URL + fortune_url;
     $.ajax({url:url, success:renderTrialMamaList});
