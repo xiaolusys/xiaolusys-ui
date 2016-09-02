@@ -7,6 +7,10 @@ body {
     
 }
 
+.hide {
+    display:none;
+}
+
 .hl {
     border: solid 1px green;
 }
