@@ -261,7 +261,8 @@ function submit_data() {
     var shelf_time = $('#shelf_time').val().trim();
     var note = $('#note_id').val().trim();
     var ware_by = $('#ware_by').val().trim();
-    var wash_instroduce = $('#wash_instroduce').val().trim();
+    var fashion = ($('#fashion') || '').val().trim();
+    var wash_instroduce = ($('#wash_instroduce')|| '').val().trim();
     var all_color = get_all_check_color();
     var all_sku = get_all_sku();
     var all_chi_ma = get_all_chima();
@@ -281,9 +282,7 @@ function submit_data() {
             all_color_str += all_color[i];
         } else {
             all_color_str += all_color[i] + ",";
-
         }
-
     }
     for (var i = 0; i < all_sku.length; i++) {
         if (i == all_sku.length - 1) {
@@ -291,7 +290,6 @@ function submit_data() {
         } else {
             all_sku_str += all_sku[i] + ",";
         }
-
     }
     for (var i = 0; i < all_chi_ma.length; i++) {
         if (i == all_chi_ma.length - 1) {
@@ -299,7 +297,6 @@ function submit_data() {
         } else {
             all_chima_str += all_chi_ma[i] + ",";
         }
-
     }
     if (product_name == "" || supplier == ""
         || material == "" || all_color_str == ""
@@ -322,6 +319,7 @@ function submit_data() {
         supplier: supplier,
         material: material,
         note: note,
+        fashion: fashion,
         all_colors: all_color_str,
         all_sku: all_sku_str,
         all_chima: all_chima_str,
