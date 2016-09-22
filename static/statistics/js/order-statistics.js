@@ -24,10 +24,49 @@ function cleanData() {
 
 }
 
+$(function(){
+    var url = '/statistics/stats/productcategory'
+    $.get(url, function(data){
+        for (var i = 0; i < data.length; i++) {
+            $('select[name="category1"]').append(`
+                  <option value="${data[i].cid}">${data[i].name}</option>
+            `)
+        }
+    })
+
+    $('select[name="category1"]').click(function(){
+        var cid = $(this).val()
+        $.get(url+'?cid='+cid, function(data){
+            $('select[name="category2"]').children().remove()
+            $('select[name="category3"]').children().remove()
+            $('select[name="category2"]').append(`<option value="">---</option>`)
+            for (var i = 0; i < data.length; i++) {
+                $('select[name="category2"]').append(`
+                      <option value="${data[i].cid}">${data[i].name}</option>
+                `)
+            }
+        })
+    })
+
+    $('select[name="category2"]').click(function(){
+        var cid = $(this).val()
+        $.get(url+'?cid='+cid, function(data){
+            $('select[name="category3"]').children().remove()
+            $('select[name="category3"]').append(`<option value="">---</option>`)
+            for (var i = 0; i < data.length; i++) {
+                $('select[name="category3"]').append(`
+                      <option value="${data[i].cid}">${data[i].name}</option>
+                `)
+            }
+        })
+    })
+})
+
 $(function () {
     var childClickBtn = $("#data-search-child");
     var femaleClickBtn = $("#data-search-female");
     var allClickBtn = $("#data-search-all");
+    var queryClickBtn = $("#data-search-query");
 
     childClickBtn.click(function () {
         cleanData();
@@ -60,6 +99,21 @@ $(function () {
             return
         }
         var data = {"time_left": time_left, "time_right": time_right};
+        getTaskRequest(data, childClickBtn);
+    });
+    queryClickBtn.click(function () {
+        cleanData();
+        var time_left = $("#datetimepicker1").val();
+        var time_right = $("#datetimepicker2").val();
+        if (time_left == "" || time_right == "") {
+            layer.msg('时间不能为空');
+            return
+        }
+        category1 = $('select[name="category1"]').val();
+        category2 = $('select[name="category2"]').val();
+        category3 = $('select[name="category3"]').val();
+        category = $('select[name="category3"]').val() ||$('select[name="category2"]').val() || $('select[name="category1"]').val()
+        var data = {"time_left": time_left, "time_right": time_right, "category": category};
         getTaskRequest(data, childClickBtn);
     });
 
