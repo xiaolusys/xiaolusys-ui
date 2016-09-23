@@ -2,7 +2,24 @@
 //var BASE_URL = 'http://staging.xiaolumeimei.com';
 var BASE_URL = 'http://m.xiaolumeimei.com';
 
+var CASHOUT_URL = '/mama_shop/html/cashout.html';
 var trial_mama_next_page = null;
+
+function canCashoutOnce() {
+    var can_cashout_once_url = '/rest/v1/pmt/cashout/can_cashout_once';
+    var url = BASE_URL + can_cashout_once_url;
+    var callback = function (res) {
+        if (res["code"] == 0) {
+            console.log(res);
+            window.location.href = CASHOUT_URL;
+        } else {
+            $("#id-msg")[0].innerHTML = res["info"];
+            $("#id-msg-box").show();
+        }
+    };
+
+    $.ajax({url:url, success:callback});
+}
 
 function format_time(charge_time) {
     var idx = charge_time.search('T');
@@ -37,9 +54,9 @@ function renderTrialMamaList(res) {
             content.push('<p>'+format_time(arr[i].charge_time)+'</p>');
             content.push('</div><div class="attender-right xlmm-orange">');
             if (i == arr.length-1) {
-                content.push('<p class="signup-status">奖励12元</p>');
+                content.push('<p class="signup-status">奖励30元</p>');
             } else {
-                content.push('<p class="signup-status">奖励12元</p>');
+                content.push('<p class="signup-status">奖励30元</p>');
             }
             content.push('</div></div>');
             $("#id-invite-list").append(content.join(''));
@@ -60,28 +77,39 @@ function loadTrialMamaNextPage() {
     }
 }
 
-function loadMamaFortune() {
-    var fortune_url = '/rest/v2/mama/fortune';
+function loadMamaProfile() {
+    var profile_url = '/rest/v1/users/profile';
+    var url = BASE_URL + profile_url;
+    var callback = function (res) {
+        if (res) {
+            var budget = res['user_budget'];
+            var budget_cash = budget.budget_cash;
+            $("#id-budget")[0].innerHTML = "零钱:" + budget_cash + "元";
+        }
+    };
+    $.ajax({url:url, success:callback});    
+}
+
+function loadMamaFortuneBrief() {
+    var fortune_url = '/rest/v2/mama/fortune/get_brief_info';
     var url = BASE_URL + fortune_url;
 
     var callback = function (res) {
         if (res) {
-            var fortune = res['mama_fortune'];
-            var extra = fortune['extra_info'];
-            
             var content = [];
-            content.push('<div><img class="img-circle head-thumbnail" src="'+extra.thumbnail+'"</></div>');
-            content.push('<div style="margin-top:8px"><span>ID: ' + fortune.mama_id+'</span></div>');
-            content.push('<div><span>店主期限:  ' + extra.surplus_days + '天</span></div>');
+            content.push('<div><img class="img-circle head-thumbnail" src="'+res['thumbnail']+'"</></div>');
+            content.push('<div style="margin-top:16px"><span>ID: ' + res['mama_id']+'</span></div>');
+            if (res['left_days'] > 0) {
+                content.push('<div><span>专业店铺（剩余' + res['left_days'] + '天）</span></div>');
+            } else {
+                content.push('<div><span>普通店铺</span></div>');
+            }
+            
             $("#id-profile").append(content.join(''));
 
             content = [];
-            content.push('<div class="xlmm-carry"><b>累计收益: '+ fortune.carry_value + '元</b></div>');
+            content.push('<div class="xlmm-carry"><b>累计收益: '+ res['carry_value'] + '元</b></div>');
             $("#id-fortune").append(content.join(''));
-
-            if (extra.surplus_days > 15) {
-                $("#id-award").hide();
-            }
         }
     };
     $.ajax({url:url, success:callback});
@@ -110,9 +138,9 @@ function checkClickCarry() {
 }
 
 $(document).ready(function() {
-    loadMamaFortune();
+    loadMamaFortuneBrief();
     loadTrialMama();
-    checkClickCarry();
+    //checkClickCarry();
 
     $(window).on("scroll", function () {
         loadTrialMamaNextPage();
