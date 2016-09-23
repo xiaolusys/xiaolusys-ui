@@ -10,7 +10,6 @@ function canCashoutOnce() {
     var url = BASE_URL + can_cashout_once_url;
     var callback = function (res) {
         if (res["code"] == 0) {
-            console.log(res);
             window.location.href = CASHOUT_URL;
         } else {
             $("#id-msg")[0].innerHTML = res["info"];
