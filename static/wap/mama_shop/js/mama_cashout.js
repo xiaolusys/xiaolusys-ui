@@ -3,7 +3,7 @@
 var BASE_URL = 'http://m.xiaolumeimei.com';
 
 var trial_mama_next_page = null;
-var max_wait_verifycode_time = 10;
+var max_wait_verifycode_time = 90;
 var global_timer = null;
 
 function format_time(charge_time) {
@@ -56,7 +56,7 @@ function requestCashoutVerifyCode() {
 }
 
 function cashoutOnce() {
-    var cashout_once_url = '/rest/v2/cashout/cashout_once';
+    var cashout_once_url = '/rest/v1/pmt/cashout/cashout_once';
     var url = BASE_URL + cashout_once_url;
     var callback = function (res) {
         if (res['code'] == 0) {
