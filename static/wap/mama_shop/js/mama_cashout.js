@@ -52,7 +52,7 @@ function requestCashoutVerifyCode() {
         }
     };
     
-    $.post({url: url, success: callback});
+    $.ajax({url:url, type:'post', success:callback});
 }
 
 function cashoutOnce() {
@@ -71,7 +71,7 @@ function cashoutOnce() {
     var verify_code = $("#id-cashout-input").val();
     var data = {"amount":amount, "verify_code":verify_code}
     
-    $.post({url:url, amount:amount, data:data, success:callback});
+    $.ajax({url:url, type:'post', data:data, success:callback});
 }
 
 
