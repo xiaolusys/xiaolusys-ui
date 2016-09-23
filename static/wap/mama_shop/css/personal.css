@@ -7,6 +7,15 @@ body {
     
 }
 
+#id-profile {
+    color: #ccc;
+}
+
+#id-cashout {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 .hide {
     display:none;
 }
@@ -23,6 +32,48 @@ body {
     width: 28%;
 }
 
+.warning {
+    padding-top: 10px;
+    color: red;
+}
+
+.cash-display {
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.number-display {
+    display: inline-block;
+}
+
+
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+
+.verifycode-input-box {
+    z-index: 1;
+    width: 70%;
+}
+
+.cashout-input {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.cashout-number-input {
+    width: 100%;
+    border-radius: 4px;
+}
+
+.submit-button {
+    margin-top: 20px;
+    text-align: center;
+}
 
 .xlmm-orange {
     color: #faac14;
@@ -36,6 +87,20 @@ body {
 .xlmm-carry {
     text-align:center;
     font-size:28px;
+}
+
+.xlmm-cash {
+    font-size: 20px;
+}
+
+.cash-display {
+    display: inline-block;
+    float: left;
+}
+
+.carry-display {
+    display: inline-block;
+    float:right;
 }
 
 .attender-row {
