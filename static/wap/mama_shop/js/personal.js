@@ -36,10 +36,10 @@ function renderTrialMamaList(res) {
             $("#id-task1-status").addClass("xlmm-orange");
 
             //var invite_award = (invite_num - 1) * 12 + 20;
-            var invite_award = (invite_num - 1) * 12;
+            var invite_award = invite_num * 30;
             $("#id-invite-num")[0].innerHTML = invite_award+'元/'+invite_num+'人';
         }
-
+        
         trial_mama_next_page = res['next'];
         
         var arr = res['results'];
