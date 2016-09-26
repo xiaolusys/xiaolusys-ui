@@ -12,7 +12,8 @@ var top10_pic_model = {
     model_id:0,
     product_name:'',
     pic_path:'',
-    location_id:0
+    location_id:0,
+    jump_url:''
 };
 
 function showTop10Pics(activity_id) {
@@ -58,6 +59,7 @@ function showTop10Pics(activity_id) {
                         top10_pics[i].model_id=res[i].model_id;
                         top10_pics[i].product_name=res[i].product_name;
                         top10_pics[i].pic_path=res[i].product_img;
+                        top10_pics[i].jump_url=res[i].jump_url;
                     }
                     else{
                         top10_pics[i].location_id = i+1;
@@ -215,6 +217,29 @@ function modelidChange(obj,event){
     }
 }
 
+function jumpTypeChange(obj,event){
+    var keynum;
+    var keychar;
+    keynum = window.event ? event.keyCode : event.which;
+    keychar = String.fromCharCode(keynum);
+    if(keynum != 13) return;
+
+    //alert("changed value is " + obj);
+    var tr_id=$(obj).closest('tr').attr('id');
+    console.log("tr ="+ tr_id + " jumtypeid="+obj.value);
+
+    if(obj.value ){
+        if (top10_pics[tr_id].jump_url.indexOf('activity_id') > 0 ){
+            tempurl = obj.value + "&url=" + "http://m.xiaolumeimei.com/mall/activity/topTen/model/2?id=" + obj.value;
+            top10_pics[tr_id].jump_url += tempurl;
+        }
+        else{
+            top10_pics[tr_id].jump_url += obj.value;
+        }
+    }
+
+}
+
 function initTable(){
     //console.log("init table");
     if(g_pic_num ==0 )
@@ -269,6 +294,14 @@ function insertRow(rowid)
           '<td><img class="preview_img" src="" style="float: right" width="100px" height="100px"></td>'+
           '<td><a class="btn btn-info pic_of_top10" style="margin-top: 5px;float: right" onclick="uploadPic(this)"' +
                                'cid="upload_top10.html">上传图片</a></td>' +
+          '<td><div class="col-sm-3 dropdown">' +
+                '<input id="jumpMenu'+ rowid + '" type="button" class="btn dropdown-toggle"  data-toggle="dropdown" value="选择跳转类型"/>' +
+                '<ul class="dropdown-menu" aria-labelledby="condition-record-type">' +
+                    '<li><a  class="dimension jump-type"  type-id="0">活动</a></li>' +
+                    '<li><a  class="dimension jump-type"  type-id="1">分类</a></li>' +
+                '</ul>' +
+            '</div></td>' +
+          '<td><input class="jump_url" type="text"  placeholder="输入跳到的活动id或分类id" onkeydown="jumpTypeChange(this,event)" ></td>' +
           '<td><a class="btn btn-info del" style="margin-top: 5px;float: right" onclick="delRow(this)">删除</a></td>' +
         '</tr>';
 
@@ -281,6 +314,18 @@ function insertRow(rowid)
         console.log( $(this).attr('type-id'));
         $("#dropdownMenu"+rowid).val($(this).html());
         top10_pics[rowid].pic_type = $(this).attr('type-id');
+    });
+
+    $(".jump-type").click(function(){
+        var rowid= $(this).closest('tr').attr('id');
+        console.log( $(this).attr('type-id'));
+        $("#jumpMenu"+rowid).val($(this).html());
+        if ($(this).attr('type-id') == 0){
+            top10_pics[rowid].jump_url = "com.jimei.xlmm://app/v1/webview?activity_id=";
+        }
+        else{
+            top10_pics[rowid].jump_url = "com.jimei.xlmm://app/v1/products/category?cid=";
+        }
     });
 }
 
@@ -327,6 +372,14 @@ function insertRowWithData(rowid, arr)
           '<td><img class="preview_img" src="" style="float: right" width="100px" height="100px"></td>'+
           '<td><a class="btn btn-info pic_of_top10" style="margin-top: 5px;float: right" onclick="uploadPic(this)"' +
                                'cid="upload_top10.html">上传图片</a></td>' +
+          '<td><div class="col-sm-3 dropdown">' +
+                '<input id="jumpMenu'+ rowid + '" type="button" class="btn dropdown-toggle"  data-toggle="dropdown" value="选择跳转类型"/>' +
+                '<ul class="dropdown-menu" aria-labelledby="condition-record-type">' +
+                    '<li><a  class="dimension jump-type"  type-id="0">活动</a></li>' +
+                    '<li><a  class="dimension jump-type"  type-id="1">分类</a></li>' +
+                '</ul>' +
+            '</div></td>' +
+          '<td><input class="jump_url" type="text"  placeholder="输入跳到的活动id或分类id" onkeydown="jumpTypeChange(this,event)" ></td>' +
           '<td><a class="btn btn-info del" style="margin-top: 5px;float: right" onclick="delRow(this)">删除</a></td>' +
         '</tr>';
   }
@@ -379,6 +432,24 @@ function insertRowWithData(rowid, arr)
         pic_path = arr[rowid].pic_path;
       }
 
+      var jump_type="";
+      var jump_id="";
+      if(arr[rowid].jump_url == null || arr[rowid].jump_url == undefined || arr[rowid].jump_url=="" ){
+           jump_type="选择跳转类型";
+           jump_id="";
+      } else {
+            begin = arr[rowid].jump_url.indexOf("activity_id");
+            if(begin>0){
+                jump_type="活动";
+                jump_id="";
+            } else{
+                jump_type="分类";
+
+                jump_id=""+parseInt(arr[rowid].jump_url.substring(begin+12));
+
+            }
+      }
+
       rowinfo += '<tr id=' +rowid + ' >' +
                     '<td><input class="location_id" type="text"  onkeydown="locationChange(this,event)" value="'+ location_id+ '"> </td>' +
               '<td><div class="col-sm-3 dropdown">' +
@@ -399,6 +470,14 @@ function insertRowWithData(rowid, arr)
               '<td><img class="preview_img" src='+ pic_path+' style="float: right" width="100px" height="100px"></td>'+
               '<td><a class="btn btn-info pic_of_top10" style="margin-top: 5px;float: right" onclick="uploadPic(this)"' +
                                    'cid="upload_top10.html">上传图片</a></td>' +
+              '<td><div class="col-sm-3 dropdown">' +
+                '<input id="jumpMenu'+ rowid + '" type="button" class="btn dropdown-toggle"  data-toggle="dropdown" value='+ jump_type +' />' +
+                '<ul class="dropdown-menu" aria-labelledby="condition-record-type">' +
+                    '<li><a  class="dimension jump-type"  type-id="0">活动</a></li>' +
+                    '<li><a  class="dimension jump-type"  type-id="1">分类</a></li>' +
+                '</ul>' +
+              '</div></td>' +
+              '<td><input class="jump_url" type="text"  placeholder="输入跳到的活动id或分类id" onkeydown="jumpTypeChange(this,event)" value="'+ jump_id+'"></td>' +
               '<td><a class="btn btn-info del" style="margin-top: 5px;float: right" onclick="delRow(this)" >删除</a></td>' +
             '</tr>';
   }
@@ -412,6 +491,18 @@ function insertRowWithData(rowid, arr)
         console.log( $(this).attr('type-id'));
         $("#dropdownMenu"+rowid).val($(this).html());
         top10_pics[rowid].pic_type = $(this).attr('type-id');
+    });
+
+    $(".jump-type").click(function(){
+        var rowid= $(this).closest('tr').attr('id');
+        console.log( $(this).attr('type-id'));
+        $("#jumpMenu"+rowid).val($(this).html());
+        if ($(this).attr('type-id') == 0){
+            top10_pics[rowid].jump_url = "com.jimei.xlmm://app/v1/webview?activity_id=";
+        }
+        else{
+            top10_pics[rowid].jump_url = "com.jimei.xlmm://app/v1/products/category?cid=";
+        }
     });
 }
 
