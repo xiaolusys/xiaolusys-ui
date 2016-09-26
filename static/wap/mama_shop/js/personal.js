@@ -14,6 +14,7 @@ function canCashoutOnce() {
         } else {
             $("#id-msg")[0].innerHTML = res["info"];
             $("#id-msg-box").show();
+            alert(res["info"]);
         }
     };
 
