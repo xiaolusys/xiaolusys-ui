@@ -47,6 +47,8 @@ function requestCashoutVerifyCode() {
     var callback = function (res) {
         if (res['code'] == 0) {
             disableVerifyCodeButton();
+        } else if (res['code'] == 1) {
+            alert(res['info'] + '请到［我的店铺］左上角进入绑定手机！');
         } else {
             alert(res['info']);
         }
