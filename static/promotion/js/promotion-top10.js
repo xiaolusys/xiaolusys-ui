@@ -12,7 +12,8 @@ var top10_pic_model = {
     model_id:0,
     product_name:'',
     pic_path:'',
-    location_id:0
+    location_id:0,
+    jump_url:''
 };
 
 function showTop10Pics(activity_id) {
@@ -215,6 +216,29 @@ function modelidChange(obj,event){
     }
 }
 
+function jumpTypeChange(obj,event){
+    var keynum;
+    var keychar;
+    keynum = window.event ? event.keyCode : event.which;
+    keychar = String.fromCharCode(keynum);
+    if(keynum != 13) return;
+
+    //alert("changed value is " + obj);
+    var tr_id=$(obj).closest('tr').attr('id');
+    console.log("tr ="+ tr_id + " jumtypeid="+obj.value);
+
+    if(obj.value ){
+        if (top10_pics[tr_id].jump_url.indexOf('activity_id') > 0 ){
+            tempurl = obj.value + "&url=" + "http://m.xiaolumeimei.com/mall/activity/topTen/model/2?id=" + obj.value;
+            top10_pics[tr_id].jump_url += tempurl;
+        }
+        else{
+            top10_pics[tr_id].jump_url += obj.value;
+        }
+    }
+
+}
+
 function initTable(){
     //console.log("init table");
     if(g_pic_num ==0 )
@@ -269,6 +293,14 @@ function insertRow(rowid)
           '<td><img class="preview_img" src="" style="float: right" width="100px" height="100px"></td>'+
           '<td><a class="btn btn-info pic_of_top10" style="margin-top: 5px;float: right" onclick="uploadPic(this)"' +
                                'cid="upload_top10.html">上传图片</a></td>' +
+          '<td><div class="col-sm-3 dropdown">' +
+                '<input id="jumpMenu'+ rowid + '" type="button" class="btn dropdown-toggle"  data-toggle="dropdown" value="选择跳转类型"/>' +
+                '<ul class="dropdown-menu" aria-labelledby="condition-record-type">' +
+                    '<li><a  class="dimension jump-type"  type-id="0">活动</a></li>' +
+                    '<li><a  class="dimension jump-type"  type-id="1">分类</a></li>' +
+                '</ul>' +
+            '</div></td>' +
+            '<td><input class="jump_url" type="text"  placeholder="输入跳转到的活动id或分类id" onkeydown="jumpTypeChange(this,event)" ></td>' +
           '<td><a class="btn btn-info del" style="margin-top: 5px;float: right" onclick="delRow(this)">删除</a></td>' +
         '</tr>';
 
@@ -281,6 +313,18 @@ function insertRow(rowid)
         console.log( $(this).attr('type-id'));
         $("#dropdownMenu"+rowid).val($(this).html());
         top10_pics[rowid].pic_type = $(this).attr('type-id');
+    });
+
+    $(".jump-type").click(function(){
+        var rowid= $(this).closest('tr').attr('id');
+        console.log( $(this).attr('type-id'));
+        $("#jumpMenu"+rowid).val($(this).html());
+        if ($(this).attr('type-id') == 0){
+            top10_pics[rowid].jump_url = "com.jimei.xlmm://app/v1/webview?activity_id=";
+        }
+        else{
+            top10_pics[rowid].jump_url = "com.jimei.xlmm://app/v1/products/category?cid=";
+        }
     });
 }
 
