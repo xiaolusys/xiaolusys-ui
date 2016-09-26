@@ -37,7 +37,7 @@ function renderTrialMamaList(res) {
 
             //var invite_award = (invite_num - 1) * 12 + 20;
             var invite_award = invite_num * 30;
-            $("#id-invite-num")[0].innerHTML = invite_award+'元/'+invite_num+'人';
+            $("#id-invite-num")[0].innerHTML = invite_num+'人';
         }
         
         trial_mama_next_page = res['next'];
@@ -52,11 +52,7 @@ function renderTrialMamaList(res) {
             content.push('<p class="attender-name">'+arr[i].nick+'</p>');
             content.push('<p>'+format_time(arr[i].charge_time)+'</p>');
             content.push('</div><div class="attender-right xlmm-orange">');
-            if (i == arr.length-1) {
-                content.push('<p class="signup-status">奖励30元</p>');
-            } else {
-                content.push('<p class="signup-status">奖励30元</p>');
-            }
+            content.push('<p class="signup-status">粉丝确定</p>');
             content.push('</div></div>');
             $("#id-invite-list").append(content.join(''));
         }
