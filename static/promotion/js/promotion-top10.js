@@ -443,11 +443,11 @@ function insertRowWithData(rowid, arr)
             begin = arr[rowid].jump_url.indexOf("activity_id");
             if(begin>0){
                 jump_type="活动";
-                jump_id="" + parseInt(arr[rowid].jump_url.substring(begin+12));
+                jump_id = parseInt(arr[rowid].jump_url.substring(begin+12));
             } else{
                 jump_type="分类";
                 begin = arr[rowid].jump_url.indexOf("cid");
-                jump_id=""+parseInt(arr[rowid].jump_url.substring(begin+4));
+                jump_id = arr[rowid].jump_url.substring(begin+4);
 
             }
       }
@@ -479,7 +479,7 @@ function insertRowWithData(rowid, arr)
                     '<li><a  class="dimension jump-type"  type-id="1">分类</a></li>' +
                 '</ul>' +
               '</div></td>' +
-              '<td><input class="jump_url" type="text"  placeholder="输入跳到的活动id或分类id" onkeydown="jumpTypeChange(this,event)" value="'+ jump_id+'"></td>' +
+              '<td><input class="jump_url" type="text"  placeholder="输入跳到的活动id或分类id" onkeydown="jumpTypeChange(this,event)" value='+ jump_id+'></td>' +
               '<td><a class="btn btn-info del" style="margin-top: 5px;float: right" onclick="delRow(this)" >删除</a></td>' +
             '</tr>';
   }
