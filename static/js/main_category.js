@@ -301,8 +301,7 @@ function submit_data() {
     if (product_name == "" || supplier == ""
         || material == "" || all_color_str == ""
         || all_sku_str == "" || (all_chima_str == "" && need_chima)
-        || shelf_time == "" || header_img_content == ""
-        || wash_instroduce == "") {
+        || shelf_time == "" || header_img_content == "") {
         swal("tips", "请填写完整的基本信息(^_^)", "error");
         return
     }
