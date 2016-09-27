@@ -70,8 +70,8 @@ function cashoutOnce() {
             $("#id-msg").css("color", "red");
         }
     };
-    var amount = $("#id-verifycode-input").val();
-    var verify_code = $("#id-cashout-input").val();
+    var verify_code = $("#id-verifycode-input").val();
+    var amount = $("#id-cashout-input").val();
     var data = {"amount":amount, "verify_code":verify_code}
     
     $.ajax({url:url, type:'post', data:data, success:callback});
