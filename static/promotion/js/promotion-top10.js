@@ -443,11 +443,11 @@ function insertRowWithData(rowid, arr)
             begin = arr[rowid].jump_url.indexOf("activity_id");
             if(begin>0){
                 jump_type="活动";
-                jump_id="";
+                jump_id="" + parseInt(arr[rowid].jump_url.substring(begin+12));
             } else{
                 jump_type="分类";
-
-                jump_id=""+parseInt(arr[rowid].jump_url.substring(begin+12));
+                begin = arr[rowid].jump_url.indexOf("cid");
+                jump_id=""+parseInt(arr[rowid].jump_url.substring(begin+4));
 
             }
       }
