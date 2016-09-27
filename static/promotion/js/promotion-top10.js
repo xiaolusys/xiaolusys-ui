@@ -230,10 +230,12 @@ function jumpTypeChange(obj,event){
 
     if(obj.value ){
         if (top10_pics[tr_id].jump_url.indexOf('activity_id') > 0 ){
+            top10_pics[tr_id].jump_url = "com.jimei.xlmm://app/v1/webview?activity_id=";
             tempurl = obj.value + "&url=" + "http://m.xiaolumeimei.com/mall/activity/topTen/model/2?id=" + obj.value;
             top10_pics[tr_id].jump_url += tempurl;
         }
         else{
+            top10_pics[tr_id].jump_url = "com.jimei.xlmm://app/v1/products/category?cid=";
             top10_pics[tr_id].jump_url += obj.value;
         }
     }
