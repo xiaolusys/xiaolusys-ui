@@ -3,7 +3,7 @@
 var BASE_URL = 'http://m.xiaolumeimei.com';
 
 var trial_mama_next_page = null;
-var max_wait_verifycode_time = 90;
+var max_wait_verifycode_time = 180;
 var global_timer = null;
 
 function format_time(charge_time) {
@@ -47,6 +47,7 @@ function requestCashoutVerifyCode() {
     var callback = function (res) {
         if (res['code'] == 0) {
             disableVerifyCodeButton();
+            alert("您的验证码已发送成功，请耐心等待，不要短时间重复发送验证码，验证超过5次今日提现将锁定！");
         } else if (res['code'] == 1) {
             alert(res['info'] + '请到［我的店铺］左上角进入绑定手机！');
         } else {
