@@ -94,7 +94,7 @@ function loadMamaFortuneBrief() {
         if (res) {
             var content = [];
             content.push('<div><img class="img-circle head-thumbnail" src="'+res['thumbnail']+'"</></div>');
-            content.push('<div style="margin-top:16px"><span>ID: ' + res['mama_id']+'</span></div>');
+            content.push('<div style="margin-top:16px"><span>ID: ' + res['mama_id']+' <a href="/mall/mct.html">充值返现>></a></span></div>');
             if (res['left_days'] > 0) {
                 content.push('<div><span>专业店铺（剩余' + res['left_days'] + '天）</span></div>');
             } else {
