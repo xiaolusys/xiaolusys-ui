@@ -49,7 +49,7 @@ function requestCashoutVerifyCode() {
             disableVerifyCodeButton();
             alert("您的验证码已发送成功，请耐心等待，不要短时间重复发送验证码，验证超过5次今日提现将锁定！");
         } else if (res['code'] == 1) {
-            alert(res['info'] + '请到［我的店铺］左上角进入绑定手机！');
+            alert(res['info'] + '请先绑定手机！');
         } else {
             alert(res['info']);
         }
