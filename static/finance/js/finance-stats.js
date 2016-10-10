@@ -178,8 +178,6 @@ var returnGoodStats = function (dateFrom, dateTo) {
 
 
 
-
-
 var depositStats = function (dateFrom, dateTo) {
     var data = {'date_from': dateFrom, 'date_to': dateTo};
     var url = '/apis/finance/v1/deposit_stats';
@@ -355,6 +353,73 @@ var stockStats = function (dateFrom, dateTo) {
     serverData(data, func, url, 'get')
 };
 
+
+var orderCarryStats = function (dateFrom, dateTo) {
+    var data = {'date_from': dateFrom, 'date_to': dateTo};
+    var url = '/apis/finance/v1/mama_order_carry_stats';
+    var func = function (res) {
+        console.log('order-carry', res);
+        var dateArray = [];
+        var carryNumData = [];
+        var orderValueData = [];
+        $('#order-carry-stats-tbody').empty();
+        $.each(res.items_data, function (k, v) {
+            dateArray.push(v.date);
+            carryNumData.push(v.sum_carry_num);
+            orderValueData.push(v.sum_order_value);
+            createTemplateDom(v, 'order-carry-stats-template', 'order-carry-stats-tbody');
+        });
+        var myChart = echarts.init(document.getElementById('order-carry-stats'));
+        var option = {
+            color: ['blue', 'green'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'line'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: dateArray, //['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '提成金额',
+                    type: 'bar',
+                    barWidth: '20%',
+                    data: carryNumData//[10, 52, 200, 334, 390, 330, 220]
+                },
+                {
+                    name: '交易额',
+                    type: 'bar',
+                    barWidth: '20%',
+                    data: orderValueData//[10, 52, 200, 334, 390, 330, 220]
+                }
+            ]
+        };
+
+        myChart.setOption(option);
+    };
+    serverData(data, func, url, 'get')
+};
+
+
 var getSumDate = function () {
     var dateFrom = $('#date-from').val();
     var dateTo = $('#date-to').val();
@@ -366,6 +431,7 @@ var getSumDate = function () {
         costStats(dateFrom, dateTo);
         stockStats(dateFrom, dateTo);
         returnGoodStats(dateFrom, dateTo);
+        orderCarryStats(dateFrom, dateTo);
     } else {
         layer.msg('请选择时间');
     }
