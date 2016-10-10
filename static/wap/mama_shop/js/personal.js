@@ -137,7 +137,7 @@ function loadClickCarry() {
 $(document).ready(function() {
     loadMamaFortuneBrief();
     loadTrialMama();
-    checkClickCarry();
+    loadClickCarry();
 
     $(window).on("scroll", function () {
         loadTrialMamaNextPage();
