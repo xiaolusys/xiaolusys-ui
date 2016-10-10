@@ -121,7 +121,7 @@ function loadTrialMama(){
 }
 
 function loadClickCarry() {
-    var click_carry_url = 'rest/v2/mama/clickcarry/get_total';
+    var click_carry_url = '/rest/v2/mama/clickcarry/get_total';
     var url = BASE_URL + click_carry_url;
 
     var callback = function (res) {
