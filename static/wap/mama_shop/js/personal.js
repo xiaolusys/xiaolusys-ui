@@ -127,7 +127,7 @@ function loadClickCarry() {
     var callback = function (res) {
         if (res) {
             $("#id-clickcarry-value")[0].innerHTML = '¥'+res['carry_num'];
-            $("#id-visitor-value")[0].innerHTML = res['visotr_num'];
+            $("#id-visitor-value")[0].innerHTML = res['visitor_num']+'位';
         }
     };
 
