@@ -20,7 +20,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/3.2.2/echarts.common.min.js"></script>
 </head>
 
-<body class="container" style="margin-bottom: 300px">
+<body class="container"  style="margin-bottom: 300px">
 
 <div class="row" style="margin-top: 30px">
     <div class="col-sm-2">
@@ -52,14 +52,6 @@
         <div id="channel-pay-stats" style="width: 400px;height:200px;"></div>
     </div>
 </div>
-<script type="text/html" id="channel-pay-template">
-    <tr>
-        <td>{{ channel }}</td>
-        <td>{{ channel_display }}</td>
-        <td>{{ count }}</td>
-        <td>{{ sum_payment }}</td>
-    </tr>
-</script>
 
 
 <div class="row" style="margin-top: 30px">
@@ -81,16 +73,6 @@
         <div id="refund-stats" style="width: 400px;height:200px;"></div>
     </div>
 </div>
-<script type="text/html" id="refund-stats-template">
-    <tr>
-        <td>{{ refund_status }}</td>
-        <td>{{ refund_status_display }}</td>
-        <td>{{ count }}</td>
-        <td>{{ sum_payment }}</td>
-    </tr>
-</script>
-
-
 
 
 <div class="row" style="margin-top: 30px">
@@ -113,16 +95,6 @@
     </div>
 </div>
 
-<script type="text/html" id="return-good-stats-template">
-    <tr>
-        <td>{{ return_goods_status }}</td>
-        <td>{{ return_good_status_display }}</td>
-        <td>{{ count }}</td>
-        <td>{{ sum_payment }}</td>
-    </tr>
-</script>
-
-
 <div class="row" style="margin-top: 30px">
     <div class="col-sm-6">
         <table class="table table-bordered">
@@ -142,14 +114,6 @@
         <div id="deposit-stats" style="width: 400px;height:200px;"></div>
     </div>
 </div>
-<script type="text/html" id="deposit-stats-template">
-    <tr>
-        <td>{{ sku_id }}</td>
-        <td>{{ deposit_display }}</td>
-        <td>{{ count }}</td>
-        <td>{{ sum_payment }}</td>
-    </tr>
-</script>
 
 
 <div class="row" style="margin-top: 30px">
@@ -173,16 +137,6 @@
     </div>
 </div>
 
-<script type="text/html" id="cost-stats-template">
-    <tr>
-        <td>{{ date }}</td>
-        <td>{{ sum_num }}</td>
-        <td>{{ sum_cost }}</td>
-        <td>{{ sum_payment }}</td>
-        <td>{{ profit }}</td>
-    </tr>
-</script>
-
 
 <div class="row" style="margin-top: 30px">
     <div class="col-sm-6">
@@ -204,6 +158,74 @@
     </div>
 </div>
 
+
+<div class="row" style="margin-top: 30px">
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>日期</th>
+                <th>订单笔数</th>
+                <th>交易金额</th>
+                <th>提成金额</th>
+            </tr>
+            </thead>
+            <tbody id="order-carry-stats-tbody">
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <div id="order-carry-stats" style="width: 700px;height:500px;"></div>
+    </div>
+</div>
+
+
+<script type="text/html" id="channel-pay-template">
+    <tr>
+        <td>{{ channel }}</td>
+        <td>{{ channel_display }}</td>
+        <td>{{ count }}</td>
+        <td>{{ sum_payment }}</td>
+    </tr>
+</script>
+
+<script type="text/html" id="refund-stats-template">
+    <tr>
+        <td>{{ refund_status }}</td>
+        <td>{{ refund_status_display }}</td>
+        <td>{{ count }}</td>
+        <td>{{ sum_payment }}</td>
+    </tr>
+</script>
+
+<script type="text/html" id="return-good-stats-template">
+    <tr>
+        <td>{{ return_goods_status }}</td>
+        <td>{{ return_good_status_display }}</td>
+        <td>{{ count }}</td>
+        <td>{{ sum_payment }}</td>
+    </tr>
+</script>
+
+<script type="text/html" id="deposit-stats-template">
+    <tr>
+        <td>{{ sku_id }}</td>
+        <td>{{ deposit_display }}</td>
+        <td>{{ count }}</td>
+        <td>{{ sum_payment }}</td>
+    </tr>
+</script>
+
+<script type="text/html" id="cost-stats-template">
+    <tr>
+        <td>{{ date }}</td>
+        <td>{{ sum_num }}</td>
+        <td>{{ sum_cost }}</td>
+        <td>{{ sum_payment }}</td>
+        <td>{{ profit }}</td>
+    </tr>
+</script>
+
 <script type="text/html" id="stock-stats-template">
     <tr>
         <td>{{ category_id }}</td>
@@ -213,8 +235,14 @@
     </tr>
 </script>
 
-
-
+<script type="text/html" id="order-carry-stats-template">
+    <tr>
+        <td>{{ date }}</td>
+        <td>{{ count }}</td>
+        <td>{{ sum_order_value }}</td>
+        <td>{{ sum_carry_num }}</td>
+    </tr>
+</script>
 
 <script type="text/javascript" src="//cdn.bootcss.com/plupload/2.1.7/plupload.full.min.js"></script>
 <script type="text/javascript" src="//cdn.bootcss.com/plupload/2.1.7/i18n/zh_CN.js"></script>
