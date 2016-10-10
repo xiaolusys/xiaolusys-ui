@@ -16,6 +16,10 @@ body {
     margin-bottom: 20px;
 }
 
+.deeppink {
+    color: #FF1493;
+}
+
 .hide {
     display:none;
 }

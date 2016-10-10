@@ -94,8 +94,8 @@ function loadMamaFortuneBrief() {
             }
             $("#id-profile").append(content.join(''));
             
-            $("#id-cash-value")[0].innerHTML = res['cash_value'];
-            $("#id-carry-value")[0].innerHTML = res['carry_value'];
+            $("#id-cash-value")[0].innerHTML = '¥'+res['cash_value'];
+            $("#id-carry-value")[0].innerHTML = '¥'+res['carry_value'];
         }
     };
     $.ajax({url:url, success:callback});
