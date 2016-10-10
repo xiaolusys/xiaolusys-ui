@@ -94,18 +94,20 @@ function loadMamaFortuneBrief() {
         if (res) {
             var content = [];
             content.push('<div><img class="img-circle head-thumbnail" src="'+res['thumbnail']+'"</></div>');
-            content.push('<div style="margin-top:16px"><span>ID: ' + res['mama_id']+' <a href="/mall/mcf.html">充值返现>></a></span></div>');
+            if (res['last_renew_type'] < 183) {
+                content.push('<div style="margin-top:16px"><span>ID: ' + res['mama_id']+' <a href="/mall/mcf.html">升级专业店铺>></a></span></div>');
+            } else {
+                content.push('<div style="margin-top:16px"><span>ID: ' + res['mama_id']);                
+            }
             if (res['left_days'] > 0) {
-                content.push('<div><span>专业店铺（剩余' + res['left_days'] + '天）</span></div>');
+                content.push('<div><span>普通店铺（试用 '+ res['left_days'] +'天）</span></div>');
             } else {
                 content.push('<div><span>普通店铺</span></div>');
             }
-            
             $("#id-profile").append(content.join(''));
-
-            content = [];
-            content.push('<div class="xlmm-carry"><b>累计收益: '+ res['carry_value'] + '元</b></div>');
-            $("#id-fortune").append(content.join(''));
+            
+            $("#id-cash-value")[0].innerHTML = '¥'+res['cash_value'];
+            $("#id-carry-value")[0].innerHTML = '¥'+res['carry_value'];
         }
     };
     $.ajax({url:url, success:callback});
@@ -118,15 +120,14 @@ function loadTrialMama(){
     $.ajax({url:url, success:renderTrialMamaList});
 }
 
-function checkClickCarry() {
-    var click_carry_url = '/rest/v2/mama/clickcarry?page_size=1&page=1';
+function loadClickCarry() {
+    var click_carry_url = 'rest/v2/mama/clickcarry/get_total';
     var url = BASE_URL + click_carry_url;
 
     var callback = function (res) {
         if (res) {
-            var arr = res['results'];
-            $("#id-task2-status")[0].innerHTML = "已完成("+arr[0].click_num+"位访客)";
-            $("#id-task2-status").addClass("xlmm-orange");
+            $("#id-clickcarry-value")[0].innerHTML = '¥'+res['carry_num'];
+            $("#id-visitor-value")[0].innerHTML = res['visotr_num'];
         }
     };
 
@@ -136,7 +137,7 @@ function checkClickCarry() {
 $(document).ready(function() {
     loadMamaFortuneBrief();
     loadTrialMama();
-    //checkClickCarry();
+    checkClickCarry();
 
     $(window).on("scroll", function () {
         loadTrialMamaNextPage();
