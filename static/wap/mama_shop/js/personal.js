@@ -97,16 +97,16 @@ function loadMamaFortuneBrief() {
             if (res['last_renew_type'] < 183) {
                 content.push('<div style="margin-top:16px"><span>ID: ' + res['mama_id']+' <a href="/mall/mcf.html">升级专业店铺>></a></span></div>');
                 if (res['left_days'] > 0) {
-                    content.push('<div><span>专业店铺（剩余 '+ res['left_days'] +'天）</span></div>');
+                    content.push('<div><span>普通店铺（试用 '+ res['left_days'] +'天）</span></div>');
                 } else {
-                    content.push('<div><span>专业店铺</span></div>');
+                    content.push('<div><span>普通店铺</span></div>');
                 }
             } else {
                 content.push('<div style="margin-top:16px"><span>ID: ' + res['mama_id']);                
                 if (res['left_days'] > 0) {
-                    content.push('<div><span>普通店铺（试用 '+ res['left_days'] +'天）</span></div>');
+                    content.push('<div><span>专业店铺（剩余 '+ res['left_days'] +'天）</span></div>');
                 } else {
-                    content.push('<div><span>普通店铺</span></div>');
+                    content.push('<div><span>专业店铺</span></div>');
                }   
             }
             $("#id-profile").append(content.join(''));
