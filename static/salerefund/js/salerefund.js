@@ -43,13 +43,20 @@ function createTemplateDom(obj, templateElementId, containerElementId) {
 var getSaleRefund = function (saleRefundId) {
     var url = '/apis/pay/v1/salerefund/' + saleRefundId;
     var func = function (res) {
-        console.log(res);
         var goodStatus = $.inArray(res.good_status, [1, 2]);// 买家收到货　买家已经退货
         if (res.status == 4 && goodStatus >= 0) {
             res.status_display = '同意退货';
         }
         createTemplateDom(res, 'sale_refund_info_tpl', 'sale_refund_info');
         createTemplateDom(res, 'sale_refund_form_tpl', 'sale_refund_form');
+        if (res.manual_refund == false) {
+            $("#manual_refund_container").attr("hidden", 'hidden');
+        }
+        $.each(res.proof_pic, function (index, proof_pic) {
+            var html = hereDoc($("#proof_pic_tpl").html()).template({"proof_pic": proof_pic});
+            $('#proof_pic').append(html);
+        });
+
     };
     serverData({}, func, url, 'get')
 };
