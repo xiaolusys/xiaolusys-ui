@@ -22,6 +22,9 @@
 <body>
 <div id="sale_refund_info"></div>
 <div id="sale_refund_form"></div>
+<div id="proof_pic">
+    <h3>佐证图片:</h3>
+</div>
 </body>
 
 <script type="text/html" id="sale_refund_info_tpl">
@@ -67,8 +70,9 @@
                 <li class="list-group-item">退款费用：{{ refund_fee }}</li>
                 <li class="list-group-item">手机号码：{{ mobile }}</li>
                 <li class="list-group-item">修改时间：{{ modified }}</li>
-                <li class="list-group-item">退款状态：{{ status_display }}</li>
+                <li class="list-group-item"><strong>退款状态：{{ status_display }}</strong></li>
                 <li class="list-group-item">申请理由：{{ reason }}</li>
+                <li class="list-group-item"><strong>退货状态：{{ good_status_display }}</strong></li>
             </ul>
         </div>
 
@@ -117,13 +121,21 @@
                     <option value="2000">￥20</option>
                 </select>
             </div>
-            <div class="col-xs-2">
+            <div class="col-xs-1" id="manual_refund_container">
+                <h3><span class="label label-danger">退款:　<input type="checkbox" name="manual_refund"/></span></h3>
+            </div>
+            <div class="col-xs-1">
                 <button type="submit" class="btn btn-warning">提交</button>
             </div>
         </form>
     </div>
 </script>
 
+<script type="text/html" id="proof_pic_tpl">
+    <div class="col-xs-2 thumbnail">
+        <img src="{{ proof_pic }}"/>
+    </div>
+</script>
 <script>
     $(function () {
         var saleRefundId = getUrlParam('sale_refund_id');
