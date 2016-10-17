@@ -28,8 +28,13 @@
            <input type="text" class="form-control" placeholder="输入推广id" oninput="idChange(this.value, event)" />
            <label >图片个数</label>
            <input type="text" class="form-control" placeholder="输入图片个数,包含商品和banner等" onkeydown="goodsNumChange(this.value, event)" />
-
+           <label class="label-db-pic-num">数据库中已有图片个数</label>
        </form>
+        <div class="form-inline">
+            <label class="form-control">关联排期ID</label>
+            <input type="text" class="form-control" placeholder="输入id" oninput="scheduleIdChange(this.value, event)" />
+            <button class="form-control" style="width:100px; color:red" onclick='queryClick(this)'> 关联 </button>
+        </div>
     </div>
 
     <div class="container" id="id-container">
@@ -54,9 +59,9 @@
 
     </div>
 
-    <div style="text-align:center">
+    <div class="col-lg-4 col-lg-offset-4" style="text-align:center">
 
-        <input class ='form-control' type='button' onclick='commitClick(this)' value='保存' width="100px"/>
+        <button  type='button' onclick='commitClick(this)' style="width:100px; color:red; border:1px solid red;">保存</button>
 
     </div>
 

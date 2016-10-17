@@ -4,6 +4,7 @@
 var BASE_URL = '';
 var g_activity_id = 0;
 var g_pic_num = 0;
+var g_schedule_id = 0;
 
 var top10_pics = new Array();
 var top10_pic_model = {
@@ -37,6 +38,7 @@ function showTop10Pics(activity_id) {
 //                            '<td>操作</th>'+
 //                        '</tr>';
 //            $(".table").append(rowinfo);
+            $(".label-db-pic-num").text("数据库中已有图片个数"+res.length);
 
             console.log("res length=",res.length);
             if(res.length == 0){
@@ -49,7 +51,7 @@ function showTop10Pics(activity_id) {
                 var num = top10_pics.length;
                 var max = g_pic_num;
                 if(g_pic_num < res.length)
-                    max = num
+                    max = res.length;
                 for(i=0; i<max;i++){
                     top10_pics[i] = cloneObject(top10_pic_model);
                     top10_pics[i].activity_id = g_activity_id;
@@ -155,6 +157,14 @@ function idChange(obj,event){
 
     //alert("changed value is " + obj);
     g_activity_id = obj;
+
+}
+
+function scheduleIdChange(obj,event){
+
+
+    console.log("schudule value is " + obj);
+    g_schedule_id = obj;
 
 }
 
@@ -337,8 +347,9 @@ function initTableWithData(arr){
         alert("请输入商品个数");
 
     var num = g_pic_num;
-    if(g_pic_num < arr.length)
-        num = arr.length
+    if(g_pic_num < arr.length) {
+        num = arr.length;
+    }
 
     console.log("initTableWithData picnum:"+ g_pic_num+" arr.length:", arr.length);
     for(i =0; i< num; i++){
@@ -617,6 +628,10 @@ $(function () {
         }
     });
 });
+
+function queryClick(obj){
+    console.log("query schedule="+ g_schedule_id);
+}
 
 $(document).ready(function() {
     //alert("load finish");
