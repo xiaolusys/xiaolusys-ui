@@ -173,7 +173,7 @@ function dynamic_generate_chi() {
         var thead = template('thead-template', result);
         $('#chima-table thead').html(thead);
         $('#chima-table tbody').html(html);
-        $('#chima-table td:nth-child(3) input').unbind().bind('blur', function(){
+        $('#chima-table td:nth-child(3) input').unbind().bind('change', function(){
             var value = $(this).val().trim();
             var step = $(this).closest('tr').find('select option:selected').val() - 0;
             var base = $(this).val() - 0;
