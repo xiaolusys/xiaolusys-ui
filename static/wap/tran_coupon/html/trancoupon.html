@@ -40,7 +40,8 @@
       </div>
 
       <div id="id-profile">
-        <p>妈妈ID:<span id="id-mama-id">1234</span>, 总共购入<span id="id-bought-num">0</span>张券。</p>
+        <p>妈妈ID:<span id="id-mama-id">1234</span>, 总共购入<span id="id-bought-num" class="hl-number">0</span>张券。</p>
+        <p id="id-waiting"></p>
         <p>您现有&nbsp;<span class="coupon-number" id="id-stock-num">0</span>&nbsp;张精品券可用！</p>
       </div>
       <div id="id-place-order" style="display:none">
@@ -64,69 +65,6 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script>
-      $(function() {
-        //$(".dropdown-toggle").dropdown('toggle');
-      });
-
-      function changeFilterText(value) {
-        var text = "筛选";
-        if (value == "1") {
-          text = "待审核";
-        } else if (value == "2") {
-          text = "待发送";
-        } else if (value == "3") {
-          text = "已完成";
-        } else if (value == "4") {
-          text = "已取消";
-        }
-        $("#id-dropdown-button")[0].innerHTML= text+' <span class="caret"></span>';
-      }
-
-      var globalShowTag = 'list-in-coupons';
-      var globalTransferStatus = '';
-
-      $("#id-dropdown-menu").click(function (e){
-          var elem = e.target;
-          var status = elem.getAttribute("status");
-          if (globalTransferStatus != status) {
-            globalTransferStatus = status;
-            changeFilterText(status);
-            if (globalShowTag == 'list-out-coupons') {
-              listOutCoupons(globalTransferStatus);
-            } else if (globalShowTag == 'list-in-coupons') {
-              listInCoupons(globalTransferStatus);
-            }            
-          }
-      });
-
-
-      $('#id-tab a').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-        var hideTag = $(this).attr("hide-tag");
-        var showTag = $(this).attr("show-tag");
-
-        if (showTag && showTag != globalShowTag) {
-          globalShowTag = showTag;
-          globalTransferStatus = '';
-          changeFilterText();
-
-          if (showTag == 'list-out-coupons') {
-            listOutCoupons(globalTransferStatus);
-          } else if (showTag == 'list-in-coupons') {
-            listInCoupons(globalTransferStatus);
-          }
-        
-          if (hideTag) {
-            $("#id-"+hideTag).hide();
-          }
-          if (showTag) {
-            $("#id-"+showTag).show();
-          }
-        }
-      });
-    </script>
     <script src="../js/coupon.js"></script>
   </body>
 </html>

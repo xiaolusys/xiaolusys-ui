@@ -6,21 +6,21 @@ var BASE_URL = 'http://staging.xiaolumeimei.com';
 var CASHOUT_URL = '/mama_shop/html/cashout.html';
 var trial_mama_next_page = null;
 
-function requestTransfer() {
-    var url = '/rest/v2/mama/trancoupon/start_transfer';
-    var url = BASE_URL + url;
+var globalShowTag = 'list-in-coupons';
+var globalTransferStatus = '';
 
-    var coupon_num = $("#id-number").val();
-    if (coupon_num <= 0) {
-        alert("请填写订购数量，不能为0！");
-        return;
+function changeFilterText(value) {
+    var text = "筛选";
+    if (value == "1") {
+        text = "待审核";
+    } else if (value == "2") {
+        text = "待发送";
+    } else if (value == "3") {
+        text = "已完成";
+    } else if (value == "4") {
+        text = "已取消";
     }
-    var callback = function (res) {
-        alert(res["info"]);
-    };
-    var data = {"coupon_num":coupon_num};
-
-    $.ajax({url:url, data:data, success:callback, type:'POST'});
+    $("#id-dropdown-button")[0].innerHTML= text+' <span class="caret"></span>';
 }
 
 function listOutCoupons(transferStatus) {
@@ -92,11 +92,76 @@ function loadProfile() {
             $("#id-mama-id")[0].innerHTML = res["mama_id"];
             $("#id-stock-num")[0].innerHTML = res["stock_num"];
             $("#id-bought-num")[0].innerHTML = res["bought_num"];
+            if (globalShowTag == 'list-in-coupons') {
+                $("#id-waiting-num")[0].innerHTML = '目前有<span class="hl-number">'+res["waiting_in_num"]+'</span>张券等待被发放！';
+            }
+            if (globalShowTag == 'list-out-coupons') {
+                $("#id-waiting-num")[0].innerHTML = '目前有<span class="hl-number">'+res["waiting_out_num"]+'</span>张券等待你审核或发放！';
+            }
         }
     };
 
     $.ajax({url:url, success:callback});
 }
+
+function requestTransfer() {
+    var url = '/rest/v2/mama/trancoupon/start_transfer';
+    var url = BASE_URL + url;
+
+    var coupon_num = $("#id-number").val();
+    if (coupon_num <= 0) {
+        alert("请填写订购数量，不能为0！");
+        return;
+    }
+    var callback = function (res) {
+        alert(res["info"]);
+        listInCoupons();
+    };
+    var data = {"coupon_num":coupon_num};
+
+    $.ajax({url:url, data:data, success:callback, type:'POST'});
+}
+
+$("#id-dropdown-menu").click(function (e){
+    var elem = e.target;
+    var status = elem.getAttribute("status");
+    if (globalTransferStatus != status) {
+        globalTransferStatus = status;
+        changeFilterText(status);
+        if (globalShowTag == 'list-out-coupons') {
+            listOutCoupons(globalTransferStatus);
+        } else if (globalShowTag == 'list-in-coupons') {
+            listInCoupons(globalTransferStatus);
+        }            
+    }
+});
+
+
+$('#id-tab a').click(function (e) {
+    e.preventDefault();
+    $(this).tab('show');
+    var hideTag = $(this).attr("hide-tag");
+    var showTag = $(this).attr("show-tag");
+
+    if (showTag && showTag != globalShowTag) {
+        globalShowTag = showTag;
+        globalTransferStatus = '';
+        changeFilterText();
+
+        if (showTag == 'list-out-coupons') {
+            listOutCoupons(globalTransferStatus);
+        } else if (showTag == 'list-in-coupons') {
+            listInCoupons(globalTransferStatus);
+        }
+        
+        if (hideTag) {
+            $("#id-"+hideTag).hide();
+        }
+        if (showTag) {
+            $("#id-"+showTag).show();
+        }
+    }
+});
 
 $(document).ready(function() {
     loadProfile();
