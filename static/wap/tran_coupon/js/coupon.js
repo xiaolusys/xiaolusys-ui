@@ -46,7 +46,7 @@ function listOutCoupons(transferStatus) {
             content.push('</div>');
             if (data['transfer_type'] == 2 && data['transfer_status'] <= 2) {
                 if (data['transfer_status'] == 1) {
-                    content.push('<div class="record-right"><button type=button class="btn btn-success">审核</button></div>');                            
+                    content.push('<div class="record-right"><button type=button class="btn btn-warning">审核</button></div>');                            
                 } 
                 if (data['transfer_status'] == 2) {
                     content.push('<div class="record-right"><button type=button class="btn btn-success">发放</button></div>');                            
