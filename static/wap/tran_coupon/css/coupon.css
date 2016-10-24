@@ -8,7 +8,7 @@ body {
     color: #f0ad4e;
 }
 
-#id-bought-num {
+.hl-number {
     color: #f0ad4e;
     font-weight: bold;
 }
