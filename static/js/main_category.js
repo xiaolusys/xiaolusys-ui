@@ -32,6 +32,34 @@ function parseUrlParams(myUrl) {
     }
     return vars;
 }
+function escapeStringIdentifier(string){
+    var mapObj = {
+       '.':"\\.",
+       '&':"\\&",
+       '$':"\\$",
+       '@':"\\@",
+       '%':"\\%",
+       '!':"\\!",
+       '-':"\\-",
+       '=':"\\=",
+       '~':"\\~",
+       '/':"\\/",
+       ' ':"\\ ",
+       ':':"\\:",
+       '(':"\\(",
+       ')':"\\)",
+       '*':"\\*",
+       '[':"\\[",
+       ']':"\\]",
+       '#':"\\#",
+    };
+    var keys = [];
+    for (var i in mapObj){
+        keys.push('\\'+i);
+    };
+    return string.replace(new RegExp(keys.join('|'),'gi'), function(key){return mapObj[key];});
+}
+
 function showCategory(first_cate, second_cate, third_cate) {
 
     var loc = new Category();
@@ -329,10 +357,10 @@ function submit_data() {
         saleproduct: saleproduct_id
     };
     for (var i = 0; i < all_color.length; i++) {
-        var one_color = all_color[i].replace('.','\\.').replace(/[\/ 　:()*+]+/g, '');
+        var one_color = escapeStringIdentifier(all_color[i]);
         //console.log(one_color)
         for (var j = 0; j < all_sku.length; j++) {
-            var one_sku = all_sku[j].replace('.','\\.').replace(/[\/ 　:()*+]+/g, '');
+            var one_sku = escapeStringIdentifier(all_sku[j]);
             //result_data[all_color[i] + "_" + all_sku[j] + "_outerid"] = $("#" + one_color + "_" + one_sku + "_outerid").val().trim();
             console.log("#" + one_color + "_" + one_sku + "_remainnum");
             result_data[all_color[i] + "_" + all_sku[j] + "_remainnum"] = $("#" + one_color + "_" + one_sku + "_remainnum").val().trim();
@@ -343,9 +371,9 @@ function submit_data() {
     }
 
     for (var k = 0; k < all_sku.length; k++) {
-        var one_sku = all_sku[k].replace('.','\\.').replace(/[\/ 　:()*+]+/g, '');
+        var one_sku = escapeStringIdentifier(all_sku[k]);
         for (var h = 0; h < all_chi_ma.length; h++) {
-            var one_chi_ma = all_chi_ma[h].replace('.','\\.').replace(/[\/ 　:()*+]+/g, '');
+            var one_chi_ma = escapeStringIdentifier(all_chi_ma[h]);
             result_data[all_sku[k] + "_" + all_chi_ma[h] + "_size"] = $("#" + one_sku + "_" + one_chi_ma + "_size").val().trim();
         }
     }
