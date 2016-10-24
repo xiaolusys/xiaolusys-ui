@@ -86,9 +86,9 @@ function loadProfile() {
     var url = BASE_URL + url;
     var callback = function (res) {
         if (res) {
-            if (res["direct_buy"] == true) {
-                $("#id-place-order").hide();
-            }
+            if (res["direct_buy"] == false) {
+                $("#id-place-order").show();
+            } 
             $("#id-mama-id")[0].innerHTML = res["mama_id"];
             $("#id-stock-num")[0].innerHTML = res["stock_num"];
             $("#id-bought-num")[0].innerHTML = res["bought_num"];
