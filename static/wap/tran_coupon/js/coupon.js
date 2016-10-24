@@ -1,6 +1,6 @@
 //var BASE_URL = 'http://127.0.0.1:8000';
-//var BASE_URL = 'http://staging.xiaolumeimei.com';
-var BASE_URL = 'http://m.xiaolumeimei.com';
+var BASE_URL = 'http://staging.xiaolumeimei.com';
+//var BASE_URL = 'http://m.xiaolumeimei.com';
 
 
 var CASHOUT_URL = '/mama_shop/html/cashout.html';
@@ -81,7 +81,25 @@ function listInCoupons(transferStatus) {
     $.ajax({url:url, data:{"transfer_status":transferStatus}, success:callback});
 }
 
+function loadProfile() {
+    var url = '/rest/v2/mama/trancoupon/profile';
+    var url = BASE_URL + url;
+    var callback = function (res) {
+        if (res) {
+            if (res["direct_buy"] == false) {
+                $("#id-place-order").hide();
+            }
+            $("#id-mama-id")[0].innerHTML = res["mama_id"];
+            $("#id-stock-num")[0].innerHTML = res["stock_num"];
+            $("#id-bought-num")[0].innerHTML = res["bought_num"];
+        }
+    };
+
+    $.ajax({url:url, success:callback});
+}
+
 $(document).ready(function() {
+    loadProfile();
     listInCoupons();
 });
 
