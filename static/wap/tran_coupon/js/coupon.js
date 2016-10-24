@@ -44,7 +44,11 @@ function listOutCoupons(transferStatus) {
             content.push('<div>'+data["month_day"]+'</div>');
             content.push('<div>'+data["hour_minute"]+'</div>');
             content.push('</div>');
-            content.push('<div class="record-right"><p>'+data['transfer_status_display']+'</p></div>');            
+            if (data['transfer_action_display']) {
+                content.push('<div class="record-right"><button type=button class="btn btn-success">'+data['transfer_action_display']+'</button></div>');                            
+            } else {
+                content.push('<div class="record-right"><p>'+data['transfer_status_display']+'</p></div>');            
+            }
             content.push('</div>');
             $("#id-list-out-coupons").append(content.join(''));
         }
