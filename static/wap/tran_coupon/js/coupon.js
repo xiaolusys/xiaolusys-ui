@@ -93,10 +93,10 @@ function loadProfile() {
             $("#id-stock-num")[0].innerHTML = res["stock_num"];
             $("#id-bought-num")[0].innerHTML = res["bought_num"];
             if (globalShowTag == 'list-in-coupons') {
-                $("#id-waiting-num")[0].innerHTML = '目前有<span class="hl-number">'+res["waiting_in_num"]+'</span>张券等待被发放！';
+                $("#id-waiting")[0].innerHTML = '目前有<span class="hl-number">'+res["waiting_in_num"]+'</span>张券等待被发放！';
             }
             if (globalShowTag == 'list-out-coupons') {
-                $("#id-waiting-num")[0].innerHTML = '目前有<span class="hl-number">'+res["waiting_out_num"]+'</span>张券等待你审核或发放！';
+                $("#id-waiting")[0].innerHTML = '目前有<span class="hl-number">'+res["waiting_out_num"]+'</span>张券等待你审核或发放！';
             }
         }
     };
