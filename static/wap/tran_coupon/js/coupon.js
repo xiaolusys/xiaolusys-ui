@@ -44,13 +44,8 @@ function listOutCoupons(transferStatus) {
             content.push('<div>'+data["month_day"]+'</div>');
             content.push('<div>'+data["hour_minute"]+'</div>');
             content.push('</div>');
-            if (data['transfer_type'] == 2 && data['transfer_status'] <= 2) {
-                if (data['transfer_status'] == 1) {
-                    content.push('<div class="record-right"><button type=button class="btn btn-warning">审核</button></div>');                            
-                } 
-                if (data['transfer_status'] == 2) {
-                    content.push('<div class="record-right"><button type=button class="btn btn-success">发放</button></div>');                            
-                } 
+            if (data['is_processable'] == true) {
+                content.push('<div class="record-right"><button type=button class="btn btn-warning" onClick="processCoupon('+data["id"]+')">审核</button></div>');                            
             } else {
                 content.push('<div class="record-right"><p>'+data['transfer_status_display']+'</p></div>');                            
             }
@@ -82,8 +77,8 @@ function listInCoupons(transferStatus) {
             content.push('<div>'+data["month_day"]+'</div>');
             content.push('<div>'+data["hour_minute"]+'</div>');
             content.push('</div>');
-            if (data['transfer_type'] == 2 && data['transfer_status'] == 1) {
-                content.push('<div class="record-right"><button type=button class="btn btn-success">取消</button></div>');                            
+            if (data['is_cancelable'] == true) {
+                content.push('<div class="record-right"><button type=button class="btn btn-default" onClick="cancelCoupon('+data["id"]+')">取消</button></div>');                            
             } else {
                 content.push('<div class="record-right"><p>'+data['transfer_status_display']+'</p></div>');                            
             }            
@@ -129,6 +124,18 @@ function requestTransfer() {
 
     $.ajax({url:url, data:data, success:callback, type:'POST'});
 }
+
+function processCoupon(pk) {
+    var url = '/rest/v2/mama/trancoupon/'+pk+'/process_coupon';
+    var url = BASE_URL + url;
+}
+
+function cancelCoupon(pk) {
+    var url = '/rest/v2/mama/trancoupon/'+pk+'/cancel_coupon';
+    var url = BASE_URL + url;
+}
+
+function transferCoupon(pk) {}
 
 $("#id-dropdown-menu").click(function (e){
     var elem = e.target;
