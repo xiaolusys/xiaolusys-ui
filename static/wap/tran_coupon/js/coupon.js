@@ -44,10 +44,10 @@ function listOutCoupons(transferStatus) {
             content.push('<div>'+data["month_day"]+'</div>');
             content.push('<div>'+data["hour_minute"]+'</div>');
             content.push('</div>');
-            if (data['is_processable'] == true) {
-                content.push('<div class="record-right" id="id-status-'+data["id"]+'"><button type=button class="btn btn-warning" onClick="processCoupon('+data["id"]+')">审核</button></div>');                            
-            } else if (data['is_buyable']){
+            if (data['is_buyable'] == true){
                 content.push('<div class="record-right" id="id-status-'+data["id"]+'"><button type=button class="btn btn-warning" onClick="transferCoupon('+data["id"]+')">发放</button></div>');                            
+            } else if (data['is_processable'] == true) {
+                content.push('<div class="record-right" id="id-status-'+data["id"]+'"><button type=button class="btn btn-warning" onClick="processCoupon('+data["id"]+')">审核</button></div>');                            
             } else {
                 content.push('<div class="record-right"><p>'+data['transfer_status_display']+'</p></div>');                            
             }
