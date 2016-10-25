@@ -46,6 +46,8 @@ function listOutCoupons(transferStatus) {
             content.push('</div>');
             if (data['is_processable'] == true) {
                 content.push('<div class="record-right" id="id-status-'+data["id"]+'"><button type=button class="btn btn-warning" onClick="processCoupon('+data["id"]+')">审核</button></div>');                            
+            } else if (data['is_buyable']){
+                content.push('<div class="record-right" id="id-status-'+data["id"]+'"><button type=button class="btn btn-warning" onClick="transferCoupon('+data["id"]+')">发放</button></div>');                            
             } else {
                 content.push('<div class="record-right"><p>'+data['transfer_status_display']+'</p></div>');                            
             }
@@ -100,7 +102,7 @@ function loadProfile() {
             $("#id-mama-id")[0].innerHTML = res["mama_id"];
             $("#id-stock-num")[0].innerHTML = res["stock_num"];
             $("#id-bought-num")[0].innerHTML = res["bought_num"];
-            $("#id-waiting")[0].innerHTML = '目前有<span class="hl-number">'+res["waiting_in_num"]+'</span>张券等待被发放,有<span class="hl-number">'+res["waiting_out_num"]+'</span>张券等待你审核或发放！';
+            $("#id-waiting")[0].innerHTML = '目前有<span class="hl-number">'+res["waiting_in_num"]+'</span>张券等待被发放,有<span class="hl-number">'+res["waiting_out_num"]+'</span>张券等待你审核！';
         }
     };
 
@@ -134,7 +136,9 @@ function processCoupon(pk) {
             $("#id-status-"+pk)[0].innerHTML = '待发放';
         }
     };
-    $.ajax({url:url, success:callback, type:'POST'});
+    if (confirm("提示：请务必先收款，后审核！")) {
+       $.ajax({url:url, success:callback, type:'POST'});
+    }
 }
 
 function cancelCoupon(pk) {
@@ -149,7 +153,19 @@ function cancelCoupon(pk) {
     $.ajax({url:url, success:callback, type:'POST'});
 }
 
-function transferCoupon(pk) {}
+function transferCoupon(pk) {
+    var url = '/rest/v2/mama/trancoupon/'+pk+'/transfer_coupon';
+    var url = BASE_URL + url;
+    var callback = function (res) {
+        alert(res["info"]);
+        if (res["code"] == 0) {
+            $("#id-status-"+pk)[0].innerHTML = "发放成功";
+        }
+    };
+    if (confirm("提示：请务必先收款，后发券！")) {
+        $.ajax({url:url, success:callback, type:'POST'});
+    }
+}
 
 $("#id-dropdown-menu").click(function (e){
     var elem = e.target;
