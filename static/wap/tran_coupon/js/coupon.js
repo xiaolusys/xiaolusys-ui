@@ -128,11 +128,19 @@ function requestTransfer() {
 function processCoupon(pk) {
     var url = '/rest/v2/mama/trancoupon/'+pk+'/process_coupon';
     var url = BASE_URL + url;
+    var callback = function (res) {
+        alert(res["info"]);
+    };
+    $.ajax({url:url, success:callback, type:'POST'});
 }
 
 function cancelCoupon(pk) {
     var url = '/rest/v2/mama/trancoupon/'+pk+'/cancel_coupon';
     var url = BASE_URL + url;
+    var callback = function (res) {
+        alert(res["info"]);
+    };
+    $.ajax({url:url, success:callback, type:'POST'});
 }
 
 function transferCoupon(pk) {}
