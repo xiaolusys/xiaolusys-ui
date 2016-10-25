@@ -98,7 +98,10 @@ function loadProfile() {
         if (res) {
             if (res["direct_buy"] == false) {
                 $("#id-place-order").show();
-            } 
+            } else {
+                $("#id-place-order")[0].innerHTML = '<a href="/mall/buycoupon" class="btn btn-danger">立即购券</a>';
+                $("#id-place-order").show();
+            }
             $("#id-mama-id")[0].innerHTML = res["mama_id"];
             $("#id-stock-num")[0].innerHTML = res["stock_num"];
             $("#id-bought-num")[0].innerHTML = res["bought_num"];
@@ -159,7 +162,7 @@ function transferCoupon(pk) {
     var callback = function (res) {
         alert(res["info"]);
         if (res["code"] == 0) {
-            $("#id-status-"+pk)[0].innerHTML = "已发放";
+            $("#id-status-"+pk)[0].innerHTML = "已完成";
         }
     };
     if (confirm("提示：请务必先收款，后发券！")) {
