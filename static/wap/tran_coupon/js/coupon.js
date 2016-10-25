@@ -14,7 +14,7 @@ function changeFilterText(value) {
     if (value == "1") {
         text = "待审核";
     } else if (value == "2") {
-        text = "待发送";
+        text = "待发放";
     } else if (value == "3") {
         text = "已完成";
     } else if (value == "4") {
@@ -45,7 +45,7 @@ function listOutCoupons(transferStatus) {
             content.push('<div>'+data["hour_minute"]+'</div>');
             content.push('</div>');
             if (data['is_processable'] == true) {
-                content.push('<div class="record-right"><button type=button class="btn btn-warning" onClick="processCoupon('+data["id"]+')">审核</button></div>');                            
+                content.push('<div class="record-right" id="id-status-'+data["id"]+'"><button type=button class="btn btn-warning" onClick="processCoupon('+data["id"]+')">审核</button></div>');                            
             } else {
                 content.push('<div class="record-right"><p>'+data['transfer_status_display']+'</p></div>');                            
             }
@@ -78,7 +78,7 @@ function listInCoupons(transferStatus) {
             content.push('<div>'+data["hour_minute"]+'</div>');
             content.push('</div>');
             if (data['is_cancelable'] == true) {
-                content.push('<div class="record-right"><button type=button class="btn btn-default" onClick="cancelCoupon('+data["id"]+')">取消</button></div>');                            
+                content.push('<div class="record-right" id="id-status-'+data["id"]+'"><button type=button class="btn btn-default" onClick="cancelCoupon('+data["id"]+')">取消</button></div>');                            
             } else {
                 content.push('<div class="record-right"><p>'+data['transfer_status_display']+'</p></div>');                            
             }            
@@ -130,6 +130,9 @@ function processCoupon(pk) {
     var url = BASE_URL + url;
     var callback = function (res) {
         alert(res["info"]);
+        if (res["code"] == 0) {
+            $("#id-status-"+pk)[0].innerHTML = '待发放';
+        }
     };
     $.ajax({url:url, success:callback, type:'POST'});
 }
@@ -139,6 +142,9 @@ function cancelCoupon(pk) {
     var url = BASE_URL + url;
     var callback = function (res) {
         alert(res["info"]);
+        if (res["code"] == 0) {
+            $("#id-status-"+pk)[0].innerHTML = "已取消";
+        }
     };
     $.ajax({url:url, success:callback, type:'POST'});
 }
