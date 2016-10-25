@@ -159,7 +159,7 @@ function transferCoupon(pk) {
     var callback = function (res) {
         alert(res["info"]);
         if (res["code"] == 0) {
-            $("#id-status-"+pk)[0].innerHTML = "发放成功";
+            $("#id-status-"+pk)[0].innerHTML = "已发放";
         }
     };
     if (confirm("提示：请务必先收款，后发券！")) {
