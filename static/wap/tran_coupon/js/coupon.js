@@ -23,6 +23,32 @@ function changeFilterText(value) {
     $("#id-dropdown-button")[0].innerHTML= text+' <span class="caret"></span>';
 }
 
+
+function loadProfile() {
+    var url = '/rest/v2/mama/trancoupon/profile';
+    var url = BASE_URL + url;
+    var callback = function (res) {
+        if (res) {
+            if (res["direct_buy"] == false) {
+                $("#id-place-order").show();
+            } else {
+                $("#id-place-order")[0].innerHTML = '<a href="/mall/buycoupon" class="btn btn-danger">立即购券</a>';
+                $("#id-place-order").show();
+            }
+            $("#id-mama-id")[0].innerHTML = res["mama_id"];
+            $("#id-stock-num")[0].innerHTML = res["stock_num"];
+            $("#id-bought-num")[0].innerHTML = res["bought_num"];
+            if (res["direct_buy"] == true) {
+                $("#id-waiting")[0].innerHTML = '目前有<span class="hl-number">'+res["waiting_out_num"]+'</span>张券等待你发放！';
+            } else {
+                $("#id-waiting")[0].innerHTML = '目前有<span class="hl-number">'+res["waiting_in_num"]+'</span>张券等待被发放,有<span class="hl-number">'+res["waiting_out_num"]+'</span>张券等待你审核！';
+            }
+        }
+    };
+
+    $.ajax({url:url, success:callback});
+}
+
 function listOutCoupons(transferStatus) {
     var url = '/rest/v2/mama/trancoupon/list_out_coupons';
     var url = BASE_URL + url;
@@ -91,27 +117,6 @@ function listInCoupons(transferStatus) {
     $.ajax({url:url, data:{"transfer_status":transferStatus}, success:callback});
 }
 
-function loadProfile() {
-    var url = '/rest/v2/mama/trancoupon/profile';
-    var url = BASE_URL + url;
-    var callback = function (res) {
-        if (res) {
-            if (res["direct_buy"] == false) {
-                $("#id-place-order").show();
-            } else {
-                $("#id-place-order")[0].innerHTML = '<a href="/mall/buycoupon" class="btn btn-danger">立即购券</a>';
-                $("#id-place-order").show();
-            }
-            $("#id-mama-id")[0].innerHTML = res["mama_id"];
-            $("#id-stock-num")[0].innerHTML = res["stock_num"];
-            $("#id-bought-num")[0].innerHTML = res["bought_num"];
-            $("#id-waiting")[0].innerHTML = '目前有<span class="hl-number">'+res["waiting_in_num"]+'</span>张券等待被发放,有<span class="hl-number">'+res["waiting_out_num"]+'</span>张券等待你审核！';
-        }
-    };
-
-    $.ajax({url:url, success:callback});
-}
-
 function requestTransfer() {
     var url = '/rest/v2/mama/trancoupon/start_transfer';
     var url = BASE_URL + url;
@@ -124,6 +129,7 @@ function requestTransfer() {
     var callback = function (res) {
         alert(res["info"]);
         listInCoupons();
+        loadProfile();
     };
     var data = {"coupon_num":coupon_num};
 
@@ -138,6 +144,7 @@ function processCoupon(pk) {
         if (res["code"] == 0) {
             $("#id-status-"+pk)[0].innerHTML = '待发放';
         }
+        loadProfile();
     };
     if (confirm("提示：请务必先收款，后审核！")) {
        $.ajax({url:url, success:callback, type:'POST'});
@@ -152,6 +159,7 @@ function cancelCoupon(pk) {
         if (res["code"] == 0) {
             $("#id-status-"+pk)[0].innerHTML = "已取消";
         }
+        loadProfile();
     };
     $.ajax({url:url, success:callback, type:'POST'});
 }
@@ -164,6 +172,7 @@ function transferCoupon(pk) {
         if (res["code"] == 0) {
             $("#id-status-"+pk)[0].innerHTML = "已完成";
         }
+        loadProfile();
     };
     if (confirm("提示：请务必先收款，后发券！")) {
         $.ajax({url:url, success:callback, type:'POST'});
@@ -192,6 +201,7 @@ $('#id-tab a').click(function (e) {
     var showTag = $(this).attr("show-tag");
 
     if (showTag && showTag != globalShowTag) {
+        loadProfile();
         globalShowTag = showTag;
         globalTransferStatus = '';
         changeFilterText();
