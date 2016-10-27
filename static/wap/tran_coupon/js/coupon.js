@@ -104,9 +104,9 @@ function listInCoupons(transferStatus) {
             content.push('<img class="img-circle" style="width:90%" src="'+data["to_mama_thumbnail"]+'" />');
             content.push('</div>');
             if (data['is_cancelable'] == true) {
-                content.push('<div class="record-right hl" id="id-status-'+data["id"]+'"><button type=button class="btn btn-default" onClick="cancelCoupon('+data["id"]+')">取消</button></div>');                            
+                content.push('<div class="record-right" id="id-status-'+data["id"]+'"><button type=button class="btn btn-default" onClick="cancelCoupon('+data["id"]+')">取消</button></div>');                            
             } else {
-                content.push('<div class="record-right hl"><p>'+data['transfer_status_display']+'</p></div>');                            
+                content.push('<div class="record-right"><p>'+data['transfer_status_display']+'</p></div>');                            
             }            
             content.push('</div>');
             $("#id-list-in-coupons").append(content.join(''));
