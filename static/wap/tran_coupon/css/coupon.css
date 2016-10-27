@@ -4,7 +4,7 @@ body {
 }
 
 .coupon-number {
-    font-size: 36px;
+    font-size: 20px;
     color: #f0ad4e;
 }
 
@@ -63,44 +63,40 @@ body {
 }
 
 .record-row {
-    height: 60px;
-    margin-bottom:10px;
+    height: 70px;
     width:100%;
-}
-
-.record-status {
-    padding-top:0px;
+    margin-top: -12px;
+    margin-bottom: -12px;
 }
 
 .record-left {
-    height: 80%;
     width: 20%;
     display: inline-block;
-    vertical-align:top;
+    vertical-align:bottom;
+    margin-top:0px;
 }
 
 .record-middle-left {
-    height:100%;
     width: 30%;
     display: inline-block;
     text-align: center;
-    vertical-align: top;
+    vertical-align: bottom;
     margin-left:6px;
 }
 
 .record-middle-right {
-    height:100%;
-    width: 18%;
+    width: 20%;
     display: inline-block;
     text-align: center;
-    padding-top:10px;
+    vertical-align: bottom;
 }
 
 .record-right {
-    width: 28%;
+    width: 20%;
     display: inline-block;
     text-align: center;
-    vertical-align: text-bottom;
+    vertical-align: bottom;
+    margin-left: 6px;
 }
 
 .record-name {
