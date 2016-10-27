@@ -1,5 +1,5 @@
 //var BASE_URL = 'http://127.0.0.1:8000';
-var BASE_URL = 'http://staging.xiaolumeimei.com';
+var BASE_URL = 'http://staging.xiaolumm.com';
 //var BASE_URL = 'http://m.xiaolumeimei.com';
 
 
