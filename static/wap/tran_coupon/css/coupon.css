@@ -71,6 +71,7 @@ body {
 
 .record-left {
     width: 20%;
+    height:100%;
     display: inline-block;
     vertical-align:bottom;
     margin-top:0px;
@@ -86,6 +87,7 @@ body {
 
 .record-middle-right {
     width: 20%;
+    height: 100%;
     display: inline-block;
     text-align: center;
     vertical-align: bottom;
