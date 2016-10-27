@@ -59,7 +59,7 @@ function listOutCoupons(transferStatus) {
         for (var i=0; i<res.length; ++i) {
             var data = res[i];
             var content = [];
-            content.push('<div class="record-row">');
+            content.push('<hr/><div class="record-row">');
             content.push('<div class="record-left">');
             content.push('<img class="img-rounded" style="width:100%" src="'+data["product_img"]+'" />');
             content.push('</div>');
@@ -93,7 +93,7 @@ function listInCoupons(transferStatus) {
         for (var i=0; i<res.length; ++i) {
             var data = res[i];
             var content = [];
-            content.push('<div class="record-row">');
+            content.push('<hr/><div class="record-row">');
             content.push('<div class="record-left">');
             content.push('<img class="img-rounded" style="width:100%" src="'+data["product_img"]+'" />');
             content.push('</div>');
