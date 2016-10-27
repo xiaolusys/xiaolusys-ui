@@ -61,13 +61,13 @@ function listOutCoupons(transferStatus) {
             var content = [];
             content.push('<hr/><div class="record-row">');
             content.push('<div class="record-left">');
-            content.push('<img class="img-rounded" style="width:100%" src="'+data["product_img"]+'" />');
+            content.push('<img class="img-rounded" style="height:100%" src="'+data["product_img"]+'" />');
             content.push('</div>');
             content.push('<div class="record-middle-left">');
             content.push('<div><span class="hl-number">'+data["coupon_num"]+'</span>&nbsp;张/出</div><div>'+data["month_day"]+'&nbsp;'+data["hour_minute"]+'</div>');
             content.push('</div>');
             content.push('<div class="record-middle-right">');
-            content.push('<img class="img-circle" style="width:90%" src="'+data["to_mama_thumbnail"]+'" />');
+            content.push('<img class="img-circle" style="height:90%" src="'+data["to_mama_thumbnail"]+'" />');
             content.push('</div>');
             if (data['is_buyable'] == true){
                 content.push('<div class="record-right" id="id-status-'+data["id"]+'"><button type=button class="btn btn-warning" onClick="transferCoupon('+data["id"]+')">发放</button></div>');                            
@@ -95,13 +95,13 @@ function listInCoupons(transferStatus) {
             var content = [];
             content.push('<hr/><div class="record-row">');
             content.push('<div class="record-left">');
-            content.push('<img class="img-rounded" style="width:100%" src="'+data["product_img"]+'" />');
+            content.push('<img class="img-rounded" style="height:100%" src="'+data["product_img"]+'" />');
             content.push('</div>');
             content.push('<div class="record-middle-left">');
             content.push('<div><span class="hl-number">'+data["coupon_num"]+'</span>&nbsp;张/入</div><div>'+data["month_day"]+'&nbsp;'+data["hour_minute"]+'</div>');
             content.push('</div>');
             content.push('<div class="record-middle-right">');
-            content.push('<img class="img-circle" style="width:90%" src="'+data["to_mama_thumbnail"]+'" />');
+            content.push('<img class="img-circle" style="height:90%" src="'+data["to_mama_thumbnail"]+'" />');
             content.push('</div>');
             if (data['is_cancelable'] == true) {
                 content.push('<div class="record-right" id="id-status-'+data["id"]+'"><button type=button class="btn btn-default" onClick="cancelCoupon('+data["id"]+')">取消</button></div>');                            
