@@ -3,8 +3,8 @@ var BASE_URL = 'http://staging.xiaolumm.com';
 //var BASE_URL = 'http://m.xiaolumeimei.com';
 
 
-var CASHOUT_URL = '/mama_shop/html/cashout.html';
-var trial_mama_next_page = null;
+var list_next_page_url = null;
+
 
 var globalShowTag = 'list-in-coupons';
 var globalTransferStatus = '';
@@ -43,68 +43,82 @@ function loadProfile() {
     $.ajax({url:url, success:callback});
 }
 
+function renderOutCouponList(res) {
+    list_next_page_url = res['next'];
+    res = res['results'];
+
+    for (var i=0; i<res.length; ++i) {
+        var data = res[i];
+        var content = [];
+        content.push('<hr/><div class="record-row">');
+        content.push('<div class="record-left">');
+        content.push('<img class="img-rounded" style="height:100%" src="'+data["product_img"]+'" />');
+        content.push('</div>');
+        content.push('<div class="record-middle-left">');
+        content.push('<div><span class="hl-number">'+data["coupon_num"]+'</span>&nbsp;张/出</div><div>'+data["month_day"]+'&nbsp;'+data["hour_minute"]+'</div>');
+        content.push('</div>');
+        content.push('<div class="record-middle-right">');
+        content.push('<img class="img-circle" style="height:90%" src="'+data["to_mama_thumbnail"]+'" />');
+        content.push('</div>');
+        if (data['is_buyable'] == true){
+            content.push('<div class="record-right" id="id-status-'+data["id"]+'"><button type=button class="btn btn-warning" onClick="transferCoupon('+data["id"]+')">发放</button></div>');                            
+        } else if (data['is_processable'] == true) {
+            content.push('<div class="record-right" id="id-status-'+data["id"]+'"><button type=button class="btn btn-warning" onClick="processCoupon('+data["id"]+')">审核</button></div>');                            
+        } else {
+            content.push('<div class="record-right transfer-status-'+data['transfer_status']+'"><p>'+data['transfer_status_display']+'</p></div>');                            
+        }
+        content.push('</div>');
+        $("#id-list-out-coupons").append(content.join(''));
+    }    
+}
+
 function listOutCoupons(transferStatus) {
     var url = '/rest/v2/mama/trancoupon/list_out_coupons';
     var url = BASE_URL + url;
-    var callback = function (res) {
-        if (res) {
+    var callback = function (response) {
+        if (response) {
             $("#id-list-out-coupons").empty();
         }
-        for (var i=0; i<res.length; ++i) {
-            var data = res[i];
-            var content = [];
-            content.push('<hr/><div class="record-row">');
-            content.push('<div class="record-left">');
-            content.push('<img class="img-rounded" style="height:100%" src="'+data["product_img"]+'" />');
-            content.push('</div>');
-            content.push('<div class="record-middle-left">');
-            content.push('<div><span class="hl-number">'+data["coupon_num"]+'</span>&nbsp;张/出</div><div>'+data["month_day"]+'&nbsp;'+data["hour_minute"]+'</div>');
-            content.push('</div>');
-            content.push('<div class="record-middle-right">');
-            content.push('<img class="img-circle" style="height:90%" src="'+data["to_mama_thumbnail"]+'" />');
-            content.push('</div>');
-            if (data['is_buyable'] == true){
-                content.push('<div class="record-right" id="id-status-'+data["id"]+'"><button type=button class="btn btn-warning" onClick="transferCoupon('+data["id"]+')">发放</button></div>');                            
-            } else if (data['is_processable'] == true) {
-                content.push('<div class="record-right" id="id-status-'+data["id"]+'"><button type=button class="btn btn-warning" onClick="processCoupon('+data["id"]+')">审核</button></div>');                            
-            } else {
-                content.push('<div class="record-right"><p>'+data['transfer_status_display']+'</p></div>');                            
-            }
-            content.push('</div>');
-            $("#id-list-out-coupons").append(content.join(''));
-        }
+        renderOutCouponList(response);
     };
     $.ajax({url:url, data:{"transfer_status":transferStatus}, success:callback});
+}
+
+function renderInCouponList(res) {
+    list_next_page_url = res['next'];
+    res = res['results'];
+
+    for (var i=0; i<res.length; ++i) {
+        var data = res[i];
+        var content = [];
+        content.push('<hr/><div class="record-row">');
+        content.push('<div class="record-left">');
+        content.push('<img class="img-rounded" style="height:100%" src="'+data["product_img"]+'" />');
+        content.push('</div>');
+        content.push('<div class="record-middle-left">');
+        content.push('<div><span class="hl-number">'+data["coupon_num"]+'</span>&nbsp;张/入</div><div>'+data["month_day"]+'&nbsp;'+data["hour_minute"]+'</div>');
+        content.push('</div>');
+        content.push('<div class="record-middle-right">');
+        content.push('<img class="img-circle" style="height:90%" src="'+data["to_mama_thumbnail"]+'" />');
+        content.push('</div>');
+        if (data['is_cancelable'] == true) {
+            content.push('<div class="record-right" id="id-status-'+data["id"]+'"><button type=button class="btn btn-default" onClick="cancelCoupon('+data["id"]+')">取消</button></div>');                            
+        } else {
+            content.push('<div class="record-right transfer-status-'+data['transfer_status']+'"><p>'+data['transfer_status_display']+'</p></div>');                            
+        }            
+        content.push('</div>');
+        $("#id-list-in-coupons").append(content.join(''));
+    }
 }
 
 function listInCoupons(transferStatus) {
     var url = '/rest/v2/mama/trancoupon/list_in_coupons';
     var url = BASE_URL + url;
-    var callback = function (res) {
-        if (res) {
+    var callback = function (response) {
+        if (response) {
             $("#id-list-in-coupons").empty();
         }
-        for (var i=0; i<res.length; ++i) {
-            var data = res[i];
-            var content = [];
-            content.push('<hr/><div class="record-row">');
-            content.push('<div class="record-left">');
-            content.push('<img class="img-rounded" style="height:100%" src="'+data["product_img"]+'" />');
-            content.push('</div>');
-            content.push('<div class="record-middle-left">');
-            content.push('<div><span class="hl-number">'+data["coupon_num"]+'</span>&nbsp;张/入</div><div>'+data["month_day"]+'&nbsp;'+data["hour_minute"]+'</div>');
-            content.push('</div>');
-            content.push('<div class="record-middle-right">');
-            content.push('<img class="img-circle" style="height:90%" src="'+data["to_mama_thumbnail"]+'" />');
-            content.push('</div>');
-            if (data['is_cancelable'] == true) {
-                content.push('<div class="record-right" id="id-status-'+data["id"]+'"><button type=button class="btn btn-default" onClick="cancelCoupon('+data["id"]+')">取消</button></div>');                            
-            } else {
-                content.push('<div class="record-right"><p>'+data['transfer_status_display']+'</p></div>');                            
-            }            
-            content.push('</div>');
-            $("#id-list-in-coupons").append(content.join(''));
-        }
+        renderInCouponList(response);
     };
     $.ajax({url:url, data:{"transfer_status":transferStatus}, success:callback});
 }
@@ -213,8 +227,28 @@ $('#id-tab a').click(function (e) {
     }
 });
 
+function appendNextPage() {
+    var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    var windowHeight = $(window).height();
+    var documentHeight = $(document).height();
+
+    if (scrollTop >= documentHeight - windowHeight) {
+        if (list_next_page_url) {
+            if (globalShowTag == 'list-in-coupons') {
+                $.ajax({url:list_next_page_url, success:renderInCouponList});
+            }
+            if (globalShowTag == 'list-out-coupons') {
+                $.ajax({url:list_next_page_url, success:renderOutCouponList});
+            }            
+        }
+    }
+}
+
 $(document).ready(function() {
     loadProfile();
     listInCoupons();
+    $(window).on("scroll", function () {
+        appendNextPage();
+    });
 });
 
