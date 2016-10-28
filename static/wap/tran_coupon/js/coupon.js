@@ -60,7 +60,7 @@ function loadProfile() {
 function renderOutCouponList(res) {
     list_next_page_url = res['next'];
     res = res['results'];
-    console.log('renderOutCouponList', res);
+
     for (var i=0; i<res.length; ++i) {
         var data = res[i];
         var content = [];
@@ -102,7 +102,7 @@ function listOutCoupons(transferStatus) {
 function renderInCouponList(res) {
     list_next_page_url = res['next'];
     res = res['results'];
-    console.log('renderInCouponList', res);
+
     for (var i=0; i<res.length; ++i) {
         var data = res[i];
         var content = [];
@@ -249,7 +249,7 @@ function appendNextPage() {
     var documentHeight = $(document).height();
 
     if (scrollTop >= documentHeight - windowHeight) {
-        console.log(scrollTop, documentHeight, windowHeight);
+
         if (list_next_page_url && should_append()) {
             close_switch();
             if (globalShowTag == 'list-in-coupons') {
