@@ -44,15 +44,8 @@
         <p id="id-waiting"></p>
         <p>您现有&nbsp;<span class="coupon-number" id="id-stock-num">0</span>&nbsp;张精品券可用！</p>
       </div>
-      <div id="id-place-order" style="display:none">
-        <div class="input-group">
-          <span class="input-group-addon">立即订购</span>
-          <input type="number" class="form-control" placeholder="eg. 6" id="id-number">
-          <span class="input-group-addon">张券！</span>
-          <span class="input-group-btn">
-            <button class="btn btn-warning" type="button" onClick="requestTransfer()">确定提交</button>
-          </span>
-        </div>
+      <div id="id-place-order">
+        <a href="/mall/trancoupon/list" class="btn btn-danger">立即购券</a>
       </div>
 
       <div id="id-list-out-coupons"></div>
