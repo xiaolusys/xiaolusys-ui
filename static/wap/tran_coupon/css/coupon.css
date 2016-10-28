@@ -33,6 +33,18 @@ body {
     text-align: center;
 }
 
+.transfer-status-1 {
+    color: #f0ad4e;
+}
+
+.transfer-status-2 {
+    color: green;
+}
+
+.transfer-status-3 {
+    color: #FF1493;
+}
+
 .deeppink {
     color: #FF1493;
 }
