@@ -38,11 +38,11 @@ body {
 }
 
 .transfer-status-2 {
-    color: green;
+    color: #FF1493;
 }
 
 .transfer-status-3 {
-    color: #FF1493;
+    color: green;
 }
 
 .deeppink {
