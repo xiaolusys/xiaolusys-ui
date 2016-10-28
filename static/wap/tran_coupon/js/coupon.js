@@ -4,6 +4,20 @@ var BASE_URL = 'http://staging.xiaolumm.com';
 
 
 var list_next_page_url = null;
+var append_next_page_switch = 0;
+
+function should_append() {
+    return append_next_page_switch == 0;
+}
+
+function close_switch() {
+    append_next_page_switch = 1;
+}
+
+function open_switch() {
+    append_next_page_switch = 0;
+}
+
 
 
 var globalShowTag = 'list-in-coupons';
@@ -69,7 +83,8 @@ function renderOutCouponList(res) {
         }
         content.push('</div>');
         $("#id-list-out-coupons").append(content.join(''));
-    }    
+    }
+    open_switch(); 
 }
 
 function listOutCoupons(transferStatus) {
@@ -109,6 +124,7 @@ function renderInCouponList(res) {
         content.push('</div>');
         $("#id-list-in-coupons").append(content.join(''));
     }
+    open_switch();
 }
 
 function listInCoupons(transferStatus) {
@@ -234,7 +250,8 @@ function appendNextPage() {
 
     if (scrollTop >= documentHeight - windowHeight) {
         console.log(scrollTop, documentHeight, windowHeight);
-        if (list_next_page_url) {
+        if (list_next_page_url && should_append()) {
+            close_switch();
             if (globalShowTag == 'list-in-coupons') {
                 $.ajax({url:list_next_page_url, success:renderInCouponList});
             }
