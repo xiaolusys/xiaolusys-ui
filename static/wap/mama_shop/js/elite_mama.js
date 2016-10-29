@@ -7,7 +7,7 @@ function loadProfile() {
     var url = BASE_URL + url;
     var callback = function (res) {
         if (res) {
-            if (res["direct_buy"] == true) {
+            if (res["is_elite_mama"] == true) {
                 $("#id-trancoupon-entry").show();
             } 
         }
