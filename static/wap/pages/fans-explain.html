@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="m-fans-container" style="text-align: center; padding: 12px">
-    <p>亲,<br/>安利一下每天都有新款的<br/>小鹿美美APP<br/>请微信扫码下载!</p>
+    <!-- <p>亲,<br/>安利一下每天都有新款的<br/>小鹿美美APP<br/>请微信扫码下载!</p> -->
 </div>
 <div class="row" style="margin-top: 15px">
     <div class="col-xs-2"></div>
@@ -29,19 +29,18 @@
 </div>
 <div class="m-fans-container">
     <ul>
-        <li>如何获得粉丝？</li>
+        <li>怎么获得粉丝！</li>
         </br>
         <div class="col-sm-* m-fans-content">
-            通过分享产品，分享您的小鹿妈妈二维码等方式让用户下载app，并在APP成功注册登陆，该用户就成为您的粉丝。</br>
-            非其他小鹿妈妈粉丝的登陆用户点击您分享的店铺页面“关注”按钮也可成为粉丝哦。</br>
+            把这个二维码截图，通过微信发给你的好友，好友扫码得到1元，你得到0.3元，每天限额20名，轻松6元赚到手！
         </div>
         </br>
-        <li>粉丝有什么作用？</li>
+        <li>为什么要扫码绑定粉丝！</li>
         </br>
         <div class="col-sm-* m-fans-content">
-            用户成为您的粉丝后，只要在app中购买产品，您就可以获得相应佣金。</br></br>
-            避免了之前您的朋友没有从您分享的链接，直接通过微信网页版或从微信公众号购买而不能得到返利的损失。</br>
-            <p>活动期间，粉丝订单的佣金可额外增加10%。</p>
+            全球首创的公司出钱给你发展粉丝，粉丝一旦绑定关注“小鹿美美”公众号，同时成为你的粉丝，以后她/他在小鹿平台APP,自助网页购买的都算是你的粉丝佣金提成。（8-30%）
+            <br>
+            活动期间，粉丝订单的佣金可额外增加10%
         </div>
         <br/>
 
@@ -49,8 +48,8 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-        var requestUrl = GLConfig.get_fan_download_qrcode;
+    function getQrcodeUrl(){
+        var requestUrl = '/rest/v2/qrcode/get_wxpub_qrcode'
         $.ajax({
             type: 'get',
             url: requestUrl,
@@ -63,11 +62,16 @@
                 }
             }
         });
-    });
+    }
+    $(function(){
+        getQrcodeUrl()
+    })
     function setQrcodePicImage(res) {
         console.log(res);
-        if (res.code == 0 && res.qrcode_url != "") {
-            $("#app_download_qrcode").attr('src', res.qrcode_url);
+        if (res.qrcode_link == ''){
+            setTimeout(getQrcodeUrl, 2000)
+        }else{
+            $("#app_download_qrcode").attr('src', res.qrcode_link);
         }
     }
 </script>
