@@ -64,12 +64,16 @@ function renderOutCouponList(res) {
     for (var i=0; i<res.length; ++i) {
         var data = res[i];
         var content = [];
+        var elite_level = '';
+        if (data["elite_level"]) {
+            elite_level = '/'+data["elite_level"][0];
+        }
         content.push('<hr/><div class="record-row">');
         content.push('<div class="record-left">');
         content.push('<img class="img-rounded" style="height:100%" src="'+data["product_img"]+'" />');
         content.push('</div>');
         content.push('<div class="record-middle-left">');
-        content.push('<div><span class="hl-number">'+data["coupon_num"]+'</span>&nbsp;张/出</div><div>'+data["month_day"]+'&nbsp;'+data["hour_minute"]+'</div>');
+        content.push('<div><span class="hl-number">'+data["coupon_num"]+'</span>&nbsp;张/出'+elite_level+'</div><div>'+data["month_day"]+'&nbsp;'+data["hour_minute"]+'</div>');
         content.push('</div>');
         content.push('<div class="record-middle-right">');
         content.push('<img class="img-circle" style="height:90%" src="'+data["to_mama_thumbnail"]+'" />');
