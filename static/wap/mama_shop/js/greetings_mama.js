@@ -3,7 +3,7 @@
 var BASE_URL = 'http://m.xiaolumeimei.com';
 
 function getAdminQrcode() {
-    var url = 'rest/v2/mama/administrator';
+    var url = '/rest/v2/mama/administrator';
     var url = BASE_URL + url;
     var callback = function (res) {
         if (res) {
