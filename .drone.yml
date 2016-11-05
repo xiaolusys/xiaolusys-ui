@@ -30,3 +30,12 @@ deploy:
     commands:
       - docker pull registry.aliyuncs.com/xiaolu-img/xiaolusys-ui
       - docker run --rm --volumes-from=static registry.aliyuncs.com/xiaolu-img/xiaolusys-ui cp -rf static /data/site_media
+  ssh:
+    host: 
+      - euho.xiaolumm.com
+    when:
+      branch: euho
+    user: root
+    commands:
+      - docker pull registry.aliyuncs.com/xiaolu-img/xiaolusys-ui
+      - docker run --rm --volumes-from=static registry.aliyuncs.com/xiaolu-img/xiaolusys-ui cp -rf static /data/site_media
