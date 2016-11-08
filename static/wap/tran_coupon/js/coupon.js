@@ -70,7 +70,8 @@ function renderOutCouponList(res) {
         }
         content.push('<hr/><div class="record-row">');
         content.push('<div class="record-left">');
-        content.push('<img class="img-rounded" style="height:100%" src="'+data["product_img"]+'" />');
+        content.push('<a href="/mall/product/details/'+data["model_product_id"]+'"')
+        content.push('<img class="img-rounded" style="height:100%" src="'+data["product_img"]+'" /></a>');
         content.push('</div>');
         content.push('<div class="record-middle-left">');
         content.push('<div><span class="hl-number">'+data["coupon_num"]+'</span>&nbsp;张/出'+elite_level+'</div><div>'+data["month_day"]+'&nbsp;'+data["hour_minute"]+'</div>');
@@ -112,7 +113,8 @@ function renderInCouponList(res) {
         var content = [];
         content.push('<hr/><div class="record-row">');
         content.push('<div class="record-left">');
-        content.push('<img class="img-rounded" style="height:100%" src="'+data["product_img"]+'" />');
+        content.push('<a href="/mall/product/details/'+data["model_product_id"]+'"')
+        content.push('<img class="img-rounded" style="height:100%" src="'+data["product_img"]+'" /></a>');
         content.push('</div>');
         content.push('<div class="record-middle-left">');
         content.push('<div><span class="hl-number">'+data["coupon_num"]+'</span>&nbsp;张/入</div><div>'+data["month_day"]+'&nbsp;'+data["hour_minute"]+'</div>');
