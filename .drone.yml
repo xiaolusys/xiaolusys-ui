@@ -22,7 +22,7 @@ deploy:
       - docker run --rm -v /var/data:/data registry.aliyuncs.com/xiaolu-img/xiaolusys-ui cp -rf static /data/site_media
   ssh:
     host: 
-      - sale.xiaolumm.com
+      - staging.xiaolumm.com
     when:
       branch: master
     user: root
