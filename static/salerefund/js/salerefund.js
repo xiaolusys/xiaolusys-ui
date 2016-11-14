@@ -2,9 +2,10 @@
  * Created by jishu_linjie on 10/11/16.
  */
 // 从admin 页面加载html页面
+
 var showSaleRefundPage = function (saleRefundId) {
     $(".click_row_" + saleRefundId).parent().parent().hide();//隐藏掉要操作的行
-    console.log("debug refund id :", saleRefundId);
+    layer.msg('werwer');
     layer.open({
         type: 2,
         title: '退款处理页面',
