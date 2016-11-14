@@ -1,7 +1,6 @@
 /**
  * Created by jishu_linjie on 10/11/16.
  */
-
 // 从admin 页面加载html页面
 var showSaleRefundPage = function (saleRefundId) {
     $(".click_row_" + saleRefundId).parent().parent().hide();//隐藏掉要操作的行
@@ -84,3 +83,16 @@ var patchSaleRefund = function (saleRefundId) {
     return false
 };
 
+var refunPostage = function (saleRefundId) {
+    var url = '/apis/pay/v1/salerefund/' + saleRefundId + '/refund_postage_manual';
+    console.log('--->saleRefundId:', saleRefundId, url);
+    layer.confirm('确定退邮费给用户吗？', {
+        btn: ['确定', '取消'] //按钮
+    }, function () {
+        var func = function (res) {
+            console.log('res:', res);
+            layer.msg(res.info);
+        };
+        serverData({}, func, url, 'post');
+    }, function () {});
+};
