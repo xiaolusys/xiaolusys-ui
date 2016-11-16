@@ -24,6 +24,7 @@
       <ul class="nav nav-tabs" role="tablist" id="id-tab">
         <li role="presentation" class="active"><a href="#" hide-tag="list-out-coupons" show-tag="list-in-coupons"><b>入券</b></a></li>
         <li role="presentation" ><a href="#" hide-tag="list-in-coupons" show-tag="list-out-coupons"><b>出券</b></a></li>
+        <li role="presentation" ><a href="#" show-tag="list-recruit"><b>招募</b></a></li>
       </ul>
       </div>
       <div style="width:30%;display:inline-block;vertical-align:middle">
@@ -49,8 +50,18 @@
       </div>
 
       <div id="id-list-out-coupons"></div>
-      <div id="id-list-in-coupons"></div>      
-
+      <div id="id-list-in-coupons"></div>   
+      <div id="id-list-recruit" style="margin-top:20px;display:none">
+      <div><p>加入精英妈妈，用专业成就事业：</p></div>
+        <div class="input-group">
+          <span class="input-group-addon">精英妈妈:</span>
+          <input type="number" class="form-control" placeholder="妈妈ID" id="id-mama-id-input">
+          <span class="input-group-btn">
+            <button class="btn btn-warning" type="button" onClick="startRecruit()">确定邀请</button>
+          </span>
+        </div>
+      </div>   
+      <div id="id-list-recruit-detail"></div>
     </div>
     
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

@@ -177,7 +177,6 @@ var returnGoodStats = function (dateFrom, dateTo) {
 };
 
 
-
 var depositStats = function (dateFrom, dateTo) {
     var data = {'date_from': dateFrom, 'date_to': dateTo};
     var url = '/apis/finance/v1/deposit_stats';
@@ -234,17 +233,30 @@ var costStats = function (dateFrom, dateTo) {
     var data = {'date_from': dateFrom, 'date_to': dateTo};
     var url = '/apis/finance/v1/cost_stats';
     var func = function (res) {
-        console.log(res);
+        console.log(res.desc);
         var dateArray = [];
         var coseArray = [];
         var paymentArray = [];
         $('#cost-stats-tbody').empty();
-        $.each(res.results, function (k, v) {
+
+        $.each(res.details.group_by_date, function (k, v) {
             dateArray.push(v.date);
             coseArray.push(v.sum_cost);
             paymentArray.push(v.sum_payment);
+            createTemplateDom(v, 'cost-stats-date-template', 'cost-stats-date-tbody');
+        });
+        var categoryNameArry = [];
+        var categoryDataArry = [];
+        $.each(res.details.group_by_category, function (k, v) {
+            categoryNameArry.push(v.category_name);
+            categoryDataArry.push({value: v.sum_cost, name: v.category_name});
+            createTemplateDom(v, 'cost-stats-category-template', 'cost-stats-category-tbody');
+        });
+
+        $.each(res.details.items, function (k, v) {
             createTemplateDom(v, 'cost-stats-template', 'cost-stats-tbody');
         });
+
         var myChart = echarts.init(document.getElementById('cost-stats'));
         var option = {
             color: ['blue', 'green'],
@@ -289,8 +301,43 @@ var costStats = function (dateFrom, dateTo) {
                 }
             ]
         };
-
         myChart.setOption(option);
+
+        var myChart2 = echarts.init(document.getElementById('cost-stats-category'));
+        var option2 = {
+            title: {
+                text: '成本分类占比',
+                subtext: '成本占比',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: categoryNameArry
+            },
+            series: [
+                {
+                    name: '成本',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: categoryDataArry,
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        myChart.setOption(option);
+        myChart2.setOption(option2);
     };
     serverData(data, func, url, 'get')
 };

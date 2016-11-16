@@ -22,6 +22,8 @@ function open_switch() {
 
 var globalShowTag = 'list-in-coupons';
 var globalTransferStatus = '';
+var globalTabIds = ['list-out-coupons','list-in-coupons','list-recruit'];
+
 
 function changeFilterText(value) {
     var text = "筛选";
@@ -207,6 +209,26 @@ function transferCoupon(pk) {
     }
 }
 
+function startRecruit() {
+    var url = '/rest/v2/mama/recruit_elite_mama';
+    var url = BASE_URL + url;
+    var callback = function (res) {
+        alert(res["info"]);
+    };
+    var mama_id = $('#id-mama-id-input').val();
+    var data = {"mama_id":mama_id};
+    $.ajax({url:url, data:data, success:callback, type:'POST'});
+}
+
+function listRecruit() {
+    var url = '/rest/v2/referal/elite_mama';
+    var url = BASE_URL + url;
+    var callback = function (res) {
+        console.log(res);
+    };
+    $.ajax({url:url, success:callback});
+}
+
 $("#id-dropdown-menu").click(function (e){
     var elem = e.target;
     var status = elem.getAttribute("status");
@@ -238,13 +260,17 @@ $('#id-tab a').click(function (e) {
             listOutCoupons(globalTransferStatus);
         } else if (showTag == 'list-in-coupons') {
             listInCoupons(globalTransferStatus);
+        } else if(showTag == 'list-recruit') {
+            listRecruit();
         }
         
-        if (hideTag) {
-            $("#id-"+hideTag).hide();
-        }
-        if (showTag) {
-            $("#id-"+showTag).show();
+        for (var i=0; i<globalTabIds.length; ++i) {
+            var tabId = globalTabIds[i];
+            if (showTag == tabId) {
+                $("#id-"+tabId).show();
+            } else {
+                $("#id-"+tabId).hide();
+            }
         }
     }
 });

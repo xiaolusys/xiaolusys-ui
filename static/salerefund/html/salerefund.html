@@ -22,6 +22,7 @@
 <body>
 <div id="sale_refund_info"></div>
 <div id="sale_refund_form"></div>
+
 <div id="proof_pic">
     <h3>佐证图片:</h3>
 </div>
@@ -61,6 +62,7 @@
                 <li class="list-group-item">物流公司：{{ company_name }}</li>
                 <li class="list-group-item">快递单号：{{ sid }}</li>
             </ul>
+
         </div>
 
         <div class="col-xs-3">
@@ -80,6 +82,9 @@
 </script>
 <script type="text/html" id="sale_refund_form_tpl">
     <div class="col-xs-12">
+        <div class="col-xs-1">
+            <button type="button" class="btn btn-warning" id="manual_refund_postage" onclick="refunPostage({{ id }})">手动退邮费</button>
+        </div>
         <form onsubmit="return patchSaleRefund({{ id }})">
             <div class="col-xs-4">
                 <span class="label label-info">审核意见:</span>
