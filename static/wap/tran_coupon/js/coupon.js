@@ -219,6 +219,15 @@ function startRecruit() {
     $.ajax({url:url, data:data, success:callback, type:'POST'});
 }
 
+function listRecruit() {
+    var url = '/rest/v2/referal/elite_mama';
+    var url = BASE_URL + url;
+    var callback = function (res) {
+        console.log(res);
+    };
+    $.ajax({url:url, success:callback});
+}
+
 $("#id-dropdown-menu").click(function (e){
     var elem = e.target;
     var status = elem.getAttribute("status");
