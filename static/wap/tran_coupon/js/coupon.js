@@ -215,6 +215,7 @@ function startRecruit() {
     var callback = function (res) {
         alert(res["info"]);
     };
+    var mama_id = $('#id-mama-id').val();
     var data = {"mama_id":mama_id};
     $.ajax({url:url, data:data, success:callback, type:'POST'});
 }
