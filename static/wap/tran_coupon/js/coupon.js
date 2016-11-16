@@ -210,7 +210,7 @@ function transferCoupon(pk) {
 }
 
 function startRecruit() {
-    var url = '/rest/v2/mama/recruit_elite_mama'';
+    var url = '/rest/v2/mama/recruit_elite_mama';
     var url = BASE_URL + url;
     var callback = function (res) {
         alert(res["info"]);
