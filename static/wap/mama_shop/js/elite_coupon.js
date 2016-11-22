@@ -15,7 +15,7 @@ function enable_elite_coupon() {
     var code = $("#id-code").val();
     var score = $("id-score").val();
 
-    var data = {"template_id":template_id, "coupon_product_model_id":coupon_product_model_id, "product_model_id":product_model_id, "code":code, "elite_score":score};
+    var data = {"template_id":template_id, "coupon_product_model_id":coupon_product_model_id, "product_model_id":product_model_id, "code":code, "score":score};
     $.ajax({url:url, data:data, success:callback, type:"post"});
 }
 
