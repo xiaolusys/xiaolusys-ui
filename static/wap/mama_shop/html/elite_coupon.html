@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>精品券生效</title>
+
+    <!-- Bootstrap -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/personal.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container" id="id-container">
+      <h3>精品券商品设置生效</h3>
+      <div style="margin-top:20px">
+        <div class="input-group">
+          <span class="input-group-addon">优惠券模版ID:</span>
+          <input id="id-template-id" type="number" class="form-control" placeholder="template_id">
+        </div>
+      </div>
+      <div style="margin-top:20px"> 
+        <div class="input-group">
+          <span class="input-group-addon">券｜商品款式ID:</span>
+          <input id="id-coupon-product-model-id" type="number" class="form-control" placeholder="coupon_product_model_id">
+        </div>
+      </div>
+      <div style="margin-top:20px"> 
+        <div class="input-group">
+          <span class="input-group-addon">商品款式ID:</span>
+          <input id="id-product-model-id" type="number" class="form-control" placeholder="product_model_id">
+        </div>
+      </div>    
+      <div style="margin-top:20px;text-align:center"> 
+        <button class="btn btn-warning" onclick="enable_elite_coupon()">提交</button>
+      </div>  
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="../js/elite_coupon.js"></script>
+  </body>
+</html>
+
+
