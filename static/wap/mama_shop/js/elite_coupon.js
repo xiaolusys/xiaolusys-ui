@@ -13,7 +13,7 @@ function enable_elite_coupon() {
     var coupon_product_model_id = $("#id-coupon-product-model-id").val();
     var product_model_id = $("#id-product-model-id").val();
     var code = $("#id-code").val();
-    var score = $("id-score").val();
+    var score = $("#id-score").val();
 
     var data = {"template_id":template_id, "coupon_product_model_id":coupon_product_model_id, "product_model_id":product_model_id, "code":code, "score":score};
     $.ajax({url:url, data:data, success:callback, type:"post"});
