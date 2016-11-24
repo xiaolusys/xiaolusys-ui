@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
+<html>
 <head lang="en">
     <meta charset="UTF-8">
     <title>财务简单统计页面</title>
@@ -18,214 +18,210 @@
     <script src="../../statistics/js/moment.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
     <script src="//cdn.bootcss.com/echarts/3.2.2/echarts.common.min.js"></script>
+    <style>
+        .my-stats {
+            margin-top: 30px;
+            min-height: 950px;
+            border-style: solid;
+            border-width: 1px;
+        }
+
+        .my-stats-desc {
+            margin-bottom: 20px
+        }
+
+        .stats-chart-rate {
+            width: 800px;
+            height: 350px;
+            margin-top: 10px;
+            margin-bottom: 20px
+        }
+    </style>
 </head>
 
-<body class="container" style="margin-bottom: 300px">
-
-
-
-<div class="row" style="margin-top: 30px">
-    <div class="col-sm-2">
-        <input type="text" class="form-control date-picker" id="date-from" placeholder="开始日期">
-    </div>
-    <div class="col-sm-2">
-        <input type="text" class="form-control date-picker" id="date-to" placeholder="截止日期">
-    </div>
-    <button type="button" class="btn btn-warning" id="search">查询</button>
+<body style="margin-bottom: 300px">
+<div class="col-md-2" style="margin-top: 80px;">
+    <ul class="nav nav-pills nav-stacked" role="tablist" style="position: fixed;" id="list-stats">
+        <li role="presentation" class="active"><a href="#">Home</a></li>
+    </ul>
 </div>
+<div class="col-md-9">
+    <div class="row" style="margin-top: 30px;">
+        <div class="col-sm-2">
+            <input type="text" class="form-control date-picker" id="date-from" placeholder="开始日期">
+        </div>
+        <div class="col-sm-2">
+            <input type="text" class="form-control date-picker" id="date-to" placeholder="截止日期">
+        </div>
+    </div>
+
+    <div class="row my-stats" id="channel-pay">
+        <h3 class="my-stats-desc" id="channel-pay-desc"></h3>
+
+        <div class="col-sm-10">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>channel</th>
+                    <th>渠道</th>
+                    <th>数量(单)</th>
+                    <th>实付款(元)</th>
+                    <th>总费用(元)</th>
+                </tr>
+                </thead>
+                <tbody id="channel-pay-tbody">
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-10">
+            <div id="channel-pay-stats" class="stats-chart-rate"></div>
+        </div>
+        <div class="col-sm-10"><p id="channel-pay-sql"></p></div>
+    </div>
 
 
-<div class="row" style="margin-top: 30px">
-    <div class="col-sm-6">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>channel</th>
-                <th>渠道</th>
-                <th>数量(单)</th>
-                <th>金额(元)</th>
-            </tr>
-            </thead>
-            <tbody id="channel-pay-tbody">
-            </tbody>
-        </table>
+    <div class="row my-stats" id="status-refund">
+        <h3 class="my-stats-desc" id="refund-desc"></h3>
+
+        <div class="col-sm-10">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>状态码</th>
+                    <th>状态名</th>
+                    <th>数量(单)</th>
+                    <th>金额(元)</th>
+                </tr>
+                </thead>
+                <tbody id="refund-stats-tbody">
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-10">
+            <div id="refund-stats" class="stats-chart-rate"></div>
+        </div>
+        <div class="col-sm-10"><p id="refund-sql"></p></div>
     </div>
-    <div class="col-sm-6">
-        <div id="channel-pay-stats" style="width: 400px;height:200px;"></div>
-    </div>
-</div>
 
 
-<div class="row" style="margin-top: 30px">
-    <div class="col-sm-6">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>状态码</th>
-                <th>状态名</th>
-                <th>数量(单)</th>
-                <th>金额(元)</th>
-            </tr>
-            </thead>
-            <tbody id="refund-stats-tbody">
-            </tbody>
-        </table>
+    <div class="row my-stats" id="refund-good-status">
+        <h3 class="my-stats-desc" id="refund-good-desc"></h3>
+
+        <div class="col-sm-10">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>状态码</th>
+                    <th>描述</th>
+                    <th>单数</th>
+                    <th>退款金额(元)</th>
+                </tr>
+                </thead>
+                <tbody id="return-good-stats-tbody">
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-10">
+            <div id="return-good-stats" class="stats-chart-rate"></div>
+        </div>
+        <div class="col-sm-10"><p id="refund-good-sql"></p></div>
     </div>
-    <div class="col-sm-6">
-        <div id="refund-stats" style="width: 400px;height:200px;"></div>
+
+    <div class="row my-stats" id="deposit">
+        <h3 class="my-stats-desc" id="deposit-desc"></h3>
+
+        <div class="col-sm-10">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>sku_id</th>
+                    <th>押金名</th>
+                    <th>数量(单)</th>
+                    <th>金额(元)</th>
+                </tr>
+                </thead>
+                <tbody id="deposit-stats-tbody">
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-10">
+            <div id="deposit-stats" class="stats-chart-rate"></div>
+        </div>
+        <div class="col-sm-10"><p id="deposit-sql"></p></div>
     </div>
-</div>
+
+    <div class="row my-stats" id="stock-category">
+        <h3 class="my-stats-desc" id="stock-category-desc"></h3>
+
+        <div class="col-sm-10">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>category_id</th>
+                    <th>类别名</th>
+                    <th>件数</th>
+                    <th>总成本(元)</th>
+                </tr>
+                </thead>
+                <tbody id="stock-stats-tbody">
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-10">
+            <div id="stock-stats" class="stats-chart-rate"></div>
+        </div>
+        <div class="col-sm-10"><p id="stock-category-sql"></p></div>
+    </div>
 
 
-<div class="row" style="margin-top: 30px">
-    <div class="col-sm-6">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>状态码</th>
-                <th>描述</th>
-                <th>单数</th>
-                <th>退款金额(元)</th>
-            </tr>
-            </thead>
-            <tbody id="return-good-stats-tbody">
-            </tbody>
-        </table>
-    </div>
-    <div class="col-sm-6">
-        <div id="return-good-stats" style="width: 400px;height:200px;"></div>
-    </div>
-</div>
+    <div class="row my-stats" id="sale-cost">
+        <h3 class="my-stats-desc" id="sale-cost-desc"></h3>
 
-<div class="row" style="margin-top: 30px">
-    <div class="col-sm-6">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>sku_id</th>
-                <th>押金名</th>
-                <th>数量(单)</th>
-                <th>金额(元)</th>
-            </tr>
-            </thead>
-            <tbody id="deposit-stats-tbody">
-            </tbody>
-        </table>
+        <div class="col-sm-10">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>订单数</th>
+                    <th>成本(元)</th>
+                    <th>交易额(元)</th>
+                    <th>利润比</th>
+                </tr>
+                </thead>
+                <tbody id="cost-stats-date-tbody">
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-10">
+            <div id="cost-stats" class="stats-chart-rate"></div>
+        </div>
+        <div class="col-sm-10"><p id="sale-cost-sql"></p></div>
     </div>
-    <div class="col-sm-6">
-        <div id="deposit-stats" style="width: 400px;height:200px;"></div>
-    </div>
-</div>
 
 
-<div class="row" style="margin-top: 30px">
-    <h2>成本日期分类明细</h2>
+    <div class="row my-stats" id="mama-order-carry">
+        <h3 class="my-stats-desc" id="mama-order-carry-desc"></h3>
 
-    <div class="col-sm-8">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>日期</th>
-                <th>类别</th>
-                <th>订单数</th>
-                <th>成本(元)</th>
-                <th>交易额(元)</th>
-                <th>利润比</th>
-            </tr>
-            </thead>
-            <tbody id="cost-stats-tbody">
-            </tbody>
-        </table>
+        <div class="col-sm-10">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>订单笔数</th>
+                    <th>交易金额</th>
+                    <th>提成金额</th>
+                </tr>
+                </thead>
+                <tbody id="order-carry-stats-tbody">
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-10">
+            <div id="order-carry-stats" class="stats-chart-rate"></div>
+        </div>
+        <div class="col-sm-10"><p id="mama-order-carry-sql"></p></div>
     </div>
-    <div class="col-sm-6">
-        <div id="cost-stats" style="width: 700px;height:500px;"></div>
-    </div>
-</div>
-<div class="row" style="margin-top: 30px">
-    <h2>成本日期分组统计</h2>
-
-    <div class="col-sm-6">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>日期</th>
-                <th>订单数</th>
-                <th>成本(元)</th>
-                <th>交易额(元)</th>
-                <th>利润比</th>
-            </tr>
-            </thead>
-            <tbody id="cost-stats-date-tbody">
-            </tbody>
-        </table>
-    </div>
-    <div class="col-sm-6">
-        <div id="cost-stats" style="width: 700px;height:500px;"></div>
-    </div>
-</div>
-<div class="row" style="margin-top: 30px">
-    <h2>成本分类分组统计</h2>
-
-    <div class="col-sm-8">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>类别名称</th>
-                <th>订单数</th>
-                <th>成本(元)</th>
-                <th>交易额(元)</th>
-                <th>利润比</th>
-            </tr>
-            </thead>
-            <tbody id="cost-stats-category-tbody">
-            </tbody>
-        </table>
-    </div>
-    <div class="col-sm-6">
-        <div id="cost-stats-category" style="width: 700px;height:500px;"></div>
-    </div>
-</div>
-
-
-<div class="row" style="margin-top: 30px">
-    <div class="col-sm-6">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>category_id</th>
-                <th>类别名</th>
-                <th>件数</th>
-                <th>总成本(元)</th>
-            </tr>
-            </thead>
-            <tbody id="stock-stats-tbody">
-            </tbody>
-        </table>
-    </div>
-    <div class="col-sm-6">
-        <div id="stock-stats" style="width: 700px;height:500px;"></div>
-    </div>
-</div>
-
-
-<div class="row" style="margin-top: 30px">
-    <div class="col-sm-6">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>日期</th>
-                <th>订单笔数</th>
-                <th>交易金额</th>
-                <th>提成金额</th>
-            </tr>
-            </thead>
-            <tbody id="order-carry-stats-tbody">
-            </tbody>
-        </table>
-    </div>
-    <div class="col-sm-6">
-        <div id="order-carry-stats" style="width: 700px;height:500px;"></div>
-    </div>
+    <div style="margin-top: 50px"></div>
 </div>
 
 
@@ -235,6 +231,7 @@
         <td>{{ channel_display }}</td>
         <td>{{ count }}</td>
         <td>{{ sum_payment }}</td>
+        <td>{{ total_fee }}</td>
     </tr>
 </script>
 
@@ -265,34 +262,6 @@
     </tr>
 </script>
 
-<script type="text/html" id="cost-stats-template">
-    <tr>
-        <td>{{ date }}</td>
-        <td>{{ category_name }}</td>
-        <td>{{ sum_num }}</td>
-        <td>{{ sum_cost }}</td>
-        <td>{{ sum_payment }}</td>
-        <td>{{ profit }}</td>
-    </tr>
-</script>
-<script type="text/html" id="cost-stats-date-template">
-    <tr>
-        <td>{{ date }}</td>
-        <td>{{ sum_num }}</td>
-        <td>{{ sum_cost }}</td>
-        <td>{{ sum_payment }}</td>
-        <td>{{ profit }}</td>
-    </tr>
-</script>
-<script type="text/html" id="cost-stats-category-template">
-    <tr>
-        <td>{{ category_name }}</td>
-        <td>{{ sum_num }}</td>
-        <td>{{ sum_cost }}</td>
-        <td>{{ sum_payment }}</td>
-        <td>{{ profit }}</td>
-    </tr>
-</script>
 
 <script type="text/html" id="stock-stats-template">
     <tr>
@@ -302,6 +271,17 @@
         <td>{{ sum_cost }}</td>
     </tr>
 </script>
+
+<script type="text/html" id="cost-stats-date-template">
+    <tr>
+        <td>{{ date }}</td>
+        <td>{{ sum_num }}</td>
+        <td>{{ sum_cost }}</td>
+        <td>{{ sum_payment }}</td>
+        <td>{{ profit }}</td>
+    </tr>
+</script>
+
 
 <script type="text/html" id="order-carry-stats-template">
     <tr>
