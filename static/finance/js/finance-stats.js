@@ -22,10 +22,22 @@ function createTemplateDom(obj, templateElementId, containerElementId) {
     $('#' + containerElementId).append(hereDoc(template).template(obj))
 }
 
+
+function ulList() {
+    var ul = '<li role="presentation" class="active"><a href="#">Home</a></li>' +
+        '<li role="presentation"><a href="#channel-pay">交易渠道占比</a></li>' +
+        '<li role="presentation"><a href="#status-refund">退款金额笔数</a></li>' +
+        '<li role="presentation"><a href="#refund-good-status">退货金额笔数</a></li>' +
+        '<li role="presentation"><a href="#deposit">押金金额笔数</a></li>' +
+        '<li role="presentation"><a href="#stock-category">库存分类统计</a></li>' +
+        '<li role="presentation"><a href="#sale-cost">销量成本核算</a></li> ' +
+        '<li role="presentation"><a href="#mama-order-carry">代理提成统计</a></li>';
+    $("#list-stats").empty();
+    $("#list-stats").append(ul);
+}
 var channelPayStats = function (dateFrom, dateTo) {
     var data = {'date_from': dateFrom, 'date_to': dateTo};
     var url = '/apis/finance/v1/channel_pay_stats';
-    $("#list-stats").append('<li role="presentation"><a href="#channel-pay">交易渠道占比</a></li>');
     var func = function (res) {
         var channelNames = [];
         var countData = [];
@@ -81,7 +93,6 @@ var channelPayStats = function (dateFrom, dateTo) {
 var refundStats = function (dateFrom, dateTo) {
     var data = {'date_from': dateFrom, 'date_to': dateTo};
     var url = '/apis/finance/v1/refund_stats';
-    $("#list-stats").append('<li role="presentation"><a href="#status-refund">退款金额笔数</a></li>');
     var func = function (res) {
         var refundNames = [];
         var countData = [];
@@ -138,7 +149,6 @@ var refundStats = function (dateFrom, dateTo) {
 var returnGoodStats = function (dateFrom, dateTo) {
     var data = {'date_from': dateFrom, 'date_to': dateTo};
     var url = '/apis/finance/v1/return_good_stats';
-    $("#list-stats").append('<li role="presentation"><a href="#refund-good-status">退货金额笔数</a></li>');
     var func = function (res) {
         var returnGoodNames = [];
         var countData = [];
@@ -194,7 +204,6 @@ var returnGoodStats = function (dateFrom, dateTo) {
 var depositStats = function (dateFrom, dateTo) {
     var data = {'date_from': dateFrom, 'date_to': dateTo};
     var url = '/apis/finance/v1/deposit_stats';
-    $("#list-stats").append('<li role="presentation"><a href="#deposit">押金金额笔数</a></li>');
     var func = function (res) {
         var depositNames = [];
         var countData = [];
@@ -250,7 +259,6 @@ var depositStats = function (dateFrom, dateTo) {
 var stockStats = function (dateFrom, dateTo) {
     var data = {'date_from': dateFrom, 'date_to': dateTo};
     var url = '/apis/finance/v1/stock_stats';
-    $("#list-stats").append('<li role="presentation"><a href="#stock-category">库存分类统计</a></li>');
     var func = function (res) {
         var stockNames = [];
         var countData = [];
@@ -306,7 +314,6 @@ var stockStats = function (dateFrom, dateTo) {
 var costStats = function (dateFrom, dateTo) {
     var data = {'date_from': dateFrom, 'date_to': dateTo};
     var url = '/apis/finance/v1/cost_stats';
-    $("#list-stats").append('<li role="presentation"><a href="#sale-cost">销量成本核算</a></li>');
     var func = function (res) {
         console.log(res.desc);
         var dateArray = [];
@@ -377,7 +384,6 @@ var costStats = function (dateFrom, dateTo) {
 var orderCarryStats = function (dateFrom, dateTo) {
     var data = {'date_from': dateFrom, 'date_to': dateTo};
     var url = '/apis/finance/v1/mama_order_carry_stats';
-    $("#list-stats").append('<li role="presentation"><a href="#mama-order-carry">代理提成统计</a></li>');
     var func = function (res) {
         var dateArray = [];
         var carryNumData = [];
@@ -462,6 +468,7 @@ var getSumDate = function (dateFrom, dateTo) {
 
 $(function () {
     var dp = $('.date-picker');
+    ulList();
     dp.datetimepicker({
         format: 'YYYY-MM-DD'
     });
