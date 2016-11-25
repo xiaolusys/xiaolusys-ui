@@ -111,6 +111,9 @@ function listOutCoupons(transferStatus) {
 
 function renderInCouponList(res) {
     list_next_page_url = res['next'];
+    if (list_next_page_url) {
+        list_next_page_url = 'https' + list_next_page_url.substr(4);
+    }    
     res = res['results'];
 
     for (var i=0; i<res.length; ++i) {
