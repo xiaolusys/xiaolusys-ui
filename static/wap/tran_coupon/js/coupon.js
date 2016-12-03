@@ -235,6 +235,10 @@ function listRecruit() {
     $.ajax({url:url, success:callback});
 }
 
+$("#id-back-button").click(function (e){
+    history.back();
+});
+
 $("#id-dropdown-menu").click(function (e){
     var elem = e.target;
     var status = elem.getAttribute("status");
