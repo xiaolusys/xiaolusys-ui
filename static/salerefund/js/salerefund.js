@@ -84,16 +84,64 @@ var patchSaleRefund = function (saleRefundId) {
     return false
 };
 
-var refunPostage = function (saleRefundId) {
-    var url = '/apis/pay/v1/salerefund/' + saleRefundId + '/refund_postage_manual';
-    console.log('--->saleRefundId:', saleRefundId, url);
-    layer.confirm('确定退邮费给用户吗？', {
+var setCheckBox = function (saleRefundId) {
+    var checked = $("#im-execute-" + saleRefundId).attr("checked");
+    console.log('checked', checked);
+    if (checked === 'checked') {
+        console.log('yes');
+        $("#im-execute-" + saleRefundId).attr("checked", null);
+    } else {
+        console.log('no');
+        $("#im-execute-" + saleRefundId).attr("checked", 'checked');
+    }
+};
+
+var refundCoupon = function (saleRefundId) {
+    console.log('补优惠券:', saleRefundId);
+    var imExecute = $("#im-execute-" + saleRefundId).attr("checked");
+    var templateId = $('#refundCoupon-' + saleRefundId).val();
+    var url = '/apis/pay/v1/salerefund/' + saleRefundId + '/refund_coupon_manual';
+    layer.confirm('确定补贴优惠券给用户吗？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
         var func = function (res) {
             console.log('res:', res);
             layer.msg(res.info);
+            if (imExecute === 'checked') {
+                location.reload();
+            }
         };
-        serverData({}, func, url, 'post');
-    }, function () {});
+        serverData({
+            'coupon_template_id': parseInt(templateId),
+            'im_execute': imExecute === 'checked'
+        }, func, url, 'post');
+    }, function () {
+    });
+};
+
+var refundPostage = function (saleRefundId) {
+    var postageValue = $("#refundPostage-" + saleRefundId).val();
+    var imExecute = $("#im-execute-" + saleRefundId).attr("checked");
+    var keyCode = window.event.charCode || window.event.keyCode;
+    var url = '/apis/pay/v1/salerefund/' + saleRefundId + '/refund_postage_manual';
+    if (keyCode == '13') {
+        console.log('退邮费:', saleRefundId, postageValue);
+        layer.confirm('确定退邮费给用户吗？', {
+            btn: ['确定', '取消'] //按钮
+        }, function () {
+            var func = function (res) {
+                console.log('res:', res);
+                layer.msg(res.info);
+                if (imExecute === 'checked') {
+                    location.reload();
+                }
+            };
+            serverData({
+                'postage_num': parseInt(postageValue) * 100,
+                'im_execute': imExecute === 'checked'
+            }, func, url, 'post');
+        }, function () {
+        });
+        return false
+    }
 };
