@@ -1,4 +1,4 @@
-//var BASE_URL = 'http://127.0.0.1:8000';
+//var BASE_URL = 'http://192.168.1.11:9000';
 //var BASE_URL = 'http://staging.xiaolumm.com';
 var BASE_URL = 'https://m.xiaolumeimei.com';
 
@@ -61,9 +61,6 @@ function loadProfile() {
 
 function renderOutCouponList(res) {
     list_next_page_url = res['next'];
-    if (list_next_page_url) {
-        list_next_page_url = 'https' + list_next_page_url.substr(4);
-    }
     res = res['results'];
 
     for (var i=0; i<res.length; ++i) {
@@ -111,9 +108,6 @@ function listOutCoupons(transferStatus) {
 
 function renderInCouponList(res) {
     list_next_page_url = res['next'];
-    if (list_next_page_url) {
-        list_next_page_url = 'https' + list_next_page_url.substr(4);
-    }    
     res = res['results'];
 
     for (var i=0; i<res.length; ++i) {
@@ -169,7 +163,7 @@ function requestTransfer() {
     };
     var data = {"coupon_num":coupon_num};
 
-    $.ajax({url:url, data:data, success:callback, type:'POST'});
+    $.ajax({url:url, data:data, success:callback, method: "POST"});
 }
 
 function processCoupon(pk) {
@@ -183,7 +177,7 @@ function processCoupon(pk) {
         loadProfile();
     };
     if (confirm("提示：请务必先收款，后审核！")) {
-       $.ajax({url:url, success:callback, type:'POST'});
+       $.ajax({url:url, success:callback, method: "POST"});
     }
 }
 
@@ -197,7 +191,7 @@ function cancelCoupon(pk) {
         }
         loadProfile();
     };
-    $.ajax({url:url, success:callback, type:'POST'});
+    $.ajax({url:url, success:callback, method: "POST"});
 }
 
 function transferCoupon(pk) {
@@ -211,7 +205,7 @@ function transferCoupon(pk) {
         loadProfile();
     };
     if (confirm("提示：请务必先收款，后发券！")) {
-        $.ajax({url:url, success:callback, type:'POST'});
+        $.ajax({url:url, success:callback, method: "POST"});
     }
 }
 
@@ -222,8 +216,14 @@ function startRecruit() {
         alert(res["info"]);
     };
     var mama_id = $('#id-mama-id-input').val();
-    var data = {"mama_id":mama_id};
-    $.ajax({url:url, data:data, success:callback, type:'POST'});
+    var mama_phone = $('#id-phone-id-input').val();
+
+    if (!mama_id || !mama_phone ){
+        alert('请输入邀请妈妈的ID及手机号');
+        return;
+    }
+    var data = {"mama_id":mama_id, "mama_phone":mama_phone};
+    $.ajax({url:url, data:data, success:callback, method: "POST"});
 }
 
 function listRecruit() {
@@ -234,10 +234,6 @@ function listRecruit() {
     };
     $.ajax({url:url, success:callback});
 }
-
-$("#id-back-button").click(function (e){
-    history.back();
-});
 
 $("#id-dropdown-menu").click(function (e){
     var elem = e.target;

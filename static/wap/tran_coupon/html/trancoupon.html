@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,67 +13,79 @@
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
-  <body>
-    <div class="container" id="id-container">
-      <div>
-        <div>
-          <button class="btn btn-default " type="button" id="id-back-button" >后退</button>
+</head>
+<body>
+<div class="container" id="id-container">
+    <div>
+        <div class="clearfix">
+            <button class="btn btn-default pull-left" type="button" id="id-back-button">后退</button>
+            <div class="col-xs-4 pull-right dropdown" id="id-dropdown">
+                <button class="col-xs-12 btn btn-default dropdown-toggle" type="button" id="id-dropdown-button"
+                        data-toggle="dropdown">筛选 <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" id="id-dropdown-menu">
+                    <li role="presentation"><a role="menuitem" status="1" href="#">待审核</a></li>
+                    <li role="presentation"><a role="menuitem" status="2" href="#">待发放</a></li>
+                    <li role="presentation"><a role="menuitem" status="3" href="#">已完成</a></li>
+                    <li role="presentation"><a role="menuitem" status="4" href="#">已取消</a></li>
+                </ul>
+            </div>
         </div>
-      <div style="width:65%;display:inline-block;vertical-align:middle">
-      <ul class="nav nav-tabs" role="tablist" id="id-tab">
-        <li role="presentation" class="active"><a href="#" hide-tag="list-out-coupons" show-tag="list-in-coupons"><b>入券</b></a></li>
-        <li role="presentation" ><a href="#" hide-tag="list-in-coupons" show-tag="list-out-coupons"><b>出券</b></a></li>
-        <li role="presentation" ><a href="#" show-tag="list-recruit"><b>招募</b></a></li>
-      </ul>
-      </div>
-      <div style="width:30%;display:inline-block;vertical-align:middle">
-        <div class="dropdown" id="id-dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" id="id-dropdown-button" data-toggle="dropdown">筛选 <span class="caret"></span></button>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" id="id-dropdown-menu">
-            <li role="presentation"><a role="menuitem" status="1" href="#">待审核</a></li>
-            <li role="presentation"><a role="menuitem" status="2" href="#">待发放</a></li>
-            <li role="presentation"><a role="menuitem" status="3" href="#">已完成</a></li>
-            <li role="presentation"><a role="menuitem" status="4" href="#">已取消</a></li>  
-        </ul>
+        <div> <!-- style="width:65%;display:inline-block;vertical-align:middle" -->
+            <ul class="nav nav-tabs" role="tablist" id="id-tab">
+                <li role="presentation" class="col-xs-4 active"><a href="#" hide-tag="list-out-coupons"
+                                                                   show-tag="list-in-coupons"><b>入券</b></a></li>
+                <li role="presentation" class="col-xs-4"><a href="#" hide-tag="list-in-coupons"
+                                                            show-tag="list-out-coupons"><b>出券</b></a></li>
+                <li role="presentation" class="col-xs-4"><a href="#" show-tag="list-recruit"><b>招募</b></a></li>
+            </ul>
         </div>
-      </div>
-      </div>
+    </div>
 
-      <div id="id-profile">
+    <div id="id-profile">
         <p>妈妈ID:<span id="id-mama-id"></span>, 总共购入<span id="id-bought-num" class="hl-number">0</span>张券。</p>
         <p id="id-waiting"></p>
         <p>您现有&nbsp;<span class="coupon-number" id="id-stock-num">0</span>&nbsp;张精品券可用！</p>
-      </div>
-      <div id="id-place-order">
-        <a href="/mall/trancoupon/list" class="btn btn-danger">立即购券</a>
-      </div>
-
-      <div id="id-list-out-coupons"></div>
-      <div id="id-list-in-coupons"></div>   
-      <div id="id-list-recruit" style="margin-top:20px;display:none">
-      <div><p>加入精英妈妈，用专业成就事业：</p></div>
-        <div class="input-group">
-          <span class="input-group-addon">精英妈妈:</span>
-          <input type="number" class="form-control" placeholder="妈妈ID" id="id-mama-id-input">
-          <span class="input-group-btn">
-            <button class="btn btn-warning" type="button" onClick="startRecruit()">确定邀请</button>
-          </span>
-        </div>
-      </div>   
-      <div id="id-list-recruit-detail"></div>
     </div>
-    
+    <div id="id-place-order">
+        <a href="/mall/trancoupon/list" class="btn btn-danger">立即购券</a>
+    </div>
+
+    <div id="id-list-out-coupons"></div>
+    <div id="id-list-in-coupons"></div>
+    <div id="id-list-recruit" style="margin-top:20px;display:none">
+        <div><p>加入精英妈妈，用专业成就事业：</p></div>
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">邀请妈妈ID</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" placeholder="请输入邀请妈妈ID" id="id-mama-id-input" required="required">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">邀请妈妈手机</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" placeholder="请输入邀请妈妈手机号" id="id-phone-id-input" required="required">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-primary" onclick="startRecruit()">确定邀请</button>
+                </div>
+            </div>
+        </form>
+        <div id="id-list-recruit-detail"></div>
+    </div>
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <script src="//cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="../js/coupon.js"></script>
-  </body>
+</body>
 </html>
 
 
