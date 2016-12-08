@@ -1,6 +1,4 @@
-//var BASE_URL = 'http://192.168.1.11:9000';
-//var BASE_URL = 'http://staging.xiaolumm.com';
-var BASE_URL = 'https://m.xiaolumeimei.com';
+var BASE_URL = '';
 
 
 var list_next_page_url = null;
@@ -224,6 +222,8 @@ function startRecruit() {
     }
     var data = {"mama_id":mama_id, "mama_phone":mama_phone};
     $.ajax({url:url, data:data, success:callback, method: "POST"});
+
+    return false;
 }
 
 function listRecruit() {
