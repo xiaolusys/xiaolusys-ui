@@ -12,16 +12,13 @@
     <link rel="stylesheet" type="text/css" href="../css/coupon.css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+
 </head>
 <body>
 <div class="container" id="id-container">
     <div>
         <div class="clearfix">
-            <button class="btn btn-default pull-left" type="button" id="id-back-button">后退</button>
+            <a class="btn btn-default pull-left" type="button" onclick="window.history.back()">后退</a>
             <div class="col-xs-4 pull-right dropdown" id="id-dropdown">
                 <button class="col-xs-12 btn btn-default dropdown-toggle" type="button" id="id-dropdown-button"
                         data-toggle="dropdown">筛选 <span class="caret"></span></button>
@@ -33,7 +30,7 @@
                 </ul>
             </div>
         </div>
-        <div> <!-- style="width:65%;display:inline-block;vertical-align:middle" -->
+        <div style="margin-top:10px;"> <!-- style="width:65%;display:inline-block;vertical-align:middle" -->
             <ul class="nav nav-tabs" role="tablist" id="id-tab">
                 <li role="presentation" class="col-xs-4 active"><a href="#" hide-tag="list-out-coupons"
                                                                    show-tag="list-in-coupons"><b>入券</b></a></li>
@@ -72,7 +69,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button class="btn btn-primary" onclick="startRecruit()">确定邀请</button>
+                    <a class="btn btn-primary" onclick="startRecruit()">确定邀请</a>
                 </div>
             </div>
         </form>
@@ -80,9 +77,13 @@
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!--<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>-->
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
     <script src="//cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="../js/coupon.js"></script>
 </body>
