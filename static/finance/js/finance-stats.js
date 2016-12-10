@@ -319,7 +319,7 @@ var costStats = function (dateFrom, dateTo) {
         var dateArray = [];
         var coseArray = [];
         var paymentArray = [];
-        $('#cost-stats-tbody').empty();
+        $('#cost-stats-date-tbody').empty();
         var a1 = '<h4><span class="label label-primary">单数：' + res.aggregate_data.total_count + '</span> | ';
         var a2 = '<span class="label label-primary">总金额：' + res.aggregate_data.total_payment + '</span></h4>';
         $('#sale-cost-desc').html(res.desc + a1 + a2);
@@ -476,7 +476,7 @@ $(function () {
     var m = d.getMonth() + 1;
     var today = d.getFullYear() + '-' + m + '-' + d.getDate();
     $('#date-to').val(today);
-    $('#date-to').on('dp.change', function () {
+    $('#search').on('click', function () {
         console.log(123123);
         var dateFrom = $('#date-from').val();
         var dateTo = $('#date-to').val();

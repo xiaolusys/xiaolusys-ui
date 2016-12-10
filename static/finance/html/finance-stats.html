@@ -48,10 +48,11 @@
 <div class="col-md-2">
     <div class="fix" style="margin-top: 40px; z-index: 10">
         <input type="text" class="form-control date-picker" id="date-from" placeholder="开始日期">
-        <input type="text" class="form-control date-picker" id="date-to" placeholder="截止日期">
+        <input type="text" class="form-control date-picker" id="date-to" placeholder="截止日期" onclick="return false">
+        <input type="button" class="form-control btn btn-warning" id="search" value="查   询">
     </div>
 
-    <div style="margin-top: 120px; z-index: -1">
+    <div style="margin-top: 150px; z-index: -1">
         <ul class="nav nav-pills nav-stacked fix" role="tablist" id="list-stats">
 
         </ul>
