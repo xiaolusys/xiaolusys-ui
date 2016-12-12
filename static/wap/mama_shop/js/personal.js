@@ -40,9 +40,11 @@ function renderTrialMamaList(res) {
             var invite_award = invite_num * 30;
             $("#id-invite-num")[0].innerHTML = invite_num+'人';
         }
-        
-        trial_mama_next_page = res['next'];
-        
+
+        if (res['next']){
+            trial_mama_next_page = res['next'].replace('http://', 'https://');
+        }
+
         var arr = res['results'];
         for (var i=0; i<arr.length; ++i) {
             var content = [];
