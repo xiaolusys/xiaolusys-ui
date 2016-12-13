@@ -59,8 +59,9 @@ function loadProfile() {
 
 function renderOutCouponList(res) {
     list_next_page_url = null;
-    if res['next']:
+    if (res['next']){
         list_next_page_url = res['next'].replace('http://', 'https://');
+    }
     res = res['results'];
 
     for (var i=0; i<res.length; ++i) {
@@ -108,10 +109,10 @@ function listOutCoupons(transferStatus) {
 
 function renderInCouponList(res) {
     list_next_page_url = null;
-    if res['next']:
+    if (res['next']){
         list_next_page_url = res['next'].replace('http://', 'https://');
+    }
     res = res['results'];
-
     for (var i=0; i<res.length; ++i) {
         var data = res[i];
         var content = [];
