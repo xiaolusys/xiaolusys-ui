@@ -43,6 +43,8 @@ function renderTrialMamaList(res) {
 
         if (res['next']){
             trial_mama_next_page = res['next'].replace('http://', 'https://');
+        } else {
+            trial_mama_next_page = null;
         }
 
         var arr = res['results'];
