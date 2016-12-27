@@ -320,8 +320,8 @@ var costStats = function (dateFrom, dateTo) {
         var coseArray = [];
         var paymentArray = [];
         $('#cost-stats-date-tbody').empty();
-        var a1 = '<h4><span class="label label-primary">单数：' + res.aggregate_data.total_count + '</span> | ';
-        var a2 = '<span class="label label-primary">总金额：' + res.aggregate_data.total_payment + '</span></h4>';
+        var a1 = '<h4><span class="label label-primary">商品件数：' + res.aggregate_data.total_count + '</span> | ';
+        var a2 = '<span class="label label-primary">交易总金额：' + res.aggregate_data.total_payment + '</span></h4>';
         $('#sale-cost-desc').html(res.desc + a1 + a2);
         $("#sale-cost-sql").html('<span class="label label-success">SQL:</span>' + res.sql);
         $.each(res.items_data, function (k, v) {
