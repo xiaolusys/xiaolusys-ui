@@ -21,7 +21,7 @@ function open_switch() {
 var globalShowTag = 'list-in-coupons';
 var globalTransferStatus = '';
 var globalTabIds = ['list-out-coupons','list-in-coupons','list-recruit'];
-
+var globalProcessingFlag = false;
 
 function changeFilterText(value) {
     var text = "筛选";
@@ -160,27 +160,35 @@ function requestTransfer() {
         return;
     }
     var callback = function (res) {
+        globalProcessingFlag = false;
         alert(res["info"]);
         listInCoupons();
         loadProfile();
     };
     var data = {"coupon_num":coupon_num};
 
-    $.ajax({url:url, data:data, success:callback, method: "POST"});
+    if (!globalProcessingFlag) {
+        $.ajax({url:url, data:data, success:callback, method: "POST"});
+        globalProcessingFlag = true;
+    }
 }
 
 function processCoupon(pk) {
     var url = '/rest/v2/mama/trancoupon/'+pk+'/process_coupon';
     var url = BASE_URL + url;
     var callback = function (res) {
+        globalProcessingFlag = false;
         alert(res["info"]);
         if (res["code"] == 0) {
             $("#id-status-"+pk)[0].innerHTML = '待发放';
         }
         loadProfile();
     };
-    if (confirm("提示：请务必先收款，后审核！")) {
-       $.ajax({url:url, success:callback, method: "POST"});
+    if (!globalProcessingFlag) {
+        if (confirm("提示：请务必先收款，后审核！")) {
+            $.ajax({url:url, success:callback, method: "POST"});
+            globalProcessingFlag = true;
+        }
     }
 }
 
@@ -188,27 +196,35 @@ function cancelCoupon(pk) {
     var url = '/rest/v2/mama/trancoupon/'+pk+'/cancel_coupon';
     var url = BASE_URL + url;
     var callback = function (res) {
+        globalProcessingFlag = false;
         alert(res["info"]);
         if (res["code"] == 0) {
             $("#id-status-"+pk)[0].innerHTML = "已取消";
         }
         loadProfile();
     };
-    $.ajax({url:url, success:callback, method: "POST"});
+    if (!globalProcessingFlag) {
+        $.ajax({url:url, success:callback, method: "POST"});
+        globalProcessingFlag = true;
+    }
 }
 
 function transferCoupon(pk) {
     var url = '/rest/v2/mama/trancoupon/'+pk+'/transfer_coupon';
     var url = BASE_URL + url;
     var callback = function (res) {
+        globalProcessingFlag = false;
         alert(res["info"]);
         if (res["code"] == 0) {
             $("#id-status-"+pk)[0].innerHTML = "已完成";
         }
         loadProfile();
     };
-    if (confirm("提示：请务必先收款，后发券！")) {
-        $.ajax({url:url, success:callback, method: "POST"});
+    if (!globalProcessingFlag) {
+        if (confirm("提示：请务必先收款，后发券！")) {
+            $.ajax({url:url, success:callback, method: "POST"});
+            globalProcessingFlag = true;
+        }
     }
 }
 
