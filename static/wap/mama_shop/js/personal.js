@@ -48,19 +48,19 @@ function renderTrialMamaList(res) {
         }
 
         var arr = res['results'];
-        for (var i=0; i<arr.length; ++i) {
-            var content = [];
-            content.push('<div class="attender-row">');
-            content.push('<div class="attender-left">');
-            content.push('<img src="'+arr[i].thumbnail+'" class="img-circle" style="height:100%;">');
-            content.push('</div><div class="attender-middle">');
-            content.push('<p class="attender-name">'+arr[i].nick+'</p>');
-            content.push('<p>'+format_time(arr[i].charge_time)+'</p>');
-            content.push('</div><div class="attender-right xlmm-orange">');
-            content.push('<p class="signup-status">粉丝确定</p>');
-            content.push('</div></div>');
-            $("#id-invite-list").append(content.join(''));
-        }
+//        for (var i=0; i<arr.length; ++i) {
+//            var content = [];
+//            content.push('<div class="attender-row">');
+//            content.push('<div class="attender-left">');
+//            content.push('<img src="'+arr[i].thumbnail+'" class="img-circle" style="height:100%;">');
+//            content.push('</div><div class="attender-middle">');
+//            content.push('<p class="attender-name">'+arr[i].nick+'</p>');
+//            content.push('<p>'+format_time(arr[i].charge_time)+'</p>');
+//            content.push('</div><div class="attender-right xlmm-orange">');
+//            content.push('<p class="signup-status">粉丝确定</p>');
+//            content.push('</div></div>');
+//            $("#id-invite-list").append(content.join(''));
+//        }
     }
 }
 
@@ -99,7 +99,8 @@ function loadMamaFortuneBrief() {
             var content = [];
             content.push('<div><img class="img-circle head-thumbnail" src="'+res['thumbnail']+'"</></div>');
             if (res['last_renew_type'] < 183) {
-                content.push('<div style="margin-top:16px"><span>ID: ' + res['mama_id']+' <a href="/mall/mcf.html">升级专业店铺>></a></span></div>');
+                //content.push('<div style="margin-top:16px"><span>ID: ' + res['mama_id']+' <a href="/mall/mcf.html">升级专业店铺>></a></span></div>');
+                content.push('<div style="margin-top:16px"><span>ID: ' + res['mama_id']+'</span></div>');
                 if (res['left_days'] > 0) {
                     content.push('<div><span>普通店铺（试用 '+ res['left_days'] +'天）</span></div>');
                 } else {
