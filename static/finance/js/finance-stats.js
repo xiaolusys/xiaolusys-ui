@@ -490,17 +490,34 @@ var boutiqueStats = function (dateFrom, dateTo) {
             if (dateArray.indexOf(v.date) < 0) {
                 dateArray.push(v.date);
             }
+            var index = dateArray.indexOf(v.date);
+
             if (v.status == 0) {
-                status0NumData.push(v.count);
-                satus0Cnt+= v.count
+                if (status0NumData[index] == undefined) {
+                    status0NumData[index] = v.count
+                }
+                else {
+                    status0NumData[index] += v.count
+                }
+                satus0Cnt += v.count
             }
             if (v.status == 1) {
-                status1NumData.push(v.count);
-                satus1Cnt+= v.count
+                if (status1NumData[index] == undefined) {
+                    status1NumData[index] = v.count
+                }
+                else {
+                    status1NumData[index] += v.count
+                }
+                satus1Cnt += v.count
             }
             if (v.status == 2) {
-                status2NumData.push(v.count);
-                satus2Cnt+= v.count
+                if (status2NumData[index] == undefined) {
+                    status2NumData[index] = v.count
+                }
+                else {
+                    status2NumData[index] += v.count
+                }
+                satus2Cnt += v.count
             }
             createTemplateDom(v, 'boutique-template', 'boutique-stats-tbody');
         });
