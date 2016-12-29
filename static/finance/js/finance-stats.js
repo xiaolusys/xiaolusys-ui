@@ -31,7 +31,8 @@ function ulList() {
         '<li role="presentation"><a href="#deposit">押金金额笔数</a></li>' +
         '<li role="presentation"><a href="#stock-category">库存分类统计</a></li>' +
         '<li role="presentation"><a href="#sale-cost">销量成本核算</a></li> ' +
-        '<li role="presentation"><a href="#mama-order-carry">代理提成统计</a></li>';
+        '<li role="presentation"><a href="#mama-order-carry">代理提成统计</a></li>' +
+        '<li role="presentation"><a href="#boutique">精品(券/产品)统计</a></li>';
     $("#list-stats").empty();
     $("#list-stats").append(ul);
 }
@@ -451,6 +452,151 @@ var orderCarryStats = function (dateFrom, dateTo) {
 };
 
 
+var boutiqueStats = function (dateFrom, dateTo) {
+    var data = {'date_from': dateFrom, 'date_to': dateTo};
+    var url = '/apis/finance/v1/boutique_coupon_stat';
+    var func = function (res) {
+        var dateArray = [];
+        var status0NumData = [];
+        var status1NumData = [];
+        var status2NumData = [];
+        var status0ValueData = [];
+        var status1ValueData = [];
+        var status2ValueData = [];
+        $('#boutique-stats-tbody').empty();
+        var aggregate_info = [
+            '<h3>精品券销售统计:</h3><span><br>',
+            '<span class="label label-primary">总张数：' + res.aggregate_data.total_count,
+            '<span class="label label-primary">总券额：' + res.aggregate_data.total_value,
+
+            '<span class="label label-primary">总券购买订单数：' + res.aggregate_data.orders_s_num,
+            '<span class="label label-primary">总券购买金额：' + res.aggregate_data.orders_s_payment,
+
+            '<br><h3>精品商品销售统计:</h3><span>',
+
+            '<span class="label label-primary">总精品商品订单件数：' + res.aggregate_data.total_boutique_num,
+            '<span class="label label-primary">总精品商品订单金额：' + res.aggregate_data.total_boutique_payment,
+            '<span class="label label-primary">总精品商品订单退款额：' + res.aggregate_data.total_refund_boutique_fee,
+        ];
+
+        var info_spans = ['<h4>', '</h4>'].join([separator = aggregate_info.join([separator = '</span> | '])]);
+
+        $('#boutique-desc').html(res.desc + info_spans);
+        $("#boutique-sql").html('<span class="label label-success">SQL:</span>' + res.sql);
+        var satus0Cnt = 0;
+        var satus1Cnt = 0;
+        var satus2Cnt = 0;
+        $.each(res.items_data, function (k, v) {
+            if (dateArray.indexOf(v.date) < 0) {
+                dateArray.push(v.date);
+            }
+            if (v.status == 0) {
+                status0NumData.push(v.count);
+                satus0Cnt+= v.count
+            }
+            if (v.status == 1) {
+                status1NumData.push(v.count);
+                satus1Cnt+= v.count
+            }
+            if (v.status == 2) {
+                status2NumData.push(v.count);
+                satus2Cnt+= v.count
+            }
+            createTemplateDom(v, 'boutique-template', 'boutique-stats-tbody');
+        });
+        var myChart = echarts.init(document.getElementById('boutique-stats'));
+        var option = {
+            color: ['blue', 'green'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'line'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: dateArray, //['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '未使用张数',
+                    type: 'bar',
+                    barWidth: '20%',
+                    data: status0NumData//[10, 52, 200, 334, 390, 330, 220]
+                }, {
+                    name: '使用张数',
+                    type: 'bar',
+                    barWidth: '20%',
+                    data: status1NumData//[10, 52, 200, 334, 390, 330, 220]
+                }, {
+                    name: '冻结张数',
+                    type: 'bar',
+                    barWidth: '20%',
+                    data: status2NumData//[10, 52, 200, 334, 390, 330, 220]
+                }
+            ]
+        };
+        var myChart2 = echarts.init(document.getElementById('boutique-stats-rate'));
+        var option2 = {
+            title: {
+                text: '状态占比',
+                subtext: '',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['未使用', '已使用', '冻结']
+            },
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: [
+                        {value: satus0Cnt, name: '未使用'},
+                        {value: satus1Cnt, name: '已使用'},
+                        {value: satus2Cnt, name: '冻结'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        myChart.setOption(option);
+        myChart2.setOption(option2);
+    };
+    serverData(data, func, url, 'get')
+};
+
+
 var getSumDate = function (dateFrom, dateTo) {
     if (dateFrom != '' && dateTo != '') {
         channelPayStats(dateFrom, dateTo);
@@ -460,6 +606,7 @@ var getSumDate = function (dateFrom, dateTo) {
         stockStats(dateFrom, dateTo);
         returnGoodStats(dateFrom, dateTo);
         orderCarryStats(dateFrom, dateTo);
+        boutiqueStats(dateFrom, dateTo);
     } else {
         layer.msg('请选择时间');
     }
