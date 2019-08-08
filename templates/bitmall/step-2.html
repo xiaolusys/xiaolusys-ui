@@ -247,6 +247,11 @@
     }
 
     var CHARGE_URL = $('#order-form').attr('action');
+    if(CHARGE_URL.indexOf('?') > 0){
+      CHARGE_URL += '&format=json';
+    } else {
+      CHARGE_URL += '?format=json';
+    }
     var form_array = $('#order-form').serializeArray();
     var params = {};
 
